@@ -1,0 +1,937 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --text-color-dark: #2C2C2A;
+    --text-color-light: #FFFFFF;
+    --input-border: #E2E8F0;
+    --btn-primary: #364087;
+    --placeholder-color: #C7C6C6;
+    --overlay-color: rgba(25, 28, 31, 0.4);
+    --card-shadow: 0px 4px 12px 12px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background-image: url('../images/bg_campus.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Dark Tint Overlay */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay-color);
+    z-index: 1;
+}
+
+/* Main Container */
+.main-wrapper {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    padding: 0 40px;
+}
+
+/* Left Side - Branding */
+.branding-container {
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 80px;
+    padding-right: 40px;
+    color: var(--text-color-light);
+}
+
+.logos-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.mascot-img {
+    width: 138px;
+    height: 143px;
+    object-fit: contain;
+}
+
+.uho-logo-img {
+    width: 191px;
+    height: 143px;
+    object-fit: contain;
+}
+
+.app-title {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 77px;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.app-subtitle {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+    max-width: 530px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Right Side - Login Card Section */
+.card-container {
+    flex: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+/* The White Card */
+.login-card {
+    width: 100%;
+    max-width: 533px;
+    min-height: 620px;
+    background-color: var(--text-color-light);
+    border-radius: 24px;
+    box-shadow: var(--card-shadow);
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* EduLab Gradient Text */
+.form-title {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 58px;
+    text-align: center;
+    margin-bottom: 40px;
+    background: linear-gradient(133deg, #364087 0%, #DB241E 23%, #DA7E29 53%, #F8F839 94%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Form Styles */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color-dark);
+    padding-left: 4px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    color: #A0AEC0;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.form-input {
+    width: 100%;
+    height: 59px;
+    padding: 10px 16px 10px 48px;
+    background-color: var(--text-color-light);
+    border: 0.5px solid var(--input-border);
+    border-radius: 10px;
+    font-size: 16px;
+    color: var(--text-color-dark);
+    outline: none;
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.form-input::placeholder {
+    color: var(--placeholder-color);
+    font-weight: 500;
+}
+
+.form-input:focus {
+    border-color: var(--btn-primary);
+    box-shadow: 0 0 0 3px rgba(54, 64, 135, 0.15);
+}
+
+.password-input {
+    padding-right: 48px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #A0AEC0;
+    display: flex;
+    align-items: center;
+    transition: color var(--transition-speed) ease;
+}
+
+.password-toggle:hover {
+    color: var(--btn-primary);
+}
+
+/* Submit Button */
+.btn-login {
+    width: 100%;
+    height: 68px; /* Balanced height for readability, figma had 76px */
+    background-color: var(--btn-primary);
+    color: #D9D9D8;
+    border: none;
+    border-radius: 15px;
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 16px;
+    box-shadow: 0px 4px 12px rgba(54, 64, 135, 0.2);
+    transition: background-color var(--transition-speed) ease, transform 0.1s ease, color var(--transition-speed) ease;
+}
+
+.btn-login:hover {
+    background-color: #2b336b;
+    color: var(--text-color-light);
+}
+
+.btn-login:active {
+    transform: scale(0.98);
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .main-wrapper {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+
+    .branding-container {
+        padding-left: 0;
+        padding-right: 0;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 40px;
+        flex: none;
+    }
+
+    .app-subtitle {
+        text-align: center;
+    }
+
+    .card-container {
+        padding: 0;
+        flex: none;
+        width: 100%;
+    }
+
+    .login-card {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .logos-group {
+        transform: scale(0.85);
+    }
+    .app-title {
+        font-size: 40px;
+        line-height: 48px;
+    }
+    .login-card {
+        padding: 32px 20px;
+    }
+    .form-title {
+        font-size: 36px;
+        margin-bottom: 28px;
+    }
+    .btn-login {
+        height: 56px;
+        font-size: 18px;
+    }
+}
+
+/* ==========================================
+   Role Switcher Page Styles (Figma 82:316)
+   ========================================== */
+.switcher-wrapper {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.switcher-card {
+    width: 100%;
+    max-width: 678px;
+    background-color: var(--text-color-light);
+    border: 1px solid var(--btn-primary);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    padding: 40px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* Profile Section Header */
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #E2E8F0;
+    padding-bottom: 24px;
+}
+
+.profile-avatar {
+    width: 78px;
+    height: 78px;
+    background: linear-gradient(135deg, var(--btn-primary) 0%, var(--brand-bg) 100%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color-light);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0px 4px 10px rgba(54, 64, 135, 0.25);
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.profile-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: #000000;
+    line-height: 1.2;
+}
+
+.profile-id {
+    font-size: 20px;
+    color: #4A5568;
+    font-weight: 500;
+}
+
+/* Prompt Text */
+.switcher-prompt {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-color-dark);
+    line-height: 1.4;
+}
+
+/* Role Selection Button Stack */
+.role-options-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.role-option-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: 84px;
+    padding: 0 24px;
+    background-color: var(--text-color-light);
+    border: 1px solid var(--btn-primary);
+    border-radius: 15px;
+    text-decoration: none;
+    transition: all var(--transition-speed) ease;
+    cursor: pointer;
+}
+
+.role-option-card:hover {
+    background-color: rgba(54, 64, 135, 0.04);
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 16px rgba(54, 64, 135, 0.12);
+}
+
+.role-option-card:active {
+    transform: translateY(0);
+}
+
+.role-option-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(54, 64, 135, 0.1);
+    color: var(--btn-primary);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+.role-option-card:hover .role-option-icon {
+    background-color: var(--btn-primary);
+    color: var(--text-color-light);
+}
+
+.role-option-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #000000;
+}
+
+/* Responsive for Switcher */
+@media (max-width: 768px) {
+    .switcher-card {
+        padding: 32px 24px;
+        gap: 24px;
+    }
+    
+    .profile-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
+    
+}
+
+/* ==========================================
+   Dashboard Page Styles (Figma 93:299)
+   ========================================== */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #F7F9FC;
+    color: var(--text-color-dark);
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 282px;
+    background-color: #29316B; /* Dark Navy from Figma */
+    color: var(--text-color-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 16px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px 24px;
+}
+
+.sidebar-logo {
+    width: 43px;
+    height: 43px;
+    object-fit: contain;
+}
+
+.sidebar-brand-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-color-light);
+    letter-spacing: -0.5px;
+}
+
+/* Sidebar User Info Card */
+.sidebar-user-card {
+    background-color: #7C94B8; /* Muted steel blue */
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    color: var(--text-color-dark);
+}
+
+.sidebar-user-name {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 4px;
+}
+
+.sidebar-user-role {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-color-light);
+}
+
+/* Sidebar Menu */
+.sidebar-menu-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #7C94B8;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding-left: 12px;
+    margin-bottom: 12px;
+}
+
+.sidebar-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    list-style: none;
+    flex-grow: 1;
+}
+
+.sidebar-menu-item a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    color: var(--text-color-light);
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.sidebar-menu-item a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-menu-item.active a {
+    background-color: #364087; /* Active Royal Blue */
+}
+
+.sidebar-menu-item-icon {
+    opacity: 0.8;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background-color: #2A4D88;
+    margin: 20px 0;
+}
+
+/* Main Workspace */
+.main-workspace {
+    margin-left: 282px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header / Navbar */
+.workspace-navbar {
+    height: 95px;
+    background-color: #364087;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    color: var(--text-color-light);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-title {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.navbar-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.navbar-avatar {
+    width: 55px;
+    height: 55px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color-light);
+    font-size: 20px;
+    font-weight: 700;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Content Body */
+.workspace-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    background-color: rgba(0, 0, 0, 0.03);
+    flex-grow: 1;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.welcome-text {
+    font-size: 36px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.welcome-subtext {
+    font-size: 20px;
+    font-weight: 500;
+    color: #8A8A8A;
+}
+
+/* Stats Metrics Grid */
+.stats-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+}
+
+.metric-card {
+    background-color: var(--text-color-light);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.02);
+    border: 0.5px solid #E2E8F0;
+    transition: transform var(--transition-speed) ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-4px);
+}
+
+.metric-icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(54, 64, 135, 0.1);
+    color: #364087;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.metric-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000000;
+    line-height: 1;
+}
+
+.metric-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* Section Header */
+.section-heading-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.btn-see-all {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #364087;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: color var(--transition-speed) ease;
+}
+
+.btn-see-all:hover {
+    color: var(--brand-bg);
+    text-decoration: underline;
+}
+
+/* Classes Grid */
+.classes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 32px;
+}
+
+.class-card {
+    background-color: var(--text-color-light);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 0.5px solid #DCDCDC;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+}
+
+.class-card-header {
+    padding: 20px 24px;
+    color: var(--text-color-light);
+    position: relative;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Gradients for different card classes */
+.class-header-blue {
+    background: linear-gradient(125deg, #5060D1 0%, #29316B 59%);
+}
+
+.class-header-orange {
+    background: linear-gradient(125deg, #CC780A 0%, #9F500C 47%);
+}
+
+.class-header-green {
+    background: linear-gradient(125deg, #2FDA59 12%, #0E9728 53%);
+}
+
+.class-card-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.class-title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.class-badge {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: var(--text-color-light);
+    padding: 2px 8px;
+    border-radius: 30px;
+    font-size: 9px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.class-lecturer-info {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
+    line-height: 1.4;
+    margin-top: 12px;
+}
+
+.class-card-body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Progress Bar */
+.progress-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.progress-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.progress-title {
+    color: #9B9B9B;
+}
+
+.progress-ratio {
+    color: #353535;
+    font-weight: 600;
+}
+
+.progress-bar-bg {
+    height: 4px;
+    background-color: #E2E8F0;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+}
+
+.class-header-blue ~ .class-card-body .progress-bar-fill {
+    background-color: #5060D1;
+}
+
+.class-header-orange ~ .class-card-body .progress-bar-fill {
+    background-color: #CC780A;
+}
+
+.class-header-green ~ .class-card-body .progress-bar-fill {
+    background-color: #0F9728;
+}
+
+/* Card Badges / Tags */
+.card-tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-bottom: 1.5px solid #F3F4F6;
+    padding-bottom: 16px;
+}
+
+.tag-pill {
+    padding: 3px 10px;
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tag-kelompok {
+    background-color: rgba(171, 218, 232, 0.3);
+    color: #325E6D;
+}
+
+.tag-asdos {
+    background-color: rgba(188, 171, 232, 0.3);
+    color: #5C4A89;
+}
+
+.tag-deadline {
+    background-color: #FFF3BF;
+    color: #6B6135;
+}
+
+/* Card Footer Stats */
+.card-footer-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.footer-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Responsive Dashboard Layout */
+@media (max-width: 1200px) {
+    .sidebar {
+        width: 80px;
+        padding: 24px 8px;
+        align-items: center;
+    }
+    
+    .sidebar-brand-name,
+    .sidebar-user-card,
+    .sidebar-menu-title,
+    .sidebar-menu-item span:first-child,
+    .sidebar-divider {
+        display: none;
+    }
+    
+    .sidebar-header {
+        padding: 0;
+        margin-bottom: 24px;
+    }
+    
+    .sidebar-menu-list {
+        align-items: center;
+    }
+    
+    .sidebar-menu-item a {
+        padding: 12px;
+        justify-content: center;
+    }
+    
+    .main-workspace {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .workspace-navbar {
+        padding: 0 20px;
+    }
+    .workspace-content {
+        padding: 24px 20px;
+        gap: 24px;
+    }
+    .welcome-text {
+        font-size: 28px;
+    }
+    .welcome-subtext {
+        font-size: 16px;
+    }
+    .classes-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
