@@ -522,7 +522,7 @@ body::before {
     flex-grow: 1;
 }
 
-.sidebar-menu-item a {
+.sidebar-menu-item > a {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -535,12 +535,52 @@ body::before {
     transition: background-color var(--transition-speed) ease;
 }
 
-.sidebar-menu-item a:hover {
+.sidebar-menu-item > a:hover {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-.sidebar-menu-item.active a {
+.sidebar-menu-item.active > a {
     background-color: #364087; /* Active Royal Blue */
+}
+
+/* Submenu Styling */
+.sidebar-submenu-list {
+    list-style: none;
+    padding-left: 20px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+/* Show submenu when parent is active, parent is hovered, or parent has active child */
+.sidebar-menu-item.active .sidebar-submenu-list,
+.sidebar-menu-item:hover .sidebar-submenu-list,
+.sidebar-menu-item:has(.sidebar-submenu-item.active) .sidebar-submenu-list {
+    display: flex;
+}
+
+.sidebar-submenu-item > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    color: rgba(255, 255, 255, 0.8) !important;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all var(--transition-speed) ease;
+}
+
+.sidebar-submenu-item > a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF !important;
+}
+
+.sidebar-submenu-item.active > a {
+    background-color: #364087 !important;
+    color: #FFFFFF !important;
 }
 
 .sidebar-menu-item-icon {
