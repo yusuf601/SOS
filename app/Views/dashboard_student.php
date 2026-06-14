@@ -37,7 +37,7 @@
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="#">
+                        <a href="/rpl/public/index.php?action=my_classes">
                             <span>Kelas Saya</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
@@ -193,7 +193,7 @@
             <section style="display: flex; flex-direction: column; gap: 20px;">
                 <div class="section-heading-row">
                     <h3 class="section-title">Kelas Saya</h3>
-                    <a href="#" class="btn-see-all">
+                    <a href="/rpl/public/index.php?action=my_classes" class="btn-see-all">
                         <span>Lihat semua</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </a>

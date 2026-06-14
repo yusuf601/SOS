@@ -440,7 +440,7 @@ body::before {
 .dashboard-container {
     display: flex;
     min-height: 100vh;
-    background-color: #F7F9FC;
+    background-color: #F8FAFC; /* Brighter slate-50 background */
     color: var(--text-color-dark);
 }
 
@@ -605,7 +605,7 @@ body::before {
     display: flex;
     flex-direction: column;
     gap: 36px;
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: #F8FAFC; /* Matching bright background */
     flex-grow: 1;
 }
 

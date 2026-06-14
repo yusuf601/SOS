@@ -46,6 +46,11 @@ switch ($action) {
         require_once __DIR__ . '/../app/Views/dashboard_student.php';
         break;
 
+    case 'my_classes':
+        // Render student's classes list view
+        require_once __DIR__ . '/../app/Views/my_classes.php';
+        break;
+
     case 'logout':
         // Clear all session data
         $_SESSION = [];
