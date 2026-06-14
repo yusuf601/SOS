@@ -56,6 +56,11 @@ switch ($action) {
         require_once __DIR__ . '/../app/Views/bank_modul.php';
         break;
 
+    case 'upload_tugas':
+        // Render upload tugas view
+        require_once __DIR__ . '/../app/Views/upload_tugas.php';
+        break;
+
     case 'logout':
         // Clear all session data
         $_SESSION = [];
