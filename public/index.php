@@ -51,6 +51,11 @@ switch ($action) {
         require_once __DIR__ . '/../app/Views/my_classes.php';
         break;
 
+    case 'bank_modul':
+        // Render bank modul view
+        require_once __DIR__ . '/../app/Views/bank_modul.php';
+        break;
+
     case 'logout':
         // Clear all session data
         $_SESSION = [];
