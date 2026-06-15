@@ -639,7 +639,7 @@ $initials = substr($initials, 0, 2);
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="#">
+                        <a href="/rpl/public/index.php?action=sanggah_nilai">
                             <span>Lihat Nilai</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
@@ -647,7 +647,7 @@ $initials = substr($initials, 0, 2);
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="#">
+                        <a href="/rpl/public/index.php?action=presensi">
                             <span>Data Presensi</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
@@ -655,7 +655,7 @@ $initials = substr($initials, 0, 2);
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="#">
+                        <a href="/rpl/public/index.php?action=sanggah_nilai">
                             <span>Sanggah Nilai</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -663,7 +663,7 @@ $initials = substr($initials, 0, 2);
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="#">
+                        <a href="/rpl/public/index.php?action=kelulusan">
                             <span>Status Kelulusan</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>

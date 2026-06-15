@@ -140,4 +140,36 @@ class TugasModel {
             'average_score' => $averageScore
         ];
     }
+
+    // Save or update grading info
+    public function saveGrade($pengumpulanId, $asistenId, $nilai, $feedback, $status) {
+        $queryCheck = "SELECT ID_Nilai FROM Tabel_Nilai WHERE ID_Pengumpulan = :pengumpulanId LIMIT 1";
+        $stmtCheck = $this->db->prepare($queryCheck);
+        $stmtCheck->bindParam(':pengumpulanId', $pengumpulanId);
+        $stmtCheck->execute();
+        $existing = $stmtCheck->fetch();
+
+        if ($existing) {
+            $query = "UPDATE Tabel_Nilai 
+                      SET ID_Asisten = :asistenId, Nilai_Angka = :nilai, Feedback = :feedback, Status_Tugas = :status 
+                      WHERE ID_Nilai = :id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':asistenId', $asistenId);
+            $stmt->bindParam(':nilai', $nilai);
+            $stmt->bindParam(':feedback', $feedback);
+            $stmt->bindParam(':status', $status);
+            $stmt->bindParam(':id', $existing['ID_Nilai']);
+            return $stmt->execute();
+        } else {
+            $query = "INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) 
+                      VALUES (:pengumpulanId, :asistenId, :nilai, :feedback, :status)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':pengumpulanId', $pengumpulanId);
+            $stmt->bindParam(':asistenId', $asistenId);
+            $stmt->bindParam(':nilai', $nilai);
+            $stmt->bindParam(':feedback', $feedback);
+            $stmt->bindParam(':status', $status);
+            return $stmt->execute();
+        }
+    }
 }

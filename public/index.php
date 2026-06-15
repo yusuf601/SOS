@@ -47,23 +47,27 @@ switch ($action) {
         break;
 
     case 'dashboard_dosen':
-        $role = $_SESSION['active_role'] ?? 'Dosen';
-        echo "<h3>Dashboard Dosen (EduLab UHO)</h3>";
-        echo "Selamat datang, " . htmlspecialchars($_SESSION['name'] ?? '') . ".<br>";
-        echo "Halaman ini sedang dikembangkan.<br><br>";
-        echo "<a href='/rpl/public/index.php?action=logout'>Log out</a>";
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->staffIndex();
         break;
 
     case 'dashboard_asisten':
-        $role = $_SESSION['active_role'] ?? 'Asisten';
-        echo "<h3>Dashboard Asisten (EduLab UHO)</h3>";
-        echo "Selamat datang, " . htmlspecialchars($_SESSION['name'] ?? '') . ".<br>";
-        echo "Halaman ini sedang dikembangkan.<br><br>";
-        echo "<a href='/rpl/public/index.php?action=logout'>Log out</a>";
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->staffIndex();
+        break;
+
+    case 'submit_grade':
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->submitGrade();
         break;
 
     case 'my_classes':
-        require_once __DIR__ . '/../app/Views/my_classes.php';
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->myClasses();
         break;
 
     case 'bank_modul':
@@ -94,6 +98,42 @@ switch ($action) {
         require_once __DIR__ . '/../app/Controllers/TugasController.php';
         $tugasController = new TugasController();
         $tugasController->cancel();
+        break;
+
+    case 'presensi':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->presensi();
+        break;
+
+    case 'submit_presensi':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->submitPresensi();
+        break;
+
+    case 'sanggah_nilai':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->sanggahNilai();
+        break;
+
+    case 'submit_sanggah':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->submitSanggah();
+        break;
+
+    case 'respond_sanggah':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->respondSanggah();
+        break;
+
+    case 'kelulusan':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->kelulusan();
         break;
 
     default:
