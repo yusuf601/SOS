@@ -74,6 +74,14 @@ $availableRoles = $_SESSION['available_roles'] ?? [];
                     <span class="role-option-title">Mahasiswa</span>
                 </a>
             <?php endif; ?>
+
+            <!-- Keluar Option -->
+            <a href="/rpl/public/index.php?action=logout" class="role-option-card" style="border-color: #FF8A8A;">
+                <div class="role-option-icon" style="background-color: rgba(255, 138, 138, 0.1); color: #FF8A8A;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                </div>
+                <span class="role-option-title" style="color: #FF8A8A;">Keluar</span>
+            </a>
         </div>
     </div>
 </div>

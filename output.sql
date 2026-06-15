@@ -252,3 +252,16 @@ INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALU
 -- Insert Dummy Grades (Task 1 is graded: 85.5, Task 2 is pending/ungraded)
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES
 (1, 18, 85.50, 'Kerja bagus, HTML semantik ditulis dengan sangat rapi.', 'Selesai');
+
+-- Insert Additional Dummy User for richer dashboard experience (Alice Margatroid)
+INSERT INTO Tabel_User (Username, Password, Role, Nama_Lengkap, ID_Kelompok) VALUES
+('E1E122004', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Alice Margatroid', 1);
+
+-- Insert Additional Submissions for Alice Margatroid
+INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES
+(1, 20, 'tugas1_alice_margatroid.zip', '2026-06-06 15:00:00'),
+(2, 20, 'tugas2_alice_margatroid.zip', '2026-06-13 19:00:00');
+
+-- Insert Additional Grades (Alice's Task 1 has a dispute/sanggahan)
+INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES
+(3, 18, 70.00, 'Tugas lengkap, namun styling CSS masih kurang rapi.', 'Sanggah', 'Mohon maaf kak, sepertinya ada kekeliruan. Saya sudah menerapkan Flexbox sesuai instruksi modul. Mohon diperiksa kembali.');

@@ -277,6 +277,136 @@ class DashboardController {
             'pending' => $pendingCount
         ];
 
+        // 1. Pending Attendance Module
+        $queryModules = "SELECT * FROM Tabel_Modul ORDER BY ID_Modul DESC";
+        $stmtModules = $db->prepare($queryModules);
+        $stmtModules->execute();
+        $modulesList = $stmtModules->fetchAll();
+
+        $pendingAttendanceModule = null;
+        foreach ($modulesList as $m) {
+            $queryMissingPresensi = "SELECT COUNT(*) as count FROM Tabel_User u
+                                     JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
+                                     JOIN Tabel_Plotting_Asisten pa ON kl.ID_Kelas = pa.ID_Kelas
+                                     WHERE pa.ID_User = :userId AND u.Role = 'Mahasiswa'
+                                       AND u.ID_User NOT IN (
+                                           SELECT ID_User FROM Tabel_Presensi WHERE ID_Modul = :modulId
+                                       )";
+            $stmtMissing = $db->prepare($queryMissingPresensi);
+            $stmtMissing->bindParam(':userId', $userId);
+            $stmtMissing->bindValue(':modulId', $m['ID_Modul']);
+            $stmtMissing->execute();
+            $missingCount = $stmtMissing->fetch()['count'];
+            if ($missingCount > 0) {
+                $pendingAttendanceModule = $m;
+                break;
+            }
+        }
+
+        // 2. Pending Grades Info
+        $queryPendingGrades = "SELECT m.ID_Modul, m.Judul_Modul, COUNT(p.ID_Pengumpulan) as count
+                               FROM Tabel_Pengumpulan p
+                               JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                               JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
+                               JOIN Tabel_User u ON p.ID_User = u.ID_User
+                               JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
+                               JOIN Tabel_Plotting_Asisten pa ON kl.ID_Kelas = pa.ID_Kelas
+                               LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                               WHERE pa.ID_User = :userId AND (n.Nilai_Angka IS NULL)
+                               GROUP BY m.ID_Modul, m.Judul_Modul
+                               ORDER BY count DESC LIMIT 1";
+        $stmtPendingGrades = $db->prepare($queryPendingGrades);
+        $stmtPendingGrades->bindParam(':userId', $userId);
+        $stmtPendingGrades->execute();
+        $pendingGradesInfo = $stmtPendingGrades->fetch();
+
+        // 3. Pending Disputes Count
+        $queryDisputesCount = "SELECT COUNT(*) as count FROM Tabel_Nilai n
+                               JOIN Tabel_Pengumpulan p ON n.ID_Pengumpulan = p.ID_Pengumpulan
+                               JOIN Tabel_User u ON p.ID_User = u.ID_User
+                               JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
+                               JOIN Tabel_Plotting_Asisten pa ON kl.ID_Kelas = pa.ID_Kelas
+                               WHERE pa.ID_User = :userId AND n.Status_Tugas = 'Sanggah' AND (n.Tanggapan_Sanggah IS NULL OR n.Tanggapan_Sanggah = '')";
+        $stmtDisputes = $db->prepare($queryDisputesCount);
+        $stmtDisputes->bindParam(':userId', $userId);
+        $stmtDisputes->execute();
+        $disputesCount = $stmtDisputes->fetch()['count'];
+
+        // 4. Grading Progress per Group
+        $activeModulId = null;
+        $activeModulTitle = "";
+        if ($pendingGradesInfo) {
+            $activeModulId = $pendingGradesInfo['ID_Modul'];
+            $activeModulTitle = $pendingGradesInfo['Judul_Modul'];
+        } else {
+            $queryLatest = "SELECT ID_Modul, Judul_Modul FROM Tabel_Modul ORDER BY ID_Modul DESC LIMIT 1";
+            $stmtLatest = $db->prepare($queryLatest);
+            $stmtLatest->execute();
+            $latestM = $stmtLatest->fetch();
+            if ($latestM) {
+                $activeModulId = $latestM['ID_Modul'];
+                $activeModulTitle = $latestM['Judul_Modul'];
+            }
+        }
+
+        $groupProgress = [];
+        $averageScore = 0.0;
+
+        if ($activeModulId) {
+            $queryGroups = "SELECT k.ID_Kelompok, k.Nama_Kelompok, cl.Nama_Kelas, cl.ID_Kelas
+                            FROM Tabel_Kelompok k
+                            JOIN Tabel_Kelas cl ON k.ID_Kelas = cl.ID_Kelas
+                            JOIN Tabel_Plotting_Asisten pa ON cl.ID_Kelas = pa.ID_Kelas
+                            WHERE pa.ID_User = :userId";
+            $stmtGroups = $db->prepare($queryGroups);
+            $stmtGroups->bindParam(':userId', $userId);
+            $stmtGroups->execute();
+            $groupsList = $stmtGroups->fetchAll();
+
+            foreach ($groupsList as $g) {
+                $queryTotalStud = "SELECT COUNT(*) as count FROM Tabel_User WHERE ID_Kelompok = :groupId AND Role = 'Mahasiswa'";
+                $stmtTotalStud = $db->prepare($queryTotalStud);
+                $stmtTotalStud->bindValue(':groupId', $g['ID_Kelompok']);
+                $stmtTotalStud->execute();
+                $totalStud = $stmtTotalStud->fetch()['count'];
+
+                $queryGradedStud = "SELECT COUNT(*) as count 
+                                    FROM Tabel_Pengumpulan p
+                                    JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                                    JOIN Tabel_User u ON p.ID_User = u.ID_User
+                                    JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                                    WHERE u.ID_Kelompok = :groupId 
+                                      AND t.ID_Modul = :modulId 
+                                      AND n.Nilai_Angka IS NOT NULL";
+                $stmtGradedStud = $db->prepare($queryGradedStud);
+                $stmtGradedStud->bindValue(':groupId', $g['ID_Kelompok']);
+                $stmtGradedStud->bindValue(':modulId', $activeModulId);
+                $stmtGradedStud->execute();
+                $gradedStud = $stmtGradedStud->fetch()['count'];
+
+                $groupProgress[] = [
+                    'group_name' => $g['Nama_Kelompok'],
+                    'total_students' => $totalStud,
+                    'graded_count' => $gradedStud
+                ];
+            }
+
+            $queryAvg = "SELECT AVG(n.Nilai_Angka) as avg_score 
+                         FROM Tabel_Nilai n
+                         JOIN Tabel_Pengumpulan p ON n.ID_Pengumpulan = p.ID_Pengumpulan
+                         JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                         JOIN Tabel_User u ON p.ID_User = u.ID_User
+                         JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
+                         JOIN Tabel_Plotting_Asisten pa ON kl.ID_Kelas = pa.ID_Kelas
+                         WHERE pa.ID_User = :userId AND t.ID_Modul = :modulId AND n.Nilai_Angka IS NOT NULL";
+                         
+            $stmtAvg = $db->prepare($queryAvg);
+            $stmtAvg->bindParam(':userId', $userId);
+            $stmtAvg->bindValue(':modulId', $activeModulId);
+            $stmtAvg->execute();
+            $averageScore = round((float)($stmtAvg->fetch()['avg_score'] ?? 0.0), 1);
+        }
+
         if ($role === 'Dosen') {
             require_once __DIR__ . '/../Views/dashboard_dosen.php';
         } else {

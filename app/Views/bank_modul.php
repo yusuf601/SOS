@@ -440,6 +440,9 @@ $initials = substr($initials, 0, 2);
 </head>
 <body>
 
+<!-- Settings toggle checkbox (pure-CSS modal control) -->
+<input type="checkbox" id="settings-toggle" class="settings-toggle">
+
 <div class="dashboard-container">
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -534,12 +537,12 @@ $initials = substr($initials, 0, 2);
             <div class="sidebar-divider"></div>
             <ul class="sidebar-menu-list">
                 <li class="sidebar-menu-item">
-                    <a href="#">
+                    <label for="settings-toggle" class="settings-open-label">
                         <span>Pengaturan</span>
                         <span class="sidebar-menu-item-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                         </span>
-                    </a>
+                    </label>
                 </li>
                 <li class="sidebar-menu-item">
                     <a href="/rpl/public/index.php?action=logout" style="color: #FF8A8A;">
@@ -809,6 +812,69 @@ $initials = substr($initials, 0, 2);
         }, 3000);
     }
 </script>
+
+<!-- ====== Settings Modal ====== -->
+<div class="settings-backdrop">
+    <div class="settings-modal">
+        <div class="settings-header">
+            <div class="settings-header-left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span class="settings-title">Pengaturan Akun</span>
+            </div>
+            <label for="settings-toggle" class="settings-close-btn" title="Tutup">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+        </div>
+        <div class="settings-tabs">
+            <span class="settings-tab">Profil</span>
+            <span class="settings-tab">Keamanan</span>
+            <span class="settings-tab settings-tab-active">Notifikasi</span>
+        </div>
+        <div class="settings-body">
+            <p class="settings-tab-desc">Atur jenis notifikasi yang ingin kamu terima</p>
+            <div class="notif-item">
+                <div class="notif-info">
+                    <span class="notif-title">Pembaruan Nilai Akademik</span>
+                    <span class="notif-desc">Notifikasi ketika nilai baru dipublikasikan oleh dosen atau asisten dosen.</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="notif-item">
+                <div class="notif-info">
+                    <span class="notif-title">Pengingat Batas Waktu Tugas</span>
+                    <span class="notif-desc">Notifikasi satu hari sebelum batas waktu pengumpulan tugas berakhir.</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="notif-item">
+                <div class="notif-info">
+                    <span class="notif-title">Tanggapan atas Sanggahan</span>
+                    <span class="notif-desc">Notifikasi ketika dosen atau asisten dosen memberikan tanggapan terhadap sanggahan yang diajukan.</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="notif-item">
+                <div class="notif-info">
+                    <span class="notif-title">Pemberitahuan Modul Baru</span>
+                    <span class="notif-desc">Notifikasi ketika dosen mengunggah atau menerbitkan modul pembelajaran baru.</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

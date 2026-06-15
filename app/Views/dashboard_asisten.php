@@ -328,9 +328,17 @@ $initials = substr($initials, 0, 2);
         <!-- Content Body -->
         <div class="workspace-content">
             <!-- Welcome Banner -->
-            <section class="welcome-banner">
-                <h1 class="welcome-text">Selamat datang, <?= htmlspecialchars(explode(" ", $fullName)[0]) ?>!</h1>
-                <p class="welcome-subtext">Kamu mengampu <?= htmlspecialchars($stats['total_classes'] ?? 0) ?> kelas praktikum aktif.</p>
+            <section class="welcome-banner" style="margin-bottom: 24px;">
+                <h1 class="welcome-text" style="font-size: 36px; font-weight: 600; color: #000000; margin: 0 0 8px 0;">Halo, <?= htmlspecialchars(explode(" ", $fullName)[0]) ?>!</h1>
+                <?php
+                $todoCount = 0;
+                if ($pendingAttendanceModule) $todoCount++;
+                if ($pendingGradesInfo) $todoCount++;
+                if ($disputesCount > 0) $todoCount++;
+                ?>
+                <p class="welcome-subtext" style="font-size: 24px; font-weight: 500; color: #8A8A8A; margin: 0;">
+                    Ada <?= $todoCount ?> hal yang perlu diselesaikan hari ini.
+                </p>
             </section>
 
             <!-- Success/Error Alert -->
@@ -345,48 +353,108 @@ $initials = substr($initials, 0, 2);
                 </div>
             <?php endif; ?>
 
-            <!-- Metric Cards -->
-            <section class="stats-metrics-grid" style="margin-bottom: 24px;">
-                <div class="metric-card">
-                    <div class="metric-icon-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                    </div>
-                    <div>
-                        <div class="metric-value"><?= htmlspecialchars($stats['total_classes'] ?? 0) ?></div>
-                        <div class="metric-label">Kelas Diajar</div>
+            <!-- Open Pencil Layout: To-Do & Progress Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; margin-bottom: 24px;">
+                
+                <!-- Card: Yang Perlu Dilakukan Sekarang -->
+                <div style="background-color: #FFFFFF; border-radius: 12px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 16px;">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #000000; margin: 0;">Yang Perlu Dilakukan Sekarang</h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- Todo 1: Presensi -->
+                        <?php if ($pendingAttendanceModule): ?>
+                            <div style="background-color: #FCEBEB; border-radius: 8px; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 39px; height: 39px; background-color: #F7C1C1; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #790000; flex-shrink: 0;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                    </div>
+                                    <div>
+                                        <h4 style="font-size: 15px; font-weight: 500; color: #000000; margin: 0 0 2px 0;">Isi presensi <?= htmlspecialchars($pendingAttendanceModule['Judul_Modul']) ?></h4>
+                                        <span style="font-size: 12px; color: #8C8C8C;">Belum diisi · Batas waktu segera</span>
+                                    </div>
+                                </div>
+                                <a href="/rpl/public/index.php?action=presensi" style="background-color: #790000; color: #FFFFFF; font-size: 12px; font-weight: 600; text-decoration: none; padding: 8px 16px; border-radius: 8px; flex-shrink: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1;">Isi Sekarang</a>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Todo 2: Penilaian Tugas -->
+                        <?php if ($pendingGradesInfo): ?>
+                            <div style="background-color: #FEF3C7; border-radius: 8px; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 39px; height: 39px; background-color: #FDE68A; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #D97706; flex-shrink: 0;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                    </div>
+                                    <div>
+                                        <h4 style="font-size: 15px; font-weight: 500; color: #000000; margin: 0 0 2px 0;"><?= htmlspecialchars($pendingGradesInfo['count']) ?> tugas belum dinilai</h4>
+                                        <span style="font-size: 12px; color: #8C8C8C;"><?= htmlspecialchars($pendingGradesInfo['Judul_Modul']) ?></span>
+                                    </div>
+                                </div>
+                                <a href="#submissions-section" style="background-color: #D97706; color: #FFFFFF; font-size: 12px; font-weight: 600; text-decoration: none; padding: 8px 16px; border-radius: 8px; flex-shrink: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1;">Nilai</a>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Todo 3: Disputes/Sanggahan -->
+                        <?php if ($disputesCount > 0): ?>
+                            <div style="background-color: #FCEBEB; border-radius: 8px; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 39px; height: 39px; background-color: #F7C1C1; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #790000; flex-shrink: 0;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                    </div>
+                                    <div>
+                                        <h4 style="font-size: 15px; font-weight: 500; color: #000000; margin: 0 0 2px 0;"><?= htmlspecialchars($disputesCount) ?> sanggah menunggu responmu</h4>
+                                        <span style="font-size: 12px; color: #8C8C8C;">Segera tanggapi keluhan mahasiswa</span>
+                                    </div>
+                                </div>
+                                <a href="/rpl/public/index.php?action=sanggah_nilai" style="background-color: #790000; color: #FFFFFF; font-size: 12px; font-weight: 600; text-decoration: none; padding: 8px 16px; border-radius: 8px; flex-shrink: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1;">Balas</a>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Fallback if nothing to do -->
+                        <?php if ($todoCount === 0): ?>
+                            <div style="text-align: center; color: #8C8C8C; padding: 24px; font-size: 14px; font-weight: 500;">
+                                🎉 Kerja bagus! Semua tugas dan presensi telah diselesaikan hari ini.
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-icon-circle" style="background-color: rgba(54, 64, 135, 0.1); color: var(--btn-primary);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                    </div>
+
+                <!-- Card: Progres Penilaian -->
+                <div style="background-color: #FFFFFF; border-radius: 15px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; gap: 16px;">
                     <div>
-                        <div class="metric-value"><?= htmlspecialchars($stats['total_subs'] ?? 0) ?></div>
-                        <div class="metric-label">Tugas Masuk</div>
+                        <h3 style="font-size: 18px; font-weight: 600; color: #000000; margin: 0 0 4px 0;">Progres Penilaian <?= htmlspecialchars($activeModulTitle ?: 'Modul') ?></h3>
+                        <span style="font-size: 14px; color: #9F9F9F; font-weight: 500;">Aktif memantau kelas Anda</span>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <?php if (empty($groupProgress)): ?>
+                            <div style="font-size: 14px; color: #9F9F9F; text-align: center; padding: 20px;">Belum ada data progres kelompok.</div>
+                        <?php else: ?>
+                            <?php foreach ($groupProgress as $gp): 
+                                $percent = $gp['total_students'] > 0 ? ($gp['graded_count'] / $gp['total_students']) * 100 : 0;
+                            ?>
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 6px;">
+                                        <span style="color: #9F9F9F;"><?= htmlspecialchars($gp['group_name']) ?> (<?= htmlspecialchars($gp['total_students']) ?> mahasiswa)</span>
+                                        <span style="color: #000000;"><?= htmlspecialchars($gp['graded_count']) ?>/<?= htmlspecialchars($gp['total_students']) ?> dinilai</span>
+                                    </div>
+                                    <div style="width: 100%; height: 6px; background-color: #ECECEC; border-radius: 3px; overflow: hidden; position: relative;">
+                                        <div style="width: <?= $percent ?>%; height: 100%; background-color: #364087; border-radius: 3px; transition: width 0.3s ease;"></div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+
+                    <div style="border-top: 1px solid #ECECEC; padding-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 14px; font-weight: 600; color: #9F9F9F;">Rata-rata nilai sejauh ini</span>
+                        <span style="font-size: 24px; font-weight: 700; color: #364087;"><?= htmlspecialchars($averageScore) ?></span>
                     </div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-icon-circle" style="background-color: rgba(22, 163, 74, 0.1); color: #16A34A;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <div>
-                        <div class="metric-value"><?= htmlspecialchars($stats['graded'] ?? 0) ?></div>
-                        <div class="metric-label">Sudah Dinilai</div>
-                    </div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon-circle" style="background-color: rgba(202, 138, 4, 0.1); color: #CA8A04;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                    </div>
-                    <div>
-                        <div class="metric-value"><?= htmlspecialchars($stats['pending'] ?? 0) ?></div>
-                        <div class="metric-label">Perlu Dinilai</div>
-                    </div>
-                </div>
-            </section>
+
+            </div>
 
             <!-- Submissions Table Card -->
-            <section class="submissions-card">
+            <section class="submissions-card" id="submissions-section">
                 <h3 class="submissions-title">Daftar Pengumpulan Tugas Mahasiswa</h3>
                 <div class="table-responsive">
                     <table class="custom-table">

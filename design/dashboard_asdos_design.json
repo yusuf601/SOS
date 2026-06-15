@@ -1,0 +1,136 @@
+<Frame name="dashboard asdos" x={3202} y={-126} w={1440} h={1024} bg="#FFFFFF" overflow="hidden">
+  <Frame name="Group 5" y={-0.00006103515625} w={1440} h={1024}>
+    <Frame name="sidebar" flex="col" h={1024} w={282} gap={10} py={10} px={8} bg="#29316B" overflow="hidden">
+      <Frame name="edulab" flex="col" h={75} w={266} gap={10} pr={18} pl={17} bg="#29316B" rounded={6}>
+        <Frame name="Frame 4" flex="row" w={214} h={75} gap={7} items="center" py={10} px={7} bg="#29316B">
+          <Rectangle name="image 3" w={43} h={43} />
+          <Text name="EduLab" w={198} h={31} size={32} weight="bold" lineHeight={39} color="#FFFFFF">EduLab</Text>
+        </Frame>
+      </Frame>
+      <Frame name="user" w={266} h={80}>
+        <Rectangle name="Rectangle 7" w={266} h={80} bg="#7C94B8" rounded={6} />
+        <Frame name="Frame 4" x={18.558143615722656} flex="col" h={80} w={227.99998474121094} gap={7} justify="center" py={10} px={7} bg="#7C94B8">
+          <Text name="Chris Redfield" size={20} weight={600} lineHeight={24.204545974731445} letterSpacing={0.0800000011920929} color="#2C2C2A">Chris Redfield</Text>
+          <Text name="Asisten Dosen" w={201} size={15} weight={600} lineHeight={18.153409957885742} letterSpacing={0.06000000089406968} color="#FFFFFF">Asisten Dosen</Text>
+        </Frame>
+      </Frame>
+      <Text name="MENU" size={16} weight="bold" textAlign="center" lineHeight={19.363636016845703} letterSpacing={0.06400000095367432} color="#7C94B8">  MENU</Text>
+      <Frame name="dashboard" w={266} h={53}>
+        <Rectangle name="Rectangle 7" w={266} h={53} bg="#364087" rounded={6} />
+        <Frame name="Frame 4" x={19} flex="row" w={235} h={53} gap={15} items="center" py={10} px={7}>
+          <Vector name="Vector" w={20} h={20} bg="#FFFFFF" />
+          <Text name="Dashboard" w={127} size={20} weight={600} lineHeight={24.204545974731445} letterSpacing={0.0800000011920929} color="#FFFFFF">Dashboard</Text>
+        </Frame>
+      </Frame>
+      <Frame name="kelas" w={266} h={53} opacity={0.5}>
+        <Rectangle name="Rectangle 7" w={266} h={53} bg="#29316B" rounded={6} />
+        <Frame name="Frame 4" x={19} flex="row" w={220} h={53} gap={15} items="center" py={10} px={7}>
+          <Vector name="Vector" w={24} h={20} bg="#FFFFFF" />
+          <Text name="Kelas Saya" w={112} size={20} weight={600} lineHeight={24.204545974731445} letterSpacing={0.0800000011920929} color="#FFFFFF">Kelas Saya</Text>
+        </Frame>
+      </Frame>
+      <Frame name="tugas" w={266} h={53} opacity={0.5}>
+        <Rectangle name="Rectangle 7" w={266} h={53} bg="#29316B" rounded={6} />
+        <Frame name="Frame 4" x={19} flex="row" w={220} h={53} gap={15} items="center" py={10} px={7}>
+          <Vector name="Vector" w={22} h={16} bg="#FFFFFF" />
+          <Text name="Data Kelompok" w={157} size={20} weight={600} lineHeight={24.204545974731445} letterSpacing={0.0800000011920929} color="#FFFFFF">Data Kelompok</Text>
+        </Frame>
+      </Frame>
+      <Frame name="nilai" w={266} h={53} opacity={0.5}>
+        <Rectangle name="Rectangle 7" w={266} h={53} bg="#29316B" rounded={6} />
+        <Frame name="Frame 4" x={19} flex="row" w={220} h={53} gap={15} items="center" py={10} px={7}>
+          <Vector name="Vector" w={20} h={16.399999618530273} bg="#FFFFFF" />
+          <Text name="Input Presensi" w={157} size={20} weight={600} lineHeight={24.204545974731445} letterSpacing={0.0800000011920929} color="#FFFFFF">Input Presensi</Text>
+        </Frame>
+      </Frame>
+      <Frame name="absen" w={266} h={53} opacity={0.5}>
+        <Rectangle name="Rectangle 7" w={266} h={53} bg="#29316B" rounded={6} />
+        <Frame name="Frame 4" x={19} flex="row" w={228} h={53} gap={15} items="center" py={10} px={7}>
+          <Vector name="Vector" w={20} h={20} bg="#FFFFFF" />
+          <Text name="Verifikasi Tugas" w={157} size={20} weight={600} lineHeight={24.204545974731445} letterSpacing={0.0800000011920929} color="#FFFFFF">Verifikasi Tugas</Text>
+        </Frame>
+      </Frame>
+      <Frame name="lulus" w={266} h={53} opacity={0.5}>
+        <Rectangle name="Rectangle 7" w={266} h={53} bg="#29316B" rounded={6} />
+        <Frame name="Frame 4" x={19} flex="row" w={220} h={53} gap={15} items="center" py={10} px={7}>
+          <Vector name="Vector" w={20} h={20} bg="#FFFFFF" />
+          <Text name="Input Nilai" w={166} size={20} weight={600} lineHeight={24.204545974731445} letterSpacing={0.0800000011920929} color="#FFFFFF">Input Nilai</Text>
+        </Frame>
+      </Frame>
+      <Frame name="sanggah" w={266} h={53} opacity={0.5}>
+        <Rectangle name="Rectangle 7" w={266} h={53} bg="#29316B" rounded={6} />
+        <Frame name="Frame 4" x={19} flex="row" w={220} h={53} gap={15} items="center" py={10} px={7}>
+          <Vector name="Vector" w={20} h={20} bg="#FFFFFF" />
+          <Text name="Tinjau Sanggahan" w={178} size={20} weight={600} lineHeight={24.204545974731445} letterSpacing={0.0800000011920929} color="#FFFFFF">Tinjau Sanggahan</Text>
+        </Frame>
+      </Frame>
+      <Frame name="kosong" w={266} h={190}>
+        <Rectangle name="Rectangle 7" w={266} h={190.00006103515625} bg="#29316B" rounded={6} />
+      </Frame>
+      <Rectangle name="batas" w={266} h={1} bg="#2A4D88" />
+      <Frame name="pengaturan" w={266} h={53} opacity={0.5}>
+        <Rectangle name="Rectangle 7" w={266} h={53} bg="#29316B" rounded={6} />
+        <Frame name="Frame 4" x={19} flex="row" w={220} h={53} gap={15} items="center" py={10} px={7} bg="#29316B">
+          <Vector name="Vector" w={20} h={20} bg="#FFFFFF" />
+          <Text name="Pengaturan" w={157} size={20} weight={600} lineHeight={24.204545974731445} letterSpacing={0.0800000011920929} color="#FFFFFF">Pengaturan</Text>
+        </Frame>
+      </Frame>
+      <Frame name="keluar" w={266} h={53} opacity={0.5}>
+        <Rectangle name="Rectangle 7" w={266} h={53} bg="#29316B" rounded={6} />
+        <Frame name="Frame 4" x={19} flex="row" w={220} h={53} gap={15} items="center" py={10} px={7}>
+          <Vector name="Vector" w={20} h={20} bg="#FFFFFF" />
+          <Text name="Keluar" w={157} size={20} weight={600} lineHeight={24.204545974731445} letterSpacing={0.0800000011920929} color="#FFFFFF">Keluar</Text>
+        </Frame>
+      </Frame>
+    </Frame>
+    <Rectangle name="bg" x={282} y={95.00006103515625} w={1158} h={929} bg="#0000000F" />
+    <Frame name="navbar" x={282} w={1158} h={95}>
+      <Rectangle name="Rectangle 14" w={1158} h={95} bg="#364087" />
+      <Ellipse name="Ellipse 1" x={1077} y={20} w={55} h={55} bg="#7C94B8" />
+      <Text name="CR" x={1087} y={32} size={25} weight="bold" textAlign="center" lineHeight={30.25568199157715} color="#FFFFFF">CR</Text>
+      <Text name="Dashboard" x={32} y={28} size={32} weight={600} lineHeight={39} color="#FFFFFF">Dashboard</Text>
+      <Frame name="Group 27" x={1002} y={19} w={55} h={55}>
+        <Rectangle name="Rectangle 25" w={55} h={55} bg="#FFFFFF47" rounded={5} />
+        <Vector name="Vector" x={11} y={7} w={31} h={38} bg="#FFFFFF" />
+      </Frame>
+    </Frame>
+  </Frame>
+  <Text name="Ada 3 hal yang perlu diselesaikan hari ini." x={313} y={160} size={24} weight="medium" textAlign="center" lineHeight={29.045454025268555} color="#8A8A8A">Ada 3 hal yang perlu diselesaikan hari ini.</Text>
+  <Text name="Halo, Chris!" x={313} y={114} size={36} weight={600} lineHeight={44} color="#000000">Halo, Chris!</Text>
+  <Frame name="Group 65" x={313} y={325} w={819} h={265}>
+    <Rectangle name="Rectangle 72" w={819} h={265} bg="#FFFFFF" rounded={8} />
+    <Text name="Yang Perlu Dilakukan Sekarang" x={18} y={11} size={16} weight={600} textAlign="center" lineHeight={19.363636016845703} color="#000000">Yang Perlu Dilakukan Sekarang</Text>
+    <Rectangle name="Rectangle 73" x={18} y={47} w={782} h={59} bg="#FCEBEB" rounded={8} />
+    <Rectangle name="Rectangle 76" x={28} y={57} w={39} h={39} bg="#F7C1C1" rounded={8} />
+    <Text name="Isi presensi pertemuan 7" x={82} y={58} size={15} weight="medium" textAlign="center" lineHeight={18.153409957885742} color="#000000">Isi presensi pertemuan 7</Text>
+    <Text name="Belum diisi" x={267} y={61} size={12} weight="medium" textAlign="center" lineHeight={15} color="#8C8C8C">Belum diisi</Text>
+    <Text name="Deadline hari ini 23:59" x={82} y={76} size={12} weight="medium" textAlign="center" lineHeight={15} color="#8C8C8C">Deadline hari ini 23:59</Text>
+    <Rectangle name="Rectangle 75" x={18} y={187} w={782} h={59} bg="#FCEBEB" rounded={8} />
+    <Rectangle name="Rectangle 74" x={18} y={116} w={782} h={59} bg="#FEF3C7" rounded={8} />
+    <Rectangle name="Rectangle 77" x={694} y={65} w={89} h={23} bg="#790000" rounded={8} />
+    <Rectangle name="Rectangle 79" x={731} y={136} w={52} h={23} bg="#D97706" rounded={8} />
+    <Rectangle name="Rectangle 80" x={731} y={206} w={52} h={23} bg="#790000" rounded={8} />
+    <Text name="Isi Sekarang" x={703} y={69} size={12} weight={600} textAlign="center" lineHeight={15} color="#FFFFFF">Isi Sekarang</Text>
+    <Text name="Balas" x={743} y={210} size={12} weight={600} textAlign="center" lineHeight={15} color="#FFFFFF">Balas</Text>
+    <Text name="Nilai" x={744} y={140} size={12} weight={600} textAlign="center" lineHeight={15} color="#FFFFFF">Nilai</Text>
+    <Rectangle name="Rectangle 78" x={28} y={124} w={39} h={39} bg="#FDE68A" rounded={8} />
+    <Rectangle name="Rectangle 81" x={28} y={197} w={39} h={39} bg="#F7C1C1" rounded={8} />
+    <Text name="5 tugas Modul 6 belum dinilai" x={82} y={124} size={15} weight="medium" textAlign="center" lineHeight={18.153409957885742} color="#000000">5 tugas Modul 6 belum dinilai</Text>
+    <Text name="1 sanggah menunggu responmu" x={82} y={200} size={15} weight="medium" textAlign="center" lineHeight={18.153409957885742} color="#000000">1 sanggah menunggu responmu</Text>
+    <Text name="Deadline penilaian: 20 Mar" x={82} y={141} size={12} weight="medium" textAlign="center" lineHeight={15} color="#8C8C8C">Deadline penilaian: 20 Mar</Text>
+    <Text name="Dari Siti Fatimah · Modul 5" x={82} y={218} size={12} weight="medium" textAlign="center" lineHeight={15} color="#8C8C8C">Dari Siti Fatimah · Modul 5</Text>
+  </Frame>
+  <Frame name="Group 66" x={313} y={628} w={1100} h={201}>
+    <Rectangle name="Rectangle 82" w={1100} h={201} bg="#FFFFFF" rounded={15} />
+    <Text name="Progres Penilaian Modul 6" x={17} y={14} size={20} weight={600} textAlign="center" lineHeight={24.204545974731445} color="#000000">Progres Penilaian  Modul 6</Text>
+    <Text name="Kelompok 1 (6 mahasiswa)" x={17} y={56} size={16} weight={600} textAlign="center" lineHeight={19.363636016845703} color="#9F9F9F">Kelompok 1 (6 mahasiswa)</Text>
+    <Text name="4/6 dinilai" x={1003} y={52} size={16} weight={600} textAlign="center" lineHeight={19.363636016845703} color="#000000">4/6 dinilai</Text>
+    <Text name="78.4" x={1036} y={149} size={20} weight="bold" textAlign="center" lineHeight={24.204545974731445} color="#364087">78.4</Text>
+    <Text name="5/6 dinilai" x={1003} y={96} size={16} weight={600} textAlign="center" lineHeight={19.363636016845703} color="#000000">5/6 dinilai</Text>
+    <Text name="Kelompok 2 (6 mahasiswa)" x={17} y={96} size={16} weight={600} textAlign="center" lineHeight={19.363636016845703} color="#9F9F9F">Kelompok 2 (6 mahasiswa)</Text>
+    <Text name="Rata-rata nilai sejauh ini" x={17} y={148} size={15} weight={600} textAlign="center" lineHeight={18.153409957885742} color="#9F9F9F">Rata-rata nilai sejauh ini</Text>
+    <Line name="Line 8" x={18} y={81} w={1062.00048828125} stroke="#D8D8D8" strokeWidth={3} rotate={0.05} />
+    <Line name="Line 10" x={18} y={123} w={1062.00048828125} stroke="#D8D8D8" strokeWidth={3} rotate={0.05} />
+    <Line name="Line 9" x={18} y={81} w={710.0006713867188} stroke="#364087" strokeWidth={3} rotate={0.08} />
+    <Line name="Line 11" x={18} y={123} w={894} stroke="#364087" strokeWidth={3} rotate={0.06} />
+    <Line name="Line 12" x={17.99951171875} y={140} w={1062.00048828125} stroke="#ECECEC
