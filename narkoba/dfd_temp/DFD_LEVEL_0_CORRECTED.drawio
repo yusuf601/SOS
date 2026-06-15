@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="app.diagrams.net" version="21.0.0">
   <diagram name="DFD Level 0 - Sistem Praktikum" id="dfd-level-0-corrected">
-    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="1654" math="0" shadow="0">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2600" pageHeight="1800" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -10,150 +10,148 @@
         <!--                    EXTERNAL ENTITIES                         -->
         <!-- ============================================================ -->
 
-        <mxCell id="e1" value="Mahasiswa" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=13;strokeWidth=3;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="60" y="720" width="160" height="70" as="geometry" />
+        <!-- Mahasiswa: LEFT CENTER — hub utama, terhubung ke hampir semua proses -->
+        <mxCell id="e1" value="Mahasiswa" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;strokeWidth=3;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="660" width="170" height="80" as="geometry" />
         </mxCell>
 
-        <mxCell id="e2" value="Asisten Praktikum" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=13;strokeWidth=3;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="1920" y="440" width="180" height="70" as="geometry" />
+        <!-- Asisten Praktikum: RIGHT UPPER -->
+        <mxCell id="e2" value="Asisten&#xa;Praktikum" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;strokeWidth=3;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="2050" y="420" width="180" height="80" as="geometry" />
         </mxCell>
 
-        <mxCell id="e3" value="Dosen / Koordinator" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=13;strokeWidth=3;fillColor=#ffe6cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1920" y="900" width="180" height="70" as="geometry" />
+        <!-- Dosen / Koordinator: RIGHT LOWER -->
+        <mxCell id="e3" value="Dosen /&#xa;Koordinator" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;strokeWidth=3;fillColor=#ffe6cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="2050" y="1200" width="180" height="80" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
         <!--                        PROCESSES                             -->
+        <!--  Layout: 3 rows x 3 cols + 1 extra (P10)                    -->
+        <!--  Row 1 (y=140): Setup — Login, Kelas, Modul                 -->
+        <!--  Row 2 (y=540): Daily — Tugas, Grading, Presensi            -->
+        <!--  Row 3 (y=940): Eval  — Rekap, Sanggah, Kelulusan, Export   -->
         <!-- ============================================================ -->
 
-        <!-- P1.0 -->
-        <mxCell id="p1" value="1.0&#xa;Manajemen&#xa;Hak Akses" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="350" y="80" width="160" height="160" as="geometry" />
+        <!-- Row 1: Setup -->
+        <mxCell id="p1" value="1.0&#xa;Manajemen&#xa;Hak Akses" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="380" y="140" width="170" height="170" as="geometry" />
         </mxCell>
 
-        <!-- P2.0 -->
-        <mxCell id="p2" value="2.0&#xa;Manajemen&#xa;Kelas &amp; Kelompok" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="680" y="80" width="160" height="160" as="geometry" />
+        <mxCell id="p2" value="2.0&#xa;Manajemen&#xa;Kelas &amp; Kelompok" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="750" y="140" width="170" height="170" as="geometry" />
         </mxCell>
 
-        <!-- P3.0 -->
-        <mxCell id="p3" value="3.0&#xa;Bank Modul&#xa;&amp; Materi" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="80" width="160" height="160" as="geometry" />
+        <mxCell id="p3" value="3.0&#xa;Bank Modul&#xa;&amp; Materi" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="140" width="170" height="170" as="geometry" />
         </mxCell>
 
-        <!-- P4.0 -->
-        <mxCell id="p4" value="4.0&#xa;Pengumpulan&#xa;Tugas" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="350" y="400" width="160" height="160" as="geometry" />
+        <!-- Row 2: Daily Operations -->
+        <mxCell id="p4" value="4.0&#xa;Pengumpulan&#xa;Tugas" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="380" y="540" width="170" height="170" as="geometry" />
         </mxCell>
 
-        <!-- P5.0 -->
-        <mxCell id="p5" value="5.0&#xa;Grading&#xa;&amp; Feedback" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="680" y="400" width="160" height="160" as="geometry" />
+        <mxCell id="p5" value="5.0&#xa;Grading&#xa;&amp; Feedback" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="750" y="540" width="170" height="170" as="geometry" />
         </mxCell>
 
-        <!-- P6.0 -->
-        <mxCell id="p6" value="6.0&#xa;Presensi&#xa;Digital" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="400" width="160" height="160" as="geometry" />
+        <mxCell id="p6" value="6.0&#xa;Presensi&#xa;Digital" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="540" width="170" height="170" as="geometry" />
         </mxCell>
 
-        <!-- P7.0 -->
-        <mxCell id="p7" value="7.0&#xa;Rekap Nilai&#xa;Otomatis" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="350" y="720" width="160" height="160" as="geometry" />
+        <!-- Row 3: Evaluation -->
+        <mxCell id="p7" value="7.0&#xa;Rekap Nilai&#xa;Otomatis" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="380" y="940" width="170" height="170" as="geometry" />
         </mxCell>
 
-        <!-- P8.0 -->
-        <mxCell id="p8" value="8.0&#xa;Sanggah&#xa;Nilai" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="680" y="720" width="160" height="160" as="geometry" />
+        <mxCell id="p8" value="8.0&#xa;Sanggah&#xa;Nilai" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="750" y="940" width="170" height="170" as="geometry" />
         </mxCell>
 
-        <!-- P9.0 -->
-        <mxCell id="p9" value="9.0&#xa;Status&#xa;Kelulusan" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="720" width="160" height="160" as="geometry" />
+        <mxCell id="p9" value="9.0&#xa;Status&#xa;Kelulusan" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="940" width="170" height="170" as="geometry" />
         </mxCell>
 
-        <!-- P10.0 -->
-        <mxCell id="p10" value="10.0&#xa;Export&#xa;Transkrip Nilai" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="1340" y="720" width="160" height="160" as="geometry" />
+        <mxCell id="p10" value="10.0&#xa;Export&#xa;Transkrip Nilai" style="ellipse;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1490" y="940" width="170" height="170" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
         <!--                       DATA STORES                            -->
+        <!--  Right column, grouped near related processes                -->
         <!-- ============================================================ -->
 
-        <mxCell id="d1" value="D1  |  Data Pengguna" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1600" y="95" width="260" height="50" as="geometry" />
+        <!-- Group 1: Setup data (near Row 1) -->
+        <mxCell id="d1" value="D1  |  Data Pengguna" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="110" width="280" height="50" as="geometry" />
         </mxCell>
 
-        <mxCell id="d2" value="D2  |  Data Kelas &amp; Kelompok" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1600" y="200" width="260" height="50" as="geometry" />
+        <mxCell id="d2" value="D2  |  Data Kelas &amp; Kelompok" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="220" width="280" height="50" as="geometry" />
         </mxCell>
 
-        <mxCell id="d3" value="D3  |  Data Modul" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1600" y="305" width="260" height="50" as="geometry" />
+        <mxCell id="d3" value="D3  |  Data Modul" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="330" width="280" height="50" as="geometry" />
         </mxCell>
 
-        <mxCell id="d4" value="D4  |  Data Tugas" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1600" y="415" width="260" height="50" as="geometry" />
+        <!-- Group 2: Operations data (near Row 2) -->
+        <mxCell id="d4" value="D4  |  Data Tugas" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="510" width="280" height="50" as="geometry" />
         </mxCell>
 
-        <mxCell id="d5" value="D5  |  Data Nilai" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1600" y="520" width="260" height="50" as="geometry" />
+        <mxCell id="d5" value="D5  |  Data Nilai" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="620" width="280" height="50" as="geometry" />
         </mxCell>
 
-        <mxCell id="d6" value="D6  |  Data Presensi" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1600" y="625" width="260" height="50" as="geometry" />
+        <mxCell id="d6" value="D6  |  Data Presensi" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="730" width="280" height="50" as="geometry" />
         </mxCell>
 
-        <mxCell id="d7" value="D7  |  Data Rekap Nilai" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1600" y="730" width="260" height="50" as="geometry" />
+        <!-- Group 3: Evaluation data (near Row 3) -->
+        <mxCell id="d7" value="D7  |  Data Rekap Nilai" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="910" width="280" height="50" as="geometry" />
         </mxCell>
 
-        <mxCell id="d8" value="D8  |  Data Sanggahan" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1600" y="835" width="260" height="50" as="geometry" />
+        <mxCell id="d8" value="D8  |  Data Sanggahan" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="1020" width="280" height="50" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
         <!--              DATA FLOWS — PROSES 1.0 (LOGIN)                 -->
         <!-- ============================================================ -->
 
-        <!-- Mahasiswa → P1.0 -->
-        <mxCell id="f1" value="Data Login (NIM)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" source="e1" target="p1" parent="1">
+        <!-- Mahasiswa → P1.0 (login) -->
+        <mxCell id="f1" value="Data Login (NIM)" style="html=1;fontSize=9;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="e1" target="p1" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Asisten → P1.0 -->
-        <mxCell id="f2" value="Data Login (Akun)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="e2" target="p1" parent="1">
+        <!-- Asisten → P1.0 (login) -->
+        <mxCell id="f2" value="Data Login (Akun)" style="html=1;fontSize=9;entryX=1;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="e2" target="p1" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Dosen → P1.0 -->
-        <mxCell id="f3" value="Data Login (NIP)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="e3" target="p1" parent="1">
+        <!-- Dosen → P1.0 (login) -->
+        <mxCell id="f3" value="Data Login (NIP)" style="html=1;fontSize=9;" edge="1" source="e3" target="p1" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- P1.0 ↔ D1 -->
-        <mxCell id="f4" value="Verifikasi Pengguna" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;endArrow=block;startArrow=block;startFill=0;endFill=0;" edge="1" source="p1" target="d1" parent="1">
+        <!-- P1.0 ↔ D1 (verifikasi pengguna) -->
+        <mxCell id="f4" value="Verifikasi Pengguna" style="html=1;fontSize=9;endArrow=block;startArrow=block;startFill=0;endFill=0;" edge="1" source="p1" target="d1" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- P1.0 → Mahasiswa -->
-        <mxCell id="f5" value="Hak Akses / Dashboard" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p1" target="e1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="350" y="135" />
-              <mxPoint x="240" y="135" />
-              <mxPoint x="240" y="755" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-
-        <!-- P1.0 → Asisten -->
-        <mxCell id="f6" value="Hak Akses / Dashboard" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p1" target="e2" parent="1">
+        <!-- P1.0 → Mahasiswa (hak akses) -->
+        <mxCell id="f5" value="Hak Akses / Dashboard" style="html=1;fontSize=9;exitX=0;exitY=0.7;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" source="p1" target="e1" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- P1.0 → Dosen -->
-        <mxCell id="f7" value="Hak Akses / Dashboard" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p1" target="e3" parent="1">
+        <!-- P1.0 → Asisten (hak akses) -->
+        <mxCell id="f6" value="Hak Akses / Dashboard" style="html=1;fontSize=9;exitX=1;exitY=0.2;exitDx=0;exitDy=0;" edge="1" source="p1" target="e2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- P1.0 → Dosen (hak akses) -->
+        <mxCell id="f7" value="Hak Akses / Dashboard" style="html=1;fontSize=9;" edge="1" source="p1" target="e3" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
@@ -162,24 +160,18 @@
         <!-- ============================================================ -->
 
         <!-- Dosen → P2.0 -->
-        <mxCell id="f8" value="Data Kelas &amp; Kelompok" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="e3" target="p2" parent="1">
+        <mxCell id="f8" value="Data Kelas &amp; Kelompok" style="html=1;fontSize=9;" edge="1" source="e3" target="p2" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P2.0 ↔ D2 -->
-        <mxCell id="f9" value="Baca / Tulis Data Kelas" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;endArrow=block;startArrow=block;startFill=0;endFill=0;" edge="1" source="p2" target="d2" parent="1">
+        <mxCell id="f9" value="Baca / Tulis Data Kelas" style="html=1;fontSize=9;endArrow=block;startArrow=block;startFill=0;endFill=0;" edge="1" source="p2" target="d2" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P2.0 → Mahasiswa -->
-        <mxCell id="f10" value="Info Kelas &amp; Jadwal Kelompok" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p2" target="e1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="775" y="270" />
-              <mxPoint x="220" y="270" />
-              <mxPoint x="220" y="755" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="f10" value="Info Kelas &amp; Jadwal Kelompok" style="html=1;fontSize=9;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.15;entryDx=0;entryDy=0;" edge="1" source="p2" target="e1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
@@ -187,24 +179,18 @@
         <!-- ============================================================ -->
 
         <!-- Dosen → P3.0 -->
-        <mxCell id="f11" value="File Modul &amp; Materi" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="e3" target="p3" parent="1">
+        <mxCell id="f11" value="File Modul &amp; Materi" style="html=1;fontSize=9;" edge="1" source="e3" target="p3" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P3.0 ↔ D3 -->
-        <mxCell id="f12" value="Baca / Tulis Data Modul" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;endArrow=block;startArrow=block;startFill=0;endFill=0;" edge="1" source="p3" target="d3" parent="1">
+        <mxCell id="f12" value="Baca / Tulis Data Modul" style="html=1;fontSize=9;endArrow=block;startArrow=block;startFill=0;endFill=0;" edge="1" source="p3" target="d3" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P3.0 → Mahasiswa -->
-        <mxCell id="f13" value="Modul, Materi, Petunjuk Tugas" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p3" target="e1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1075" y="280" />
-              <mxPoint x="200" y="280" />
-              <mxPoint x="200" y="755" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="f13" value="Modul, Materi, Petunjuk Tugas" style="html=1;fontSize=9;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="p3" target="e1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
@@ -212,28 +198,22 @@
         <!-- ============================================================ -->
 
         <!-- Mahasiswa → P4.0 -->
-        <mxCell id="f14" value="File Laporan / Tugas" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="e1" target="p4" parent="1">
+        <mxCell id="f14" value="File Laporan / Tugas" style="html=1;fontSize=9;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="e1" target="p4" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P4.0 ↔ D4 -->
-        <mxCell id="f15" value="Cek Deadline &amp; Simpan Tugas" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;endArrow=block;startArrow=block;startFill=0;endFill=0;" edge="1" source="p4" target="d4" parent="1">
+        <mxCell id="f15" value="Cek Deadline &amp; Simpan Tugas" style="html=1;fontSize=9;endArrow=block;startArrow=block;startFill=0;endFill=0;" edge="1" source="p4" target="d4" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P4.0 → Mahasiswa -->
-        <mxCell id="f16" value="Konfirmasi Tugas Diterima" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p4" target="e1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="380" y="455" />
-              <mxPoint x="160" y="455" />
-              <mxPoint x="160" y="755" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="f16" value="Konfirmasi Tugas Diterima" style="html=1;fontSize=9;exitX=0;exitY=0.7;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="p4" target="e1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P4.0 → Asisten -->
-        <mxCell id="f17" value="Notifikasi Tugas Masuk" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p4" target="e2" parent="1">
+        <mxCell id="f17" value="Notifikasi Tugas Masuk" style="html=1;fontSize=9;" edge="1" source="p4" target="e2" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
@@ -242,29 +222,23 @@
         <!-- ============================================================ -->
 
         <!-- Asisten → P5.0 -->
-        <mxCell id="f18" value="Input Nilai &amp; Feedback" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="e2" target="p5" parent="1">
+        <mxCell id="f18" value="Input Nilai &amp; Feedback" style="html=1;fontSize=9;" edge="1" source="e2" target="p5" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- D4 → P5.0 -->
-        <mxCell id="f19" value="Data Tugas Mahasiswa" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="d4" target="p5" parent="1">
+        <mxCell id="f19" value="Data Tugas Mahasiswa" style="html=1;fontSize=9;" edge="1" source="d4" target="p5" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P5.0 → D5 -->
-        <mxCell id="f20" value="Simpan Nilai" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p5" target="d5" parent="1">
+        <mxCell id="f20" value="Simpan Nilai" style="html=1;fontSize=9;" edge="1" source="p5" target="d5" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P5.0 → Mahasiswa -->
-        <mxCell id="f21" value="Nilai &amp; Feedback" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p5" target="e1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="680" y="535" />
-              <mxPoint x="140" y="535" />
-              <mxPoint x="140" y="755" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="f21" value="Nilai &amp; Feedback" style="html=1;fontSize=9;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.6;entryDx=0;entryDy=0;" edge="1" source="p5" target="e1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
@@ -272,24 +246,18 @@
         <!-- ============================================================ -->
 
         <!-- Asisten → P6.0 -->
-        <mxCell id="f22" value="Data Kehadiran Mahasiswa" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="e2" target="p6" parent="1">
+        <mxCell id="f22" value="Data Kehadiran Mahasiswa" style="html=1;fontSize=9;" edge="1" source="e2" target="p6" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P6.0 ↔ D6 -->
-        <mxCell id="f23" value="Baca / Tulis Data Presensi" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;endArrow=block;startArrow=block;startFill=0;endFill=0;" edge="1" source="p6" target="d6" parent="1">
+        <mxCell id="f23" value="Baca / Tulis Data Presensi" style="html=1;fontSize=9;endArrow=block;startArrow=block;startFill=0;endFill=0;" edge="1" source="p6" target="d6" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P6.0 → Mahasiswa -->
-        <mxCell id="f24" value="Status Presensi" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p6" target="e1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="980" y="620" />
-              <mxPoint x="120" y="620" />
-              <mxPoint x="120" y="755" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="f24" value="Status Presensi" style="html=1;fontSize=9;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" source="p6" target="e1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
@@ -297,17 +265,17 @@
         <!-- ============================================================ -->
 
         <!-- D5 → P7.0 -->
-        <mxCell id="f25" value="Data Nilai" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="d5" target="p7" parent="1">
+        <mxCell id="f25" value="Data Nilai" style="html=1;fontSize=9;" edge="1" source="d5" target="p7" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- D6 → P7.0 -->
-        <mxCell id="f26" value="Data Presensi" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="d6" target="p7" parent="1">
+        <mxCell id="f26" value="Data Presensi" style="html=1;fontSize=9;" edge="1" source="d6" target="p7" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P7.0 → D7 -->
-        <mxCell id="f27" value="Simpan Rekap Nilai Akhir" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p7" target="d7" parent="1">
+        <mxCell id="f27" value="Simpan Rekap Nilai Akhir" style="html=1;fontSize=9;" edge="1" source="p7" target="d7" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
@@ -316,34 +284,28 @@
         <!-- ============================================================ -->
 
         <!-- Mahasiswa → P8.0 -->
-        <mxCell id="f28" value="Form Sanggah Nilai" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="e1" target="p8" parent="1">
+        <mxCell id="f28" value="Form Sanggah Nilai" style="html=1;fontSize=9;exitX=1;exitY=0.7;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="e1" target="p8" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- Asisten → P8.0 -->
-        <mxCell id="f29" value="Keputusan Sanggah" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="e2" target="p8" parent="1">
+        <mxCell id="f29" value="Keputusan Sanggah" style="html=1;fontSize=9;" edge="1" source="e2" target="p8" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P8.0 → D8 -->
-        <mxCell id="f30" value="Simpan Data Sanggahan" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p8" target="d8" parent="1">
+        <mxCell id="f30" value="Simpan Data Sanggahan" style="html=1;fontSize=9;" edge="1" source="p8" target="d8" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P8.0 → D5 (update nilai jika sanggah disetujui) -->
-        <mxCell id="f31" value="Update Nilai (jika disetujui)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p8" target="d5" parent="1">
+        <mxCell id="f31" value="Update Nilai (jika disetujui)" style="html=1;fontSize=9;dashed=1;" edge="1" source="p8" target="d5" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P8.0 → Mahasiswa -->
-        <mxCell id="f32" value="Hasil Keputusan Sanggah" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p8" target="e1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="775" y="870" />
-              <mxPoint x="100" y="870" />
-              <mxPoint x="100" y="790" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="f32" value="Hasil Keputusan Sanggah" style="html=1;fontSize=9;exitX=0;exitY=0.7;exitDx=0;exitDy=0;entryX=1;entryY=0.85;entryDx=0;entryDy=0;" edge="1" source="p8" target="e1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
@@ -351,19 +313,13 @@
         <!-- ============================================================ -->
 
         <!-- D7 → P9.0 -->
-        <mxCell id="f33" value="Data Rekap Nilai" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="d7" target="p9" parent="1">
+        <mxCell id="f33" value="Data Rekap Nilai" style="html=1;fontSize=9;" edge="1" source="d7" target="p9" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P9.0 → Mahasiswa -->
-        <mxCell id="f34" value="Indikator Kelulusan (Lulus/Mengulang)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p9" target="e1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1075" y="890" />
-              <mxPoint x="80" y="890" />
-              <mxPoint x="80" y="790" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="f34" value="Indikator Kelulusan&#xa;(Lulus/Mengulang)" style="html=1;fontSize=9;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="p9" target="e1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
@@ -371,17 +327,17 @@
         <!-- ============================================================ -->
 
         <!-- Dosen → P10.0 -->
-        <mxCell id="f35" value="Request Export" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="e3" target="p10" parent="1">
+        <mxCell id="f35" value="Request Export" style="html=1;fontSize=9;" edge="1" source="e3" target="p10" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- D7 → P10.0 -->
-        <mxCell id="f36" value="Data Rekap Nilai" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="d7" target="p10" parent="1">
+        <mxCell id="f36" value="Data Rekap Nilai" style="html=1;fontSize=9;" edge="1" source="d7" target="p10" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- P10.0 → Dosen -->
-        <mxCell id="f37" value="File Transkrip Nilai (PDF/Excel)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;" edge="1" source="p10" target="e3" parent="1">
+        <mxCell id="f37" value="File Transkrip Nilai&#xa;(PDF/Excel)" style="html=1;fontSize=9;" edge="1" source="p10" target="e3" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
