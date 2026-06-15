@@ -10,9 +10,9 @@
         .class-selector-card {
             background-color: #FFFFFF; /* Pure white card */
             border-radius: 15px;
-            padding: 24px;
-            border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02); /* Subtle shadow */
+            padding: 32px; /* Increased whitespace */
+            border: none; /* Removed border */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02); /* Elevated shadow */
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -77,7 +77,7 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
             padding-top: 16px;
-            border-top: 1px solid #F3F4F6;
+            border-top: 1px solid #FAFBFD; /* Softer border */
         }
 
         .meta-info-item {
@@ -110,8 +110,8 @@
         .modul-card {
             background-color: #FFFFFF; /* Pure white card */
             border-radius: 15px;
-            border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02); /* Subtle shadow */
+            border: none; /* Removed border */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02); /* Elevated shadow */
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -120,16 +120,16 @@
 
         .modul-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03); /* Softer hover shadow */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08), 0 4px 15px rgba(0, 0, 0, 0.04); /* Elevated hover shadow */
         }
 
         .modul-card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 24px;
+            padding: 24px 32px; /* Increased padding */
             background-color: #FFFFFF; /* Pure white header */
-            border-bottom: 1px solid #EAF0F6; /* Softer border */
+            border-bottom: none; /* Removed border */
             flex-wrap: wrap;
             gap: 16px;
         }
@@ -174,7 +174,7 @@
         }
 
         .modul-card-body {
-            padding: 24px;
+            padding: 28px 32px; /* Increased padding */
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -192,7 +192,7 @@
             gap: 12px;
             flex-wrap: wrap;
             margin-top: 8px;
-            border-top: 1px solid #F1F5F9;
+            border-top: 1px solid #FAFBFD; /* Softer border */
             padding-top: 16px;
         }
 

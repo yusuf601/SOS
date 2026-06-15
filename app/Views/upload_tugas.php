@@ -10,9 +10,9 @@
         .class-selector-card {
             background-color: #FFFFFF; /* Pure white card */
             border-radius: 15px;
-            padding: 24px;
-            border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02); /* Subtle shadow */
+            padding: 32px; /* Increased whitespace */
+            border: none; /* Removed border */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02); /* Elevated shadow */
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -83,12 +83,12 @@
         .summary-card {
             background-color: #FFFFFF; /* Pure white card */
             border-radius: 12px;
-            padding: 16px 20px;
-            border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
+            padding: 20px 24px; /* Increased padding */
+            border: none; /* Removed border */
             display: flex;
             align-items: center;
             gap: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02), 0 2px 8px rgba(0, 0, 0, 0.01); /* Subtle shadow */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.01); /* Elevated shadow */
         }
 
         .summary-icon-wrapper {
@@ -132,8 +132,8 @@
         .task-card {
             background-color: #FFFFFF; /* Pure white card */
             border-radius: 15px;
-            border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02); /* Subtle shadow */
+            border: none; /* Removed border */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02); /* Elevated shadow */
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -142,7 +142,7 @@
 
         .task-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03); /* Softer hover shadow */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08), 0 4px 15px rgba(0, 0, 0, 0.04); /* Elevated hover shadow */
         }
 
         /* Left status borders */
@@ -155,9 +155,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 24px;
+            padding: 24px 32px; /* Increased padding */
             background-color: #FFFFFF; /* Pure white header */
-            border-bottom: 1px solid #EAF0F6; /* Softer border */
+            border-bottom: none; /* Removed border */
             flex-wrap: wrap;
             gap: 16px;
         }
@@ -220,17 +220,17 @@
         .status-badge-revision { background-color: rgba(234, 88, 12, 0.1); color: #EA580C; }
 
         .task-card-body {
-            padding: 24px;
+            padding: 28px 32px; /* Increased padding */
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
 
         .task-instruction-box {
-            background-color: #F8FAFC;
+            background-color: #FAFBFC; /* Lighter container background */
             border-radius: 8px;
             padding: 14px 18px;
-            border: 1px solid #E2E8F0;
+            border: 1px solid #F1F5F9; /* Softer border */
         }
 
         .instruction-title {

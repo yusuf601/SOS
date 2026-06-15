@@ -486,8 +486,10 @@ body::before {
 .dashboard-container {
     display: flex;
     min-height: 100vh;
-    background-color: #FAFBFD; /* Lighter page background */
+    background-color: #FFFFFF; /* Pure white page background */
     color: var(--text-color-dark);
+    position: relative;
+    z-index: 2;
 }
 
 /* Sidebar Styling */
@@ -687,11 +689,11 @@ body::before {
 
 /* Content Body */
 .workspace-content {
-    padding: 40px;
+    padding: 56px; /* Increased padding / whitespace */
     display: flex;
     flex-direction: column;
-    gap: 36px;
-    background-color: #FAFBFD; /* Lighter page background */
+    gap: 48px; /* Increased gap */
+    background-color: #FFFFFF; /* Pure white content canvas */
     flex-grow: 1;
 }
 
@@ -730,14 +732,14 @@ body::before {
     align-items: center;
     text-align: center;
     gap: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02); /* Subtle shadow */
-    border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02); /* Elevated shadow separation */
+    border: none; /* Removed border */
     transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
 .metric-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08), 0 4px 15px rgba(0, 0, 0, 0.04);
 }
 
 .metric-icon-circle {
@@ -804,8 +806,8 @@ body::before {
     background-color: #FFFFFF; /* Pure white card */
     border-radius: 15px;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02); /* Subtle shadow */
+    border: none; /* Removed border */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02); /* Elevated shadow separation */
     display: flex;
     flex-direction: column;
     transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
@@ -813,11 +815,11 @@ body::before {
 
 .class-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08), 0 4px 15px rgba(0, 0, 0, 0.04);
 }
 
 .class-card-header {
-    padding: 20px 24px;
+    padding: 24px 32px; /* Increased padding */
     color: var(--text-color-light);
     position: relative;
     min-height: 120px;
@@ -871,10 +873,10 @@ body::before {
 }
 
 .class-card-body {
-    padding: 20px 24px;
+    padding: 28px 32px; /* Increased padding */
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px; /* Increased gap */
 }
 
 /* Progress Bar */
