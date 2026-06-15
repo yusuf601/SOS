@@ -1,3 +1,16 @@
+<?php
+// ==============================================================================
+// EduLab UHO - Upload Tugas View
+// ==============================================================================
+
+$fullName = $_SESSION['name'] ?? 'Guest';
+$words = explode(" ", $fullName);
+$initials = "";
+foreach ($words as $w) {
+    $initials .= strtoupper($w[0] ?? '');
+}
+$initials = substr($initials, 0, 2);
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -583,8 +596,8 @@
 
             <!-- User profile summary -->
             <div class="sidebar-user-card">
-                <div class="sidebar-user-name">John Doe</div>
-                <div class="sidebar-user-role">Mahasiswa</div>
+                <div class="sidebar-user-name"><?= htmlspecialchars($fullName) ?></div>
+                <div class="sidebar-user-role"><?= htmlspecialchars($_SESSION['active_role'] ?? 'Mahasiswa') ?></div>
             </div>
 
             <!-- Menu Navigation -->
@@ -695,7 +708,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                 </button>
                 
-                <div class="navbar-avatar">JD</div>
+                <div class="navbar-avatar"><?= htmlspecialchars($initials) ?></div>
             </div>
         </header>
 
@@ -707,13 +720,29 @@
                     <span class="class-selector-title">Pilih Kelas Praktikum:</span>
                     <div class="custom-select-wrapper">
                         <select class="class-select" id="classSelector" aria-label="Pilih kelas praktikum">
-                            <option value="web" selected>Praktikum Pemrograman Web (Kelas A)</option>
-                            <option value="database">Praktikum Basis Data (Kelas B)</option>
-                            <option value="network">Praktikum Jaringan Komputer (Kelas C)</option>
+                            <?php if ($_SESSION['active_role'] === 'Mahasiswa' && $classInfo): ?>
+                                <option value="<?= htmlspecialchars($classInfo['ID_Kelas']) ?>" selected><?= htmlspecialchars($classInfo['Nama_Kelas']) ?></option>
+                            <?php else: ?>
+                                <?php foreach ($allClasses as $cls): ?>
+                                    <option value="<?= htmlspecialchars($cls['ID_Kelas']) ?>"><?= htmlspecialchars($cls['Nama_Kelas']) ?></option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </select>
                     </div>
                 </div>
             </section>
+
+            <!-- Success/Error Alert -->
+            <?php if (isset($_SESSION['upload_success'])): ?>
+                <div style="background-color: #DEF7EC; color: #03543F; padding: 16px; border-radius: 12px; font-size: 15px; font-weight: 600; border: 1px solid #BCF0DA; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(3, 84, 63, 0.05);">
+                    <?= htmlspecialchars($_SESSION['upload_success']); unset($_SESSION['upload_success']); ?>
+                </div>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['upload_error'])): ?>
+                <div style="background-color: #FEE2E2; color: #DC2626; padding: 16px; border-radius: 12px; font-size: 15px; font-weight: 600; border: 1px solid #FCA5A5; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.05);">
+                    <?= htmlspecialchars($_SESSION['upload_error']); unset($_SESSION['upload_error']); ?>
+                </div>
+            <?php endif; ?>
 
             <!-- Progress Summary Row -->
             <section class="progress-summary-grid" id="progressSummary">
@@ -722,8 +751,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     </div>
                     <div class="summary-details">
-                        <span class="summary-value" id="valGraded">5 / 7</span>
-                        <span class="summary-label">Tugas Dinilai</span>
+                        <span class="summary-value" id="valGraded"><?= htmlspecialchars($progress['graded']) ?> / <?= htmlspecialchars($progress['total_tasks']) ?></span>
+                        <span class="summary-label">Tugas Dinilai (Rata-rata: <?= htmlspecialchars($progress['average_score']) ?>)</span>
                     </div>
                 </div>
                 <div class="summary-card">
@@ -731,7 +760,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                     </div>
                     <div class="summary-details">
-                        <span class="summary-value" id="valPending">1 / 7</span>
+                        <span class="summary-value" id="valPending"><?= htmlspecialchars($progress['pending']) ?> / <?= htmlspecialchars($progress['total_tasks']) ?></span>
                         <span class="summary-label">Menunggu Penilaian</span>
                     </div>
                 </div>
@@ -740,7 +769,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                     </div>
                     <div class="summary-details">
-                        <span class="summary-value" id="valMissing">1 / 7</span>
+                        <span class="summary-value" id="valMissing"><?= htmlspecialchars($progress['missing']) ?> / <?= htmlspecialchars($progress['total_tasks']) ?></span>
                         <span class="summary-label">Belum Mengumpulkan</span>
                     </div>
                 </div>
@@ -748,7 +777,112 @@
 
             <!-- Tasks List -->
             <section class="tasks-container" id="tasksContainer">
-                <!-- Populated dynamically by JS -->
+                <?php if (empty($tasksData)): ?>
+                    <p style="text-align: center; color: #9B9B9B; font-weight: 600; padding: 32px;">Belum ada tugas praktikum yang dirilis.</p>
+                <?php else: ?>
+                    <?php foreach ($tasksData as $index => $item): 
+                        $tugas = $item['tugas'];
+                        $sub = $item['submission'];
+                        
+                        // Determine status
+                        $status = 'missing';
+                        $statusText = 'Belum Mengumpulkan';
+                        $borderClass = 'task-card-missing';
+                        $badgeClass = 'badge-missing';
+                        
+                        if ($sub) {
+                            if ($sub['Status_Tugas'] === 'Selesai') {
+                                $status = 'graded';
+                                $statusText = 'Sudah Dinilai';
+                                $borderClass = 'task-card-graded';
+                                $badgeClass = 'badge-graded';
+                            } elseif ($sub['Status_Tugas'] === 'Revisi') {
+                                $status = 'revision';
+                                $statusText = 'Revisi';
+                                $borderClass = 'task-card-revision';
+                                $badgeClass = 'badge-revision';
+                            } else {
+                                $status = 'pending';
+                                $statusText = 'Menunggu Penilaian';
+                                $borderClass = 'task-card-pending';
+                                $badgeClass = 'badge-pending';
+                            }
+                        }
+                    ?>
+                        <article class="task-card <?= $borderClass ?>" id="task-<?= $tugas['ID_Tugas'] ?>">
+                            <header class="task-card-header">
+                                <div class="task-identity">
+                                    <div class="task-number-badge <?= $badgeClass ?>"><?= sprintf("%02d", $index + 1) ?></div>
+                                    <div class="task-title-block">
+                                        <h3 class="task-title"><?= htmlspecialchars($tugas['Judul_Modul']) ?></h3>
+                                        <span class="task-deadline <?= $status === 'missing' ? 'deadline-urgent' : 'deadline-normal' ?>">
+                                            Deadline: <?= date('d M Y, H:i', strtotime($tugas['Deadline_Upload'])) ?> WITA
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="status-badge status-badge-<?= $status ?>"><?= $statusText ?></span>
+                            </header>
+                            <div class="task-card-body">
+                                <div class="task-instruction-box">
+                                    <span class="instruction-title">Instruksi Tugas:</span>
+                                    <p class="instruction-content"><?= htmlspecialchars($tugas['Instruksi_Tugas']) ?></p>
+                                </div>
+                                
+                                <?php if ($status === 'graded'): ?>
+                                    <div class="submitted-file-row">
+                                        <div class="submitted-file-info">
+                                            <span class="file-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                            </span>
+                                            <div class="file-details">
+                                                <span class="file-name"><?= htmlspecialchars($sub['File_Tugas']) ?></span>
+                                                <span class="file-date">Diunggah pada: <?= date('d M Y, H:i', strtotime($sub['Waktu_Submit'])) ?> WITA</span>
+                                            </div>
+                                        </div>
+                                        <?php if (!empty($sub['Nilai_Angka'])): ?>
+                                            <div style="margin-top: 12px; padding: 12px; background-color: rgba(22, 163, 74, 0.05); border-radius: 8px; border: 1px dashed rgba(22, 163, 74, 0.2);">
+                                                <span style="font-weight: 700; color: #16A34A; font-size: 14px;">Nilai: <?= $sub['Nilai_Angka'] ?> / 100</span>
+                                                <?php if (!empty($sub['Feedback'])): ?>
+                                                    <p style="margin: 4px 0 0 0; font-size: 13px; color: #475569;">Feedback: <i>"<?= htmlspecialchars($sub['Feedback']) ?>"</i></p>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php elseif ($status === 'pending'): ?>
+                                    <div class="submitted-file-row">
+                                        <div class="submitted-file-info">
+                                            <span class="file-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                            </span>
+                                            <div class="file-details">
+                                                <span class="file-name"><?= htmlspecialchars($sub['File_Tugas']) ?></span>
+                                                <span class="file-date">Diunggah pada: <?= date('d M Y, H:i', strtotime($sub['Waktu_Submit'])) ?> WITA</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="actions-row">
+                                        <a href="/rpl/public/index.php?action=cancel_tugas&id_tugas=<?= $tugas['ID_Tugas'] ?>" class="btn-action btn-cancel-submit" onclick="return confirm('Apakah Anda yakin ingin membatalkan pengumpulan tugas ini?')">Batalkan Pengumpulan</a>
+                                        <button type="button" class="btn-action btn-reupload" onclick="openUploadModal(<?= $tugas['ID_Tugas'] ?>, '<?= htmlspecialchars($tugas['Judul_Modul']) ?>')">Kumpul Ulang</button>
+                                    </div>
+                                <?php elseif ($status === 'revision'): ?>
+                                    <?php if (!empty($sub['Feedback'])): ?>
+                                        <div class="revision-box">
+                                            <span class="revision-header">Catatan Revisi:</span>
+                                            <p class="revision-comment">"<?= htmlspecialchars($sub['Feedback']) ?>"</p>
+                                        </div>
+                                    <?php endif; ?>
+                                    <div class="actions-row">
+                                        <button type="button" class="btn-action btn-upload" onclick="openUploadModal(<?= $tugas['ID_Tugas'] ?>, '<?= htmlspecialchars($tugas['Judul_Modul']) ?>')">Kumpulkan Revisi</button>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="actions-row">
+                                        <button type="button" class="btn-action btn-upload" onclick="openUploadModal(<?= $tugas['ID_Tugas'] ?>, '<?= htmlspecialchars($tugas['Judul_Modul']) ?>')">Kumpulkan Tugas</button>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </section>
         </div>
     </main>
@@ -761,10 +895,10 @@
             <h3 class="modal-title-text" id="modalTitle">Unggah Tugas: Modul 07</h3>
             <button type="button" class="close-btn" onclick="closeUploadModal()">&times;</button>
         </header>
-        <form id="uploadForm" onsubmit="handleFormSubmit(event)">
-            <input type="hidden" id="submitModulId" value="">
+        <form id="uploadForm" action="/rpl/public/index.php?action=submit_tugas" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id_tugas" id="submitModulId" value="">
             <div class="modal-body">
-                <p style="font-size: 14px; color: #475569; font-weight: 500;">Silakan unggah file laporan tugas praktikum Anda (format .zip atau .pdf, maksimal 10MB).</p>
+                <p style="font-size: 14px; color: #475569; font-weight: 500;">Silakan unggah file laporan tugas praktikum Anda (format .zip, .rar, atau .pdf, maksimal 10MB).</p>
                 
                 <!-- Drag and drop zone -->
                 <div class="upload-drag-area" id="dragArea" onclick="triggerFileSelect()">
@@ -773,7 +907,7 @@
                     </span>
                     <span class="upload-text-primary">Tarik & lepas file di sini atau klik untuk mencari</span>
                     <span class="upload-text-secondary">Mendukung file ZIP, RAR, PDF hingga 10MB</span>
-                    <input type="file" id="fileInput" class="file-input-hidden" accept=".zip,.rar,.pdf" onchange="handleFileSelect(event)">
+                    <input type="file" name="file_tugas" id="fileInput" class="file-input-hidden" accept=".zip,.rar,.pdf" onchange="handleFileSelect(event)">
                 </div>
 
                 <!-- Display selected file info -->
@@ -800,165 +934,8 @@
 </div>
 
 <script>
-    // Class metadata & tasks mock data
-    const classData = {
-        web: {
-            summary: { graded: "5 / 7", pending: "1 / 7", missing: "1 / 7" },
-            tasks: [
-                { id: 1, num: "01", title: "Dasar HTML & Struktur Web", instr: "Buat halaman profil diri sederhana menggunakan tag HTML5 semantik.", deadline: "Deadline: 15 Sep 2025, 23:59 WITA", status: "graded", file: "laporan_html_m1.zip", date: "Diunggah pada: 14 Sep 2025, 20:30 WITA" },
-                { id: 2, num: "02", title: "CSS Styling & Layouting Flexbox", instr: "Terapkan CSS Flexbox untuk membuat tata letak navbar dan layout 3 kolom responsif.", deadline: "Deadline: 22 Sep 2025, 23:59 WITA", status: "graded", file: "laporan_css_m2.zip", date: "Diunggah pada: 21 Sep 2025, 18:45 WITA" },
-                { id: 3, num: "03", title: "CSS Grid & Responsive Design", instr: "Buat halaman galeri foto menggunakan CSS Grid dan Media Queries untuk mobile breakpoint.", deadline: "Deadline: 29 Sep 2025, 23:59 WITA", status: "graded", file: "laporan_grid_m3.zip", date: "Diunggah pada: 28 Sep 2025, 22:15 WITA" },
-                { id: 4, num: "04", title: "JavaScript DOM Manipulation & Events", instr: "Buat aplikasi To-Do List interaktif dengan fitur tambah, hapus, dan tandai selesai menggunakan JS DOM.", deadline: "Deadline: 06 Okt 2025, 23:59 WITA", status: "graded", file: "laporan_js_m4.zip", date: "Diunggah pada: 05 Okt 2025, 21:00 WITA" },
-                { id: 5, num: "05", title: "PHP Scripting Basics", instr: "Buat script kalkulator IPK mahasiswa menggunakan percabangan dan perulangan array di PHP.", deadline: "Deadline: 13 Okt 2025, 23:59 WITA", status: "graded", file: "laporan_php_m5.zip", date: "Diunggah pada: 12 Okt 2025, 23:10 WITA" },
-                { id: 6, num: "06", title: "Form Handling & Database Connection", instr: "Buat sistem CRUD sederhana untuk manajemen data mahasiswa terintegrasi MariaDB.", deadline: "Deadline: 20 Okt 2025, 23:59 WITA", status: "pending", file: "laporan_crud_m6.zip", date: "Diunggah pada: 19 Okt 2025, 14:00 WITA" },
-                { id: 7, num: "07", title: "Implementasi MVC Arsitektur di PHP", instr: "Refactor kode CRUD Modul 06 ke dalam struktur MVC PHP Native (Model, View, Controller).", deadline: "Deadline: 25 Jun 2026, 23:59 WITA", status: "missing" }
-            ]
-        },
-        database: {
-            summary: { graded: "3 / 4", pending: "0 / 4", missing: "1 / 4" },
-            tasks: [
-                { id: 1, num: "01", title: "Entity-Relationship Diagram (ERD)", instr: "Rancang ERD untuk studi kasus sistem manajemen perpustakaan kampus.", deadline: "Deadline: 17 Sep 2025, 23:59 WITA", status: "graded", file: "erd_library_m1.zip", date: "Diunggah pada: 15 Sep 2025, 10:15 WITA" },
-                { id: 2, num: "02", title: "DDL & DML Dasar SQL", instr: "Buat script SQL DDL untuk skema ERD yang telah dirancang sebelumnya.", deadline: "Deadline: 24 Sep 2025, 23:59 WITA", status: "graded", file: "ddl_dml_m2.zip", date: "Diunggah pada: 23 Sep 2025, 18:20 WITA" },
-                { id: 3, num: "03", title: "Querying & Join Table", instr: "Buat query untuk menampilkan statistik peminjaman buku per mahasiswa menggunakan JOIN & GROUP BY.", deadline: "Deadline: 01 Okt 2025, 23:59 WITA", status: "graded", file: "queries_join_m3.zip", date: "Diunggah pada: 30 Sep 2025, 22:50 WITA" },
-                { id: 4, num: "04", title: "Stored Procedure & Triggers", instr: "Buat trigger untuk mengurangkan stok buku secara otomatis ketika ada peminjaman baru.", deadline: "Deadline: 08 Okt 2025, 23:59 WITA", status: "missing" }
-            ]
-        },
-        network: {
-            summary: { graded: "1 / 2", pending: "0 / 2", missing: "1 / 2" },
-            tasks: [
-                { id: 1, num: "01", title: "IP Address Subnetting (CIDR)", instr: "Lakukan subnetting kelas C untuk pembagian 4 gedung di fakultas.", deadline: "Deadline: 19 Sep 2025, 23:59 WITA", status: "graded", file: "subnetting_m1.zip", date: "Diunggah pada: 18 Sep 2025, 19:40 WITA" },
-                { id: 2, num: "02", title: "Routing Dinamis RIPv2 & OSPF", instr: "Simulasikan perutean dinamis RIPv2 pada topologi 3 router di Cisco Packet Tracer.", deadline: "Deadline: 26 Sep 2025, 23:59 WITA", status: "missing" }
-            ]
-        }
-    };
-
     // DOM Elements
     const classSelector = document.getElementById('classSelector');
-    const valGraded = document.getElementById('valGraded');
-    const valPending = document.getElementById('valPending');
-    const valMissing = document.getElementById('valMissing');
-    const tasksContainer = document.getElementById('tasksContainer');
-
-    // Handle Class Selection
-    classSelector.addEventListener('change', function() {
-        const selectedClass = this.value;
-        const data = classData[selectedClass];
-
-        // Update summary values
-        valGraded.textContent = data.summary.graded;
-        valPending.textContent = data.summary.pending;
-        valMissing.textContent = data.summary.missing;
-
-        // Render Tasks
-        renderTasks(data.tasks);
-    });
-
-    // Render Tasks Function
-    function renderTasks(tasks) {
-        tasksContainer.innerHTML = '';
-
-        tasks.forEach(task => {
-            let statusText = '';
-            let borderClass = '';
-            let badgeClass = '';
-            let fileRow = '';
-            let actionsBlock = '';
-
-            if (task.status === 'graded') {
-                statusText = 'Sudah Dinilai';
-                borderClass = 'task-card-graded';
-                badgeClass = 'badge-graded';
-                fileRow = `
-                    <div class="submitted-file-row">
-                        <div class="submitted-file-info">
-                            <span class="file-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                            </span>
-                            <div class="file-details">
-                                <span class="file-name">${task.file}</span>
-                                <span class="file-date">${task.date}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                actionsBlock = ''; // No action needed once graded
-            } else if (task.status === 'pending') {
-                statusText = 'Menunggu Penilaian';
-                borderClass = 'task-card-pending';
-                badgeClass = 'badge-pending';
-                fileRow = `
-                    <div class="submitted-file-row">
-                        <div class="submitted-file-info">
-                            <span class="file-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                            </span>
-                            <div class="file-details">
-                                <span class="file-name">${task.file}</span>
-                                <span class="file-date">${task.date}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                actionsBlock = `
-                    <div class="actions-row">
-                        <button type="button" class="btn-action btn-cancel-submit" onclick="cancelSubmission(${task.id})">Batalkan Pengumpulan</button>
-                        <button type="button" class="btn-action btn-reupload" onclick="openUploadModal(${task.id}, '${task.title}')">Kumpul Ulang</button>
-                    </div>
-                `;
-            } else if (task.status === 'missing') {
-                statusText = 'Belum Mengumpulkan';
-                borderClass = 'task-card-missing';
-                badgeClass = 'badge-missing';
-                fileRow = '';
-                actionsBlock = `
-                    <div class="actions-row">
-                        <button type="button" class="btn-action btn-upload" onclick="openUploadModal(${task.id}, '${task.title}')">Kumpulkan Tugas</button>
-                    </div>
-                `;
-            } else if (task.status === 'revision') {
-                statusText = 'Revisi';
-                borderClass = 'task-card-revision';
-                badgeClass = 'badge-revision';
-                fileRow = `
-                    <div class="revision-box">
-                        <span class="revision-header">Catatan Revisi:</span>
-                        <p class="revision-comment">"${task.comment}"</p>
-                    </div>
-                `;
-                actionsBlock = `
-                    <div class="actions-row">
-                        <button type="button" class="btn-action btn-upload" onclick="openUploadModal(${task.id}, '${task.title}')">Kumpulkan Revisi</button>
-                    </div>
-                `;
-            }
-
-            const cardHtml = `
-                <article class="task-card ${borderClass}" id="task-${task.id}">
-                    <header class="task-card-header">
-                        <div class="task-identity">
-                            <div class="task-number-badge ${badgeClass}">${task.num}</div>
-                            <div class="task-title-block">
-                                <h3 class="task-title">${task.title}</h3>
-                                <span class="task-deadline ${task.status === 'missing' ? 'deadline-urgent' : 'deadline-normal'}">${task.deadline}</span>
-                            </div>
-                        </div>
-                        <span class="status-badge status-badge-${task.status}">${statusText}</span>
-                    </header>
-                    <div class="task-card-body">
-                        <div class="task-instruction-box">
-                            <span class="instruction-title">Instruksi Tugas:</span>
-                            <p class="instruction-content">${task.instr}</p>
-                        </div>
-                        ${fileRow}
-                        ${actionsBlock}
-                    </div>
-                </article>
-            `;
-            tasksContainer.innerHTML += cardHtml;
-        });
-    }
-
-    // Modal & Upload Logic
     const uploadModal = document.getElementById('uploadModal');
     const modalTitle = document.getElementById('modalTitle');
     const submitModulId = document.getElementById('submitModulId');
@@ -970,6 +947,12 @@
     const toast = document.getElementById('toastNotification');
     const toastMessage = document.getElementById('toastMessage');
 
+    // Handle Class Selection
+    classSelector.addEventListener('change', function() {
+        showToast("Menampilkan data kelas: " + this.options[this.selectedIndex].text);
+    });
+
+    // Modal & Upload Logic
     function openUploadModal(id, title) {
         submitModulId.value = id;
         modalTitle.textContent = `Unggah Tugas: Modul ${String(id).padStart(2, '0')}`;
@@ -988,6 +971,7 @@
         uploadModal.setAttribute('aria-hidden', 'true');
     }
 
+    // File input interaction
     function triggerFileSelect() {
         fileInput.click();
     }
@@ -1038,85 +1022,6 @@
         }
     });
 
-    // Handle Form Submit (Mock backend response)
-    function handleFormSubmit(event) {
-        event.preventDefault();
-        const id = parseInt(submitModulId.value);
-        const fileObj = fileInput.files[0];
-        closeUploadModal();
-        
-        // Find task in local data to simulate database update
-        const selectedClass = classSelector.value;
-        const tasks = classData[selectedClass].tasks;
-        const task = tasks.find(t => t.id === id);
-        
-        if (task) {
-            // Update model state in mock data
-            const wasMissing = task.status === 'missing';
-            task.status = 'pending';
-            task.file = fileObj ? fileObj.name : 'laporan_tugas.zip';
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
-            const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace('.', ':');
-            task.date = `Diunggah pada: ${dateStr}, ${timeStr} WITA`;
-
-            // Adjust counters
-            if (wasMissing) {
-                const partsGraded = classData[selectedClass].summary.graded.split(' / ');
-                const partsPending = classData[selectedClass].summary.pending.split(' / ');
-                const partsMissing = classData[selectedClass].summary.missing.split(' / ');
-                
-                const newPending = parseInt(partsPending[0]) + 1;
-                const newMissing = Math.max(0, parseInt(partsMissing[0]) - 1);
-                
-                classData[selectedClass].summary.pending = `${newPending} / ${partsPending[1]}`;
-                classData[selectedClass].summary.missing = `${newMissing} / ${partsMissing[1]}`;
-
-                // Update UI Summary counters
-                valPending.textContent = classData[selectedClass].summary.pending;
-                valMissing.textContent = classData[selectedClass].summary.missing;
-            }
-
-            // Re-render
-            renderTasks(tasks);
-        }
-
-        showToast("Tugas berhasil diunggah dan disimpan ke server.");
-    }
-
-    // Cancel Submission Mock
-    function cancelSubmission(id) {
-        if (confirm("Apakah Anda yakin ingin membatalkan pengumpulan tugas ini?")) {
-            const selectedClass = classSelector.value;
-            const tasks = classData[selectedClass].tasks;
-            const task = tasks.find(t => t.id === id);
-
-            if (task) {
-                task.status = 'missing';
-                task.file = '';
-                task.date = '';
-
-                // Adjust counters
-                const partsPending = classData[selectedClass].summary.pending.split(' / ');
-                const partsMissing = classData[selectedClass].summary.missing.split(' / ');
-                
-                const newPending = Math.max(0, parseInt(partsPending[0]) - 1);
-                const newMissing = parseInt(partsMissing[0]) + 1;
-
-                classData[selectedClass].summary.pending = `${newPending} / ${partsPending[1]}`;
-                classData[selectedClass].summary.missing = `${newMissing} / ${partsMissing[1]}`;
-
-                // Update UI counters
-                valPending.textContent = classData[selectedClass].summary.pending;
-                valMissing.textContent = classData[selectedClass].summary.missing;
-
-                // Re-render
-                renderTasks(tasks);
-                showToast("Pengumpulan tugas dibatalkan.");
-            }
-        }
-    }
-
     // Show Toast
     function showToast(message) {
         toastMessage.textContent = message;
@@ -1125,9 +1030,6 @@
             toast.className = toast.className.replace("show", "");
         }, 3000);
     }
-
-    // Initial Load
-    renderTasks(classData.web.tasks);
 </script>
 
 </body>

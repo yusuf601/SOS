@@ -79,7 +79,21 @@ switch ($action) {
         break;
 
     case 'upload_tugas':
-        require_once __DIR__ . '/../app/Views/upload_tugas.php';
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->index();
+        break;
+
+    case 'submit_tugas':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->upload();
+        break;
+
+    case 'cancel_tugas':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->cancel();
         break;
 
     default:
