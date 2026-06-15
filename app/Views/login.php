@@ -25,6 +25,12 @@
         <div class="login-card">
             <h2 class="form-title"><span class="title-edu">Edu</span><span class="title-lab">Lab</span></h2>
 
+            <?php if (isset($_SESSION['login_error'])): ?>
+                <div style="background-color: #FEE2E2; color: #DC2626; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 600; text-align: center; margin-bottom: 20px; border: 1px solid #FCA5A5;">
+                    <?= htmlspecialchars($_SESSION['login_error']); unset($_SESSION['login_error']); ?>
+                </div>
+            <?php endif; ?>
+
             <form action="/rpl/public/index.php?action=login" method="POST" class="login-form">
                 <!-- NIM / NIP Field -->
                 <div class="form-group">
