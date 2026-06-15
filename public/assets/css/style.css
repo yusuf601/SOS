@@ -210,6 +210,45 @@ body::before {
     color: var(--btn-primary);
 }
 
+/* Remember Me & Help Link styling */
+.form-options-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.remember-me-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color-dark);
+    cursor: pointer;
+    user-select: none;
+}
+
+.remember-me-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--btn-primary);
+    cursor: pointer;
+}
+
+.help-link {
+    color: var(--btn-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition-speed) ease;
+}
+
+.help-link:hover {
+    text-decoration: underline;
+    color: #2b336b;
+}
+
 /* Submit Button */
 .btn-login {
     width: 100%;

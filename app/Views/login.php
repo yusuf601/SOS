@@ -54,6 +54,15 @@
                     </div>
                 </div>
 
+                <!-- Remember Me & Help Links Row -->
+                <div class="form-options-row">
+                    <label class="remember-me-label">
+                        <input type="checkbox" name="remember" id="remember">
+                        <span>Ingat saya</span>
+                    </label>
+                    <a href="#" class="help-link">Butuh bantuan?</a>
+                </div>
+
                 <!-- Submit Button -->
                 <button type="submit" class="btn-login">Login</button>
             </form>
