@@ -175,3 +175,26 @@ CREATE TABLE Tabel_Nilai_Akhir (
         ON DELETE CASCADE 
         ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ==========================================
+-- 4. DATA INITIALIZATION (DOSEN DATA)
+-- ==========================================
+
+-- Insert Dosen (Lecturers) from daftar_dosen.md
+INSERT INTO Tabel_User (Username, Password, Role, Nama_Lengkap, ID_Kelompok) VALUES
+('0017117606', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Isnawaty, S.Si., M.T', NULL),
+('0022078406', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'L.M. Fid Aksara, S.Kom., M.Kom.', NULL),
+('0007118106', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Statiswaty, S.T., M.MSI', NULL),
+('0017089402', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Asa Hari Wibowo, S.T., M.Eng.', NULL),
+('0022027607', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Sutardi, S.Kom., M.T.', NULL),
+('0020107601', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Prof. Dr. Ir. Laode Muh. Golok Jaya, S.T., M.T.', NULL),
+('0025047107', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Bambang Pramono, S.Si., M.T.', NULL),
+('0006049104', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Rizal Adi Saputra, S.T., M.Kom', NULL),
+('0906028701', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Jumadil Nangi, S.Kom., M.T.', NULL),
+('0009096503', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Dr. Ir. Muhammad Ihsan Sarita, M.Kom.', NULL),
+('0016018306', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Ika Purwanti Ningrum Purnama, S.Kom., M.Cs.', NULL),
+('0929098602', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'La Ode Muhammad Bahtiar Aksara, S.T., M.T.', NULL),
+('0014068304', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Dr. Ir. Muh. Yamin, S.T., M.Eng', NULL),
+('0023069101', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Adha Mashur Sajiah, S.T., M.Eng.', NULL),
+('0912069303', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Muhammad Irwan Syahib, S.T., M.Kom.', NULL),
+('0117019203', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Ryan Rinaldi Hadistio, S.Kom., M.Kom.', NULL);
