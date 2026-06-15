@@ -20,16 +20,21 @@
 body {
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
+    background-color: #FFFFFF; /* Clean white background by default for dashboard pages */
+    color: var(--text-color-dark);
+    overflow-x: hidden;
+}
+
+/* Campus Theme for Login & Role Switcher Pages */
+body.bg-campus-theme {
     background-image: url('../images/bg_campus.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    overflow-x: hidden;
 }
 
-/* Dark Tint Overlay */
-body::before {
+body.bg-campus-theme::before {
     content: '';
     position: absolute;
     top: 0;

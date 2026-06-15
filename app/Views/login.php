@@ -6,7 +6,7 @@
     <title>Login - EduLab Universitas Halu Oleo</title>
     <link rel="stylesheet" href="/rpl/public/assets/css/style.css">
 </head>
-<body>
+<body class="bg-campus-theme">
 
 <div class="main-wrapper">
     <!-- Left Side: Branding Content -->

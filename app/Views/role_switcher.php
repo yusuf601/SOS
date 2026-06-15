@@ -6,7 +6,7 @@
     <title>Pilih Peran - EduLab UHO</title>
     <link rel="stylesheet" href="/rpl/public/assets/css/style.css">
 </head>
-<body>
+<body class="bg-campus-theme">
 
 <div class="switcher-wrapper">
     <div class="switcher-card">
