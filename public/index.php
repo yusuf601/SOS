@@ -41,7 +41,9 @@ switch ($action) {
         break;
 
     case 'dashboard_student':
-        require_once __DIR__ . '/../app/Views/dashboard_student.php';
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->studentIndex();
         break;
 
     case 'dashboard_dosen':
@@ -65,7 +67,15 @@ switch ($action) {
         break;
 
     case 'bank_modul':
-        require_once __DIR__ . '/../app/Views/bank_modul.php';
+        require_once __DIR__ . '/../app/Controllers/ModulController.php';
+        $modulController = new ModulController();
+        $modulController->index();
+        break;
+
+    case 'download_materi':
+        require_once __DIR__ . '/../app/Controllers/ModulController.php';
+        $modulController = new ModulController();
+        $modulController->download();
         break;
 
     case 'upload_tugas':

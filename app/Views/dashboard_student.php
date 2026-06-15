@@ -1,3 +1,14 @@
+<?php
+$fullName = $_SESSION['name'] ?? 'Guest';
+$firstName = explode(" ", $fullName)[0];
+
+$words = explode(" ", $fullName);
+$initials = "";
+foreach ($words as $w) {
+    $initials .= strtoupper($w[0] ?? '');
+}
+$initials = substr($initials, 0, 2);
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -20,8 +31,8 @@
 
             <!-- User profile summary -->
             <div class="sidebar-user-card">
-                <div class="sidebar-user-name">John Doe</div>
-                <div class="sidebar-user-role">Mahasiswa</div>
+                <div class="sidebar-user-name"><?= htmlspecialchars($fullName) ?></div>
+                <div class="sidebar-user-role"><?= htmlspecialchars($_SESSION['active_role'] ?? 'Mahasiswa') ?></div>
             </div>
 
             <!-- Menu Navigation -->
@@ -132,7 +143,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                 </button>
                 
-                <div class="navbar-avatar">JD</div>
+                <div class="navbar-avatar"><?= htmlspecialchars($initials) ?></div>
             </div>
         </header>
 
@@ -140,8 +151,8 @@
         <div class="workspace-content">
             <!-- Welcome Banner -->
             <section class="welcome-banner">
-                <h1 class="welcome-text">Selamat datang, John!</h1>
-                <p class="welcome-subtext">Kamu memiliki 2 deadline mendatang dan 1 nilai baru masuk hari ini.</p>
+                <h1 class="welcome-text">Selamat datang, <?= htmlspecialchars($firstName) ?>!</h1>
+                <p class="welcome-subtext">Kamu memiliki <?= htmlspecialchars($stats['pending_tasks'] ?? 0) ?> tugas pending/belum selesai saat ini.</p>
             </section>
 
             <!-- Metric Cards -->
@@ -152,7 +163,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                     </div>
                     <div>
-                        <div class="metric-value">3</div>
+                        <div class="metric-value"><?= htmlspecialchars($stats['active_classes'] ?? 0) ?></div>
                         <div class="metric-label">Kelas Aktif</div>
                     </div>
                 </div>
@@ -163,7 +174,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                     </div>
                     <div>
-                        <div class="metric-value">2</div>
+                        <div class="metric-value"><?= htmlspecialchars($stats['pending_tasks'] ?? 0) ?></div>
                         <div class="metric-label">Tugas Pending</div>
                     </div>
                 </div>
@@ -174,7 +185,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                     </div>
                     <div>
-                        <div class="metric-value">82.4</div>
+                        <div class="metric-value"><?= htmlspecialchars($stats['average_score'] ?? 0) ?></div>
                         <div class="metric-label">Rata-rata Nilai</div>
                     </div>
                 </div>
@@ -185,7 +196,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                     </div>
                     <div>
-                        <div class="metric-value">85%</div>
+                        <div class="metric-value"><?= htmlspecialchars($stats['attendance'] ?? 100) ?>%</div>
                         <div class="metric-label">Kehadiran</div>
                     </div>
                 </div>

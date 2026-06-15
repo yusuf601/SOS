@@ -57,4 +57,21 @@ class UserModel {
 
         return array_unique($roles);
     }
+
+    // Get attendance rate for student
+    public function getAttendanceRate($userId) {
+        $query = "SELECT 
+                    COUNT(*) as total, 
+                    SUM(CASE WHEN Status_Kehadiran = 'Hadir' THEN 1 ELSE 0 END) as hadir 
+                  FROM Tabel_Presensi 
+                  WHERE ID_User = :userId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+        $res = $stmt->fetch();
+        if (!$res || $res['total'] == 0) {
+            return 100.0; // Default to 100% if no attendance records yet
+        }
+        return round(($res['hadir'] / $res['total']) * 100, 1);
+    }
 }
