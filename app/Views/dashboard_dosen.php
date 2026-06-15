@@ -19,215 +19,208 @@ $initials = substr($initials, 0, 2);
     <title>Dashboard Dosen - EduLab UHO</title>
     <link class="style-link" rel="stylesheet" href="/rpl/public/assets/css/style.css">
     <style>
-        /* CSS Extension specifically for Lecturer/Assistant Layout */
-        .submissions-card {
+        /* CSS Extension specifically for Dosen Grid Layout */
+        .dosen-dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 1024px) {
+            .dosen-dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .class-card {
             background-color: #FFFFFF;
-            border-radius: 15px;
-            padding: 32px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            margin-bottom: 24px;
-        }
-
-        .submissions-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-color-dark);
-            margin-bottom: 20px;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-            width: 100%;
-        }
-
-        .custom-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 14px;
-        }
-
-        .custom-table th {
-            padding: 14px 16px;
-            background-color: #F8FAFC;
-            color: #475569;
-            font-weight: 600;
-            border-bottom: 2px solid #E2E8F0;
-        }
-
-        .custom-table td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #E2E8F0;
-            color: #1E293B;
-            font-weight: 500;
-        }
-
-        .custom-table tr:hover {
-            background-color: #F8FAFC;
-        }
-
-        .badge-status {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .badge-graded { background-color: rgba(22, 163, 74, 0.1); color: #16A34A; }
-        .badge-pending { background-color: rgba(202, 138, 4, 0.1); color: #CA8A04; }
-        .badge-revision { background-color: rgba(234, 88, 12, 0.1); color: #EA580C; }
-
-        .btn-action-table {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 32px;
-            padding: 0 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: none;
-        }
-
-        .btn-grade {
-            background-color: var(--btn-primary);
-            color: white;
-            box-shadow: 0 2px 6px rgba(54, 64, 135, 0.2);
-        }
-
-        .btn-grade:hover {
-            background-color: #2b336b;
-            transform: translateY(-1px);
-        }
-
-        .btn-download-sub {
-            background-color: rgba(71, 85, 105, 0.08);
-            color: #475569;
-            margin-right: 6px;
-        }
-
-        .btn-download-sub:hover {
-            background-color: rgba(71, 85, 105, 0.15);
-        }
-
-        /* Modal styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            animation: modalFadeIn 0.3s ease;
-            overflow: hidden;
-        }
-
-        @keyframes modalFadeIn {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            padding: 20px 24px;
-            background-color: var(--btn-primary);
-            color: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 16px;
+            border: 1px solid #F1F5F9;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .modal-title-text {
+        .class-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .class-card-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .class-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background-color: #F1F5F9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748B;
+        }
+
+        .class-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .class-name {
             font-size: 18px;
             font-weight: 600;
+            color: #0F172A;
+            margin: 0;
         }
 
-        .close-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            line-height: 1;
-            padding: 0;
+        .class-meta {
+            font-size: 14px;
+            color: #64748B;
+            font-weight: 500;
         }
 
-        .modal-body {
+        .class-card-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-tag {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .badge-tag-danger {
+            background-color: #FCEBEB;
+            color: #791F1F;
+        }
+
+        .badge-tag-success {
+            background-color: #EAF3DE;
+            color: #27500A;
+        }
+
+        .btn-create-class {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #364087;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .btn-create-class:hover {
+            color: #2b336b;
+        }
+
+        .widget-card {
+            background-color: #FFFFFF;
+            border-radius: 16px;
             padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid #F1F5F9;
+            margin-bottom: 24px;
+        }
+
+        .widget-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0F172A;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .widget-list {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
 
-        .form-group {
+        .widget-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .widget-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .widget-icon-green {
+            background-color: #EAF3DE;
+            color: #27500A;
+        }
+
+        .widget-icon-blue {
+            background-color: #ABDAE8;
+            color: #1A5C70;
+        }
+
+        .widget-icon-red {
+            background-color: #FCEBEB;
+            color: #791F1F;
+        }
+
+        .widget-item-info {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 2px;
         }
 
-        .form-label {
-            font-size: 14px;
+        .widget-item-title {
+            font-size: 12px;
             font-weight: 600;
-            color: var(--text-color-dark);
+            color: #0F172A;
         }
 
-        .form-control {
-            height: 44px;
-            padding: 0 12px;
-            border: 1px solid #CBD5E1;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.2s;
+        .widget-item-subtitle {
+            font-size: 11px;
+            color: #64748B;
         }
 
-        .form-control:focus {
-            border-color: var(--btn-primary);
+        .widget-divider {
+            height: 1px;
+            background-color: #F1F5F9;
+            margin: 4px 0;
         }
 
-        textarea.form-control {
-            height: 100px;
-            padding: 12px;
-            resize: none;
-        }
-
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid #E2E8F0;
+        .summary-item {
             display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            background-color: #F8FAFC;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
         }
 
-        .btn-cancel {
-            height: 42px;
-            padding: 0 20px;
-            background-color: #E2E8F0;
-            color: #475569;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
+        .summary-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #64748B;
+        }
+
+        .summary-status {
+            font-size: 13px;
+            font-weight: 700;
+            color: #94A3B8;
         }
     </style>
 </head>
@@ -252,9 +245,6 @@ $initials = substr($initials, 0, 2);
                 <div class="sidebar-user-role"><?= htmlspecialchars($_SESSION['active_role'] ?? 'Dosen') ?></div>
             </div>
 
-            <!-- Menu Navigation -->
-            <nav>
-                <div class="sidebar-menu-title">Menu Utama</div>
             <!-- Menu Navigation -->
             <nav>
                 <div class="sidebar-menu-title">Menu Utama</div>
@@ -358,9 +348,9 @@ $initials = substr($initials, 0, 2);
         <!-- Content Body -->
         <div class="workspace-content">
             <!-- Welcome Banner -->
-            <section class="welcome-banner">
-                <h1 class="welcome-text">Selamat datang, <?= htmlspecialchars(explode(" ", $fullName)[0]) ?>!</h1>
-                <p class="welcome-subtext">Kamu mengampu <?= htmlspecialchars($stats['total_classes'] ?? 0) ?> kelas praktikum aktif.</p>
+            <section class="welcome-banner" style="margin-bottom: 24px;">
+                <h1 class="welcome-text">Selamat datang, <?= htmlspecialchars($fullName) ?>!</h1>
+                <p class="welcome-subtext">Memantau <?= htmlspecialchars($stats['total_classes'] ?? 0) ?> kelas aktif dengan total <?= htmlspecialchars($stats['total_students'] ?? 0) ?> mahasiswa semester ini.</p>
             </section>
 
             <!-- Success/Error Alert -->
@@ -375,185 +365,109 @@ $initials = substr($initials, 0, 2);
                 </div>
             <?php endif; ?>
 
-            <!-- Metric Cards -->
-            <section class="stats-metrics-grid" style="margin-bottom: 24px;">
-                <div class="metric-card">
-                    <div class="metric-icon-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <!-- Dosen Dashboard Grid -->
+            <div class="dosen-dashboard-grid">
+                <!-- Left Column: Semua Kelas Aktif -->
+                <div class="classes-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="font-size: 20px; font-weight: 600; color: #000000; margin: 0;">Semua Kelas Aktif</h3>
+                        <a href="#" class="btn-create-class" onclick="alert('Fitur Buat Kelas Baru tersedia di versi berikutnya.')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Buat Kelas Baru
+                        </a>
                     </div>
-                    <div>
-                        <div class="metric-value"><?= htmlspecialchars($stats['total_classes'] ?? 0) ?></div>
-                        <div class="metric-label">Kelas Diajar</div>
-                    </div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon-circle" style="background-color: rgba(54, 64, 135, 0.1); color: var(--btn-primary);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                    </div>
-                    <div>
-                        <div class="metric-value"><?= htmlspecialchars($stats['total_subs'] ?? 0) ?></div>
-                        <div class="metric-label">Tugas Masuk</div>
-                    </div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon-circle" style="background-color: rgba(22, 163, 74, 0.1); color: #16A34A;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <div>
-                        <div class="metric-value"><?= htmlspecialchars($stats['graded'] ?? 0) ?></div>
-                        <div class="metric-label">Sudah Dinilai</div>
-                    </div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon-circle" style="background-color: rgba(202, 138, 4, 0.1); color: #CA8A04;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                    </div>
-                    <div>
-                        <div class="metric-value"><?= htmlspecialchars($stats['pending'] ?? 0) ?></div>
-                        <div class="metric-label">Perlu Dinilai</div>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Submissions Table Card -->
-            <section class="submissions-card">
-                <h3 class="submissions-title">Daftar Pengumpulan Tugas Mahasiswa</h3>
-                <div class="table-responsive">
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th>Mahasiswa</th>
-                                <th>Kelas</th>
-                                <th>Modul</th>
-                                <th>Waktu Pengumpulan</th>
-                                <th>Status</th>
-                                <th>Nilai</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (empty($submissions)): ?>
-                                <tr>
-                                    <td colspan="7" style="text-align: center; color: #9B9B9B; padding: 24px;">Belum ada pengumpulan tugas mahasiswa di kelas Anda.</td>
-                                </tr>
-                            <?php else: ?>
-                                <?php foreach ($submissions as $sub): 
-                                    $statusClass = 'badge-pending';
-                                    $statusText = 'Belum Dinilai';
-                                    if (!empty($sub['Nilai_Angka']) || $sub['Status_Tugas'] !== NULL) {
-                                        if ($sub['Status_Tugas'] === 'Selesai') {
-                                            $statusClass = 'badge-graded';
-                                            $statusText = 'Sudah Dinilai';
-                                        } elseif ($sub['Status_Tugas'] === 'Revisi') {
-                                            $statusClass = 'badge-revision';
-                                            $statusText = 'Revisi';
-                                        }
-                                    }
-                                ?>
-                                    <tr>
-                                        <td>
-                                            <div style="font-weight: 600; color: #1E293B;"><?= htmlspecialchars($sub['Nama_Mahasiswa']) ?></div>
-                                            <div style="font-size: 12px; color: #64748B;"><?= htmlspecialchars($sub['NIM_Mahasiswa']) ?></div>
-                                        </td>
-                                        <td><?= htmlspecialchars($sub['Nama_Kelas']) ?></td>
-                                        <td><?= htmlspecialchars($sub['Judul_Modul']) ?></td>
-                                        <td><?= date('d M Y, H:i', strtotime($sub['Waktu_Submit'])) ?> WITA</td>
-                                        <td>
-                                            <span class="badge-status <?= $statusClass ?>"><?= $statusText ?></span>
-                                        </td>
-                                        <td>
-                                            <span style="font-weight: 700; color: #1E293B;"><?= !empty($sub['Nilai_Angka']) ? htmlspecialchars($sub['Nilai_Angka']) : '-' ?></span>
-                                        </td>
-                                        <td>
-                                            <!-- Download student file -->
-                                            <a href="/rpl/public/assets/uploads/tugas/<?= urlencode($sub['File_Tugas']) ?>" class="btn-action-table btn-download-sub" download>
-                                                Unduh
-                                            </a>
-                                            <!-- Open Grade Modal -->
-                                            <button type="button" class="btn-action-table btn-grade" onclick="openGradeModal(<?= $sub['ID_Pengumpulan'] ?>, '<?= htmlspecialchars($sub['Nama_Mahasiswa']) ?>', '<?= htmlspecialchars($sub['Judul_Modul']) ?>', '<?= $sub['Nilai_Angka'] ?? '' ?>', '<?= htmlspecialchars($sub['Feedback'] ?? '') ?>', '<?= $sub['Status_Tugas'] ?? 'Selesai' ?>')">
-                                                Nilai
-                                            </button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                    <?php if (empty($classesDetail)): ?>
+                        <div style="background-color: #FFFFFF; border-radius: 16px; padding: 32px; text-align: center; border: 1px solid #F1F5F9; color: #64748B;">
+                            Belum ada kelas aktif yang terplot untuk Anda.
+                        </div>
+                    <?php else: ?>
+                        <?php foreach ($classesDetail as $cdetail): ?>
+                            <div class="class-card">
+                                <div class="class-card-left">
+                                    <div class="class-thumb">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                    </div>
+                                    <div class="class-info">
+                                        <h4 class="class-name"><?= htmlspecialchars($cdetail['class_name']) ?></h4>
+                                        <span class="class-meta">
+                                            <?= htmlspecialchars($cdetail['schedule']) ?> &middot; 
+                                            <?= htmlspecialchars($cdetail['student_count']) ?> mhs &middot; 
+                                            Pertemuan <?= htmlspecialchars($cdetail['pertemuan_progress']) ?> &middot; 
+                                            Asisten Dosen : <?= htmlspecialchars(explode(" ", $cdetail['assistant_name'])[0]) ?>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="class-card-right">
+                                    <?php if ($cdetail['repeating_count'] > 0): ?>
+                                        <span class="badge-tag badge-tag-danger"><?= htmlspecialchars($cdetail['repeating_count']) ?> mengulang</span>
+                                    <?php endif; ?>
+                                    
+                                    <?php if ($cdetail['passed_count'] > 0): ?>
+                                        <span class="badge-tag badge-tag-success"><?= htmlspecialchars($cdetail['passed_count']) ?> lulus</span>
+                                    <?php else: ?>
+                                        <span class="badge-tag badge-tag-success">Aktif</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
-            </section>
+
+                <!-- Right Column: Sidebar Widgets -->
+                <div class="widgets-section">
+                    <!-- Widget: Aktivitas Terbaru -->
+                    <div class="widget-card">
+                        <h3 class="widget-title">Aktivitas Terbaru</h3>
+                        <div class="widget-list">
+                            <?php foreach ($activities as $index => $act): ?>
+                                <?php if ($index > 0): ?>
+                                    <div class="widget-divider"></div>
+                                <?php endif; ?>
+                                <div class="widget-item">
+                                    <?php
+                                    $iconClass = 'widget-icon-green';
+                                    $svgIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                                    if ($act['type'] === 'dispute') {
+                                        $iconClass = 'widget-icon-blue';
+                                        $svgIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line><circle cx="12" cy="12" r="10"></circle></svg>';
+                                    } elseif ($act['type'] === 'system') {
+                                        $iconClass = 'widget-icon-red';
+                                        $svgIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
+                                    }
+                                    ?>
+                                    <div class="widget-icon <?= $iconClass ?>">
+                                        <?= $svgIcon ?>
+                                    </div>
+                                    <div class="widget-item-info">
+                                        <span class="widget-item-title"><?= htmlspecialchars($act['title']) ?></span>
+                                        <span class="widget-item-subtitle"><?= htmlspecialchars($act['subtitle']) ?></span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                    <!-- Widget: Ringkasan Kelulusan -->
+                    <div class="widget-card">
+                        <h3 class="widget-title">Ringkasan Kelulusan</h3>
+                        <div class="widget-list" style="gap: 12px;">
+                            <?php foreach ($graduationSummary as $index => $sum): ?>
+                                <?php if ($index > 0): ?>
+                                    <div class="widget-divider" style="margin: 2px 0;"></div>
+                                <?php endif; ?>
+                                <div class="summary-item">
+                                    <span class="summary-name"><?= htmlspecialchars($sum['class_name']) ?></span>
+                                    <span class="summary-status"><?= htmlspecialchars($sum['status']) ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 </div>
-
-<!-- Grading Modal -->
-<div class="modal" id="gradeModal" aria-hidden="true" role="dialog">
-    <div class="modal-content">
-        <header class="modal-header">
-            <h3 class="modal-title-text" id="modalTitle">Penilaian Tugas</h3>
-            <button type="button" class="close-btn" onclick="closeGradeModal()">&times;</button>
-        </header>
-        <form id="gradeForm" action="/rpl/public/index.php?action=submit_grade" method="POST">
-            <input type="hidden" name="id_pengumpulan" id="submitPengumpulanId" value="">
-            <div class="modal-body">
-                <div style="background-color: #F8FAFC; padding: 12px; border-radius: 8px; border: 1px solid #E2E8F0; margin-bottom: 12px;">
-                    <div style="font-size: 13px; color: #64748B; font-weight: 500;">Mahasiswa:</div>
-                    <div id="mhsName" style="font-size: 15px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">-</div>
-                    <div style="font-size: 13px; color: #64748B; font-weight: 500;">Modul:</div>
-                    <div id="modulTitle" style="font-size: 14px; font-weight: 600; color: #475569;">-</div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="nilaiAngka">Nilai Angka (0 - 100):</label>
-                    <input type="number" step="0.01" min="0" max="100" name="nilai_angka" id="nilaiAngka" class="form-control" placeholder="Contoh: 85.50" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="statusTugas">Status Tugas:</label>
-                    <select name="status_tugas" id="statusTugas" class="form-control" style="padding: 0 8px;" required>
-                        <option value="Selesai">Selesai (Lulus)</option>
-                        <option value="Revisi">Revisi (Harus Diperbaiki)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="feedback">Umpan Balik (Feedback):</label>
-                    <textarea name="feedback" id="feedback" class="form-control" placeholder="Tulis catatan atau saran perbaikan di sini..."></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeGradeModal()">Batal</button>
-                <button type="submit" class="btn-submit" style="background-color: var(--btn-primary); color: white; border: none; padding: 0 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">Simpan Nilai</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-    const gradeModal = document.getElementById('gradeModal');
-    const submitPengumpulanId = document.getElementById('submitPengumpulanId');
-    const mhsName = document.getElementById('mhsName');
-    const modulTitle = document.getElementById('modulTitle');
-    const nilaiAngka = document.getElementById('nilaiAngka');
-    const statusTugas = document.getElementById('statusTugas');
-    const feedback = document.getElementById('feedback');
-
-    function openGradeModal(id, student, modul, currentNilai, currentFeedback, currentStatus) {
-        submitPengumpulanId.value = id;
-        mhsName.textContent = student;
-        modulTitle.textContent = modul;
-        nilaiAngka.value = currentNilai;
-        feedback.value = currentFeedback;
-        statusTugas.value = currentStatus || 'Selesai';
-
-        gradeModal.style.display = 'flex';
-        gradeModal.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeGradeModal() {
-        gradeModal.style.display = 'none';
-        gradeModal.setAttribute('aria-hidden', 'true');
-    }
-</script>
 
 <!-- ====== Settings Modal ====== -->
 <div class="settings-backdrop">

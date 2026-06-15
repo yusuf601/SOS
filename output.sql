@@ -265,3 +265,47 @@ INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALU
 -- Insert Additional Grades (Alice's Task 1 has a dispute/sanggahan)
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES
 (3, 18, 70.00, 'Tugas lengkap, namun styling CSS masih kurang rapi.', 'Sanggah', 'Mohon maaf kak, sepertinya ada kekeliruan. Saya sudah menerapkan Flexbox sesuai instruksi modul. Mohon diperiksa kembali.');
+
+-- ==============================================================================
+-- 6. INDONESIAN DEMO DATA FOR LECTURER ADHA MASHUR SAJIAH (ID: 14)
+-- ==============================================================================
+-- Plot Dosen Adha Mashur Sajiah ke Kelas 1 (Web), Kelas 2 (Basis Data), dan Kelas 3 (Jaringan)
+INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES
+(14, 1),
+(14, 2),
+(14, 3);
+
+-- Tambah Asisten Baru (Wowok)
+INSERT INTO Tabel_User (Username, Password, Role, Nama_Lengkap, ID_Kelompok) VALUES
+('E1E122005', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Asisten', 'Wowok Hermawan', NULL);
+
+-- Plot Asisten Wowok ke Kelas 2 (Basis Data) dan Kelas 3 (Jaringan)
+INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES
+((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122005'), 2),
+((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122005'), 3);
+
+-- Tambah Mahasiswa Baru (Jokowi, Raka, Yusuf, Budi Santoso, Siti Aminah)
+INSERT INTO Tabel_User (Username, Password, Role, Nama_Lengkap, ID_Kelompok) VALUES
+('E1E122006', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Jokowi', 1),
+('E1E122007', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Raka', 3),
+('E1E122008', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Yusuf', 3),
+('E1E122009', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Budi Santoso', 2),
+('E1E122010', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Siti Aminah', 2);
+
+-- Raka mengumpulkan Tugas 1 (Basis Data) dan dinilai oleh Asisten Wowok
+INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES
+(1, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122007'), 'tugas1_raka.zip', '2026-06-14 20:00:00');
+
+INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES
+((SELECT ID_Pengumpulan FROM Tabel_Pengumpulan WHERE File_Tugas = 'tugas1_raka.zip' LIMIT 1), 
+ (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122005'), 
+ 88.00, 'Kueri SQL ditulis dengan sangat efisien dan benar.', 'Selesai');
+
+-- Yusuf mengumpulkan Tugas 1 (Basis Data) dan mengajukan Sanggah atas nilai Wowok
+INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES
+(1, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122008'), 'tugas1_yusuf.zip', '2026-06-06 17:00:00');
+
+INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES
+((SELECT ID_Pengumpulan FROM Tabel_Pengumpulan WHERE File_Tugas = 'tugas1_yusuf.zip' LIMIT 1), 
+ (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122005'), 
+ 65.00, 'Ada kesalahan relasi di ERD.', 'Sanggah', 'Mohon maaf kak, relasi many-to-many sudah saya uraikan menjadi tabel perantara. Mohon diperiksa kembali.');
