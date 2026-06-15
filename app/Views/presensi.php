@@ -18,21 +18,23 @@ $hadirCount = 0;
 $sakitCount = 0;
 $izinCount = 0;
 $alfaCount = 0;
-$totalPresensi = 0;
+$totalRecorded = 0;
 $attendanceRate = 100;
 
 if ($role === 'Mahasiswa' && !empty($attendance)) {
-    $totalPresensi = count($attendance);
     foreach ($attendance as $att) {
-        switch ($att['Status_Kehadiran']) {
-            case 'Hadir': $hadirCount++; break;
-            case 'Sakit': $sakitCount++; break;
-            case 'Izin': $izinCount++; break;
-            case 'Alfa': $alfaCount++; break;
+        if (!empty($att['Status_Kehadiran'])) {
+            $totalRecorded++;
+            switch ($att['Status_Kehadiran']) {
+                case 'Hadir': $hadirCount++; break;
+                case 'Sakit': $sakitCount++; break;
+                case 'Izin': $izinCount++; break;
+                case 'Alfa': $alfaCount++; break;
+            }
         }
     }
-    if ($totalPresensi > 0) {
-        $attendanceRate = round(($hadirCount / $totalPresensi) * 100);
+    if ($totalRecorded > 0) {
+        $attendanceRate = round(($hadirCount / $totalRecorded) * 100);
     }
 }
 ?>
@@ -61,29 +63,59 @@ if ($role === 'Mahasiswa' && !empty($attendance)) {
 
         .stats-summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
             margin-bottom: 24px;
         }
 
+        @media (max-width: 992px) {
+            .stats-summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .stat-mini-card {
-            background-color: #F8FAFC;
-            border: 1px solid #E2E8F0;
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+            border: 0.5px solid rgba(54, 64, 135, 0.1);
+            position: relative;
+        }
+
+        .stat-mini-icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
         }
 
         .stat-mini-val {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 700;
+            line-height: 1.2;
             margin-bottom: 4px;
+            text-align: center;
         }
 
         .stat-mini-lbl {
-            font-size: 13px;
-            color: #64748B;
+            font-size: 14px;
             font-weight: 600;
+            color: #64748B;
+            text-align: center;
         }
 
         .filter-section {
@@ -136,37 +168,46 @@ if ($role === 'Mahasiswa' && !empty($attendance)) {
         }
 
         .custom-table th {
-            padding: 14px 16px;
-            background-color: #F8FAFC;
-            color: #475569;
+            color: #64748B;
+            font-size: 13px;
             font-weight: 600;
-            border-bottom: 2px solid #E2E8F0;
+            padding: 16px 20px;
+            border-bottom: 1px solid #E2E8F0;
+            background-color: #FFFFFF;
+            text-transform: none;
+            letter-spacing: normal;
         }
 
         .custom-table td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #E2E8F0;
-            color: #1E293B;
+            font-size: 14px;
             font-weight: 500;
+            color: #334155;
+            padding: 16px 20px;
+            border-bottom: 1px solid #F1F5F9;
+            vertical-align: middle;
+            transition: background-color var(--transition-speed) ease;
         }
 
-        .custom-table tr:hover {
+        .custom-table tr:hover td {
             background-color: #F8FAFC;
         }
 
         .badge-status {
             display: inline-flex;
             align-items: center;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
+            justify-content: center;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 9999px;
+            text-align: center;
+            width: 80px;
         }
 
-        .badge-hadir { background-color: rgba(22, 163, 74, 0.1); color: #16A34A; }
-        .badge-sakit { background-color: rgba(59, 130, 246, 0.1); color: #3B82F6; }
-        .badge-izin { background-color: rgba(234, 179, 8, 0.1); color: #EAB308; }
-        .badge-alfa { background-color: rgba(22, 163, 74, 0.1); color: #DC2626; } /* Wait, let's fix color to red! */
+        .badge-hadir { background-color: #EAF3DE; color: #2F6100; }
+        .badge-sakit { background-color: #E7D9FF; color: #8161BC; }
+        .badge-izin { background-color: #FFEECC; color: #D38C00; }
+        .badge-alfa { background-color: #FCEBEB; color: #791F1F; }
 
         .radio-group {
             display: flex;
@@ -251,6 +292,16 @@ if ($role === 'Mahasiswa' && !empty($attendance)) {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                                 </span>
                             </a>
+                            <ul class="sidebar-submenu-list">
+                                <li class="sidebar-submenu-item">
+                                    <a href="/rpl/public/index.php?action=bank_modul">
+                                        <span>Bank Modul</span>
+                                        <span class="sidebar-menu-item-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="sidebar-menu-item">
                             <a href="/rpl/public/index.php?action=upload_tugas">
@@ -277,7 +328,7 @@ if ($role === 'Mahasiswa' && !empty($attendance)) {
                             </a>
                         </li>
                         <li class="sidebar-menu-item">
-                            <a href="/rpl/public/index.php?action=sanggah_nilai">
+                            <a href="/rpl/public/index.php?action=sanggah_form">
                                 <span>Sanggah Nilai</span>
                                 <span class="sidebar-menu-item-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -384,43 +435,66 @@ if ($role === 'Mahasiswa' && !empty($attendance)) {
 
             <?php if ($role === 'Mahasiswa'): ?>
                 <!-- STUDENT PRESENSI VIEW -->
-                <section class="presensi-card">
-                    <h3 class="presensi-title">Ringkasan Kehadiran Anda</h3>
-                    
-                    <div class="stats-summary-grid">
-                        <div class="stat-mini-card" style="border-left: 4px solid #16A34A;">
-                            <div class="stat-mini-val" style="color: #16A34A;"><?= $attendanceRate ?>%</div>
-                            <div class="stat-mini-lbl">Persentase Kehadiran</div>
+                <?php
+                $className = $classInfo['Nama_Kelas'] ?? 'Sistem Digital A';
+
+                $monthsIndo = [
+                    1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+                    5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+                    9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+                ];
+                ?>
+                
+                <div class="stats-summary-grid">
+                    <!-- Card 1: Hadir -->
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-icon-box" style="background-color: #EAF3DE;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2F6100" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><polyline points="9 14 11 16 15 12"></polyline></svg>
                         </div>
-                        <div class="stat-mini-card">
-                            <div class="stat-mini-val" style="color: #16A34A;"><?= $hadirCount ?></div>
-                            <div class="stat-mini-lbl">Hadir</div>
-                        </div>
-                        <div class="stat-mini-card">
-                            <div class="stat-mini-val" style="color: #3B82F6;"><?= $sakitCount ?></div>
-                            <div class="stat-mini-lbl">Sakit</div>
-                        </div>
-                        <div class="stat-mini-card">
-                            <div class="stat-mini-val" style="color: #EAB308;"><?= $izinCount ?></div>
-                            <div class="stat-mini-lbl">Izin</div>
-                        </div>
-                        <div class="stat-mini-card">
-                            <div class="stat-mini-val" style="color: #DC2626;"><?= $alfaCount ?></div>
-                            <div class="stat-mini-lbl">Alfa / Tanpa Keterangan</div>
-                        </div>
+                        <div class="stat-mini-val" style="color: #000000;"><?= $hadirCount ?></div>
+                        <div class="stat-mini-lbl" style="color: #000000;">Hadir</div>
                     </div>
-                </section>
+
+                    <!-- Card 2: Alpa -->
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-icon-box" style="background-color: #FCEBEB;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#791F1F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="10" y1="13" x2="14" y2="17"></line><line x1="14" y1="13" x2="10" y2="17"></line></svg>
+                        </div>
+                        <div class="stat-mini-val" style="color: #791F1F;"><?= $alfaCount ?></div>
+                        <div class="stat-mini-lbl" style="color: #791F1F;">Alpa</div>
+                    </div>
+
+                    <!-- Card 3: Izin -->
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-icon-box" style="background-color: #FFEECC;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D38C00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><line x1="12" y1="13" x2="12" y2="15"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        </div>
+                        <div class="stat-mini-val" style="color: #D38C00;"><?= $izinCount ?></div>
+                        <div class="stat-mini-lbl" style="color: #D38C00;">Izin</div>
+                    </div>
+
+                    <!-- Card 4: Kehadiran -->
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-icon-box" style="background-color: #E7D9FF;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8161BC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><circle cx="9.5" cy="13.5" r="1.5"></circle><circle cx="14.5" cy="16.5" r="1.5"></circle><line x1="14" y1="13" x2="10" y2="17"></line></svg>
+                        </div>
+                        <div class="stat-mini-val" style="color: #8161BC;"><?= $attendanceRate ?>%</div>
+                        <div class="stat-mini-lbl" style="color: #8161BC;">Kehadiran</div>
+                    </div>
+                </div>
 
                 <section class="presensi-card">
-                    <h3 class="presensi-title">Detail Log Kehadiran</h3>
+                    <h3 class="presensi-title" style="margin-bottom: 4px;"><?= htmlspecialchars($className) ?></h3>
+                    <div style="font-size: 14px; font-weight: 600; color: #797979; margin-bottom: 24px;">Riwayat Kehadiran</div>
+                    
                     <div class="table-responsive">
                         <table class="custom-table">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Tanggal</th>
-                                    <th>Materi/Modul</th>
-                                    <th>Status Kehadiran</th>
+                                    <th style="width: 10%;">Pertemuan</th>
+                                    <th style="width: 50%;">Materi</th>
+                                    <th style="width: 25%;">Tanggal</th>
+                                    <th style="width: 15%; text-align: center;">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -430,14 +504,26 @@ if ($role === 'Mahasiswa' && !empty($attendance)) {
                                     </tr>
                                 <?php else: ?>
                                     <?php foreach ($attendance as $index => $row): ?>
+                                        <?php
+                                        $dateVal = '';
+                                        if (!empty($row['Tanggal'])) {
+                                            $time = strtotime($row['Tanggal']);
+                                            $d = date('j', $time);
+                                            $m = $monthsIndo[(int)date('n', $time)] ?? date('F', $time);
+                                            $y = date('Y', $time);
+                                            $dateVal = "$d $m $y";
+                                        }
+                                        ?>
                                         <tr>
-                                            <td><?= $index + 1 ?></td>
-                                            <td><?= htmlspecialchars(date('d M Y', strtotime($row['Tanggal']))) ?></td>
+                                            <td style="color: #64748B; font-weight: 600;"><?= $index + 1 ?></td>
                                             <td><?= htmlspecialchars($row['Judul_Modul']) ?></td>
-                                            <td>
-                                                <span class="badge-status badge-<?= strtolower($row['Status_Kehadiran']) ?>">
-                                                    <?= htmlspecialchars($row['Status_Kehadiran']) ?>
-                                                </span>
+                                            <td><?= htmlspecialchars($dateVal) ?></td>
+                                            <td style="text-align: center;">
+                                                <?php if (!empty($row['Status_Kehadiran'])): ?>
+                                                    <span class="badge-status badge-<?= strtolower($row['Status_Kehadiran']) ?>">
+                                                        <?= htmlspecialchars($row['Status_Kehadiran']) ?>
+                                                    </span>
+                                                <?php endif; ?>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

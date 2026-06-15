@@ -74,6 +74,21 @@ class TugasController {
             exit;
         }
 
+        // Fetch task details to check deadline
+        $tugas = $this->tugasModel->getTugasById($tugasId);
+        if (!$tugas) {
+            $_SESSION['upload_error'] = "Tugas tidak ditemukan.";
+            header('Location: /rpl/public/index.php?action=upload_tugas');
+            exit;
+        }
+
+        // Check if deadline has passed
+        if (time() > strtotime($tugas['Deadline_Upload'])) {
+            $_SESSION['upload_error'] = "Batas waktu pengumpulan tugas telah berakhir. Upload ditolak.";
+            header('Location: /rpl/public/index.php?action=upload_tugas');
+            exit;
+        }
+
         if (!isset($_FILES['file_tugas']) || $_FILES['file_tugas']['error'] !== UPLOAD_ERR_OK) {
             $_SESSION['upload_error'] = "Gagal mengunggah file. Silakan pilih file kembali.";
             header('Location: /rpl/public/index.php?action=upload_tugas');
@@ -205,11 +220,11 @@ class TugasController {
         if ($role === 'Mahasiswa') {
             $classInfo = $this->kelasModel->getStudentClass($userId);
             
-            // Get attendance list for student
-            $query = "SELECT p.*, m.Judul_Modul FROM Tabel_Presensi p
-                      JOIN Tabel_Modul m ON p.ID_Modul = m.ID_Modul
-                      WHERE p.ID_User = :userId
-                      ORDER BY p.Tanggal ASC";
+            // Get all modules and left join student's attendance records
+            $query = "SELECT m.ID_Modul, m.Judul_Modul, p.ID_Presensi, p.Status_Kehadiran, p.Tanggal 
+                      FROM Tabel_Modul m
+                      LEFT JOIN Tabel_Presensi p ON m.ID_Modul = p.ID_Modul AND p.ID_User = :userId
+                      ORDER BY m.ID_Modul ASC";
             $stmt = $db->prepare($query);
             $stmt->bindParam(':userId', $userId);
             $stmt->execute();
@@ -326,6 +341,8 @@ class TugasController {
 
         $classInfo = null;
         $gradesList = [];
+        $progress = null;
+        $attendanceRate = 100.0;
 
         if ($role === 'Mahasiswa') {
             $classInfo = $this->kelasModel->getStudentClass($userId);
@@ -343,6 +360,11 @@ class TugasController {
             $stmt->bindParam(':userId', $userId);
             $stmt->execute();
             $gradesList = $stmt->fetchAll();
+
+            // Fetch progress and attendance rate
+            $progress = $this->tugasModel->getStudentProgress($userId);
+            require_once __DIR__ . '/../Models/UserModel.php';
+            $attendanceRate = (new UserModel())->getAttendanceRate($userId);
         } else {
             $query = "SELECT p.ID_Pengumpulan, p.File_Tugas, p.Waktu_Submit,
                              u.Nama_Lengkap as Nama_Mahasiswa, u.Username as NIM,
@@ -367,6 +389,57 @@ class TugasController {
         require_once __DIR__ . '/../Views/sanggah_nilai.php';
     }
 
+    // Render Sanggah Nilai Form Page (Student Side)
+    public function sanggahForm() {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        $userId = $_SESSION['user_id'];
+        $role = $_SESSION['active_role'] ?? 'Mahasiswa';
+        $db = (new Database())->getConnection();
+
+        if ($role !== 'Mahasiswa') {
+            header('Location: /rpl/public/index.php?action=sanggah_nilai');
+            exit;
+        }
+
+        // Fetch student class info
+        $classInfo = $this->kelasModel->getStudentClass($userId);
+
+        // Fetch student grades list (only graded ones)
+        $query = "SELECT p.ID_Pengumpulan, m.Judul_Modul, m.ID_Modul, n.Nilai_Angka, n.ID_Nilai, n.Alasan_Sanggah, n.Status_Tugas
+                  FROM Tabel_Pengumpulan p
+                  JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                  JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
+                  JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                  WHERE p.ID_User = :userId
+                  ORDER BY m.ID_Modul ASC";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+        $gradesList = $stmt->fetchAll();
+
+        // Fetch appeal history (where Alasan_Sanggah is not null)
+        $historyQuery = "SELECT p.ID_Pengumpulan, m.Judul_Modul, k.Nama_Kelas, n.Nilai_Angka, n.ID_Nilai, n.Alasan_Sanggah, n.Status_Tugas, n.Tanggapan_Sanggah, p.Waktu_Submit
+                         FROM Tabel_Pengumpulan p
+                         JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                         JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
+                         JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                         JOIN Tabel_User u ON p.ID_User = u.ID_User
+                         JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
+                         JOIN Tabel_Kelas k ON kl.ID_Kelas = k.ID_Kelas
+                         WHERE p.ID_User = :userId AND n.Alasan_Sanggah IS NOT NULL
+                         ORDER BY n.ID_Nilai DESC";
+        $stmtHistory = $db->prepare($historyQuery);
+        $stmtHistory->bindParam(':userId', $userId);
+        $stmtHistory->execute();
+        $appealsHistory = $stmtHistory->fetchAll();
+
+        require_once __DIR__ . '/../Views/sanggah_form.php';
+    }
+
     // Submit Appeal POST (Student side)
     public function submitSanggah() {
         if (!isset($_SESSION['user_id']) || ($_SESSION['active_role'] ?? '') !== 'Mahasiswa') {
@@ -375,7 +448,7 @@ class TugasController {
         }
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /rpl/public/index.php?action=sanggah_nilai');
+            header('Location: /rpl/public/index.php?action=sanggah_form');
             exit;
         }
 
@@ -385,7 +458,7 @@ class TugasController {
 
         if ($idNilai <= 0 || empty($alasan)) {
             $_SESSION['sanggah_error'] = "Alasan sanggahan tidak boleh kosong.";
-            header('Location: /rpl/public/index.php?action=sanggah_nilai');
+            header('Location: /rpl/public/index.php?action=sanggah_form');
             exit;
         }
 
@@ -402,7 +475,7 @@ class TugasController {
             $_SESSION['sanggah_error'] = "Gagal mengirim sanggahan nilai.";
         }
 
-        header('Location: /rpl/public/index.php?action=sanggah_nilai');
+        header('Location: /rpl/public/index.php?action=sanggah_form');
         exit;
     }
 
@@ -459,21 +532,51 @@ class TugasController {
         $userId = $_SESSION['user_id'];
         $role = $_SESSION['active_role'] ?? 'Mahasiswa';
         $db = (new Database())->getConnection();
-
         $classInfo = null;
         $finalGrades = [];
+        $studentClassesData = [];
 
         if ($role === 'Mahasiswa') {
             $classInfo = $this->kelasModel->getStudentClass($userId);
             
+            // Initial mockup classes data matching the mockup layout
+            $studentClassesData = [
+                [
+                    'name' => 'Sistem Digital',
+                    'presensi' => 85,
+                    'tugas' => 86,
+                    'nilai_akhir' => 89,
+                    'status' => 'Lulus'
+                ],
+                [
+                    'name' => 'Praktikum Basis Data',
+                    'presensi' => 86,
+                    'tugas' => 86,
+                    'nilai_akhir' => 89,
+                    'status' => 'Lulus'
+                ],
+                [
+                    'name' => 'Praktikum Pemrograman Web',
+                    'presensi' => 58,
+                    'tugas' => 55,
+                    'nilai_akhir' => 56,
+                    'status' => 'Mengulang'
+                ]
+            ];
+
             if ($classInfo) {
                 $classId = $classInfo['ID_Kelas'];
 
                 $progress = $this->tugasModel->getStudentProgress($userId);
+                require_once __DIR__ . '/../Models/UserModel.php';
                 $attendanceRate = (new UserModel())->getAttendanceRate($userId);
 
-                $avgScore = $progress['average_score'];
-                $statusKelulusan = ($avgScore >= 70 && $attendanceRate >= 75) ? 'Lulus' : 'Mengulang';
+                $avgScore = $progress ? $progress['average_score'] : 0.0;
+                $actualPresensi = $attendanceRate !== null ? round($attendanceRate) : 0;
+                $actualTugas = round($avgScore);
+                $actualNilaiAkhir = round((0.3 * $actualPresensi) + (0.7 * $actualTugas));
+                
+                $statusKelulusan = ($actualNilaiAkhir >= 70 && $actualPresensi >= 75) ? 'Lulus' : 'Mengulang';
 
                 $queryCheck = "SELECT ID_Nilai_Akhir FROM Tabel_Nilai_Akhir WHERE ID_User = :userId AND ID_Kelas = :classId LIMIT 1";
                 $stmtCheck = $db->prepare($queryCheck);
@@ -487,7 +590,7 @@ class TugasController {
                                     SET Nilai_Akhir = :avgScore, Status_Kelulusan = :status 
                                     WHERE ID_Nilai_Akhir = :id";
                     $stmtUpdate = $db->prepare($queryUpdate);
-                    $stmtUpdate->bindParam(':avgScore', $avgScore);
+                    $stmtUpdate->bindParam(':avgScore', $actualNilaiAkhir);
                     $stmtUpdate->bindParam(':status', $statusKelulusan);
                     $stmtUpdate->bindParam(':id', $existing['ID_Nilai_Akhir']);
                     $stmtUpdate->execute();
@@ -497,7 +600,7 @@ class TugasController {
                     $stmtInsert = $db->prepare($queryInsert);
                     $stmtInsert->bindParam(':userId', $userId);
                     $stmtInsert->bindParam(':classId', $classId);
-                    $stmtInsert->bindParam(':avgScore', $avgScore);
+                    $stmtInsert->bindParam(':avgScore', $actualNilaiAkhir);
                     $stmtInsert->bindParam(':status', $statusKelulusan);
                     $stmtInsert->execute();
                 }
@@ -508,6 +611,30 @@ class TugasController {
                 $stmtFinal->bindParam(':classId', $classId);
                 $stmtFinal->execute();
                 $finalGrades = $stmtFinal->fetch();
+
+                // Merge actual dynamic class information into mockup array
+                $actualClassName = $classInfo['Nama_Kelas'];
+                $found = false;
+                foreach ($studentClassesData as &$cData) {
+                    if (stripos($actualClassName, $cData['name']) !== false || stripos($cData['name'], $actualClassName) !== false) {
+                        $cData['name'] = $actualClassName;
+                        $cData['presensi'] = $actualPresensi;
+                        $cData['tugas'] = $actualTugas;
+                        $cData['nilai_akhir'] = $actualNilaiAkhir;
+                        $cData['status'] = $statusKelulusan;
+                        $found = true;
+                        break;
+                    }
+                }
+                if (!$found) {
+                    array_unshift($studentClassesData, [
+                        'name' => $actualClassName,
+                        'presensi' => $actualPresensi,
+                        'tugas' => $actualTugas,
+                        'nilai_akhir' => $actualNilaiAkhir,
+                        'status' => $statusKelulusan
+                    ]);
+                }
             }
         } else {
             $queryFinal = "SELECT na.*, u.Nama_Lengkap as Nama_Mahasiswa, u.Username as NIM, k.Nama_Kelas

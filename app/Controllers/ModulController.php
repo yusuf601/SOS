@@ -71,8 +71,18 @@ class ModulController {
             }
         }
 
-        // Fetch all modules
-        $modules = $this->modulModel->getAllModuls();
+        // Fetch all modules enriched with task deadline and student grade
+        $db = (new Database())->getConnection();
+        $query = "SELECT m.*, t.ID_Tugas, t.Deadline_Upload, p.ID_Pengumpulan, n.Nilai_Angka, n.Status_Tugas
+                  FROM Tabel_Modul m
+                  LEFT JOIN Tabel_Tugas t ON m.ID_Modul = t.ID_Modul
+                  LEFT JOIN Tabel_Pengumpulan p ON t.ID_Tugas = p.ID_Tugas AND p.ID_User = :userId
+                  LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                  ORDER BY m.ID_Modul ASC";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+        $modules = $stmt->fetchAll();
 
         require_once __DIR__ . '/../Views/bank_modul.php';
     }

@@ -44,36 +44,141 @@ $initials = substr($initials, 0, 2);
         }
 
         .custom-table th {
-            padding: 14px 16px;
-            background-color: #F8FAFC;
-            color: #475569;
+            color: #64748B;
+            font-size: 13px;
             font-weight: 600;
-            border-bottom: 2px solid #E2E8F0;
+            padding: 16px 20px;
+            border-bottom: 1px solid #E2E8F0;
+            background-color: #FFFFFF;
+            text-transform: none;
+            letter-spacing: normal;
         }
 
         .custom-table td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #E2E8F0;
-            color: #1E293B;
+            font-size: 14px;
             font-weight: 500;
+            color: #334155;
+            padding: 16px 20px;
+            border-bottom: 1px solid #F1F5F9;
+            vertical-align: middle;
+            transition: background-color var(--transition-speed) ease;
         }
 
-        .custom-table tr:hover {
+        .custom-table tr:hover td {
             background-color: #F8FAFC;
         }
 
         .badge-status {
             display: inline-flex;
             align-items: center;
-            padding: 4px 10px;
+            justify-content: center;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 9999px;
+            text-align: center;
+            width: 110px;
+        }
+
+        .badge-selesai { background-color: #DEF7EC; color: #03543F; }
+        .badge-sanggah { background-color: #FDE8E8; color: #9B1C1C; }
+        .badge-pending { background-color: #FEF3C7; color: #D97706; }
+
+        /* Course Cards Grid */
+        .matkul-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .matkul-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .matkul-card {
+            background-color: #FFFFFF;
             border-radius: 20px;
-            font-size: 12px;
+            padding: 24px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+            border: 0.5px solid rgba(54, 64, 135, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+        }
+
+        .matkul-card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .matkul-status-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .matkul-status-success {
+            background-color: #EAF3DE;
+            color: #27500A;
+        }
+
+        .matkul-status-danger {
+            background-color: #FCEBEB;
+            color: #791F1F;
+        }
+
+        .matkul-stats-divider {
+            border: none;
+            border-top: 0.5px solid #E2E8F0;
+            margin: 4px 0;
+        }
+
+        .matkul-stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .matkul-stat-label {
+            color: #8F8F8F;
+            font-weight: 500;
+        }
+
+        .matkul-stat-val {
+            color: #000000;
             font-weight: 600;
         }
 
-        .badge-selesai { background-color: rgba(22, 163, 74, 0.1); color: #16A34A; }
-        .badge-sanggah { background-color: rgba(220, 38, 38, 0.1); color: #DC2626; }
-        .badge-pending { background-color: rgba(202, 138, 4, 0.1); color: #CA8A04; }
+        .matkul-final-grade-block {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 4px;
+        }
+
+        .matkul-final-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .matkul-final-val {
+            font-size: 28px;
+            font-weight: 700;
+            color: #000000;
+            line-height: 1;
+        }
 
         .btn-action-table {
             display: inline-flex;
@@ -110,6 +215,38 @@ $initials = substr($initials, 0, 2);
         .btn-tanggapi:hover {
             background-color: #2b336b;
             transform: translateY(-1px);
+        }
+
+        .btn-action-outline {
+            background-color: #FFFFFF;
+            color: #334155;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            height: 32px;
+            padding: 0 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-action-outline:hover {
+            background-color: #F8FAFC;
+            border-color: #94A3B8;
+            color: #0F172A;
+        }
+
+        .btn-action-outline:disabled {
+            background-color: #F1F5F9;
+            color: #94A3B8;
+            border-color: #E2E8F0;
+            cursor: not-allowed;
+            box-shadow: none;
         }
 
         /* Modal styling */
@@ -292,6 +429,16 @@ $initials = substr($initials, 0, 2);
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                                 </span>
                             </a>
+                            <ul class="sidebar-submenu-list">
+                                <li class="sidebar-submenu-item">
+                                    <a href="/rpl/public/index.php?action=bank_modul">
+                                        <span>Bank Modul</span>
+                                        <span class="sidebar-menu-item-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="sidebar-menu-item">
                             <a href="/rpl/public/index.php?action=upload_tugas">
@@ -301,7 +448,7 @@ $initials = substr($initials, 0, 2);
                                 </span>
                             </a>
                         </li>
-                        <li class="sidebar-menu-item">
+                        <li class="sidebar-menu-item active">
                             <a href="/rpl/public/index.php?action=sanggah_nilai">
                                 <span>Lihat Nilai</span>
                                 <span class="sidebar-menu-item-icon">
@@ -317,8 +464,8 @@ $initials = substr($initials, 0, 2);
                                 </span>
                             </a>
                         </li>
-                        <li class="sidebar-menu-item active">
-                            <a href="/rpl/public/index.php?action=sanggah_nilai">
+                        <li class="sidebar-menu-item">
+                            <a href="/rpl/public/index.php?action=sanggah_form">
                                 <span>Sanggah Nilai</span>
                                 <span class="sidebar-menu-item-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -399,7 +546,7 @@ $initials = substr($initials, 0, 2);
     <main class="main-workspace">
         <!-- Top Navbar -->
         <header class="workspace-navbar">
-            <h2 class="navbar-title"><?= ($role === 'Mahasiswa') ? 'Sanggah Nilai' : 'Tanggapan Sanggah Nilai' ?></h2>
+            <h2 class="navbar-title"><?= ($role === 'Mahasiswa') ? 'Lihat Nilai' : 'Tanggapan Sanggah Nilai' ?></h2>
             <div class="navbar-profile">
                 <button type="button" style="background:none; border:none; color:white; cursor:pointer;" aria-label="Notifikasi">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
@@ -425,67 +572,182 @@ $initials = substr($initials, 0, 2);
 
             <?php if ($role === 'Mahasiswa'): ?>
                 <!-- STUDENT VIEW -->
+                <?php
+                $className = $classInfo['Nama_Kelas'] ?? 'Sistem Digital A';
+                
+                // Calculate dynamic stats
+                $avgScoreVal = $progress ? number_format((float)$progress['average_score'], 1) : '82.4';
+                $finalGradeVal = $progress ? number_format((float)$progress['average_score'], 1) : '83.0';
+                $presensiVal = ($attendanceRate !== null) ? round($attendanceRate) . '%' : '85%';
+                $isPass = $progress ? ((float)$progress['average_score'] >= 70) : true;
+
+                $monthsIndo = [
+                    1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+                    5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+                    9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+                ];
+                ?>
+
+                <!-- Grid of Course Cards (nilai matkul) at the TOP -->
+                <div class="matkul-grid">
+                    <!-- Card 1: Student's Actual Class (Dynamic card) -->
+                    <article class="matkul-card">
+                        <span class="matkul-card-title"><?= htmlspecialchars($className) ?></span>
+                        <?php if ($isPass): ?>
+                            <div class="matkul-status-box matkul-status-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Di atas nilai minimum (70)</span>
+                            </div>
+                        <?php else: ?>
+                            <div class="matkul-status-box matkul-status-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                <span>Di bawah nilai minimum (70)</span>
+                            </div>
+                        <?php endif; ?>
+                        <hr class="matkul-stats-divider">
+                        <div class="matkul-stat-row">
+                            <span class="matkul-stat-label">Rata-rata tugas</span>
+                            <span class="matkul-stat-val"><?= $avgScoreVal ?></span>
+                        </div>
+                        <div class="matkul-stat-row">
+                            <span class="matkul-stat-label">Nilai presensi (30%)</span>
+                            <span class="matkul-stat-val"><?= $presensiVal ?></span>
+                        </div>
+                        <div class="matkul-final-grade-block">
+                            <span class="matkul-final-label">Nilai Akhir</span>
+                            <span class="matkul-final-val" style="color: <?= $isPass ? '#16A34A' : '#DC2626' ?>;"><?= $finalGradeVal ?></span>
+                        </div>
+                    </article>
+
+                    <!-- Card 2: Jaringan Komputer A (Static/Placeholder warning card) -->
+                    <article class="matkul-card">
+                        <span class="matkul-card-title">Jarigan Komputer A</span>
+                        <div class="matkul-status-box matkul-status-danger">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                            <span>Di atas nilai minimum (70)</span>
+                        </div>
+                        <hr class="matkul-stats-divider">
+                        <div class="matkul-stat-row">
+                            <span class="matkul-stat-label">Rata-rata tugas</span>
+                            <span class="matkul-stat-val">55.0</span>
+                        </div>
+                        <div class="matkul-stat-row">
+                            <span class="matkul-stat-label">Nilai presensi (30%)</span>
+                            <span class="matkul-stat-val">58%</span>
+                        </div>
+                        <div class="matkul-final-grade-block">
+                            <span class="matkul-final-label">Nilai Akhir</span>
+                            <span class="matkul-final-val" style="color: #DC2626;">56.0</span>
+                        </div>
+                    </article>
+
+                    <!-- Card 3: Student's Actual Class Duplicate (matching mockup) -->
+                    <article class="matkul-card">
+                        <span class="matkul-card-title"><?= htmlspecialchars($className) ?></span>
+                        <?php if ($isPass): ?>
+                            <div class="matkul-status-box matkul-status-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Di atas nilai minimum (70)</span>
+                            </div>
+                        <?php else: ?>
+                            <div class="matkul-status-box matkul-status-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                <span>Di bawah nilai minimum (70)</span>
+                            </div>
+                        <?php endif; ?>
+                        <hr class="matkul-stats-divider">
+                        <div class="matkul-stat-row">
+                            <span class="matkul-stat-label">Rata-rata tugas</span>
+                            <span class="matkul-stat-val"><?= $avgScoreVal ?></span>
+                        </div>
+                        <div class="matkul-stat-row">
+                            <span class="matkul-stat-label">Nilai presensi (30%)</span>
+                            <span class="matkul-stat-val"><?= $presensiVal ?></span>
+                        </div>
+                        <div class="matkul-final-grade-block">
+                            <span class="matkul-final-label">Nilai Akhir</span>
+                            <span class="matkul-final-val" style="color: <?= $isPass ? '#16A34A' : '#DC2626' ?>;"><?= $finalGradeVal ?></span>
+                        </div>
+                    </article>
+                </div>
+
                 <section class="sanggah-card">
-                    <h3 class="sanggah-title">Daftar Nilai & Sanggahan Tugas</h3>
+                    <h3 class="sanggah-title" style="font-size: 20px; font-weight: 700; color: #000000; margin-bottom: 24px; text-align: left;"><?= htmlspecialchars($className) ?></h3>
                     <div class="table-responsive">
                         <table class="custom-table">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Modul</th>
-                                    <th>Nilai</th>
-                                    <th>Status</th>
-                                    <th>Feedback Asisten</th>
-                                    <th>Detail Sanggahan</th>
-                                    <th style="width: 120px;">Aksi</th>
+                                    <th style="width: 8%;">Modul</th>
+                                    <th style="width: 50%;">Judul</th>
+                                    <th style="width: 12%; text-align: center;">Nilai</th>
+                                    <th style="width: 20%;">Feedback</th>
+                                    <th style="width: 10%;"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if (empty($gradesList)): ?>
                                     <tr>
-                                        <td colspan="7" style="text-align: center; color: #94A3B8; padding: 24px;">Belum ada nilai tugas yang diterbitkan.</td>
+                                        <td colspan="5" style="text-align: center; color: #94A3B8; padding: 24px;">Belum ada nilai tugas yang diterbitkan.</td>
                                     </tr>
                                 <?php else: ?>
                                     <?php foreach ($gradesList as $idx => $grade): ?>
+                                        <?php
+                                        $dateVal = '-';
+                                        if (!empty($grade['Waktu_Submit'])) {
+                                            $time = strtotime($grade['Waktu_Submit']);
+                                            $d = date('j', $time);
+                                            $m = $monthsIndo[(int)date('n', $time)] ?? date('F', $time);
+                                            $y = date('Y', $time);
+                                            $dateVal = "$d $m $y";
+                                        }
+                                        $score = (float)$grade['Nilai_Angka'];
+                                        ?>
                                         <tr>
-                                            <td><?= $idx + 1 ?></td>
+                                            <td style="color: #64748B; font-weight: 600;"><?= $idx + 1 ?></td>
                                             <td>
-                                                <div style="font-weight: 600;"><?= htmlspecialchars($grade['Judul_Modul']) ?></div>
-                                                <div style="font-size: 12px; color: #64748B; margin-top: 2px;">
-                                                    File: <a href="/rpl/public/assets/uploads/tugas/<?= htmlspecialchars($grade['File_Tugas']) ?>" target="_blank" style="color: var(--btn-primary); text-decoration: underline;"><?= htmlspecialchars(basename($grade['File_Tugas'])) ?></a>
+                                                <div style="font-weight: 600; color: #1E293B; display: flex; align-items: center; gap: 8px;">
+                                                    <span style="display: inline-flex; align-items: center; justify-content: center; background-color: #FEE2E2; color: #DC2626; border-radius: 4px; padding: 2px 6px; font-size: 10px; font-weight: 800; font-family: monospace; border: 1px solid #FCA5A5; line-height: 1;">PDF</span>
+                                                    <?= htmlspecialchars($grade['Judul_Modul']) ?>
                                                 </div>
-                                            </td>
-                                            <td style="font-size: 16px; font-weight: 700;"><?= htmlspecialchars($grade['Nilai_Angka']) ?></td>
-                                            <td>
-                                                <span class="badge-status badge-<?= strtolower($grade['Status_Tugas']) ?>">
-                                                    <?= htmlspecialchars($grade['Status_Tugas']) ?>
-                                                </span>
-                                            </td>
-                                            <td style="max-width: 200px; font-size: 13px; color: #475569;">
-                                                <?= !empty($grade['Feedback']) ? htmlspecialchars($grade['Feedback']) : '<span style="color: #94A3B8; font-style: italic;">Tidak ada feedback</span>' ?>
-                                            </td>
-                                            <td style="max-width: 250px; font-size: 13px;">
-                                                <?php if (!empty($grade['Alasan_Sanggah'])): ?>
-                                                    <div><strong>Sanggahan Anda:</strong> <?= htmlspecialchars($grade['Alasan_Sanggah']) ?></div>
-                                                    <?php if (!empty($grade['Tanggapan_Sanggah'])): ?>
-                                                        <div style="margin-top: 6px; padding-top: 6px; border-top: 1px dashed #E2E8F0; color: var(--btn-primary);">
-                                                            <strong>Balasan Asisten:</strong> <?= htmlspecialchars($grade['Tanggapan_Sanggah']) ?>
+                                                
+                                                <!-- Dynamic Feedback & Appeal Details -->
+                                                <div style="font-size: 12px; color: #64748B; margin-top: 6px; display: flex; flex-direction: column; gap: 4px; padding-left: 42px;">
+                                                    <div>
+                                                        File: <a href="/rpl/public/assets/uploads/tugas/<?= htmlspecialchars($grade['File_Tugas']) ?>" target="_blank" style="color: var(--btn-primary); text-decoration: underline;"><?= htmlspecialchars(basename($grade['File_Tugas'])) ?></a>
+                                                    </div>
+                                                    <?php if (!empty($grade['Feedback'])): ?>
+                                                        <div style="color: #475569; background-color: #F8FAFC; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #CBD5E1; margin-top: 4px; max-width: 90%;">
+                                                            <strong>Feedback Asisten:</strong> <?= htmlspecialchars($grade['Feedback']) ?>
                                                         </div>
                                                     <?php endif; ?>
-                                                <?php else: ?>
-                                                    <span style="color: #94A3B8; font-style: italic;">Belum mengajukan sanggahan</span>
-                                                <?php endif; ?>
+                                                    <?php if (!empty($grade['Alasan_Sanggah'])): ?>
+                                                        <div style="color: #991B1B; background-color: #FEF2F2; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #FCA5A5; margin-top: 4px; max-width: 90%;">
+                                                            <strong>Sanggahan Anda:</strong> <?= htmlspecialchars($grade['Alasan_Sanggah']) ?>
+                                                            <?php if (!empty($grade['Tanggapan_Sanggah'])): ?>
+                                                                <div style="margin-top: 4px; padding-top: 4px; border-top: 1px dashed #FCA5A5; color: var(--btn-primary);">
+                                                                    <strong>Jawaban Asisten:</strong> <?= htmlspecialchars($grade['Tanggapan_Sanggah']) ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
                                             </td>
-                                            <td>
-                                                <?php if ($grade['Status_Tugas'] === 'Selesai' && empty($grade['Alasan_Sanggah'])): ?>
-                                                    <button type="button" class="btn-action-table btn-sanggah" 
-                                                            onclick="openSanggahModal(<?= $grade['ID_Nilai'] ?>, '<?= htmlspecialchars(addslashes($grade['Judul_Modul'])) ?>', <?= $grade['Nilai_Angka'] ?>)">
-                                                        Sanggah
-                                                    </button>
+                                            <td style="font-size: 16px; font-weight: 700; text-align: center; color: #1E293B;"><?= htmlspecialchars(round($grade['Nilai_Angka'])) ?></td>
+                                            <td><?= htmlspecialchars($dateVal) ?></td>
+                                            <td style="text-align: center;">
+                                                <?php if ($score >= 70): ?>
+                                                    <a href="/rpl/public/assets/uploads/tugas/<?= htmlspecialchars($grade['File_Tugas']) ?>" target="_blank" class="btn-action-outline">Lihat</a>
                                                 <?php else: ?>
-                                                    <button type="button" class="btn-action-table" disabled style="background-color: #E2E8F0; color: #94A3B8; cursor: not-allowed;">
-                                                        Locked
-                                                    </button>
+                                                    <?php if (empty($grade['Alasan_Sanggah'])): ?>
+                                                        <button type="button" class="btn-action-outline" 
+                                                                onclick="openSanggahModal(<?= $grade['ID_Nilai'] ?>, '<?= htmlspecialchars(addslashes($grade['Judul_Modul'])) ?>', <?= $grade['Nilai_Angka'] ?>)">
+                                                            Sanggah
+                                                        </button>
+                                                    <?php else: ?>
+                                                        <button type="button" class="btn-action-outline" disabled style="opacity: 0.6; cursor: not-allowed;">
+                                                            Sanggah
+                                                        </button>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -522,6 +784,7 @@ $initials = substr($initials, 0, 2);
                         </form>
                     </div>
                 </div>
+
 
                 <script>
                     function openSanggahModal(idNilai, judulModul, nilaiLama) {

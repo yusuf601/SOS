@@ -600,17 +600,10 @@ body.bg-campus-theme::before {
 .sidebar-submenu-list {
     list-style: none;
     padding-left: 20px;
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 4px;
     margin-top: 4px;
-}
-
-/* Show submenu when parent is active, parent is hovered, or parent has active child */
-.sidebar-menu-item.active .sidebar-submenu-list,
-.sidebar-menu-item:hover .sidebar-submenu-list,
-.sidebar-menu-item:has(.sidebar-submenu-item.active) .sidebar-submenu-list {
-    display: flex;
 }
 
 .sidebar-submenu-item > a {

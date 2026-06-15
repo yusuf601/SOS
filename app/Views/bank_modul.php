@@ -19,17 +19,25 @@ $initials = substr($initials, 0, 2);
     <title>Bank Modul - EduLab UHO</title>
     <link rel="stylesheet" href="/rpl/public/assets/css/style.css">
     <style>
-        /* CSS Extension specifically for Bank Modul layout */
+        /* CSS Extension specifically for Bank Modul layout matching Figma design */
+        .workspace-content {
+            background-color: #F0F0F0;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Class Selector Card (Only shown to Dosen/Asisten) */
         .class-selector-card {
-            background-color: #FFFFFF; /* Pure white card */
-            border-radius: 15px;
-            padding: 32px; /* Increased whitespace */
-            border: none; /* Removed border */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02); /* Elevated shadow */
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+            border: 0.5px solid rgba(54, 64, 135, 0.2);
             display: flex;
             flex-direction: column;
             gap: 16px;
-            margin-bottom: 24px;
         }
 
         .class-selector-header {
@@ -41,9 +49,9 @@ $initials = substr($initials, 0, 2);
         }
 
         .class-selector-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            color: var(--text-color-dark);
+            color: #364087;
         }
 
         .custom-select-wrapper {
@@ -56,8 +64,8 @@ $initials = substr($initials, 0, 2);
             width: 100%;
             height: 48px;
             padding: 0 16px;
-            background-color: #FFFFFF; /* Pure white select background */
-            border: 1px solid #E2E8F0; /* Softer border */
+            background-color: #FFFFFF;
+            border: 1px solid #E2E8F0;
             border-radius: 8px;
             font-size: 15px;
             font-weight: 600;
@@ -90,7 +98,7 @@ $initials = substr($initials, 0, 2);
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
             padding-top: 16px;
-            border-top: 1px solid #FAFBFD; /* Softer border */
+            border-top: 1px solid #E2E8F0;
         }
 
         .meta-info-item {
@@ -113,133 +121,282 @@ $initials = substr($initials, 0, 2);
             color: var(--text-color-dark);
         }
 
-        /* Modul Cards */
-        .moduls-container {
+        /* Alert Info Bar */
+        .alert-info-bar {
+            background-color: rgba(212, 201, 255, 0.34);
+            border-radius: 5px;
+            padding: 16px;
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
         }
 
-        .modul-card {
-            background-color: #FFFFFF; /* Pure white card */
-            border-radius: 15px;
-            border: none; /* Removed border */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02); /* Elevated shadow */
-            overflow: hidden;
+        .alert-info-icon-wrapper {
+            background-color: #7C5DFA;
+            color: #FFFFFF;
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
-            transition: all var(--transition-speed) ease;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            flex-shrink: 0;
         }
 
-        .modul-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08), 0 4px 15px rgba(0, 0, 0, 0.04); /* Elevated hover shadow */
+        .alert-info-text {
+            color: #5D56B8;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.2;
         }
 
-        .modul-card-header {
+        /* Modul Berlangsung */
+        .modul-berlangsung-card {
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+            border: 0.5px solid rgba(54, 64, 135, 0.2);
+        }
+
+        .modul-berlangsung-header {
+            font-size: 16px;
+            font-weight: 600;
+            color: #364087;
+            margin-bottom: 12px;
+        }
+
+        .modul-berlangsung-strip {
+            background-color: rgba(215, 229, 242, 0.61);
+            border-radius: 5px;
+            padding: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 24px 32px; /* Increased padding */
-            background-color: #FFFFFF; /* Pure white header */
-            border-bottom: none; /* Removed border */
             flex-wrap: wrap;
             gap: 16px;
         }
 
-        .modul-identity {
+        .modul-berlangsung-left {
             display: flex;
             align-items: center;
             gap: 16px;
         }
 
-        .modul-number-badge {
-            background-color: var(--btn-primary);
-            color: var(--text-color-light);
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
+        .modul-berlangsung-icon {
+            background-color: #2B587F;
+            color: #FFFFFF;
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 15px;
-            font-weight: 700;
             flex-shrink: 0;
-            box-shadow: 0px 4px 8px rgba(54, 64, 135, 0.2);
         }
 
-        .modul-title-block {
+        .modul-berlangsung-details {
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
 
-        .modul-title {
-            font-size: 18px;
+        .modul-berlangsung-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.2;
+        }
+
+        .modul-berlangsung-meta {
+            font-size: 12px;
+            color: #4B5563;
+        }
+
+        .modul-berlangsung-meta-date {
+            color: #D97706; /* orange */
+            font-weight: 600;
+        }
+
+        .modul-berlangsung-badges {
+            display: flex;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .badge-yellow {
+            background-color: #FFF3BF;
+            color: #000000;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 30px;
+        }
+
+        .badge-red {
+            background-color: #FEE2E2;
+            color: #DC2626;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 30px;
+        }
+
+        .badge-green {
+            background-color: #DEF7EC;
+            color: #03543F;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 30px;
+        }
+
+        .modul-berlangsung-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 120px;
+        }
+
+        .btn-download-modul {
+            background-color: #2B577F;
+            color: #FFFFFF;
+            font-size: 10px;
+            font-weight: 600;
+            border: 0.2px solid rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+
+        .btn-download-modul:hover {
+            background-color: #1e3f5c;
+        }
+
+        .btn-upload-tugas {
+            background-color: #FFFFFF;
+            color: #2B577F;
+            font-size: 10px;
+            font-weight: 600;
+            border: 0.5px solid #2B577F;
+            border-radius: 5px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-upload-tugas:hover {
+            background-color: #2B577F;
+            color: #FFFFFF;
+        }
+
+        /* Modul Selesai Table styling */
+        .modul-selesai-card {
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+            border: 0.5px solid rgba(54, 64, 135, 0.2);
+        }
+
+        .modul-selesai-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modul-selesai-title {
+            font-size: 20px;
             font-weight: 600;
             color: #000000;
         }
 
-        .modul-date {
-            font-size: 13px;
-            color: #9B9B9B;
-            font-weight: 500;
+        .modul-selesai-subtitle {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.5);
+            font-weight: 600;
         }
 
-        .modul-card-body {
-            padding: 28px 32px; /* Increased padding */
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+        .modul-table-wrapper {
+            overflow-x: auto;
+            width: 100%;
         }
 
-        .modul-description {
-            font-size: 15px;
-            color: #475569;
-            line-height: 1.6;
-            font-weight: 500;
+        .modul-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
         }
 
-        .download-actions-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-            border-top: 1px solid #FAFBFD; /* Softer border */
-            padding-top: 16px;
-        }
-
-        .modul-download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            height: 42px;
-            padding: 0 18px;
-            border-radius: 8px;
-            text-decoration: none;
+        .modul-table th {
+            color: rgba(0, 0, 0, 0.5);
             font-size: 14px;
             font-weight: 600;
-            transition: all var(--transition-speed) ease;
+            padding: 12px 16px;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.4);
         }
 
-        .btn-materi {
-            background-color: rgba(54, 64, 135, 0.1);
-            color: var(--btn-primary);
+        .modul-table td {
+            font-size: 12px;
+            font-weight: 500;
+            color: #000000;
+            padding: 16px;
+            border-bottom: 0.2px solid rgba(0, 0, 0, 0.4);
+            vertical-align: middle;
         }
 
-        .btn-materi:hover {
-            background-color: var(--btn-primary);
-            color: var(--text-color-light);
+        .modul-table tr:last-child td {
+            border-bottom: none;
         }
 
-        .btn-petunjuk {
-            background-color: rgba(219, 36, 30, 0.08);
-            color: #DB241E;
+        .grade-value {
+            font-weight: 700;
+            color: #000000;
         }
 
-        .btn-petunjuk:hover {
-            background-color: #DB241E;
-            color: var(--text-color-light);
+        .grade-red {
+            font-weight: 700;
+            color: #DC2626;
+        }
+
+        .grade-pending {
+            font-weight: 600;
+            color: #D97706;
+        }
+
+        .btn-table-download {
+            background: none;
+            border: 1px solid #E2E8F0;
+            border-radius: 5px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #4B5563;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-table-download:hover {
+            background-color: #F3F4F6;
+            color: #111827;
         }
 
         /* Toast Styling */
@@ -354,7 +511,7 @@ $initials = substr($initials, 0, 2);
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="/rpl/public/index.php?action=sanggah_nilai">
+                        <a href="/rpl/public/index.php?action=sanggah_form">
                             <span>Sanggah Nilai</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -413,94 +570,222 @@ $initials = substr($initials, 0, 2);
 
         <!-- Content Body -->
         <div class="workspace-content">
-            <!-- Class Selector -->
-            <section class="class-selector-card">
-                <div class="class-selector-header">
-                    <span class="class-selector-title">Pilih Kelas Praktikum:</span>
-                    <div class="custom-select-wrapper">
-                        <select class="class-select" id="classSelector" aria-label="Pilih kelas praktikum">
-                            <?php if ($_SESSION['active_role'] === 'Mahasiswa' && $classInfo): ?>
-                                <option value="<?= htmlspecialchars($classInfo['ID_Kelas']) ?>" selected><?= htmlspecialchars($classInfo['Nama_Kelas']) ?></option>
-                            <?php else: ?>
+            <?php
+            // Group modules into active (Modul Berlangsung) and completed (Modul Selesai)
+            $activeModul = null;
+            $activeModulIndex = -1;
+            $completedModules = [];
+            
+            $now = time();
+            foreach ($modules as $index => $modul) {
+                $deadline = $modul['Deadline_Upload'] ? strtotime($modul['Deadline_Upload']) : null;
+                
+                // Active modul is the first module with a future deadline
+                if ($deadline && $deadline > $now && !$activeModul) {
+                    $activeModul = $modul;
+                    $activeModulIndex = $index;
+                } else {
+                    $completedModules[] = [
+                        'index' => $index + 1,
+                        'data' => $modul
+                    ];
+                }
+            }
+
+            // Fallback: If no future deadline is found but we have modules, the last module is active (if role is Student)
+            if (!$activeModul && !empty($modules) && $_SESSION['active_role'] === 'Mahasiswa') {
+                $activeModul = end($modules);
+                $activeModulIndex = count($modules) - 1;
+                array_pop($completedModules);
+            }
+            ?>
+
+            <!-- Class Selector (Only shown to Dosen and Asisten, hidden for Mahasiswa as per Figma screenshot) -->
+            <?php if ($_SESSION['active_role'] !== 'Mahasiswa'): ?>
+                <section class="class-selector-card">
+                    <div class="class-selector-header">
+                        <span class="class-selector-title">Pilih Kelas Praktikum:</span>
+                        <div class="custom-select-wrapper">
+                            <select class="class-select" id="classSelector" aria-label="Pilih kelas praktikum">
                                 <?php foreach ($allClasses as $cls): ?>
                                     <option value="<?= htmlspecialchars($cls['ID_Kelas']) ?>"><?= htmlspecialchars($cls['Nama_Kelas']) ?></option>
                                 <?php endforeach; ?>
-                            <?php endif; ?>
-                        </select>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- Class Meta Details -->
-                <div class="class-meta-info">
-                    <div class="meta-info-item">
-                        <span class="meta-info-label">Dosen Pengampu</span>
-                        <span class="meta-info-value" id="lecturerName"><?= htmlspecialchars($lecturerName) ?></span>
+                    
+                    <div class="class-meta-info">
+                        <div class="meta-info-item">
+                            <span class="meta-info-label">Dosen Pengampu</span>
+                            <span class="meta-info-value" id="lecturerName"><?= htmlspecialchars($lecturerName) ?></span>
+                        </div>
+                        <div class="meta-info-item">
+                            <span class="meta-info-label">Asisten Praktikum</span>
+                            <span class="meta-info-value" id="assistantName"><?= htmlspecialchars($assistantName) ?></span>
+                        </div>
+                        <div class="meta-info-item">
+                            <span class="meta-info-label">Jadwal & Ruang</span>
+                            <span class="meta-info-value" id="classSchedule"><?= htmlspecialchars($schedule) ?></span>
+                        </div>
                     </div>
-                    <div class="meta-info-item">
-                        <span class="meta-info-label">Asisten Praktikum</span>
-                        <span class="meta-info-value" id="assistantName"><?= htmlspecialchars($assistantName) ?></span>
-                    </div>
-                    <div class="meta-info-item">
-                        <span class="meta-info-label">Jadwal & Ruang</span>
-                        <span class="meta-info-value" id="classSchedule"><?= htmlspecialchars($schedule) ?></span>
-                    </div>
-                    <div class="meta-info-item">
-                        <span class="meta-info-label">Kelompok Kamu</span>
-                        <span class="meta-info-value" id="groupName"><?= htmlspecialchars($classInfo['Nama_Kelompok'] ?? 'Tidak Terdaftar') ?></span>
-                    </div>
-                </div>
-            </section>
+                </section>
+            <?php endif; ?>
 
             <!-- Download Error Alert -->
             <?php if (isset($_SESSION['download_error'])): ?>
-                <div style="background-color: #FEE2E2; color: #DC2626; padding: 16px; border-radius: 12px; font-size: 15px; font-weight: 600; border: 1px solid #FCA5A5; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.05);">
+                <div style="background-color: #FEE2E2; color: #DC2626; padding: 16px; border-radius: 12px; font-size: 15px; font-weight: 600; border: 1px solid #FCA5A5; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.05); margin-bottom: 8px;">
                     <?= htmlspecialchars($_SESSION['download_error']); unset($_SESSION['download_error']); ?>
                 </div>
             <?php endif; ?>
 
-            <!-- Moduls list -->
-            <section class="moduls-container" id="modulsContainer">
-                <?php foreach ($modules as $index => $modul): ?>
-                    <article class="modul-card" id="modul-<?= $modul['ID_Modul'] ?>">
-                        <header class="modul-card-header">
-                            <div class="modul-identity">
-                                <div class="modul-number-badge"><?= sprintf("%02d", $index + 1) ?></div>
-                                <div class="modul-title-block">
-                                    <h3 class="modul-title"><?= htmlspecialchars($modul['Judul_Modul']) ?></h3>
-                                    <span class="modul-date">Diunggah pada: <?= date('d M Y', strtotime('2025-09-08 + ' . ($index * 7) . ' days')) ?></span>
-                                </div>
+            <!-- Info Bar (Figma Sibling Group 29) -->
+            <div class="alert-info-bar">
+                <div class="alert-info-icon-wrapper">i</div>
+                <div class="alert-info-text">
+                    Klik tombol Unduh untuk mengunduh modul. Modul yang belum dirilis dosen tidak bisa diakses.
+                </div>
+            </div>
+
+            <!-- Modul Berlangsung (Figma Sibling Group 44) -->
+            <?php if ($activeModul): ?>
+                <section class="modul-berlangsung-card">
+                    <h3 class="modul-berlangsung-header">Modul Berlangsung</h3>
+                    <div class="modul-berlangsung-strip">
+                        <div class="modul-berlangsung-left">
+                            <div class="modul-berlangsung-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
                             </div>
-                        </header>
-                        <div class="modul-card-body">
-                            <p class="modul-description">
-                                <?php
-                                $desc = "";
-                                if ($modul['ID_Modul'] == 1) {
-                                    $desc = "Mempelajari sintaks dasar HTML5, struktur tag dokumen web, form input element, dan pengelompokan konten secara semantik.";
-                                } elseif ($modul['ID_Modul'] == 2) {
-                                    $desc = "Mengatur gaya tampilan halaman web dengan CSS, pemodelan box model, pewarnaan, tipografi, serta penataan tata letak menggunakan Flexbox.";
-                                } elseif ($modul['ID_Modul'] == 3) {
-                                    $desc = "Penerapan CSS Grid Layout untuk desain grid 2 dimensi kompleks, serta media queries untuk pembuatan layout yang responsif di berbagai perangkat.";
-                                } else {
-                                    $desc = "Mempelajari konsep modul lanjutan untuk platform manajemen tugas praktikum EduLab UHO.";
-                                }
-                                echo htmlspecialchars($desc);
-                                ?>
-                            </p>
-                            
-                            <div class="download-actions-row">
-                                <a href="/rpl/public/index.php?action=download_materi&file=<?= urlencode($modul['File_Materi']) ?>" class="modul-download-btn btn-materi">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    <span>Unduh Modul</span>
-                                </a>
-                                <a href="#" class="modul-download-btn btn-petunjuk" onclick="event.preventDefault(); showToast('Petunjuk tugas terintegrasi di modul materi.');">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                                    <span>Unduh Petunjuk Tugas</span>
-                                </a>
+                            <div class="modul-berlangsung-details">
+                                <h4 class="modul-berlangsung-title">Modul <?= $activeModulIndex + 1 ?>: <?= htmlspecialchars($activeModul['Judul_Modul']) ?></h4>
+                                <span class="modul-berlangsung-meta">
+                                    Pertemuan <?= $activeModulIndex + 1 ?> · Deadline: 
+                                    <span class="modul-berlangsung-meta-date">
+                                        <?= $activeModul['Deadline_Upload'] ? date('d M Y, H:i', strtotime($activeModul['Deadline_Upload'])) : 'Belum Diatur' ?>
+                                    </span>
+                                </span>
+                                <?php if ($_SESSION['active_role'] === 'Mahasiswa'): ?>
+                                    <div class="modul-berlangsung-badges">
+                                        <?php
+                                        if ($activeModul['Deadline_Upload']) {
+                                            $diff = strtotime($activeModul['Deadline_Upload']) - time();
+                                            $days = ceil($diff / (3600 * 24));
+                                            if ($days > 0) {
+                                                echo '<span class="badge-yellow">' . $days . ' hari lagi</span>';
+                                            } else {
+                                                echo '<span class="badge-red">Terlambat</span>';
+                                            }
+                                        }
+                                        
+                                        if ($activeModul['ID_Pengumpulan']) {
+                                            echo '<span class="badge-green">Sudah dikumpulkan</span>';
+                                        } else {
+                                            echo '<span class="badge-red">Belum dikumpulkan</span>';
+                                        }
+                                        ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
-                    </article>
-                <?php endforeach; ?>
+                        <div class="modul-berlangsung-actions">
+                            <a href="/rpl/public/index.php?action=download_materi&file=<?= urlencode($activeModul['File_Materi']) ?>" class="btn-download-modul">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Unduh Modul</span>
+                            </a>
+                            <?php if ($_SESSION['active_role'] === 'Mahasiswa'): ?>
+                                <a href="/rpl/public/index.php?action=upload_tugas" class="btn-upload-tugas">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                    <span>Upload Tugas</span>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </section>
+            <?php endif; ?>
+
+            <!-- Modul Selesai (Figma Sibling Group 30) -->
+            <section class="modul-selesai-card">
+                <div class="modul-selesai-header">
+                    <h3 class="modul-selesai-title">Modul Selesai</h3>
+                    <span class="modul-selesai-subtitle">Pertemuan 1-<?= count($completedModules) > 0 ? end($completedModules)['index'] : '6' ?></span>
+                </div>
+                <div class="modul-table-wrapper">
+                    <table class="modul-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Judul Modul</th>
+                                <th>Pertemuan</th>
+                                <th>Deadline Tugas</th>
+                                <?php if ($_SESSION['active_role'] === 'Mahasiswa'): ?>
+                                    <th>Nilaimu</th>
+                                <?php endif; ?>
+                                <th>Unduh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($completedModules)): ?>
+                                <tr>
+                                    <td colspan="<?= $_SESSION['active_role'] === 'Mahasiswa' ? 6 : 5 ?>" style="text-align: center; color: rgba(0,0,0,0.5);">Belum ada modul yang selesai.</td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($completedModules as $item): 
+                                    $idx = $item['index'];
+                                    $m = $item['data'];
+                                    $deadlineStr = $m['Deadline_Upload'] ? date('d M Y', strtotime($m['Deadline_Upload'])) : '-';
+                                    
+                                    // Determine the grade display (Only for students)
+                                    $gradeDisplay = '-';
+                                    if ($_SESSION['active_role'] === 'Mahasiswa') {
+                                        if ($m['ID_Pengumpulan']) {
+                                            if ($m['Nilai_Angka'] !== null) {
+                                                $gradeDisplay = '<span class="grade-value">' . round($m['Nilai_Angka']) . '</span>';
+                                            } else {
+                                                $gradeDisplay = '<span class="grade-pending">Diproses</span>';
+                                            }
+                                        } else {
+                                            // If deadline has passed and no submission
+                                            $deadlineTime = $m['Deadline_Upload'] ? strtotime($m['Deadline_Upload']) : null;
+                                            if ($deadlineTime && $deadlineTime < $now) {
+                                                $gradeDisplay = '<span class="grade-red">Tidak Kumpul</span>';
+                                            }
+                                        }
+                                    }
+                                ?>
+                                    <tr>
+                                        <td><?= $idx ?></td>
+                                        <td>
+                                            <!-- Red PDF Icon -->
+                                            <svg class="pdf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;">
+                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                <polyline points="14 2 14 8 20 8"></polyline>
+                                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                                <polyline points="10 9 9 9 8 9"></polyline>
+                                            </svg>
+                                            <span style="vertical-align: middle;"><?= htmlspecialchars($m['Judul_Modul']) ?></span>
+                                        </td>
+                                        <td><?= $idx ?></td>
+                                        <td><?= $deadlineStr ?></td>
+                                        <?php if ($_SESSION['active_role'] === 'Mahasiswa'): ?>
+                                            <td><?= $gradeDisplay ?></td>
+                                        <?php endif; ?>
+                                        <td>
+                                            <a href="/rpl/public/index.php?action=download_materi&file=<?= urlencode($m['File_Materi']) ?>" class="btn-table-download" aria-label="Unduh modul">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </section>
         </div>
     </main>

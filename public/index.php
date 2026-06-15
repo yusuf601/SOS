@@ -118,6 +118,12 @@ switch ($action) {
         $tugasController->sanggahNilai();
         break;
 
+    case 'sanggah_form':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->sanggahForm();
+        break;
+
     case 'submit_sanggah':
         require_once __DIR__ . '/../app/Controllers/TugasController.php';
         $tugasController = new TugasController();

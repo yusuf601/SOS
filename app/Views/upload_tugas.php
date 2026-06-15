@@ -19,17 +19,25 @@ $initials = substr($initials, 0, 2);
     <title>Upload Tugas - EduLab UHO</title>
     <link rel="stylesheet" href="/rpl/public/assets/css/style.css">
     <style>
-        /* CSS Extension specifically for Upload Tugas layout */
+        /* CSS Extension specifically for Upload Tugas layout matching Figma design */
+        .workspace-content {
+            background-color: #F0F0F0;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Class Selector Card (Only shown to Dosen/Asisten) */
         .class-selector-card {
-            background-color: #FFFFFF; /* Pure white card */
-            border-radius: 15px;
-            padding: 32px; /* Increased whitespace */
-            border: none; /* Removed border */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02); /* Elevated shadow */
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+            border: 0.5px solid rgba(54, 64, 135, 0.2);
             display: flex;
             flex-direction: column;
             gap: 16px;
-            margin-bottom: 24px;
         }
 
         .class-selector-header {
@@ -41,9 +49,9 @@ $initials = substr($initials, 0, 2);
         }
 
         .class-selector-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            color: var(--text-color-dark);
+            color: #364087;
         }
 
         .custom-select-wrapper {
@@ -56,8 +64,8 @@ $initials = substr($initials, 0, 2);
             width: 100%;
             height: 48px;
             padding: 0 16px;
-            background-color: #FFFFFF; /* Pure white select background */
-            border: 1px solid #E2E8F0; /* Softer border */
+            background-color: #FFFFFF;
+            border: 1px solid #E2E8F0;
             border-radius: 8px;
             font-size: 15px;
             font-weight: 600;
@@ -85,400 +93,146 @@ $initials = substr($initials, 0, 2);
             pointer-events: none;
         }
 
-        /* Progress Header Panel */
-        .progress-summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-
-        .summary-card {
-            background-color: #FFFFFF; /* Pure white card */
-            border-radius: 12px;
-            padding: 20px 24px; /* Increased padding */
-            border: none; /* Removed border */
+        /* Banner Danger Bar */
+        .alert-danger-bar {
+            background-color: #FFF1F2;
+            border-radius: 10px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             gap: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.01); /* Elevated shadow */
+            border: 0.5px solid rgba(220, 38, 38, 0.3);
+            margin-bottom: 8px;
         }
 
-        .summary-icon-wrapper {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
+        .alert-danger-icon-wrapper {
+            background-color: #EF4444;
+            color: #FFFFFF;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        .icon-success { background-color: rgba(22, 163, 74, 0.1); color: #16A34A; }
-        .icon-warning { background-color: rgba(202, 138, 4, 0.1); color: #CA8A04; }
-        .icon-danger { background-color: rgba(220, 38, 38, 0.1); color: #DC2626; }
-
-        .summary-details {
+        .alert-danger-details {
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
 
-        .summary-value {
-            font-size: 24px;
+        .alert-danger-title {
+            color: #991B1B;
+            font-size: 14px;
             font-weight: 700;
-            color: #000000;
         }
 
-        .summary-label {
-            font-size: 13px;
-            font-weight: 500;
-            color: #8A8A8A;
-        }
-
-        /* Task Cards */
-        .tasks-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .task-card {
-            background-color: #FFFFFF; /* Pure white card */
-            border-radius: 15px;
-            border: none; /* Removed border */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02); /* Elevated shadow */
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: all var(--transition-speed) ease;
-        }
-
-        .task-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08), 0 4px 15px rgba(0, 0, 0, 0.04); /* Elevated hover shadow */
-        }
-
-        /* Left status borders */
-        .task-card-graded { border-left: 5px solid #16A34A; }
-        .task-card-pending { border-left: 5px solid #CA8A04; }
-        .task-card-missing { border-left: 5px solid #DC2626; }
-        .task-card-revision { border-left: 5px solid #EA580C; }
-
-        .task-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px 32px; /* Increased padding */
-            background-color: #FFFFFF; /* Pure white header */
-            border-bottom: none; /* Removed border */
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .task-identity {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .task-number-badge {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 15px;
-            font-weight: 700;
-            flex-shrink: 0;
-            color: white;
-        }
-
-        .badge-graded { background-color: #16A34A; box-shadow: 0px 4px 8px rgba(22, 163, 74, 0.2); }
-        .badge-pending { background-color: #CA8A04; box-shadow: 0px 4px 8px rgba(202, 138, 4, 0.2); }
-        .badge-missing { background-color: #DC2626; box-shadow: 0px 4px 8px rgba(220, 38, 38, 0.2); }
-        .badge-revision { background-color: #EA580C; box-shadow: 0px 4px 8px rgba(234, 88, 12, 0.2); }
-
-        .task-title-block {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .task-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #000000;
-        }
-
-        .task-deadline {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .deadline-normal { color: #8A8A8A; }
-        .deadline-urgent { color: #DC2626; }
-
-        .status-badge {
-            padding: 6px 14px;
-            border-radius: 30px;
+        .alert-danger-subtitle {
+            color: #7F1D1D;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
+        }
+
+        .alert-close-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        .alert-close-btn:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Active Upload Card */
+        .upload-card {
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 24px 32px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+            border: 0.5px solid rgba(54, 64, 135, 0.2);
             text-align: center;
         }
 
-        .status-badge-graded { background-color: rgba(22, 163, 74, 0.1); color: #16A34A; }
-        .status-badge-pending { background-color: rgba(202, 138, 4, 0.1); color: #CA8A04; }
-        .status-badge-missing { background-color: rgba(220, 38, 38, 0.1); color: #DC2626; }
-        .status-badge-revision { background-color: rgba(234, 88, 12, 0.1); color: #EA580C; }
-
-        .task-card-body {
-            padding: 28px 32px; /* Increased padding */
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .task-instruction-box {
-            background-color: #FAFBFC; /* Lighter container background */
-            border-radius: 8px;
-            padding: 14px 18px;
-            border: 1px solid #F1F5F9; /* Softer border */
-        }
-
-        .instruction-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: #64748B;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        .instruction-content {
-            font-size: 15px;
-            color: var(--text-color-dark);
-            line-height: 1.5;
-            font-weight: 500;
-        }
-
-        /* Submitted File Row */
-        .submitted-file-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: rgba(54, 64, 135, 0.03);
-            border: 1px solid rgba(54, 64, 135, 0.1);
-            border-radius: 8px;
-            padding: 12px 18px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .submitted-file-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .file-icon {
-            color: var(--btn-primary);
-        }
-
-        .file-details {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .file-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-color-dark);
-        }
-
-        .file-date {
-            font-size: 12px;
-            color: #8A8A8A;
-            font-weight: 500;
-        }
-
-        /* Action Buttons */
-        .actions-row {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        .btn-action {
-            height: 42px;
-            padding: 0 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-speed) ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .btn-upload {
-            background-color: var(--btn-primary);
-            color: white;
-            border: none;
-            box-shadow: 0px 4px 10px rgba(54, 64, 135, 0.15);
-        }
-
-        .btn-upload:hover {
-            background-color: #2b336b;
-            transform: translateY(-1px);
-        }
-
-        .btn-reupload {
-            background-color: rgba(54, 64, 135, 0.08);
-            color: var(--btn-primary);
-            border: 1px solid rgba(54, 64, 135, 0.2);
-        }
-
-        .btn-reupload:hover {
-            background-color: rgba(54, 64, 135, 0.15);
-        }
-
-        .btn-cancel-submit {
-            background-color: transparent;
-            color: #FF8A8A;
-            border: 1px solid rgba(255, 138, 138, 0.3);
-        }
-
-        .btn-cancel-submit:hover {
-            background-color: rgba(255, 138, 138, 0.05);
-        }
-
-        /* Revision Comments */
-        .revision-box {
-            background-color: rgba(234, 88, 12, 0.04);
-            border-left: 4px solid #EA580C;
-            border-radius: 0 8px 8px 0;
-            padding: 14px 18px;
-        }
-
-        .revision-header {
-            font-size: 13px;
-            font-weight: 700;
-            color: #EA580C;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .revision-comment {
-            font-size: 14px;
-            color: #1E293B;
-            line-height: 1.4;
-            font-style: italic;
-            font-weight: 500;
-        }
-
-        /* Upload Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 550px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            animation: modalFadeIn 0.3s ease;
-            overflow: hidden;
-        }
-
-        @keyframes modalFadeIn {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            padding: 20px 24px;
-            background-color: var(--btn-primary);
-            color: white;
+        .upload-card-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            text-align: left;
         }
 
-        .modal-title-text {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            line-height: 1;
-            padding: 0;
-        }
-
-        .modal-body {
-            padding: 24px;
+        .upload-card-title-block {
             display: flex;
             flex-direction: column;
-            gap: 20px;
         }
 
+        .upload-card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .upload-card-subtitle {
+            font-size: 12px;
+            color: #6B7280;
+            margin-top: 4px;
+        }
+
+        .badge-yellow {
+            background-color: #FFF3BF;
+            color: #000000;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 30px;
+            align-self: flex-start;
+        }
+
+        /* Drag & Drop */
         .upload-drag-area {
             border: 2px dashed #CBD5E1;
             border-radius: 12px;
-            padding: 32px 20px;
+            padding: 40px 20px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            background-color: #F8FAFC;
+            gap: 8px;
+            background-color: #FFFFFF;
             cursor: pointer;
             transition: all var(--transition-speed) ease;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .upload-drag-area:hover, .upload-drag-area.dragover {
-            border-color: var(--btn-primary);
+            border-color: #2B577F;
             background-color: rgba(54, 64, 135, 0.02);
         }
 
         .upload-icon {
-            color: var(--btn-primary);
+            color: #6B7280;
+            margin-bottom: 4px;
         }
 
         .upload-text-primary {
-            font-size: 15px;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--text-color-dark);
+            color: #4B5563;
         }
 
         .upload-text-secondary {
-            font-size: 13px;
-            color: #9B9B9B;
-            font-weight: 500;
+            font-size: 10px;
+            color: #9CA3AF;
         }
 
         .file-input-hidden {
@@ -493,54 +247,151 @@ $initials = substr($initials, 0, 2);
             background-color: rgba(54, 64, 135, 0.05);
             border-radius: 8px;
             border: 1px solid rgba(54, 64, 135, 0.1);
+            max-width: 600px;
+            margin: 8px auto 0 auto;
         }
 
         .file-icon-modal {
-            color: var(--btn-primary);
+            color: #2B577F;
         }
 
         .file-name-text {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            color: var(--text-color-dark);
+            color: #111827;
             flex-grow: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            text-align: left;
         }
 
         .remove-file-btn {
             background: none;
             border: none;
-            color: #FF8A8A;
+            color: #EF4444;
             cursor: pointer;
             font-size: 18px;
         }
 
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid #E2E8F0;
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            background-color: #F8FAFC;
-        }
-
-        .btn-cancel {
-            height: 42px;
-            padding: 0 20px;
-            background-color: #E2E8F0;
-            color: #475569;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
+        .btn-submit-upload {
+            background-color: #2B577F;
+            color: #FFFFFF;
+            border: 0.2px solid rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            height: 32px;
+            padding: 0 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 12px;
             font-weight: 600;
+            text-decoration: none;
             cursor: pointer;
+            margin-top: 16px;
             transition: background-color var(--transition-speed) ease;
         }
 
-        .btn-cancel:hover {
-            background-color: #CBD5E1;
+        .btn-submit-upload:hover {
+            background-color: #1e3f5c;
+        }
+
+        .btn-submit-upload:disabled {
+            background-color: #E2E8F0;
+            color: #9CA3AF;
+            cursor: not-allowed;
+            border: none;
+        }
+
+        /* Riwayat Pengumpulan Card */
+        .riwayat-card {
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+            border: 0.5px solid rgba(54, 64, 135, 0.2);
+        }
+
+        .riwayat-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .riwayat-table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .riwayat-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .riwayat-table th {
+            color: #64748B;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 12px 16px;
+            border-bottom: 1px solid #E2E8F0;
+            background-color: #F8FAFC;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .riwayat-table td {
+            font-size: 13px;
+            font-weight: 500;
+            color: #334155;
+            padding: 12px 16px;
+            border-bottom: 1px solid #F1F5F9;
+            vertical-align: middle;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        .riwayat-table tr:hover td {
+            background-color: #F8FAFC;
+        }
+
+        .riwayat-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Status Badges */
+        .status-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 9999px;
+            text-align: center;
+            width: 110px;
+        }
+
+        .status-dikumpulkan {
+            background-color: #DEF7EC;
+            color: #03543F;
+        }
+
+        .status-tidak-kumpul {
+            background-color: #FDE8E8;
+            color: #9B1C1C;
+        }
+
+        .status-pending {
+            background-color: #FEF3C7;
+            color: #D97706;
+        }
+
+        .grade-value {
+            font-weight: 700;
+            color: #1E293B;
         }
 
         /* Toast Styling */
@@ -655,7 +506,7 @@ $initials = substr($initials, 0, 2);
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="/rpl/public/index.php?action=sanggah_nilai">
+                        <a href="/rpl/public/index.php?action=sanggah_form">
                             <span>Sanggah Nilai</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -714,13 +565,57 @@ $initials = substr($initials, 0, 2);
 
         <!-- Content Body -->
         <div class="workspace-content">
-            <!-- Class Selector -->
+            <?php
+            // Parse tasks to find active and missed tasks
+            $rejectedTugas = null;
+            $rejectedTugasIndex = -1;
+            $activeTugasItem = null;
+            $activeTugasIndex = -1;
+
+            $months = [
+                'January' => 'Januari', 'February' => 'Februari', 'March' => 'Maret',
+                'April' => 'April', 'May' => 'Mei', 'June' => 'Juni',
+                'July' => 'Juli', 'August' => 'Agustus', 'September' => 'September',
+                'October' => 'Oktober', 'November' => 'November', 'December' => 'Desember'
+            ];
+
+            $monthsShort = [
+                'January' => 'Jan', 'February' => 'Feb', 'March' => 'Mar',
+                'April' => 'Apr', 'May' => 'Mei', 'June' => 'Jun',
+                'July' => 'Jul', 'August' => 'Agu', 'September' => 'Sep',
+                'October' => 'Okt', 'November' => 'Nov', 'December' => 'Des'
+            ];
+
+            foreach ($tasksData as $index => $item) {
+                $tugas = $item['tugas'];
+                $sub = $item['submission'];
+                
+                $deadlinePassed = time() > strtotime($tugas['Deadline_Upload']);
+                $hasSubmitted = ($sub !== null && ($sub['Status_Tugas'] === 'Selesai' || $sub['Status_Tugas'] === 'Pending' || $sub['Status_Tugas'] === 'Revisi' || $sub['Status_Tugas'] === 'Sanggah'));
+                
+                if (!$deadlinePassed && $activeTugasItem === null) {
+                    $activeTugasItem = $item;
+                    $activeTugasIndex = $index;
+                }
+                
+                if ($deadlinePassed && !$hasSubmitted) {
+                    $rejectedTugas = $tugas;
+                    $rejectedTugasIndex = $index;
+                }
+            }
+
+            // Hide Class Selector and Progress Summary for Mahasiswa
+            $isMahasiswa = ($_SESSION['active_role'] ?? 'Mahasiswa') === 'Mahasiswa';
+            ?>
+
+            <!-- Class Selector (Hidden for Mahasiswa) -->
+            <?php if (!$isMahasiswa): ?>
             <section class="class-selector-card">
                 <div class="class-selector-header">
                     <span class="class-selector-title">Pilih Kelas Praktikum:</span>
                     <div class="custom-select-wrapper">
                         <select class="class-select" id="classSelector" aria-label="Pilih kelas praktikum">
-                            <?php if ($_SESSION['active_role'] === 'Mahasiswa' && $classInfo): ?>
+                            <?php if ($classInfo): ?>
                                 <option value="<?= htmlspecialchars($classInfo['ID_Kelas']) ?>" selected><?= htmlspecialchars($classInfo['Nama_Kelas']) ?></option>
                             <?php else: ?>
                                 <?php foreach ($allClasses as $cls): ?>
@@ -731,6 +626,7 @@ $initials = substr($initials, 0, 2);
                     </div>
                 </div>
             </section>
+            <?php endif; ?>
 
             <!-- Success/Error Alert -->
             <?php if (isset($_SESSION['upload_success'])): ?>
@@ -744,7 +640,8 @@ $initials = substr($initials, 0, 2);
                 </div>
             <?php endif; ?>
 
-            <!-- Progress Summary Row -->
+            <!-- Progress Summary Row (Hidden for Mahasiswa) -->
+            <?php if (!$isMahasiswa): ?>
             <section class="progress-summary-grid" id="progressSummary">
                 <div class="summary-card">
                     <div class="summary-icon-wrapper icon-success">
@@ -774,157 +671,175 @@ $initials = substr($initials, 0, 2);
                     </div>
                 </div>
             </section>
+            <?php endif; ?>
 
-            <!-- Tasks List -->
-            <section class="tasks-container" id="tasksContainer">
-                <?php if (empty($tasksData)): ?>
-                    <p style="text-align: center; color: #9B9B9B; font-weight: 600; padding: 32px;">Belum ada tugas praktikum yang dirilis.</p>
-                <?php else: ?>
-                    <?php foreach ($tasksData as $index => $item): 
-                        $tugas = $item['tugas'];
-                        $sub = $item['submission'];
-                        
-                        // Determine status
-                        $status = 'missing';
-                        $statusText = 'Belum Mengumpulkan';
-                        $borderClass = 'task-card-missing';
-                        $badgeClass = 'badge-missing';
-                        
-                        if ($sub) {
-                            if ($sub['Status_Tugas'] === 'Selesai') {
-                                $status = 'graded';
-                                $statusText = 'Sudah Dinilai';
-                                $borderClass = 'task-card-graded';
-                                $badgeClass = 'badge-graded';
-                            } elseif ($sub['Status_Tugas'] === 'Revisi') {
-                                $status = 'revision';
-                                $statusText = 'Revisi';
-                                $borderClass = 'task-card-revision';
-                                $badgeClass = 'badge-revision';
+            <!-- Red Alert Banner for Missed Module -->
+            <?php if ($isMahasiswa && $rejectedTugas): 
+                $engMonth = date('F', strtotime($rejectedTugas['Deadline_Upload']));
+                $indShortMonth = $monthsShort[$engMonth] ?? date('M', strtotime($rejectedTugas['Deadline_Upload']));
+                $formattedRejectedDeadline = date('j', strtotime($rejectedTugas['Deadline_Upload'])) . ' ' . $indShortMonth . ' ' . date('Y', strtotime($rejectedTugas['Deadline_Upload'])) . ', ' . date('H:i', strtotime($rejectedTugas['Deadline_Upload']));
+            ?>
+            <div class="alert-danger-bar">
+                <div class="alert-danger-icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <div class="alert-danger-details">
+                    <span class="alert-danger-title">Modul <?= $rejectedTugasIndex + 1 ?>-Upload ditolak</span>
+                    <span class="alert-danger-subtitle">Deadline berakhir <?= $formattedRejectedDeadline ?></span>
+                </div>
+                <button type="button" class="alert-close-btn" onclick="closeAlertBanner(this)" aria-label="Tutup">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#991B1B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <?php endif; ?>
+
+            <!-- Active Upload Area (Only for Mahasiswa and when there is an active task) -->
+            <?php if ($isMahasiswa): ?>
+                <?php if ($activeTugasItem): 
+                    $activeTugas = $activeTugasItem['tugas'];
+                    $activeSub = $activeTugasItem['submission'];
+                    
+                    // Format active task deadline
+                    $engMonth = date('F', strtotime($activeTugas['Deadline_Upload']));
+                    $indShortMonth = $monthsShort[$engMonth] ?? date('M', strtotime($activeTugas['Deadline_Upload']));
+                    $formattedActiveDeadline = date('j', strtotime($activeTugas['Deadline_Upload'])) . ' ' . $indShortMonth . ' ' . date('Y', strtotime($activeTugas['Deadline_Upload'])) . ', ' . date('H:i', strtotime($activeTugas['Deadline_Upload']));
+                    
+                    // Calculate countdown badge
+                    $badgeText = "";
+                    $timeDiff = strtotime($activeTugas['Deadline_Upload']) - time();
+                    if ($timeDiff > 0) {
+                        $daysLeft = ceil($timeDiff / 86400);
+                        if ($daysLeft > 1) {
+                            $badgeText = "$daysLeft hari lagi";
+                        } elseif ($daysLeft == 1) {
+                            $hoursLeft = ceil($timeDiff / 3600);
+                            if ($hoursLeft > 1) {
+                                $badgeText = "$hoursLeft jam lagi";
                             } else {
-                                $status = 'pending';
-                                $statusText = 'Menunggu Penilaian';
-                                $borderClass = 'task-card-pending';
-                                $badgeClass = 'badge-pending';
+                                $minsLeft = ceil($timeDiff / 60);
+                                $badgeText = "$minsLeft menit lagi";
                             }
                         }
-                    ?>
-                        <article class="task-card <?= $borderClass ?>" id="task-<?= $tugas['ID_Tugas'] ?>">
-                            <header class="task-card-header">
-                                <div class="task-identity">
-                                    <div class="task-number-badge <?= $badgeClass ?>"><?= sprintf("%02d", $index + 1) ?></div>
-                                    <div class="task-title-block">
-                                        <h3 class="task-title"><?= htmlspecialchars($tugas['Judul_Modul']) ?></h3>
-                                        <span class="task-deadline <?= $status === 'missing' ? 'deadline-urgent' : 'deadline-normal' ?>">
-                                            Deadline: <?= date('d M Y, H:i', strtotime($tugas['Deadline_Upload'])) ?> WITA
-                                        </span>
-                                    </div>
-                                </div>
-                                <span class="status-badge status-badge-<?= $status ?>"><?= $statusText ?></span>
-                            </header>
-                            <div class="task-card-body">
-                                <div class="task-instruction-box">
-                                    <span class="instruction-title">Instruksi Tugas:</span>
-                                    <p class="instruction-content"><?= htmlspecialchars($tugas['Instruksi_Tugas']) ?></p>
-                                </div>
-                                
-                                <?php if ($status === 'graded'): ?>
-                                    <div class="submitted-file-row">
-                                        <div class="submitted-file-info">
-                                            <span class="file-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                            </span>
-                                            <div class="file-details">
-                                                <span class="file-name"><?= htmlspecialchars($sub['File_Tugas']) ?></span>
-                                                <span class="file-date">Diunggah pada: <?= date('d M Y, H:i', strtotime($sub['Waktu_Submit'])) ?> WITA</span>
-                                            </div>
-                                        </div>
-                                        <?php if (!empty($sub['Nilai_Angka'])): ?>
-                                            <div style="margin-top: 12px; padding: 12px; background-color: rgba(22, 163, 74, 0.05); border-radius: 8px; border: 1px dashed rgba(22, 163, 74, 0.2);">
-                                                <span style="font-weight: 700; color: #16A34A; font-size: 14px;">Nilai: <?= $sub['Nilai_Angka'] ?> / 100</span>
-                                                <?php if (!empty($sub['Feedback'])): ?>
-                                                    <p style="margin: 4px 0 0 0; font-size: 13px; color: #475569;">Feedback: <i>"<?= htmlspecialchars($sub['Feedback']) ?>"</i></p>
-                                                <?php endif; ?>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                <?php elseif ($status === 'pending'): ?>
-                                    <div class="submitted-file-row">
-                                        <div class="submitted-file-info">
-                                            <span class="file-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                            </span>
-                                            <div class="file-details">
-                                                <span class="file-name"><?= htmlspecialchars($sub['File_Tugas']) ?></span>
-                                                <span class="file-date">Diunggah pada: <?= date('d M Y, H:i', strtotime($sub['Waktu_Submit'])) ?> WITA</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="actions-row">
-                                        <a href="/rpl/public/index.php?action=cancel_tugas&id_tugas=<?= $tugas['ID_Tugas'] ?>" class="btn-action btn-cancel-submit" onclick="return confirm('Apakah Anda yakin ingin membatalkan pengumpulan tugas ini?')">Batalkan Pengumpulan</a>
-                                        <button type="button" class="btn-action btn-reupload" onclick="openUploadModal(<?= $tugas['ID_Tugas'] ?>, '<?= htmlspecialchars($tugas['Judul_Modul']) ?>')">Kumpul Ulang</button>
-                                    </div>
-                                <?php elseif ($status === 'revision'): ?>
-                                    <?php if (!empty($sub['Feedback'])): ?>
-                                        <div class="revision-box">
-                                            <span class="revision-header">Catatan Revisi:</span>
-                                            <p class="revision-comment">"<?= htmlspecialchars($sub['Feedback']) ?>"</p>
-                                        </div>
-                                    <?php endif; ?>
-                                    <div class="actions-row">
-                                        <button type="button" class="btn-action btn-upload" onclick="openUploadModal(<?= $tugas['ID_Tugas'] ?>, '<?= htmlspecialchars($tugas['Judul_Modul']) ?>')">Kumpulkan Revisi</button>
-                                    </div>
-                                <?php else: ?>
-                                    <div class="actions-row">
-                                        <button type="button" class="btn-action btn-upload" onclick="openUploadModal(<?= $tugas['ID_Tugas'] ?>, '<?= htmlspecialchars($tugas['Judul_Modul']) ?>')">Kumpulkan Tugas</button>
-                                    </div>
-                                <?php endif; ?>
+                    }
+                ?>
+                <section class="upload-card" style="margin-bottom: 24px;">
+                    <div class="upload-card-header">
+                        <div class="upload-card-title-block">
+                            <span class="upload-card-title">Modul <?= $activeTugasIndex + 1 ?>-<?= htmlspecialchars($activeTugas['Judul_Modul']) ?></span>
+                            <span class="upload-card-subtitle">Deadline Tugas: <?= $formattedActiveDeadline ?></span>
+                        </div>
+                        <?php if (!empty($badgeText)): ?>
+                            <span class="badge-yellow"><?= $badgeText ?></span>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <form id="inlineUploadForm" action="/rpl/public/index.php?action=submit_tugas" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="id_tugas" value="<?= $activeTugas['ID_Tugas'] ?>">
+                        
+                        <!-- Drag and drop zone -->
+                        <div class="upload-drag-area" id="inlineDragArea" onclick="triggerInlineFileSelect()">
+                            <span class="upload-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            </span>
+                            <span class="upload-text-primary">Klik atau seret file PDF laporan ke sini</span>
+                            <span class="upload-text-secondary">Format PDF - Maks. 20MB</span>
+                            <input type="file" name="file_tugas" id="inlineFileInput" class="file-input-hidden" accept=".pdf" onchange="handleInlineFileSelect(event)">
+                        </div>
+
+                        <!-- Display selected file info -->
+                        <div class="selected-file-display" id="inlineFileDisplay">
+                            <span class="file-icon-modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                            </span>
+                            <span class="file-name-text" id="inlineFileName">laporan_praktikum.pdf</span>
+                            <button type="button" class="remove-file-btn" onclick="removeInlineSelectedFile(event)">&times;</button>
+                        </div>
+
+                        <?php if ($activeSub): ?>
+                            <div style="margin-top: 12px; font-size: 13px; color: #16A34A; font-weight: 600;">
+                                Tugas Terkirim: <a href="/rpl/public/assets/uploads/tugas/<?= htmlspecialchars($activeSub['File_Tugas']) ?>" target="_blank" style="color: #2B577F; text-decoration: underline;"><?= htmlspecialchars($activeSub['File_Tugas']) ?></a> (Diunggah pada: <?= date('d M Y, H:i', strtotime($activeSub['Waktu_Submit'])) ?> WITA)
                             </div>
-                        </article>
-                    <?php endforeach; ?>
+                        <?php endif; ?>
+
+                        <button type="submit" class="btn-submit-upload" id="btnSubmitInlineUpload" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            Upload
+                        </button>
+                    </form>
+                </section>
+                <?php else: ?>
+                <section class="upload-card" style="margin-bottom: 24px;">
+                    <p style="text-align: center; color: #9B9B9B; font-weight: 600; padding: 32px; margin: 0;">Tidak ada modul tugas aktif yang memerlukan pengumpulan saat ini.</p>
+                </section>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <!-- Riwayat Pengumpulan Tugas Table -->
+            <section class="riwayat-card">
+                <h3 class="riwayat-title">Riwayat Pengumpulan Tugas</h3>
+                <?php if (empty($tasksData)): ?>
+                    <p style="text-align: center; color: #9B9B9B; font-weight: 600; padding: 32px; margin: 0;">Belum ada riwayat pengumpulan tugas.</p>
+                <?php else: ?>
+                    <div class="riwayat-table-wrapper">
+                        <table class="riwayat-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 6%; text-align: center;">No</th>
+                                    <th style="width: 24%;">Kelas</th>
+                                    <th style="width: 12%; text-align: center;">Modul</th>
+                                    <th style="width: 28%;">Deadline Tugas</th>
+                                    <th style="width: 15%; text-align: center;">Nilaimu</th>
+                                    <th style="width: 15%; text-align: center;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($tasksData as $index => $item): 
+                                    $tugas = $item['tugas'];
+                                    $sub = $item['submission'];
+                                    
+                                    // Determine status and style
+                                    $statusClass = 'status-tidak-kumpul';
+                                    $statusText = 'Tidak Kumpul';
+                                    $scoreText = '-';
+                                    
+                                    if ($sub) {
+                                        $statusClass = 'status-dikumpulkan';
+                                        $statusText = 'Dikumpulkan';
+                                        if (!empty($sub['Nilai_Angka'])) {
+                                            $scoreText = round($sub['Nilai_Angka']);
+                                        }
+                                    } else {
+                                        $deadlinePassed = time() > strtotime($tugas['Deadline_Upload']);
+                                        if (!$deadlinePassed) {
+                                            $statusClass = 'status-pending';
+                                            $statusText = 'Belum Kumpul';
+                                        }
+                                    }
+                                    
+                                    // Format deadline
+                                    $engMonth = date('F', strtotime($tugas['Deadline_Upload']));
+                                    $indMonth = $months[$engMonth] ?? $engMonth;
+                                    $formattedDeadline = date('j', strtotime($tugas['Deadline_Upload'])) . ' ' . $indMonth . ' ' . date('Y', strtotime($tugas['Deadline_Upload']));
+                                    
+                                    // Class name
+                                    $className = $classInfo['Nama_Kelas'] ?? 'Pemrograman Web';
+                                ?>
+                                    <tr>
+                                        <td style="text-align: center; color: #64748B; font-weight: 600;"><?= $index + 1 ?></td>
+                                        <td><?= htmlspecialchars($className) ?></td>
+                                        <td style="text-align: center;"><?= $index + 1 ?></td>
+                                        <td><?= $formattedDeadline ?></td>
+                                        <td class="grade-value" style="text-align: center;"><?= $scoreText ?></td>
+                                        <td style="text-align: center;"><span class="status-badge-pill <?= $statusClass ?>"><?= $statusText ?></span></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 <?php endif; ?>
             </section>
         </div>
     </main>
-</div>
-
-<!-- Upload Modal -->
-<div class="modal" id="uploadModal" aria-hidden="true" role="dialog">
-    <div class="modal-content">
-        <header class="modal-header">
-            <h3 class="modal-title-text" id="modalTitle">Unggah Tugas: Modul 07</h3>
-            <button type="button" class="close-btn" onclick="closeUploadModal()">&times;</button>
-        </header>
-        <form id="uploadForm" action="/rpl/public/index.php?action=submit_tugas" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="id_tugas" id="submitModulId" value="">
-            <div class="modal-body">
-                <p style="font-size: 14px; color: #475569; font-weight: 500;">Silakan unggah file laporan tugas praktikum Anda (format .zip, .rar, atau .pdf, maksimal 10MB).</p>
-                
-                <!-- Drag and drop zone -->
-                <div class="upload-drag-area" id="dragArea" onclick="triggerFileSelect()">
-                    <span class="upload-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                    </span>
-                    <span class="upload-text-primary">Tarik & lepas file di sini atau klik untuk mencari</span>
-                    <span class="upload-text-secondary">Mendukung file ZIP, RAR, PDF hingga 10MB</span>
-                    <input type="file" name="file_tugas" id="fileInput" class="file-input-hidden" accept=".zip,.rar,.pdf" onchange="handleFileSelect(event)">
-                </div>
-
-                <!-- Display selected file info -->
-                <div class="selected-file-display" id="fileDisplay">
-                    <span class="file-icon-modal">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                    </span>
-                    <span class="file-name-text" id="fileName">laporan_praktikum_web_m7.zip</span>
-                    <button type="button" class="remove-file-btn" onclick="removeSelectedFile(event)">&times;</button>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeUploadModal()">Batal</button>
-                <button type="submit" class="btn-submit" id="btnSubmitModal" disabled>Kirim Tugas</button>
-            </div>
-        </form>
-    </div>
 </div>
 
 <!-- Success Toast Notification -->
@@ -936,99 +851,92 @@ $initials = substr($initials, 0, 2);
 <script>
     // DOM Elements
     const classSelector = document.getElementById('classSelector');
-    const uploadModal = document.getElementById('uploadModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const submitModulId = document.getElementById('submitModulId');
-    const dragArea = document.getElementById('dragArea');
-    const fileInput = document.getElementById('fileInput');
-    const fileDisplay = document.getElementById('fileDisplay');
-    const fileName = document.getElementById('fileName');
-    const btnSubmitModal = document.getElementById('btnSubmitModal');
     const toast = document.getElementById('toastNotification');
     const toastMessage = document.getElementById('toastMessage');
 
     // Handle Class Selection
-    classSelector.addEventListener('change', function() {
-        showToast("Menampilkan data kelas: " + this.options[this.selectedIndex].text);
-    });
-
-    // Modal & Upload Logic
-    function openUploadModal(id, title) {
-        submitModulId.value = id;
-        modalTitle.textContent = `Unggah Tugas: Modul ${String(id).padStart(2, '0')}`;
-        
-        fileInput.value = '';
-        fileDisplay.style.display = 'none';
-        dragArea.style.display = 'flex';
-        btnSubmitModal.disabled = true;
-
-        uploadModal.style.display = 'flex';
-        uploadModal.setAttribute('aria-hidden', 'false');
+    if (classSelector) {
+        classSelector.addEventListener('change', function() {
+            showToast("Menampilkan data kelas: " + this.options[this.selectedIndex].text);
+        });
     }
 
-    function closeUploadModal() {
-        uploadModal.style.display = 'none';
-        uploadModal.setAttribute('aria-hidden', 'true');
+    // Inline Form Elements
+    const inlineDragArea = document.getElementById('inlineDragArea');
+    const inlineFileInput = document.getElementById('inlineFileInput');
+    const inlineFileDisplay = document.getElementById('inlineFileDisplay');
+    const inlineFileName = document.getElementById('inlineFileName');
+    const btnSubmitInlineUpload = document.getElementById('btnSubmitInlineUpload');
+
+    function triggerInlineFileSelect() {
+        if (inlineFileInput) inlineFileInput.click();
     }
 
-    // File input interaction
-    function triggerFileSelect() {
-        fileInput.click();
-    }
-
-    function handleFileSelect(event) {
+    function handleInlineFileSelect(event) {
         const files = event.target.files;
-        if (files.length > 0) {
-            displaySelectedFile(files[0]);
+        if (files && files.length > 0) {
+            displayInlineSelectedFile(files[0]);
         }
     }
 
-    function displaySelectedFile(file) {
-        fileName.textContent = file.name;
-        dragArea.style.display = 'none';
-        fileDisplay.style.display = 'flex';
-        btnSubmitModal.disabled = false;
+    function displayInlineSelectedFile(file) {
+        if (inlineFileName) inlineFileName.textContent = file.name;
+        if (inlineDragArea) inlineDragArea.style.display = 'none';
+        if (inlineFileDisplay) inlineFileDisplay.style.display = 'flex';
+        if (btnSubmitInlineUpload) btnSubmitInlineUpload.disabled = false;
     }
 
-    function removeSelectedFile(event) {
-        event.stopPropagation();
-        fileInput.value = '';
-        fileDisplay.style.display = 'none';
-        dragArea.style.display = 'flex';
-        btnSubmitModal.disabled = true;
+    function removeInlineSelectedFile(event) {
+        if (event) event.stopPropagation();
+        if (inlineFileInput) inlineFileInput.value = '';
+        if (inlineFileDisplay) inlineFileDisplay.style.display = 'none';
+        if (inlineDragArea) inlineDragArea.style.display = 'flex';
+        if (btnSubmitInlineUpload) btnSubmitInlineUpload.disabled = true;
     }
 
-    // Drag & Drop
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dragArea.addEventListener(eventName, e => {
-            e.preventDefault();
-            dragArea.classList.add('dragover');
-        }, false);
-    });
+    // Drag & Drop for Inline Drag Area
+    if (inlineDragArea) {
+        ['dragenter', 'dragover'].forEach(eventName => {
+            inlineDragArea.addEventListener(eventName, e => {
+                e.preventDefault();
+                inlineDragArea.classList.add('dragover');
+            }, false);
+        });
 
-    ['dragleave', 'drop'].forEach(eventName => {
-        dragArea.addEventListener(eventName, e => {
-            e.preventDefault();
-            dragArea.classList.remove('dragover');
-        }, false);
-    });
+        ['dragleave', 'drop'].forEach(eventName => {
+            inlineDragArea.addEventListener(eventName, e => {
+                e.preventDefault();
+                inlineDragArea.classList.remove('dragover');
+            }, false);
+        });
 
-    dragArea.addEventListener('drop', e => {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        if (files.length > 0) {
-            fileInput.files = files;
-            displaySelectedFile(files[0]);
-        }
-    });
+        inlineDragArea.addEventListener('drop', e => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files && files.length > 0) {
+                inlineFileInput.files = files;
+                displayInlineSelectedFile(files[0]);
+            }
+        });
+    }
 
     // Show Toast
     function showToast(message) {
-        toastMessage.textContent = message;
-        toast.className = "toast show";
-        setTimeout(() => {
-            toast.className = toast.className.replace("show", "");
-        }, 3000);
+        if (toastMessage && toast) {
+            toastMessage.textContent = message;
+            toast.className = "toast show";
+            setTimeout(() => {
+                toast.className = toast.className.replace("show", "");
+            }, 3000);
+        }
+    }
+
+    // Close Alert Banner
+    function closeAlertBanner(btn) {
+        const banner = btn.closest('.alert-danger-bar');
+        if (banner) {
+            banner.style.display = 'none';
+        }
     }
 </script>
 

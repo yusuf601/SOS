@@ -239,6 +239,16 @@ $initials = substr($initials, 0, 2);
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                                 </span>
                             </a>
+                            <ul class="sidebar-submenu-list">
+                                <li class="sidebar-submenu-item">
+                                    <a href="/rpl/public/index.php?action=bank_modul">
+                                        <span>Bank Modul</span>
+                                        <span class="sidebar-menu-item-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="sidebar-menu-item">
                             <a href="/rpl/public/index.php?action=upload_tugas">
@@ -265,7 +275,7 @@ $initials = substr($initials, 0, 2);
                             </a>
                         </li>
                         <li class="sidebar-menu-item">
-                            <a href="/rpl/public/index.php?action=sanggah_nilai">
+                            <a href="/rpl/public/index.php?action=sanggah_form">
                                 <span>Sanggah Nilai</span>
                                 <span class="sidebar-menu-item-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -360,8 +370,8 @@ $initials = substr($initials, 0, 2);
             
             <?php if ($role === 'Mahasiswa'): ?>
                 <!-- STUDENT KELULUSAN VIEW -->
-                <?php if (!$classInfo): ?>
-                    <section class="kelulusan-card" style="text-align: center; padding: 48px;">
+                <?php if (empty($studentClassesData)): ?>
+                    <section class="kelulusan-card" style="text-align: center; padding: 48px; border-radius: 20px; border: 1px solid #E2E8F0; max-width: 1078px;">
                         <div style="color: #94A3B8; margin-bottom: 16px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                         </div>
@@ -369,38 +379,76 @@ $initials = substr($initials, 0, 2);
                         <p style="color: #64748B;">Anda belum didaftarkan di kelas praktikum apa pun. Hubungi dosen pembimbing atau asisten praktikum.</p>
                     </section>
                 <?php else: ?>
-                    <?php 
-                    $isLulus = ($finalGrades && $finalGrades['Status_Kelulusan'] === 'Lulus');
-                    $bannerClass = $isLulus ? 'lulus' : 'mengulang';
-                    $sealClass = $isLulus ? 'lulus' : 'mengulang';
-                    $statusText = $isLulus ? 'LULUS' : 'MENGULANG';
-                    ?>
                     
-                    <section class="kelulusan-card" style="padding: 24px;">
-                        <div class="graduation-banner <?= $bannerClass ?>">
-                            <div class="seal-icon-wrapper <?= $sealClass ?>">
+                    <!-- Course status cards -->
+                    <?php foreach ($studentClassesData as $cData): ?>
+                        <?php 
+                        $isLulus = ($cData['status'] === 'Lulus');
+                        $cardBg = $isLulus ? '#EAF3DE' : '#FCEBEB';
+                        $cardStroke = $isLulus ? '#C0DD97' : '#FF9595';
+                        $badgeColor = $isLulus ? '#27500A' : '#791F1F';
+                        $classColor = $isLulus ? '#3B6D11' : '#B72D2D';
+                        $statusText = $isLulus ? 'LULUS' : 'MENGULANG';
+                        ?>
+                        <div class="graduation-status-card" style="background-color: <?= $cardBg ?>; border: 1px solid <?= $cardStroke ?>; box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05); padding: 20px 24px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; max-width: 1078px; height: 96px;">
+                            <div style="display: flex; align-items: center; gap: 16px;">
                                 <?php if ($isLulus): ?>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                                    <svg width="33" height="33" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" fill="#27500E" />
+                                        <path d="M8 12L11 15L16 9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 <?php else: ?>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                    <svg width="33" height="33" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" fill="#791F1F" />
+                                        <path d="M8 8L16 16M16 8L8 16" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 <?php endif; ?>
-                            </div>
-                            
-                            <h2 class="graduation-status-text <?= $bannerClass ?>"><?= $statusText ?></h2>
-                            <p class="graduation-desc">
-                                Berdasarkan akumulasi pengerjaan tugas dan tingkat absensi di kelas <strong><?= htmlspecialchars($classInfo['Nama_Kelas']) ?></strong>, Anda dinyatakan <strong><?= strtolower($statusText) ?></strong> praktikum.
-                            </p>
-                            
-                            <div class="stats-summary-grid">
-                                <div class="stat-mini-card">
-                                    <div class="stat-mini-val" style="color: var(--btn-primary);"><?= htmlspecialchars($progress['average_score']) ?></div>
-                                    <div class="stat-mini-lbl">Rerata Nilai Tugas (Min: 70)</div>
-                                </div>
-                                <div class="stat-mini-card">
-                                    <div class="stat-mini-val" style="color: var(--btn-primary);"><?= htmlspecialchars($attendanceRate) ?>%</div>
-                                    <div class="stat-mini-lbl">Tingkat Absensi (Min: 75%)</div>
+                                
+                                <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                                    <span style="font-size: 20px; font-weight: bold; color: <?= $badgeColor ?>; line-height: 1.2;"><?= $statusText ?></span>
+                                    <span style="font-size: 16px; font-weight: 500; color: <?= $classColor ?>;"><?= htmlspecialchars($cData['name']) ?></span>
                                 </div>
                             </div>
+                            
+                            <div style="text-align: right; display: flex; align-items: center; gap: 16px;">
+                                <span style="font-size: 13px; font-weight: 500; color: #7E7E7E;">Nilai Akhir</span>
+                                <span style="font-size: 40px; font-weight: bold; color: #000000; line-height: 1; min-width: 59px; text-align: center;"><?= $cData['nilai_akhir'] ?></span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+
+                    <!-- Detail Komponen Nilai Table -->
+                    <section class="kelulusan-card" style="padding: 24px; border-radius: 20px; max-width: 1078px; margin-top: 32px; border: 0.5px solid rgba(0, 0, 0, 0.1);">
+                        <h3 class="kelulusan-title" style="font-size: 20px; font-weight: 600; color: #000000; margin-bottom: 24px;">Detail Komponen Nilai</h3>
+                        <div class="table-responsive">
+                            <table class="custom-table" style="width: 100%;">
+                                <thead>
+                                    <tr style="border-bottom: 1.5px solid #00000033;">
+                                        <th style="font-weight: 600; color: rgba(0,0,0,0.5); padding: 16px 24px; border: none; font-size: 14px; background: none;">Kelas</th>
+                                        <th style="font-weight: 600; color: rgba(0,0,0,0.5); padding: 16px 24px; border: none; text-align: center; font-size: 14px; background: none;">Presensi (30%)</th>
+                                        <th style="font-weight: 600; color: rgba(0,0,0,0.5); padding: 16px 24px; border: none; text-align: center; font-size: 14px; background: none;">Tugas (70%)</th>
+                                        <th style="font-weight: 600; color: rgba(0,0,0,0.5); padding: 16px 24px; border: none; text-align: center; font-size: 14px; background: none;">Nilai Akhir</th>
+                                        <th style="font-weight: 600; color: rgba(0,0,0,0.5); padding: 16px 24px; border: none; text-align: center; font-size: 14px; background: none;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($studentClassesData as $cData): ?>
+                                        <tr style="border-bottom: 0.5px solid #00000022;">
+                                            <td style="padding: 16px 24px; font-weight: 500; font-size: 14px; color: #000000;"><?= htmlspecialchars($cData['name']) ?></td>
+                                            <td style="padding: 16px 24px; font-weight: 500; font-size: 14px; text-align: center; color: #000000;"><?= $cData['presensi'] ?>%</td>
+                                            <td style="padding: 16px 24px; font-weight: 500; font-size: 14px; text-align: center; color: #000000;"><?= $cData['tugas'] ?></td>
+                                            <td style="padding: 16px 24px; font-weight: 600; font-size: 14px; text-align: center; color: #000000;"><?= $cData['nilai_akhir'] ?></td>
+                                            <td style="padding: 16px 24px; font-weight: 600; text-align: center;">
+                                                <?php if ($cData['status'] === 'Lulus'): ?>
+                                                    <span style="color: #27500A; background-color: #EAF3DE; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700;">Lulus</span>
+                                                <?php else: ?>
+                                                    <span style="color: #791F1F; background-color: #FCEBEB; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700;">Mengulang</span>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                     </section>
                 <?php endif; ?>
