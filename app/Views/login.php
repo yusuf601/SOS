@@ -23,7 +23,7 @@
     <!-- Right Side: Login Card -->
     <div class="card-container">
         <div class="login-card">
-            <h2 class="form-title">EduLab</h2>
+            <h2 class="form-title"><span class="title-edu">Edu</span><span class="title-lab">Lab</span></h2>
 
             <form action="/rpl/public/index.php?action=login" method="POST" class="login-form">
                 <!-- NIM / NIP Field -->

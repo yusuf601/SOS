@@ -8,11 +8,11 @@
     <style>
         /* CSS Extension specifically for Upload Tugas layout */
         .class-selector-card {
-            background-color: var(--text-color-light);
+            background-color: #FFFFFF; /* Pure white card */
             border-radius: 15px;
             padding: 24px;
-            border: 0.5px solid #DCDCDC;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02); /* Subtle shadow */
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -43,8 +43,8 @@
             width: 100%;
             height: 48px;
             padding: 0 16px;
-            background-color: #F8FAFC;
-            border: 1px solid var(--input-border);
+            background-color: #FFFFFF; /* Pure white select background */
+            border: 1px solid #E2E8F0; /* Softer border */
             border-radius: 8px;
             font-size: 15px;
             font-weight: 600;
@@ -81,14 +81,14 @@
         }
 
         .summary-card {
-            background-color: var(--text-color-light);
+            background-color: #FFFFFF; /* Pure white card */
             border-radius: 12px;
             padding: 16px 20px;
-            border: 0.5px solid #DCDCDC;
+            border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
             display: flex;
             align-items: center;
             gap: 16px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.01);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02), 0 2px 8px rgba(0, 0, 0, 0.01); /* Subtle shadow */
         }
 
         .summary-icon-wrapper {
@@ -130,10 +130,10 @@
         }
 
         .task-card {
-            background-color: var(--text-color-light);
+            background-color: #FFFFFF; /* Pure white card */
             border-radius: 15px;
-            border: 0.5px solid #DCDCDC;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02); /* Subtle shadow */
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -142,7 +142,7 @@
 
         .task-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03); /* Softer hover shadow */
         }
 
         /* Left status borders */
@@ -156,8 +156,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 24px;
-            background-color: #F8FAFC;
-            border-bottom: 0.5px solid #E3E3E3;
+            background-color: #FFFFFF; /* Pure white header */
+            border-bottom: 1px solid #EAF0F6; /* Softer border */
             flex-wrap: wrap;
             gap: 16px;
         }

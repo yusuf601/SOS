@@ -126,7 +126,14 @@ body::before {
     line-height: 58px;
     text-align: center;
     margin-bottom: 40px;
-    background: linear-gradient(133deg, #364087 0%, #DB241E 23%, #DA7E29 53%, #F8F839 94%);
+}
+
+.title-edu {
+    color: #364087;
+}
+
+.title-lab {
+    background: linear-gradient(133deg, #364087 0%, #DB241E 23%, #DA7E29 53%, #F8F339 94%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -479,7 +486,7 @@ body::before {
 .dashboard-container {
     display: flex;
     min-height: 100vh;
-    background-color: #F8FAFC; /* Brighter slate-50 background */
+    background-color: #FAFBFD; /* Lighter page background */
     color: var(--text-color-dark);
 }
 
@@ -684,7 +691,7 @@ body::before {
     display: flex;
     flex-direction: column;
     gap: 36px;
-    background-color: #F8FAFC; /* Matching bright background */
+    background-color: #FAFBFD; /* Lighter page background */
     flex-grow: 1;
 }
 
@@ -715,7 +722,7 @@ body::before {
 }
 
 .metric-card {
-    background-color: var(--text-color-light);
+    background-color: #FFFFFF; /* Pure white card */
     border-radius: 20px;
     padding: 24px;
     display: flex;
@@ -723,13 +730,14 @@ body::before {
     align-items: center;
     text-align: center;
     gap: 16px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.02);
-    border: 0.5px solid #E2E8F0;
-    transition: transform var(--transition-speed) ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02); /* Subtle shadow */
+    border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
 .metric-card:hover {
     transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .metric-icon-circle {
@@ -793,13 +801,19 @@ body::before {
 }
 
 .class-card {
-    background-color: var(--text-color-light);
+    background-color: #FFFFFF; /* Pure white card */
     border-radius: 15px;
     overflow: hidden;
-    border: 0.5px solid #DCDCDC;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.04); /* Softer border */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02); /* Subtle shadow */
     display: flex;
     flex-direction: column;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.class-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .class-card-header {
