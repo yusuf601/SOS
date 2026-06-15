@@ -15,11 +15,11 @@
         </mxCell>
 
         <mxCell id="e2" value="Asisten Praktikum" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=13;strokeWidth=3;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="2060" y="500" width="180" height="70" as="geometry" />
+          <mxGeometry x="1920" y="440" width="180" height="70" as="geometry" />
         </mxCell>
 
         <mxCell id="e3" value="Dosen / Koordinator" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=13;strokeWidth=3;fillColor=#ffe6cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="2060" y="1000" width="180" height="70" as="geometry" />
+          <mxGeometry x="1920" y="900" width="180" height="70" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
@@ -28,52 +28,52 @@
 
         <!-- P1.0 -->
         <mxCell id="p1" value="1.0&#xa;Manajemen&#xa;Hak Akses" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="400" y="60" width="150" height="150" as="geometry" />
+          <mxGeometry x="350" y="80" width="160" height="160" as="geometry" />
         </mxCell>
 
         <!-- P2.0 -->
         <mxCell id="p2" value="2.0&#xa;Manajemen&#xa;Kelas &amp; Kelompok" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="700" y="60" width="150" height="150" as="geometry" />
+          <mxGeometry x="680" y="80" width="160" height="160" as="geometry" />
         </mxCell>
 
         <!-- P3.0 -->
         <mxCell id="p3" value="3.0&#xa;Bank Modul&#xa;&amp; Materi" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="1000" y="60" width="150" height="150" as="geometry" />
+          <mxGeometry x="1010" y="80" width="160" height="160" as="geometry" />
         </mxCell>
 
         <!-- P4.0 -->
         <mxCell id="p4" value="4.0&#xa;Pengumpulan&#xa;Tugas" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="400" y="380" width="150" height="150" as="geometry" />
+          <mxGeometry x="350" y="400" width="160" height="160" as="geometry" />
         </mxCell>
 
         <!-- P5.0 -->
         <mxCell id="p5" value="5.0&#xa;Grading&#xa;&amp; Feedback" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="700" y="380" width="150" height="150" as="geometry" />
+          <mxGeometry x="680" y="400" width="160" height="160" as="geometry" />
         </mxCell>
 
         <!-- P6.0 -->
         <mxCell id="p6" value="6.0&#xa;Presensi&#xa;Digital" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="1000" y="380" width="150" height="150" as="geometry" />
+          <mxGeometry x="1010" y="400" width="160" height="160" as="geometry" />
         </mxCell>
 
         <!-- P7.0 -->
         <mxCell id="p7" value="7.0&#xa;Rekap Nilai&#xa;Otomatis" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="400" y="700" width="150" height="150" as="geometry" />
+          <mxGeometry x="350" y="720" width="160" height="160" as="geometry" />
         </mxCell>
 
         <!-- P8.0 -->
         <mxCell id="p8" value="8.0&#xa;Sanggah&#xa;Nilai" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="700" y="700" width="150" height="150" as="geometry" />
+          <mxGeometry x="680" y="720" width="160" height="160" as="geometry" />
         </mxCell>
 
         <!-- P9.0 -->
         <mxCell id="p9" value="9.0&#xa;Status&#xa;Kelulusan" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="1000" y="700" width="150" height="150" as="geometry" />
+          <mxGeometry x="1010" y="720" width="160" height="160" as="geometry" />
         </mxCell>
 
         <!-- P10.0 -->
         <mxCell id="p10" value="10.0&#xa;Export&#xa;Transkrip Nilai" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="1300" y="700" width="150" height="150" as="geometry" />
+          <mxGeometry x="1340" y="720" width="160" height="160" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
@@ -81,35 +81,35 @@
         <!-- ============================================================ -->
 
         <mxCell id="d1" value="D1  |  Data Pengguna" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="100" width="240" height="50" as="geometry" />
+          <mxGeometry x="1600" y="95" width="260" height="50" as="geometry" />
         </mxCell>
 
         <mxCell id="d2" value="D2  |  Data Kelas &amp; Kelompok" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="200" width="240" height="50" as="geometry" />
+          <mxGeometry x="1600" y="200" width="260" height="50" as="geometry" />
         </mxCell>
 
         <mxCell id="d3" value="D3  |  Data Modul" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="300" width="240" height="50" as="geometry" />
+          <mxGeometry x="1600" y="305" width="260" height="50" as="geometry" />
         </mxCell>
 
         <mxCell id="d4" value="D4  |  Data Tugas" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="400" width="240" height="50" as="geometry" />
+          <mxGeometry x="1600" y="415" width="260" height="50" as="geometry" />
         </mxCell>
 
         <mxCell id="d5" value="D5  |  Data Nilai" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="500" width="240" height="50" as="geometry" />
+          <mxGeometry x="1600" y="520" width="260" height="50" as="geometry" />
         </mxCell>
 
         <mxCell id="d6" value="D6  |  Data Presensi" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="600" width="240" height="50" as="geometry" />
+          <mxGeometry x="1600" y="625" width="260" height="50" as="geometry" />
         </mxCell>
 
         <mxCell id="d7" value="D7  |  Data Rekap Nilai" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="700" width="240" height="50" as="geometry" />
+          <mxGeometry x="1600" y="730" width="260" height="50" as="geometry" />
         </mxCell>
 
         <mxCell id="d8" value="D8  |  Data Sanggahan" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="800" width="240" height="50" as="geometry" />
+          <mxGeometry x="1600" y="835" width="260" height="50" as="geometry" />
         </mxCell>
 
         <!-- ============================================================ -->
