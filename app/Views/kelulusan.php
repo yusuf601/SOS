@@ -312,7 +312,7 @@ $initials = substr($initials, 0, 2);
                             </a>
                         </li>
                         <li class="sidebar-menu-item">
-                            <a href="#">
+                            <a href="/rpl/public/index.php?action=data_kelompok">
                                 <span>Data Kelompok</span>
                                 <span class="sidebar-menu-item-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -328,7 +328,7 @@ $initials = substr($initials, 0, 2);
                             </a>
                         </li>
                         <li class="sidebar-menu-item">
-                            <a href="#">
+                            <a href="/rpl/public/index.php?action=verifikasi_tugas">
                                 <span>Verifikasi Tugas</span>
                                 <span class="sidebar-menu-item-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
@@ -481,68 +481,254 @@ $initials = substr($initials, 0, 2);
                 <?php endif; ?>
 
             <?php else: ?>
-                <!-- DOSEN / ASISTEN KELULUSAN VIEW -->
-                <section class="kelulusan-card">
-                    <h3 class="kelulusan-title">Rekapitulasi Kelulusan Kelas Praktikum</h3>
-                    
-                    <div class="search-bar-container">
-                        <input type="text" id="studentSearch" class="search-input" placeholder="Cari NIM atau Nama..." onkeyup="filterStudentsTable()">
-                    </div>
+                <!-- DOSEN / ASISTEN VIEW -->
+                
+                <?php 
+                // Toggle view based on view_recap parameter
+                $viewRecap = isset($_GET['view_recap']) && $_GET['view_recap'] == 1;
+                ?>
 
-                    <div class="table-responsive">
-                        <table class="custom-table" id="kelulusanTable">
-                            <thead>
-                                <tr>
-                                    <th>NIM</th>
-                                    <th>Nama Lengkap</th>
-                                    <th>Kelas</th>
-                                    <th>Nilai Akhir (Rerata)</th>
-                                    <th>Status Kelulusan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($finalGrades)): ?>
-                                    <tr>
-                                        <td colspan="5" style="text-align: center; color: #94A3B8; padding: 24px;">Belum ada data nilai akhir mahasiswa yang dihitung.</td>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; max-width: 1078px; width: 100%;">
+                    <h2 class="kelulusan-title" style="margin: 0; font-size: 28px; font-weight: 700; color: #1E293B;">
+                        <?= $viewRecap ? 'Rekapitulasi Kelulusan' : 'Input Nilai' ?>
+                    </h2>
+                    <a href="/rpl/public/index.php?action=kelulusan<?= $viewRecap ? '' : '&view_recap=1' ?>" 
+                       style="background-color: var(--sidebar-bg); color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none; padding: 10px 20px; border-radius: 8px; transition: opacity 0.2s;" 
+                       onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=1;">
+                        <?= $viewRecap ? '← Kembali ke Input Nilai' : 'Lihat Rekapitulasi Kelulusan' ?>
+                    </a>
+                </div>
+
+                <?php if ($viewRecap): ?>
+                    <!-- REKAPITULASI KELULUSAN VIEW -->
+                    <section class="kelulusan-card" style="background-color: #FFFFFF; border-radius: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); padding: 24px 32px; width: 100%; max-width: 1078px;">
+                        <div class="search-bar-container" style="margin-bottom: 24px;">
+                            <input type="text" id="studentSearch" class="search-input" placeholder="Cari NIM atau Nama..." onkeyup="filterStudentsTable()" style="width: 100%; max-width: 320px; padding: 10px 14px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 14px;">
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="custom-table" id="kelulusanTable" style="width: 100%; border-collapse: collapse; text-align: left;">
+                                <thead>
+                                    <tr style="border-bottom: 1.5px solid rgba(0, 0, 0, 0.1);">
+                                        <th style="font-weight: 600; color: rgba(0,0,0,0.5); padding: 16px; border: none; font-size: 14px;">NIM</th>
+                                        <th style="font-weight: 600; color: rgba(0,0,0,0.5); padding: 16px; border: none; font-size: 14px;">Nama Lengkap</th>
+                                        <th style="font-weight: 600; color: rgba(0,0,0,0.5); padding: 16px; border: none; font-size: 14px;">Kelas</th>
+                                        <th style="font-weight: 600; color: rgba(0,0,0,0.5); padding: 16px; border: none; font-size: 14px;">Nilai Akhir (Rerata)</th>
+                                        <th style="font-weight: 600; color: rgba(0,0,0,0.5); padding: 16px; border: none; font-size: 14px;">Status Kelulusan</th>
                                     </tr>
-                                <?php else: ?>
-                                    <?php foreach ($finalGrades as $row): ?>
-                                        <tr class="student-row">
-                                            <td class="search-nim"><?= htmlspecialchars($row['NIM']) ?></td>
-                                            <td class="search-nama" style="font-weight: 600;"><?= htmlspecialchars($row['Nama_Mahasiswa']) ?></td>
-                                            <td><?= htmlspecialchars($row['Nama_Kelas']) ?></td>
-                                            <td style="font-size: 16px; font-weight: 700;"><?= htmlspecialchars($row['Nilai_Akhir']) ?></td>
-                                            <td>
-                                                <span class="badge-status badge-<?= strtolower($row['Status_Kelulusan']) ?>">
-                                                    <?= htmlspecialchars($row['Status_Kelulusan']) ?>
-                                                </span>
-                                            </td>
+                                </thead>
+                                <tbody>
+                                    <?php if (empty($finalGrades)): ?>
+                                        <tr>
+                                            <td colspan="5" style="text-align: center; color: #94A3B8; padding: 24px;">Belum ada data nilai akhir mahasiswa yang dihitung.</td>
                                         </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+                                    <?php else: ?>
+                                        <?php foreach ($finalGrades as $row): ?>
+                                            <tr class="student-row" style="border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);">
+                                                <td class="search-nim" style="padding: 16px; font-size: 13px; font-weight: 500;"><?= htmlspecialchars($row['NIM']) ?></td>
+                                                <td class="search-nama" style="padding: 16px; font-size: 13px; font-weight: 600;"><?= htmlspecialchars($row['Nama_Mahasiswa']) ?></td>
+                                                <td style="padding: 16px; font-size: 13px;"><?= htmlspecialchars($row['Nama_Kelas']) ?></td>
+                                                <td style="padding: 16px; font-size: 15px; font-weight: 700;"><?= htmlspecialchars($row['Nilai_Akhir']) ?></td>
+                                                <td style="padding: 16px;">
+                                                    <span class="badge-status badge-<?= strtolower($row['Status_Kelulusan']) ?>" style="padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; display: inline-block; text-align: center; background-color: <?= strtolower($row['Status_Kelulusan']) === 'lulus' ? '#EAF3DE' : '#FCEBEB' ?>; color: <?= strtolower($row['Status_Kelulusan']) === 'lulus' ? '#27500A' : '#791F1F' ?>;">
+                                                        <?= htmlspecialchars($row['Status_Kelulusan']) ?>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
 
-                <script>
-                    function filterStudentsTable() {
-                        var input = document.getElementById("studentSearch");
-                        var filter = input.value.toLowerCase();
-                        var rows = document.getElementsByClassName("student-row");
+                    <script>
+                        function filterStudentsTable() {
+                            var input = document.getElementById("studentSearch");
+                            var filter = input.value.toLowerCase();
+                            var rows = document.getElementsByClassName("student-row");
 
-                        for (var i = 0; i < rows.length; i++) {
-                            var nim = rows[i].getElementsByClassName("search-nim")[0].innerText.toLowerCase();
-                            var nama = rows[i].getElementsByClassName("search-nama")[0].innerText.toLowerCase();
-                            
-                            if (nim.includes(filter) || nama.includes(filter)) {
-                                rows[i].style.display = "";
-                            } else {
-                                rows[i].style.display = "none";
+                            for (var i = 0; i < rows.length; i++) {
+                                var nim = rows[i].getElementsByClassName("search-nim")[0].innerText.toLowerCase();
+                                var nama = rows[i].getElementsByClassName("search-nama")[0].innerText.toLowerCase();
+                                
+                                if (nim.includes(filter) || nama.includes(filter)) {
+                                    rows[i].style.display = "";
+                                } else {
+                                    rows[i].style.display = "none";
+                                }
                             }
                         }
-                    }
-                </script>
+                    </script>
+
+                <?php else: ?>
+                    <!-- SPLIT LAYOUT INPUT NILAI -->
+                    
+                    <!-- Feedback Success/Error Alert -->
+                    <?php if (isset($_SESSION['grade_success'])): ?>
+                        <div class="alert alert-success" style="background-color: #DEF7EC; color: #03543F; border: 1px solid #BCF0DA; padding: 12px 20px; border-radius: 8px; margin-bottom: 24px; font-size: 14px; font-weight: 600; max-width: 1078px;">
+                            <?= htmlspecialchars($_SESSION['grade_success']) ?>
+                        </div>
+                        <?php unset($_SESSION['grade_success']); ?>
+                    <?php endif; ?>
+
+                    <?php if (isset($_SESSION['grade_error'])): ?>
+                        <div class="alert alert-error" style="background-color: #FDE8E8; color: #9B1C1C; border: 1px solid #FBD5D5; padding: 12px 20px; border-radius: 8px; margin-bottom: 24px; font-size: 14px; font-weight: 600; max-width: 1078px;">
+                            <?= htmlspecialchars($_SESSION['grade_error']) ?>
+                        </div>
+                        <?php unset($_SESSION['grade_error']); ?>
+                    <?php endif; ?>
+
+                    <div style="display: flex; gap: 24px; width: 100%; max-width: 1078px; align-items: flex-start;">
+                        
+                        <!-- Left Panel: Antrian Penilaian -->
+                        <div style="width: 38%; background-color: #FFFFFF; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); padding: 20px; border: 0.5px solid rgba(0,0,0,0.1);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                <h3 style="font-size: 16px; font-weight: 700; color: #000000;">Antrian Penilaian</h3>
+                                <span style="font-size: 12px; font-weight: 600; color: #797979;"><?= $pendingCount ?> belum dinilai</span>
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 10px; max-height: 520px; overflow-y: auto; padding-right: 4px;">
+                                <?php if (empty($submissionsQueue)): ?>
+                                    <div style="text-align: center; color: #797979; padding: 32px 16px; font-size: 13px;">
+                                        Tidak ada tugas mahasiswa untuk dinilai.
+                                    </div>
+                                <?php else: ?>
+                                    <?php foreach ($submissionsQueue as $sub): 
+                                        $isSelected = $selectedSubmission && (int)$sub['ID_Pengumpulan'] === (int)$selectedSubmission['ID_Pengumpulan'];
+                                        $hasGrade = !empty($sub['Nilai_Angka']) && $sub['Nilai_Angka'] > 0.00;
+                                        
+                                        // Initials
+                                        $nameParts = explode(' ', $sub['Nama_Mahasiswa']);
+                                        $initials = '';
+                                        foreach ($nameParts as $part) {
+                                            $initials .= strtoupper(substr($part, 0, 1));
+                                        }
+                                        $initials = substr($initials, 0, 2);
+                                    ?>
+                                        <a href="/rpl/public/index.php?action=kelulusan&pengumpulan_id=<?= $sub['ID_Pengumpulan'] ?>" 
+                                           style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; text-decoration: none; border: 1px solid <?= $isSelected ? '#E2E8F0' : '#F1F5F9' ?>; background-color: <?= $isSelected ? '#EAF3DE' : '#FFFFFF' ?>; transition: all 0.2s ease;">
+                                            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #7C94B8; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0;">
+                                                <?= htmlspecialchars($initials) ?>
+                                            </div>
+                                            <div style="flex-grow: 1; min-width: 0; text-align: left;">
+                                                <div style="font-size: 14px; font-weight: 700; color: #1E293B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                    <?= htmlspecialchars($sub['Nama_Mahasiswa']) ?>
+                                                </div>
+                                                <div style="font-size: 11px; color: #64748B; margin-top: 2px;">
+                                                    <?= htmlspecialchars($sub['Nama_Kelompok']) ?> • <?= date('d M y', strtotime($sub['Waktu_Submit'])) ?>
+                                                </div>
+                                            </div>
+                                            <?php if ($hasGrade): ?>
+                                                <div style="background-color: #27500A; color: #FFFFFF; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700;" title="Sudah dinilai: <?= htmlspecialchars($sub['Nilai_Angka']) ?>">
+                                                    ✓
+                                                </div>
+                                            <?php endif; ?>
+                                        </a>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Grading Form -->
+                        <div style="flex-grow: 1; background-color: #FFFFFF; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); padding: 24px; border: 0.5px solid rgba(0,0,0,0.1);">
+                            <?php if (!$selectedSubmission): ?>
+                                <div style="text-align: center; color: #797979; padding: 48px;">
+                                    Pilih mahasiswa di panel kiri untuk memulai penilaian.
+                                </div>
+                            <?php else: 
+                                // Selected student initials
+                                $selParts = explode(' ', $selectedSubmission['Nama_Mahasiswa']);
+                                $selInitials = '';
+                                foreach ($selParts as $part) {
+                                    $selInitials .= strtoupper(substr($part, 0, 1));
+                                }
+                                $selInitials = substr($selInitials, 0, 2);
+                            ?>
+                                <!-- Student Header -->
+                                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #E2E8F0;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #7C94B8; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700;">
+                                        <?= htmlspecialchars($selInitials) ?>
+                                    </div>
+                                    <div style="flex-grow: 1; text-align: left;">
+                                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: #1E293B;"><?= htmlspecialchars($selectedSubmission['Nama_Mahasiswa']) ?></h4>
+                                            <span style="font-size: 12px; font-weight: 600; color: #64748B;"><?= htmlspecialchars($selectedSubmission['Judul_Modul']) ?></span>
+                                        </div>
+                                        <div style="font-size: 12px; color: #64748B; margin-top: 4px;">
+                                            <?= htmlspecialchars($selectedSubmission['NIM_Mahasiswa']) ?> • <?= htmlspecialchars($selectedSubmission['Nama_Kelompok']) ?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- File bar -->
+                                <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                    <div style="display: flex; align-items: center; gap: 12px; text-align: left; min-width: 0;">
+                                        <svg style="color: #791F1F; width: 24px; height: 24px; flex-shrink: 0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                        </svg>
+                                        <div style="min-width: 0;">
+                                            <div style="font-size: 13px; font-weight: 600; color: #1E293B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                <?= htmlspecialchars($selectedSubmission['File_Tugas']) ?>
+                                            </div>
+                                            <div style="font-size: 11px; color: #64748B; margin-top: 2px;">
+                                                Diunggah <?= date('d M, H:i', strtotime($selectedSubmission['Waktu_Submit'])) ?> WITA
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <a href="/rpl/public/index.php?action=view_tugas&file=<?= urlencode($selectedSubmission['File_Tugas']) ?>" 
+                                       target="_blank"
+                                       class="btn-view" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; background-color: #FFFFFF; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #1E293B;">
+                                        <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        Lihat
+                                    </a>
+                                </div>
+
+                                <!-- Form -->
+                                <form action="/rpl/public/index.php?action=submit_grade" method="POST" style="text-align: left;">
+                                    <input type="hidden" name="id_pengumpulan" value="<?= $selectedSubmission['ID_Pengumpulan'] ?>">
+                                    <!-- Preserve current selection on redirect -->
+                                    <input type="hidden" name="redirect_url" value="/rpl/public/index.php?action=kelulusan&pengumpulan_id=<?= $selectedSubmission['ID_Pengumpulan'] ?>">
+                                    
+                                    <!-- Preset status to Selesai as grading is being done -->
+                                    <input type="hidden" name="status_tugas" value="Selesai">
+
+                                    <div class="form-group" style="margin-bottom: 20px;">
+                                        <label class="form-label" style="font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 6px;">Nilai (0-100)</label>
+                                        <input type="number" step="0.01" min="0" max="100" name="nilai_angka" class="form-control" placeholder="Masukkan nilai" value="<?= $selectedSubmission['Nilai_Angka'] > 0.00 ? htmlspecialchars($selectedSubmission['Nilai_Angka']) : '' ?>" style="width: 100%; padding: 10px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 14px;" required>
+                                    </div>
+
+                                    <div class="form-group" style="margin-bottom: 24px;">
+                                        <label class="form-label" style="font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 6px;">Feedback/Catatan untuk Mahasiswa</label>
+                                        <textarea name="feedback" class="form-control" placeholder="Tulis catatan atau komentar untuk mahasiswa ini..." style="width: 100%; min-height: 120px; padding: 10px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 14px; resize: vertical;"><?= htmlspecialchars($selectedSubmission['Feedback'] ?? '') ?></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn-submit" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #27500A; border: none; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer; transition: opacity 0.2s;">
+                                        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                            <polyline points="7 3 7 8 15 8"></polyline>
+                                        </svg>
+                                        Simpan Nilai
+                                    </button>
+                                </form>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Notice banner -->
+                    <div style="background-color: #E0E7FF; border: 1px solid #C7D2FE; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 12px; text-align: left; max-width: 1078px; width: 100%; margin-top: 24px;">
+                        <svg style="color: #4F46E5; width: 22px; height: 22px; flex-shrink: 0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span style="font-size: 13px; font-weight: 600; color: #3730A3;">Nilai tidak bisa diubah sendiri setelah 3×24 jam. Hubungi dosen jika perlu koreksi</span>
+                    </div>
+
+                <?php endif; ?>
             <?php endif; ?>
         </div>
     </main>

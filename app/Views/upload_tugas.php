@@ -760,7 +760,7 @@ $initials = substr($initials, 0, 2);
 
                         <?php if ($activeSub): ?>
                             <div style="margin-top: 12px; font-size: 13px; color: #16A34A; font-weight: 600;">
-                                Tugas Terkirim: <a href="/rpl/public/assets/uploads/tugas/<?= htmlspecialchars($activeSub['File_Tugas']) ?>" target="_blank" style="color: #2B577F; text-decoration: underline;"><?= htmlspecialchars($activeSub['File_Tugas']) ?></a> (Diunggah pada: <?= date('d M Y, H:i', strtotime($activeSub['Waktu_Submit'])) ?> WITA)
+                                Tugas Terkirim: <a href="/rpl/public/index.php?action=view_tugas&file=<?= urlencode($activeSub['File_Tugas']) ?>" target="_blank" style="color: #2B577F; text-decoration: underline;"><?= htmlspecialchars($activeSub['File_Tugas']) ?></a> (Diunggah pada: <?= date('d M Y, H:i', strtotime($activeSub['Waktu_Submit'])) ?> WITA)
                             </div>
                         <?php endif; ?>
 

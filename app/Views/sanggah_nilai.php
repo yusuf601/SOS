@@ -502,7 +502,7 @@ $initials = substr($initials, 0, 2);
                             </a>
                         </li>
                         <li class="sidebar-menu-item">
-                            <a href="#">
+                            <a href="/rpl/public/index.php?action=data_kelompok">
                                 <span>Data Kelompok</span>
                                 <span class="sidebar-menu-item-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -518,7 +518,7 @@ $initials = substr($initials, 0, 2);
                             </a>
                         </li>
                         <li class="sidebar-menu-item">
-                            <a href="#">
+                            <a href="/rpl/public/index.php?action=verifikasi_tugas">
                                 <span>Verifikasi Tugas</span>
                                 <span class="sidebar-menu-item-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
@@ -740,7 +740,7 @@ $initials = substr($initials, 0, 2);
                                                 <!-- Dynamic Feedback & Appeal Details -->
                                                 <div style="font-size: 12px; color: #64748B; margin-top: 6px; display: flex; flex-direction: column; gap: 4px; padding-left: 42px;">
                                                     <div>
-                                                        File: <a href="/rpl/public/assets/uploads/tugas/<?= htmlspecialchars($grade['File_Tugas']) ?>" target="_blank" style="color: var(--btn-primary); text-decoration: underline;"><?= htmlspecialchars(basename($grade['File_Tugas'])) ?></a>
+                                                        File: <a href="/rpl/public/index.php?action=view_tugas&file=<?= urlencode($grade['File_Tugas']) ?>" target="_blank" style="color: var(--btn-primary); text-decoration: underline;"><?= htmlspecialchars(basename($grade['File_Tugas'])) ?></a>
                                                     </div>
                                                     <?php if (!empty($grade['Feedback'])): ?>
                                                         <div style="color: #475569; background-color: #F8FAFC; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #CBD5E1; margin-top: 4px; max-width: 90%;">
@@ -763,7 +763,7 @@ $initials = substr($initials, 0, 2);
                                             <td><?= htmlspecialchars($dateVal) ?></td>
                                             <td style="text-align: center;">
                                                 <?php if ($score >= 70): ?>
-                                                    <a href="/rpl/public/assets/uploads/tugas/<?= htmlspecialchars($grade['File_Tugas']) ?>" target="_blank" class="btn-action-outline">Lihat</a>
+                                                    <a href="/rpl/public/index.php?action=view_tugas&file=<?= urlencode($grade['File_Tugas']) ?>" target="_blank" class="btn-action-outline">Lihat</a>
                                                 <?php else: ?>
                                                     <?php if (empty($grade['Alasan_Sanggah'])): ?>
                                                         <button type="button" class="btn-action-outline" 
@@ -864,7 +864,7 @@ $initials = substr($initials, 0, 2);
                                                 <div><?= htmlspecialchars($grade['Nama_Kelas']) ?></div>
                                                 <div style="font-size: 13px; color: #475569; font-weight: 600;"><?= htmlspecialchars($grade['Judul_Modul']) ?></div>
                                                 <div style="font-size: 12px; margin-top: 2px;">
-                                                    File Tugas: <a href="/rpl/public/assets/uploads/tugas/<?= htmlspecialchars($grade['File_Tugas']) ?>" target="_blank" style="color: var(--btn-primary); text-decoration: underline;"><?= htmlspecialchars(basename($grade['File_Tugas'])) ?></a>
+                                                    File Tugas: <a href="/rpl/public/index.php?action=view_tugas&file=<?= urlencode($grade['File_Tugas']) ?>" target="_blank" style="color: var(--btn-primary); text-decoration: underline;"><?= htmlspecialchars(basename($grade['File_Tugas'])) ?></a>
                                                 </div>
                                             </td>
                                             <td style="font-size: 16px; font-weight: 700; color: #DC2626;"><?= htmlspecialchars($grade['Nilai_Angka']) ?></td>
