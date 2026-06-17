@@ -21,14 +21,38 @@ $initials = substr($initials, 0, 2);
     <style>
         /* CSS Extension specifically for Dosen Grid Layout */
         .dosen-dashboard-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 24px;
             margin-top: 16px;
         }
 
-        @media (max-width: 1024px) {
-            .dosen-dashboard-grid {
+        .widgets-section-horizontal {
+            background-color: rgba(54, 64, 135, 0.66); /* Matches #364087A8 semi-transparent navy */
+            border-radius: 15px;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 8px;
+            align-items: start; /* Align widgets at the top instead of stretching */
+        }
+
+        .widgets-section-horizontal .widget-card {
+            margin-bottom: 0;
+            padding: 16px 20px; /* Reduced padding to fit content naturally */
+        }
+
+        .widgets-section-horizontal .widget-title {
+            margin-bottom: 12px; /* Tighter title margin */
+        }
+
+        .widgets-section-horizontal .widget-list {
+            gap: 12px; /* Tighter list gap */
+        }
+
+        @media (max-width: 768px) {
+            .widgets-section-horizontal {
                 grid-template-columns: 1fr;
             }
         }
@@ -36,14 +60,17 @@ $initials = substr($initials, 0, 2);
         .class-card {
             background-color: #FFFFFF;
             border-radius: 16px;
-            padding: 24px;
+            padding: 24px 24px 36px 24px; /* Space for absolute progress bar */
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column !important;
+            align-items: stretch;
             margin-bottom: 16px;
             border: 1px solid #F1F5F9;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative; /* Relative positioning for absolute progress bar */
+            max-width: none !important; /* Override global max-width constraint */
+            width: 100%;
         }
 
         .class-card:hover {
@@ -54,37 +81,40 @@ $initials = substr($initials, 0, 2);
         .class-card-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
         }
 
         .class-thumb {
             width: 50px;
             height: 50px;
-            border-radius: 12px;
+            border-radius: 10px;
             background-color: #F1F5F9;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #64748B;
+            color: #FFFFFF; /* White icon color */
+            flex-shrink: 0;
         }
 
         .class-info {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
+            text-align: left;
         }
 
         .class-name {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
-            color: #0F172A;
+            color: #000000;
             margin: 0;
+            line-height: 1.2;
         }
 
         .class-meta {
-            font-size: 14px;
-            color: #64748B;
-            font-weight: 500;
+            font-size: 16px;
+            color: #9F9F9F;
+            font-weight: 600;
         }
 
         .class-card-right {
@@ -95,7 +125,7 @@ $initials = substr($initials, 0, 2);
 
         .badge-tag {
             padding: 4px 10px;
-            border-radius: 8px;
+            border-radius: 30px; /* Pill border radius */
             font-size: 11px;
             font-weight: 600;
             display: inline-flex;
@@ -172,13 +202,13 @@ $initials = substr($initials, 0, 2);
         }
 
         .widget-icon-blue {
-            background-color: #ABDAE8;
-            color: #1A5C70;
+            background-color: #ABDAE866;
+            color: #29316B;
         }
 
         .widget-icon-red {
             background-color: #FCEBEB;
-            color: #791F1F;
+            color: #C21111;
         }
 
         .widget-item-info {
@@ -259,39 +289,39 @@ $initials = substr($initials, 0, 2);
                     </li>
                     <li class="sidebar-menu-item">
                         <a href="/rpl/public/index.php?action=my_classes">
-                            <span>Kelas Saya</span>
+                            <span>Buat Kelas</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                             </span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="#">
-                            <span>Data Kelompok</span>
+                        <a href="/rpl/public/index.php?action=data_kelompok">
+                            <span>Buat Kelompok</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                             </span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="/rpl/public/index.php?action=presensi">
-                            <span>Input Presensi</span>
-                            <span class="sidebar-menu-item-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a href="#">
-                            <span>Verifikasi Tugas</span>
+                        <a href="/rpl/public/index.php?action=verifikasi_tugas">
+                            <span>Upload Modul</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                             </span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
+                        <a href="/rpl/public/index.php?action=presensi">
+                            <span>Monitoring Kelas</span>
+                            <span class="sidebar-menu-item-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
                         <a href="/rpl/public/index.php?action=kelulusan">
-                            <span>Input Nilai</span>
+                            <span>Export Rekapitulasi</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
                             </span>
@@ -367,7 +397,7 @@ $initials = substr($initials, 0, 2);
 
             <!-- Dosen Dashboard Grid -->
             <div class="dosen-dashboard-grid">
-                <!-- Left Column: Semua Kelas Aktif -->
+                <!-- Semua Kelas Aktif (Full Width) -->
                 <div class="classes-section">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                         <h3 style="font-size: 20px; font-weight: 600; color: #000000; margin: 0;">Semua Kelas Aktif</h3>
@@ -382,40 +412,69 @@ $initials = substr($initials, 0, 2);
                             Belum ada kelas aktif yang terplot untuk Anda.
                         </div>
                     <?php else: ?>
-                        <?php foreach ($classesDetail as $cdetail): ?>
+                        <?php foreach ($classesDetail as $cdx => $cdetail): ?>
+                            <?php
+                            // Determine thumb color dynamically based on index to ensure exact match with Figma
+                            if ($cdx == 0) {
+                                $thumbColor = '#1F3A69'; // Dark Blue
+                            } elseif ($cdx == 1) {
+                                $thumbColor = '#0A5A48'; // Dark Green
+                            } else {
+                                $thumbColor = '#734308'; // Brown
+                            }
+
+                            // Parse meeting progress
+                            $currentMeeting = 6;
+                            $totalMeetings = 8;
+                            if (preg_match('/(\d+)\s*\/\s*(\d+)/', $cdetail['pertemuan_progress'] ?? '', $matches)) {
+                                $currentMeeting = (int)$matches[1];
+                                $totalMeetings = (int)$matches[2];
+                            } else {
+                                $currentMeeting = (int)($cdetail['pertemuan_progress'] ?? 6);
+                            }
+                            $percent = ($totalMeetings > 0) ? ($currentMeeting / $totalMeetings) * 100 : 75;
+                            ?>
                             <div class="class-card">
-                                <div class="class-card-left">
-                                    <div class="class-thumb">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                <div class="class-card-body-row" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%;">
+                                    <!-- Left: Icon & Center: Info -->
+                                    <div style="display: flex; align-items: center; gap: 20px;">
+                                        <div class="class-thumb" style="background-color: <?= $thumbColor ?>; color: #FFFFFF;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                        </div>
+                                        <div class="class-info">
+                                            <h4 class="class-name"><?= htmlspecialchars($cdetail['class_name']) ?></h4>
+                                            <span class="class-meta">
+                                                <?= htmlspecialchars($cdetail['schedule']) ?> &middot; 
+                                                <?= htmlspecialchars($cdetail['student_count']) ?> mhs &middot; 
+                                                Pertemuan <?= htmlspecialchars($cdetail['pertemuan_progress']) ?> &middot; 
+                                                Asisten Dosen : <?= htmlspecialchars(explode(" ", $cdetail['assistant_name'])[0]) ?>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="class-info">
-                                        <h4 class="class-name"><?= htmlspecialchars($cdetail['class_name']) ?></h4>
-                                        <span class="class-meta">
-                                            <?= htmlspecialchars($cdetail['schedule']) ?> &middot; 
-                                            <?= htmlspecialchars($cdetail['student_count']) ?> mhs &middot; 
-                                            Pertemuan <?= htmlspecialchars($cdetail['pertemuan_progress']) ?> &middot; 
-                                            Asisten Dosen : <?= htmlspecialchars(explode(" ", $cdetail['assistant_name'])[0]) ?>
-                                        </span>
+                                    <!-- Right: Badges -->
+                                    <div class="class-card-right">
+                                        <?php if ($cdetail['repeating_count'] > 0): ?>
+                                            <span class="badge-tag badge-tag-danger"><?= htmlspecialchars($cdetail['repeating_count']) ?> mengulang</span>
+                                        <?php endif; ?>
+                                        
+                                        <?php if ($cdetail['passed_count'] > 0): ?>
+                                            <span class="badge-tag badge-tag-success"><?= htmlspecialchars($cdetail['passed_count']) ?> lulus</span>
+                                        <?php endif; ?>
+                                        
+                                        <span class="badge-tag badge-tag-success">Aktif</span>
                                     </div>
                                 </div>
-                                <div class="class-card-right">
-                                    <?php if ($cdetail['repeating_count'] > 0): ?>
-                                        <span class="badge-tag badge-tag-danger"><?= htmlspecialchars($cdetail['repeating_count']) ?> mengulang</span>
-                                    <?php endif; ?>
-                                    
-                                    <?php if ($cdetail['passed_count'] > 0): ?>
-                                        <span class="badge-tag badge-tag-success"><?= htmlspecialchars($cdetail['passed_count']) ?> lulus</span>
-                                    <?php else: ?>
-                                        <span class="badge-tag badge-tag-success">Aktif</span>
-                                    <?php endif; ?>
+                                <!-- Progress Bar positioned absolutely matching Figma (x=26, y=82.5, width=1040, card size 1096x95) -->
+                                <div class="class-progress-container" style="position: absolute; left: 26px; right: 26px; bottom: 12px; height: 3px; background-color: #D8D8D8; border-radius: 999px; overflow: hidden;">
+                                    <div class="class-progress-bar" style="width: <?= $percent ?>%; background-color: #364087; height: 100%; transition: width 0.3s ease;"></div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
 
-                <!-- Right Column: Sidebar Widgets -->
-                <div class="widgets-section">
+                <!-- Widgets Section (Bottom Horizontal Box) -->
+                <div class="widgets-section-horizontal">
                     <!-- Widget: Aktivitas Terbaru -->
                     <div class="widget-card">
                         <h3 class="widget-title">Aktivitas Terbaru</h3>
@@ -427,13 +486,16 @@ $initials = substr($initials, 0, 2);
                                 <div class="widget-item">
                                     <?php
                                     $iconClass = 'widget-icon-green';
-                                    $svgIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                                    // Default: grade (dokumen + pulpen)
+                                    $svgIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4.8 5.6L4.8 4L12 4L12 5.6L4.8 5.6ZM4.8 8L4.8 6.4L12 6.4L12 8L4.8 8ZM7.2 16L2.4 16C1.73 16 1.17 15.77 0.7 15.3C0.23 14.83 0 14.27 0 13.6L0 11.2L2.4 11.2L2.4 0L14.4 0L14.4 7.22C14.13 7.19 13.86 7.2 13.59 7.25C13.32 7.3 13.05 7.38 12.8 7.5L12.8 1.6L4 1.6L4 11.2L8.8 11.2L7.2 12.8L1.6 12.8L1.6 13.6C1.6 13.83 1.68 14.02 1.83 14.17C1.98 14.32 2.17 14.4 2.4 14.4L7.2 14.4L7.2 16ZM8.8 16L8.8 13.54L13.22 9.14C13.34 9.02 13.47 8.93 13.62 8.88C13.77 8.83 13.91 8.8 14.06 8.8C14.22 8.8 14.37 8.83 14.52 8.89C14.67 8.95 14.8 9.04 14.92 9.16L15.66 9.9C15.77 10.02 15.85 10.15 15.91 10.3C15.97 10.45 16 10.59 16 10.74C16 10.89 15.97 11.04 15.92 11.19C15.87 11.34 15.78 11.48 15.66 11.6L11.26 16L8.8 16ZM10 14.8L10.76 14.8L13.18 12.36L12.82 11.98L12.44 11.62L10 14.04L10 14.8ZM12.82 11.98L12.44 11.62L13.18 12.36L12.82 11.98Z" /></svg>';
                                     if ($act['type'] === 'dispute') {
                                         $iconClass = 'widget-icon-blue';
-                                        $svgIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line><circle cx="12" cy="12" r="10"></circle></svg>';
+                                        // dispute (balon chat)
+                                        $svgIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M0 16L0 1.6C0 1.16 0.16 0.78 0.47 0.47C0.78 0.16 1.16 0 1.6 0L14.4 0C14.84 0 15.22 0.16 15.53 0.47C15.84 0.78 16 1.16 16 1.6L16 11.2C16 11.64 15.84 12.02 15.53 12.33C15.22 12.64 14.84 12.8 14.4 12.8L3.2 12.8L0 16ZM2.52 11.2L14.4 11.2L14.4 1.6L1.6 1.6L1.6 12.1L2.52 11.2Z" /></svg>';
                                     } elseif ($act['type'] === 'system') {
                                         $iconClass = 'widget-icon-red';
-                                        $svgIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
+                                        // system (gembok)
+                                        $svgIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 21" fill="currentColor"><path d="M2 21C1.45 21 0.98 20.8 0.59 20.41C0.2 20.02 0 19.55 0 19L0 9C0 8.45 0.2 7.98 0.59 7.59C0.98 7.2 1.45 7 2 7L3 7L3 5C3 3.62 3.49 2.44 4.46 1.46C5.44 0.49 6.62 0 8 0C9.38 0 10.56 0.49 11.54 1.46C12.51 2.44 13 3.62 13 5L13 7L14 7C14.55 7 15.02 7.2 15.41 7.59C15.8 7.98 16 8.45 16 9L16 19C16 19.55 15.8 20.02 15.41 20.41C15.02 20.8 14.55 21 14 21L2 21ZM2 19L14 19L14 9L2 9L2 19ZM9.41 15.41C9.8 15.02 10 14.55 10 14C10 13.45 9.8 12.98 9.41 12.59C9.02 12.2 8.55 12 8 12C7.45 12 6.98 12.2 6.59 12.59C6.2 12.98 6 13.45 6 14C6 14.55 6.2 15.02 6.59 15.41C6.98 15.8 7.45 16 8 16C8.55 16 9.02 15.8 9.41 15.41ZM5 7L11 7L11 5C11 4.17 10.71 3.46 10.13 2.88C9.54 2.29 8.83 2 8 2C7.17 2 6.46 2.29 5.88 2.88C5.29 3.46 5 4.17 5 5L5 7Z" /></svg>';
                                     }
                                     ?>
                                     <div class="widget-icon <?= $iconClass ?>">
@@ -452,15 +514,27 @@ $initials = substr($initials, 0, 2);
                     <div class="widget-card">
                         <h3 class="widget-title">Ringkasan Kelulusan</h3>
                         <div class="widget-list" style="gap: 12px;">
-                            <?php foreach ($graduationSummary as $index => $sum): ?>
-                                <?php if ($index > 0): ?>
-                                    <div class="widget-divider" style="margin: 2px 0;"></div>
-                                <?php endif; ?>
-                                <div class="summary-item">
-                                    <span class="summary-name"><?= htmlspecialchars($sum['class_name']) ?></span>
-                                    <span class="summary-status"><?= htmlspecialchars($sum['status']) ?></span>
-                                </div>
-                            <?php endforeach; ?>
+                            <?php if (empty($classesDetail)): ?>
+                                <div style="font-size: 13px; color: #94A3B8;">Belum ada data kelulusan.</div>
+                            <?php else: ?>
+                                <?php foreach ($classesDetail as $index => $cdetail): ?>
+                                    <?php if ($index > 0): ?>
+                                        <div class="widget-divider" style="margin: 2px 0;"></div>
+                                    <?php endif; ?>
+                                    <div class="summary-item" style="display: flex; flex-direction: column; gap: 8px; width: 100%; align-items: stretch;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                            <span class="summary-name" style="font-size: 13px; font-weight: 600; color: #929292;"><?= htmlspecialchars($cdetail['class_name']) ?></span>
+                                            <span class="summary-status" style="font-size: 13px; font-weight: bold; color: #929292;">Belum final</span>
+                                        </div>
+                                        <?php
+                                        $passRate = ($cdetail['student_count'] > 0) ? ($cdetail['passed_count'] / $cdetail['student_count']) * 100 : 0;
+                                        ?>
+                                        <div class="summary-progress-container" style="width: 100%; height: 4px; background-color: #E2E2E2; border-radius: 999px; overflow: hidden;">
+                                            <div class="summary-progress-bar" style="width: <?= $passRate ?>%; background-color: #29316B; height: 100%; transition: width 0.3s ease;"></div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

@@ -389,6 +389,263 @@ $initials = substr($initials, 0, 2);
             overflow-x: auto;
             width: 100%;
         }
+
+        /* CSS untuk Layout Kartu Tinjau Sanggahan (Asisten Dosen) */
+        .sanggah-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .sanggah-card-asdos {
+            background-color: #FFFFFF;
+            border: 1px solid #C8C8C8;
+            border-radius: 10px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.02);
+            transition: all 0.2s ease;
+        }
+
+        .sanggah-card-asdos.pending {
+            border-left: 6px solid #D78F00;
+        }
+
+        .sanggah-card-asdos.resolved {
+            border-left: 6px solid #58922E;
+        }
+
+        .card-header-asdos {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .card-profile-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-avatar-asdos {
+            width: 47px;
+            height: 47px;
+            border-radius: 50%;
+            background-color: #7C94B8;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .card-user-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .card-student-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-student-name span.module-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #8C8C8C;
+            margin-left: 8px;
+        }
+
+        .card-student-sub {
+            font-size: 13px;
+            font-weight: 500;
+            color: #8C8C8C;
+        }
+
+        .card-status-badge {
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-status-badge.pending {
+            background-color: #FFF7D3;
+            color: #92400E;
+        }
+
+        .card-status-badge.resolved {
+            background-color: #EAF3DE;
+            color: #2F6100;
+        }
+
+        .card-appeal-content {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.5;
+            color: #6C6C6C;
+            margin: 8px 0 4px;
+            text-align: left;
+        }
+
+        .card-meta-line {
+            font-size: 14px;
+            color: #6C6C6C;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .card-form-asdos {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border-top: 1px dashed #E2E8F0;
+            padding-top: 16px;
+        }
+
+        .card-textarea-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+        }
+
+        .card-textarea-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6C6C6C;
+        }
+
+        .card-textarea-asdos {
+            width: 100%;
+            min-height: 80px;
+            background-color: #FFFFFF;
+            border: 1px solid #C8C8C8;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #334155;
+            outline: none;
+            resize: vertical;
+            transition: border-color 0.2s ease;
+        }
+
+        .card-textarea-asdos:focus {
+            border-color: #364087;
+        }
+
+        .card-action-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .card-input-score-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-input-score-label {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .card-input-score {
+            width: 90px;
+            padding: 8px;
+            border: 1px solid #C8C8C8;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            outline: none;
+        }
+
+        .card-input-score:focus {
+            border-color: #364087;
+        }
+
+        .card-buttons-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-card-action {
+            height: 38px;
+            padding: 0 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #FFFFFF;
+            transition: all 0.2s ease;
+        }
+
+        .btn-card-action.approve {
+            background-color: #2F6100;
+            box-shadow: 0 2px 4px rgba(47, 97, 0, 0.2);
+        }
+
+        .btn-card-action.approve:hover {
+            background-color: #224700;
+            transform: translateY(-0.5px);
+        }
+
+        .btn-card-action.reject {
+            background-color: #A32D2D;
+            box-shadow: 0 2px 4px rgba(163, 45, 45, 0.2);
+        }
+
+        .btn-card-action.reject:hover {
+            background-color: #822222;
+            transform: translateY(-0.5px);
+        }
+
+        .response-readonly-box {
+            background-color: #EAF3DE;
+            border: 1px solid #C8DDC0;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-top: 12px;
+            text-align: left;
+        }
+
+        .response-readonly-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #2F6100;
+            margin-bottom: 4px;
+        }
+
+        .response-readonly-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #475569;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -837,109 +1094,191 @@ $initials = substr($initials, 0, 2);
                 <!-- DOSEN / ASISTEN VIEW -->
                 <section class="sanggah-card">
                     <h3 class="sanggah-title">Daftar Pengajuan Sanggah Nilai Mahasiswa</h3>
-                    <div class="table-responsive">
-                        <table class="custom-table">
-                            <thead>
-                                <tr>
-                                    <th>Mahasiswa</th>
-                                    <th>Kelas & Modul</th>
-                                    <th>Nilai Lama</th>
-                                    <th>Alasan Sanggah</th>
-                                    <th style="width: 140px;">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($gradesList)): ?>
-                                    <tr>
-                                        <td colspan="5" style="text-align: center; color: #94A3B8; padding: 24px;">Tidak ada pengajuan sanggah nilai aktif.</td>
-                                    </tr>
-                                <?php else: ?>
-                                    <?php foreach ($gradesList as $grade): ?>
-                                        <tr>
-                                            <td>
-                                                <div style="font-weight: 600;"><?= htmlspecialchars($grade['Nama_Mahasiswa']) ?></div>
-                                                <div style="font-size: 12px; color: #64748B;"><?= htmlspecialchars($grade['NIM']) ?></div>
-                                            </td>
-                                            <td>
-                                                <div><?= htmlspecialchars($grade['Nama_Kelas']) ?></div>
-                                                <div style="font-size: 13px; color: #475569; font-weight: 600;"><?= htmlspecialchars($grade['Judul_Modul']) ?></div>
-                                                <div style="font-size: 12px; margin-top: 2px;">
-                                                    File Tugas: <a href="/rpl/public/index.php?action=view_tugas&file=<?= urlencode($grade['File_Tugas']) ?>" target="_blank" style="color: var(--btn-primary); text-decoration: underline;"><?= htmlspecialchars(basename($grade['File_Tugas'])) ?></a>
+                    
+                    <div class="sanggah-list-container">
+                        <?php if (empty($gradesList)): ?>
+                            <div style="text-align: center; color: #94A3B8; padding: 48px; background-color: #F8FAFC; border: 1px dashed #E2E8F0; border-radius: 12px;">
+                                Tidak ada pengajuan sanggah nilai aktif saat ini.
+                            </div>
+                        <?php else: ?>
+                            <?php foreach ($gradesList as $grade): 
+                                $hasResponded = !empty($grade['Tanggapan_Sanggah']);
+                                $cardStatusClass = $hasResponded ? 'resolved' : 'pending';
+                                
+                                // Get student initials
+                                $words = explode(" ", $grade['Nama_Mahasiswa']);
+                                $stdInitials = "";
+                                foreach ($words as $w) {
+                                    $stdInitials .= strtoupper($w[0] ?? '');
+                                }
+                                $stdInitials = substr($stdInitials, 0, 2);
+                            ?>
+                                <div class="sanggah-card-asdos <?= $cardStatusClass ?>">
+                                    <!-- Header Info -->
+                                    <div class="card-header-asdos">
+                                        <div class="card-profile-group">
+                                            <div class="card-avatar-asdos"><?= htmlspecialchars($stdInitials) ?></div>
+                                            <div class="card-user-meta">
+                                                <div class="card-student-name">
+                                                    <?= htmlspecialchars($grade['Nama_Mahasiswa']) ?> 
+                                                    <span class="module-label"><?= htmlspecialchars($grade['Judul_Modul']) ?></span>
                                                 </div>
-                                            </td>
-                                            <td style="font-size: 16px; font-weight: 700; color: #DC2626;"><?= htmlspecialchars($grade['Nilai_Angka']) ?></td>
-                                            <td style="max-width: 300px; font-size: 13px; background-color: #FEF2F2; color: #990000; padding: 10px; border-radius: 8px; border: 1px solid #FEE2E2;">
-                                                <?= htmlspecialchars($grade['Alasan_Sanggah']) ?>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn-action-table btn-tanggapi"
-                                                        onclick="openTanggapanModal(<?= $grade['ID_Nilai'] ?>, '<?= htmlspecialchars(addslashes($grade['Nama_Mahasiswa'])) ?>', '<?= htmlspecialchars(addslashes($grade['Judul_Modul'])) ?>', <?= $grade['Nilai_Angka'] ?>)">
-                                                    Tanggapi
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
+                                                <div class="card-student-sub">
+                                                    <?= htmlspecialchars($grade['NIM']) ?> &middot; <?= htmlspecialchars($grade['Nama_Kelas']) ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Status Badge -->
+                                        <?php if ($hasResponded): ?>
+                                            <span class="card-status-badge resolved">Telah Ditanggapi</span>
+                                        <?php else: ?>
+                                            <span class="card-status-badge pending">Menunggu Respon</span>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <!-- Appeal Content -->
+                                    <div class="card-appeal-content">
+                                        &ldquo;<?= htmlspecialchars($grade['Alasan_Sanggah']) ?>&rdquo;
+                                    </div>
+                                    
+                                    <div class="card-meta-line">
+                                        Nilai tercatat: <strong><?= htmlspecialchars($grade['Nilai_Angka']) ?></strong> &middot; Modul: <?= htmlspecialchars($grade['Judul_Modul']) ?> &middot; 
+                                        File Tugas: <a href="/rpl/public/index.php?action=view_tugas&file=<?= urlencode($grade['File_Tugas']) ?>" target="_blank" style="color: var(--btn-primary); text-decoration: underline; font-weight: 600;"><?= htmlspecialchars(basename($grade['File_Tugas'])) ?></a>
+                                    </div>
+
+                                    <!-- Response Form or Readonly Response -->
+                                    <?php if ($hasResponded): ?>
+                                        <div class="response-readonly-box">
+                                            <div class="response-readonly-title">Responmu:</div>
+                                            <div class="response-readonly-text">
+                                                <?= htmlspecialchars($grade['Tanggapan_Sanggah']) ?>
+                                                <span style="font-size: 12px; color: #64748B; display: block; margin-top: 4px;">
+                                                    Status Tugas: <strong><?= htmlspecialchars($grade['Status_Tugas'] ?? 'Selesai') ?></strong>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    <?php else: ?>
+                                        <form method="POST" action="/rpl/public/index.php?action=respond_sanggah" class="card-form-asdos">
+                                            <input type="hidden" name="id_nilai" value="<?= $grade['ID_Nilai'] ?>">
+                                            <input type="hidden" name="nilai_baru" class="card-hidden-score" value="<?= htmlspecialchars($grade['Nilai_Angka']) ?>">
+                                            <input type="hidden" name="status_tugas" value="Selesai">
+                                            
+                                            <div class="card-textarea-wrapper">
+                                                <label class="card-textarea-label">Responmu:</label>
+                                                <textarea name="tanggapan_sanggah" class="card-textarea-asdos" placeholder="Tulis respons, koreksi, atau alasan penolakan..." required></textarea>
+                                            </div>
+
+                                            <div class="card-action-row">
+                                                <!-- Right: Actions -->
+                                                <div class="card-buttons-group" style="margin-left: auto;">
+                                                    <!-- Decline Button -->
+                                                    <button type="submit" class="btn-card-action reject">
+                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+                                                        </svg>
+                                                        Tolak Sanggahan
+                                                    </button>
+
+                                                    <!-- Approve Button -->
+                                                    <button type="button" class="btn-card-action approve" onclick="handleApproveClick(this, '<?= htmlspecialchars(addslashes($grade['Nama_Mahasiswa'])) ?>', '<?= htmlspecialchars(addslashes($grade['Judul_Modul'])) ?>', '<?= htmlspecialchars($grade['Nilai_Angka']) ?>')">
+                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                            <polyline points="20 6 9 17 4 12"/>
+                                                        </svg>
+                                                        Setujui & Koreksi Nilai
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </section>
 
-                <!-- Dosen/Asisten Response Modal -->
-                <div id="tanggapanModal" class="modal">
+                <!-- Koreksi Nilai Modal -->
+                <div id="koreksiNilaiModal" class="modal">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <span class="modal-title-text">Tanggapi Sanggah Nilai</span>
-                            <button class="close-btn" onclick="closeTanggapanModal()">&times;</button>
+                        <div class="modal-header" style="background-color: #58922E;">
+                            <span class="modal-title-text">Koreksi Nilai Sanggahan</span>
+                            <button class="close-btn" onclick="closeKoreksiModal()">&times;</button>
                         </div>
-                        <form method="POST" action="/rpl/public/index.php?action=respond_sanggah">
-                            <input type="hidden" name="id_nilai" id="tanggapan_id_nilai">
-                            <div class="modal-body">
-                                <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; padding: 12px; border-radius: 8px; font-size: 13px;">
-                                    <strong>Mahasiswa:</strong> <span id="tanggapan_nama_mhs"></span><br>
-                                    <strong>Modul:</strong> <span id="tanggapan_judul_modul"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="nilai_baru">Nilai Baru (Angka)</label>
-                                    <input type="number" name="nilai_baru" id="nilai_baru" class="form-control" min="0" max="100" step="0.01" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="tanggapan_sanggah">Tanggapan / Catatan Penyesuaian</label>
-                                    <textarea name="tanggapan_sanggah" id="tanggapan_sanggah" class="form-control" placeholder="Tuliskan umpan balik atau alasan perubahan/penolakan nilai..." required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="status_tugas">Status Tugas</label>
-                                    <select name="status_tugas" id="status_tugas" class="form-control">
-                                        <option value="Selesai">Selesai (Nilai Diperbarui)</option>
-                                        <option value="Revisi">Revisi (Minta Mahasiswa Ulang/Perbaiki)</option>
-                                    </select>
-                                </div>
+                        <div class="modal-body">
+                            <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; padding: 16px; border-radius: 12px; font-size: 14px; color: #475569; display: flex; flex-direction: column; gap: 8px;">
+                                <div style="text-align: left;"><strong>Mahasiswa:</strong> <span id="koreksi_nama_mahasiswa"></span></div>
+                                <div style="text-align: left;"><strong>Modul:</strong> <span id="koreksi_judul_modul"></span></div>
+                                <div style="text-align: left;"><strong>Nilai Saat Ini:</strong> <span id="koreksi_nilai_lama" style="font-weight: 700; color: #0F172A;"></span></div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn-cancel" onclick="closeTanggapanModal()">Batal</button>
-                                <button type="submit" class="btn-confirm">Simpan & Selesaikan</button>
+                            <div class="form-group" style="text-align: left;">
+                                <label class="form-label" for="koreksi_nilai_baru">Koreksi Nilai Baru:</label>
+                                <input type="number" id="koreksi_nilai_baru" class="form-control" min="0" max="100" step="0.01" required placeholder="Masukkan nilai baru (0-100)">
                             </div>
-                        </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-cancel" onclick="closeKoreksiModal()">Batal</button>
+                            <button type="button" class="btn-confirm" style="background-color: #2F6100;" onclick="submitApproveSanggah()">Simpan & Koreksi</button>
+                        </div>
                     </div>
                 </div>
 
                 <script>
-                    function openTanggapanModal(idNilai, namaMhs, judulModul, nilaiLama) {
-                        document.getElementById('tanggapan_id_nilai').value = idNilai;
-                        document.getElementById('tanggapan_nama_mhs').innerText = namaMhs;
-                        document.getElementById('tanggapan_judul_modul').innerText = judulModul;
-                        document.getElementById('nilai_baru').value = nilaiLama;
-                        document.getElementById('tanggapanModal').style.display = 'flex';
+                    let activeFormElement = null;
+
+                    function handleApproveClick(buttonElement, studentName, moduleTitle, currentScore) {
+                        const form = buttonElement.closest('form');
+                        if (!form) return;
+                        
+                        const textarea = form.querySelector('.card-textarea-asdos');
+                        if (textarea && !textarea.reportValidity()) {
+                            return;
+                        }
+                        
+                        activeFormElement = form;
+                        
+                        document.getElementById('koreksi_nama_mahasiswa').innerText = studentName;
+                        document.getElementById('koreksi_judul_modul').innerText = moduleTitle;
+                        document.getElementById('koreksi_nilai_lama').innerText = currentScore;
+                        
+                        const newScoreInput = document.getElementById('koreksi_nilai_baru');
+                        newScoreInput.value = currentScore;
+                        
+                        document.getElementById('koreksiNilaiModal').style.display = 'flex';
                     }
 
-                    function closeTanggapanModal() {
-                        document.getElementById('tanggapanModal').style.display = 'none';
+                    function closeKoreksiModal() {
+                        document.getElementById('koreksiNilaiModal').style.display = 'none';
+                        activeFormElement = null;
                     }
 
+                    function submitApproveSanggah() {
+                        if (!activeFormElement) return;
+                        
+                        const newScoreInput = document.getElementById('koreksi_nilai_baru');
+                        const newScore = parseFloat(newScoreInput.value);
+                        
+                        if (isNaN(newScore) || newScore < 0 || newScore > 100) {
+                            alert('Harap masukkan nilai yang valid antara 0 dan 100.');
+                            return;
+                        }
+                        
+                        const hiddenScoreInput = activeFormElement.querySelector('.card-hidden-score');
+                        if (hiddenScoreInput) {
+                            hiddenScoreInput.value = newScore;
+                        }
+                        
+                        activeFormElement.submit();
+                    }
+
+                    // Global window click to close modal
+                    const originalWindowClick = window.onclick;
                     window.onclick = function(event) {
-                        var modal = document.getElementById('tanggapanModal');
-                        if (event.target == modal) {
-                            modal.style.display = "none";
+                        if (originalWindowClick) {
+                            originalWindowClick(event);
+                        }
+                        const koreksiModal = document.getElementById('koreksiNilaiModal');
+                        if (event.target == koreksiModal) {
+                            closeKoreksiModal();
                         }
                     }
                 </script>
