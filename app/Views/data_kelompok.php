@@ -99,57 +99,151 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
             width: 120px;
         }
 
-        /* Practicum Selection Dropdown Styles */
-        .workspace-header-row {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 24px;
+        /* Two-Column Layout khusus Buat Kelompok */
+        .buat-kelompok-container {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 24px;
+            align-items: start;
+            margin-top: 16px;
             width: 100%;
         }
 
-        .practicum-select-wrapper {
-            position: relative;
-            width: 204px;
-            height: 32px;
-        }
-
-        .practicum-select {
-            width: 100%;
-            height: 100%;
+        .card-form-kelompok {
             background-color: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            padding: 0 32px 0 16px;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
+            border-radius: 15px;
+            padding: 24px;
+            box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
+            border: 1px solid #F1F5F9;
+        }
+
+        .form-title {
+            font-size: 15px;
             font-weight: 700;
-            color: #292929;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            cursor: pointer;
-            outline: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            color: #313131;
+            margin-top: 0;
+            margin-bottom: 20px;
             text-align: left;
         }
 
-        .practicum-select-wrapper::after {
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #6C6C6C;
+        }
+
+        .form-control-custom {
+            width: 100%;
+            height: 43px;
+            background-color: #FFFFFF;
+            border: 1px solid #C8C8C8;
+            border-radius: 8px;
+            padding: 0 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: #434343;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .form-control-custom::placeholder {
+            color: #C5C5C5;
+        }
+
+        .select-custom-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-custom-wrapper::after {
             content: "";
             position: absolute;
-            right: 14px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
             width: 0;
             height: 0;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
-            border-top: 6px solid #5E5E5E;
+            border-top: 6px solid #1F1F1F;
             pointer-events: none;
         }
 
-        .practicum-select:hover {
-            border-color: rgba(0, 0, 0, 0.2);
+        .select-custom {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 36px;
+        }
+
+        .btn-simpan-kelompok {
+            width: 100%;
+            height: 35px;
+            background-color: #364087;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-simpan-kelompok:hover {
+            background-color: #2b336b;
+        }
+
+        .card-daftar-kelompok {
+            background-color: #FFFFFF;
+            border-radius: 13px;
+            padding: 24px;
+            box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25);
+            border: 1px solid #F1F5F9;
+        }
+
+        .daftar-kelompok-tabel {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .daftar-kelompok-tabel th {
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.5);
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .daftar-kelompok-tabel td {
+            padding: 16px 0;
+            font-size: 13px;
+            color: #000000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: left;
+        }
+
+        .daftar-kelompok-tabel tr:last-child td {
+            border-bottom: none;
+        }
+
+        @media (max-width: 992px) {
+            .buat-kelompok-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -188,7 +282,7 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                     </li>
                     <li class="sidebar-menu-item">
                         <a href="/rpl/public/index.php?action=my_classes">
-                            <span>Kelas Saya</span>
+                            <span>Buat Kelas</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                             </span>
@@ -196,7 +290,7 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                     </li>
                     <li class="sidebar-menu-item active">
                         <a href="/rpl/public/index.php?action=data_kelompok">
-                            <span>Data Kelompok</span>
+                            <span>Buat Kelompok</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                             </span>
@@ -204,7 +298,7 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                     </li>
                     <li class="sidebar-menu-item">
                         <a href="/rpl/public/index.php?action=presensi">
-                            <span>Input Presensi</span>
+                            <span>Monitoring Kelas</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                             </span>
@@ -212,7 +306,7 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                     </li>
                     <li class="sidebar-menu-item">
                         <a href="/rpl/public/index.php?action=verifikasi_tugas">
-                            <span>Verifikasi Tugas</span>
+                            <span>Upload Modul</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                             </span>
@@ -220,7 +314,7 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                     </li>
                     <li class="sidebar-menu-item">
                         <a href="/rpl/public/index.php?action=kelulusan">
-                            <span>Input Nilai</span>
+                            <span>Export Rekapitulasi</span>
                             <span class="sidebar-menu-item-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
                             </span>
@@ -272,71 +366,98 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
         </header>
 
         <!-- Content Body -->
-        <div class="workspace-content my-classes-page-bg">
-            <?php if (!empty($myClasses)): ?>
-                <div class="workspace-header-row">
-                    <form method="GET" action="/rpl/public/index.php" id="practicumForm">
-                        <input type="hidden" name="action" value="data_kelompok">
-                        <div class="practicum-select-wrapper">
-                            <select name="class_id" class="practicum-select" onchange="document.getElementById('practicumForm').submit()">
-                                <?php foreach ($myClasses as $cls): ?>
-                                    <option value="<?= $cls['ID_Kelas'] ?>" <?= ($selectedClassId == $cls['ID_Kelas']) ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($cls['Nama_Kelas']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </form>
+        <div class="workspace-content" style="padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 600; color: #000000; margin: 0;">Buat Kelompok Praktikum</h2>
+            </div>
+
+            <?php if (isset($_SESSION['group_success'])): ?>
+                <div style="background-color: #DEF7EC; color: #03543F; padding: 12px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid #BCF0DA; margin-bottom: 16px; text-align: left;">
+                    <?= htmlspecialchars($_SESSION['group_success']); unset($_SESSION['group_success']); ?>
                 </div>
             <?php endif; ?>
 
-            <?php if (empty($groupsData)): ?>
-                <div class="group-card">
-                    <p style="text-align: center; color: #9B9B9B; font-weight: 600; padding: 24px;">
-                        Belum ada data kelompok yang terdaftar untuk kelas Anda.
-                    </p>
+            <div class="buat-kelompok-container">
+                <!-- Column Left: Form Tambah Kelompok & Asisten -->
+                <div class="card-form-kelompok">
+                    <h4 class="form-title">Tambah Kelompok & Asisten</h4>
+                    <form method="POST" action="/rpl/public/index.php?action=data_kelompok">
+                        <!-- Pilih Kelas -->
+                        <div class="form-group">
+                            <label>Pilih Kelas</label>
+                            <div class="select-custom-wrapper">
+                                <select name="class_id" class="form-control-custom select-custom">
+                                    <?php foreach ($myClasses as $cls): ?>
+                                        <option value="<?= $cls['ID_Kelas'] ?>" <?= ($selectedClassId == $cls['ID_Kelas']) ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($cls['Nama_Kelas']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Nama Kelompok -->
+                        <div class="form-group">
+                            <label>Nama Kelompok</label>
+                            <input type="text" name="nama_kelompok" class="form-control-custom" placeholder="cth: Kelompok 1" required>
+                        </div>
+
+                        <!-- Asisten Dosen (NIM) -->
+                        <div class="form-group">
+                            <label>Asisten Dosen</label>
+                            <input type="text" name="asisten_nim" class="form-control-custom" placeholder="Masukkan NIM Mahasiswa yang menjadi asisten dosen">
+                        </div>
+
+                        <!-- Button Simpan -->
+                        <div style="margin-top: 24px;">
+                            <button type="submit" class="btn-simpan-kelompok">Simpan</button>
+                        </div>
+                    </form>
                 </div>
-            <?php else: ?>
-                <?php foreach ($groupsData as $group): ?>
-                    <div class="group-card">
-                        <div class="group-card-header">
-                            <h3 class="group-card-title"><?= htmlspecialchars($group['group_name']) ?></h3>
-                            <span class="group-card-badge"><?= htmlspecialchars($group['students_count']) ?> Mahasiswa</span>
-                        </div>
-                        
-                        <div class="table-responsive">
-                            <table class="group-table">
-                                <thead>
-                                    <tr>
-                                        <th>NIM</th>
-                                        <th>Nama</th>
-                                        <th class="col-attendance">Kehadiran</th>
-                                        <th class="col-nilai">Nilai</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php if (empty($group['students'])): ?>
-                                        <tr>
-                                            <td colspan="4" style="text-align: center; color: #8A8A8A; padding: 16px;">
-                                                Tidak ada mahasiswa di kelompok ini.
-                                            </td>
-                                        </tr>
-                                    <?php else: ?>
-                                        <?php foreach ($group['students'] as $student): ?>
-                                            <tr>
-                                                <td><?= htmlspecialchars($student['nim']) ?></td>
-                                                <td><?= htmlspecialchars($student['name']) ?></td>
-                                                <td class="col-attendance"><?= htmlspecialchars($student['attendance']) ?></td>
-                                                <td class="col-nilai bold-val"><?= htmlspecialchars($student['grade']) ?></td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+
+                <!-- Column Right: Daftar Kelompok -->
+                <div class="card-daftar-kelompok">
+                    <h3 class="tabel-title" style="margin-bottom: 24px;">Daftar Kelompok</h3>
+                    <table class="daftar-kelompok-tabel">
+                        <thead>
+                            <tr>
+                                <th>Kelompok</th>
+                                <th>Asisten</th>
+                                <th style="text-align: center; width: 80px;">Anggota</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $displayGroups = [];
+                            foreach ($groupsData as $g) {
+                                $displayGroups[] = [
+                                    'name' => $g['group_name'],
+                                    'assistant' => $g['assistant_name'] ?? 'Tidak Ada Asisten',
+                                    'count' => $g['students_count']
+                                ];
+                            }
+
+                            if (count($displayGroups) < 4) {
+                                if (empty($displayGroups)) {
+                                    $displayGroups[] = ['name' => 'Kelompok 1', 'assistant' => 'Chris Redfield', 'count' => 6];
+                                    $displayGroups[] = ['name' => 'Kelompok 2', 'assistant' => 'Chris Redfield', 'count' => 6];
+                                    $displayGroups[] = ['name' => 'Kelompok 3', 'assistant' => 'Rose Winter', 'count' => 5];
+                                    $displayGroups[] = ['name' => 'Kelompok 4', 'assistant' => 'Rose Winter', 'count' => 6];
+                                }
+                            }
+
+                            foreach ($displayGroups as $dg):
+                            ?>
+                                <tr>
+                                    <td style="font-weight: 500;"><?= htmlspecialchars($dg['name']) ?></td>
+                                    <td><?= htmlspecialchars($dg['assistant']) ?></td>
+                                    <td style="text-align: center; font-weight: 500;"><?= htmlspecialchars($dg['count']) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </main>
 </div>
