@@ -64,10 +64,22 @@ switch ($action) {
         $dashboardController->submitGrade();
         break;
 
+    case 'submit_verification':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->submitVerification();
+        break;
+
     case 'my_classes':
         require_once __DIR__ . '/../app/Controllers/DashboardController.php';
         $dashboardController = new DashboardController();
         $dashboardController->myClasses();
+        break;
+
+    case 'data_kelompok':
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->dataKelompok();
         break;
 
     case 'bank_modul':
@@ -76,10 +88,22 @@ switch ($action) {
         $modulController->index();
         break;
 
+    case 'upload_modul':
+        require_once __DIR__ . '/../app/Controllers/ModulController.php';
+        $modulController = new ModulController();
+        $modulController->uploadModul();
+        break;
+
     case 'download_materi':
         require_once __DIR__ . '/../app/Controllers/ModulController.php';
         $modulController = new ModulController();
         $modulController->download();
+        break;
+
+    case 'view_tugas':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->viewFile();
         break;
 
     case 'upload_tugas':
@@ -110,6 +134,12 @@ switch ($action) {
         require_once __DIR__ . '/../app/Controllers/TugasController.php';
         $tugasController = new TugasController();
         $tugasController->submitPresensi();
+        break;
+
+    case 'verifikasi_tugas':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->verifikasiTugas();
         break;
 
     case 'sanggah_nilai':

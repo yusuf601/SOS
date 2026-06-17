@@ -118,4 +118,97 @@ class ModulController {
             exit;
         }
     }
+
+    // Render Upload Modul View & Handle Upload Request (Dosen)
+    public function uploadModul() {
+        if (!isset($_SESSION['user_id']) || !in_array($_SESSION['active_role'] ?? '', ['Dosen', 'Asisten'])) {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        $userId = $_SESSION['user_id'];
+        $role = $_SESSION['active_role'];
+        $db = (new Database())->getConnection();
+
+        // Handle POST form submission
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $judulModul = trim($_POST['judul_modul'] ?? '');
+            $pertemuan = trim($_POST['pertemuan'] ?? '');
+            $classId = (int)($_POST['class_id'] ?? 0);
+            $deadline = trim($_POST['deadline'] ?? '');
+
+            if ($judulModul && $deadline && isset($_FILES['file_materi']) && $_FILES['file_materi']['error'] === UPLOAD_ERR_OK) {
+                $fileTmpPath = $_FILES['file_materi']['tmp_name'];
+                $fileName = $_FILES['file_materi']['name'];
+                $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+                if ($fileExtension === 'pdf') {
+                    // Safe filename
+                    $safeFileName = time() . '_' . preg_replace('/[^a-zA-Z0-9_.-]/', '_', $fileName);
+                    $uploadFileDir = __DIR__ . '/../../public/assets/uploads/materi/';
+
+                    if (!is_dir($uploadFileDir)) {
+                        mkdir($uploadFileDir, 0777, true);
+                    }
+
+                    $dest_path = $uploadFileDir . $safeFileName;
+
+                    if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                        try {
+                            $db->beginTransaction();
+
+                            // 1. Insert to Tabel_Modul
+                            $stmt = $db->prepare("INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES (:judul, :file)");
+                            $stmt->execute([
+                                ':judul' => $judulModul,
+                                ':file' => $safeFileName
+                            ]);
+                            $modulId = $db->lastInsertId();
+
+                            // 2. Insert to Tabel_Tugas
+                            $instruksi = "Kumpulkan tugas untuk " . $judulModul;
+                            $stmtTugas = $db->prepare("INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (:modulId, :instruksi, :deadline)");
+                            $stmtTugas->execute([
+                                ':modulId' => $modulId,
+                                ':instruksi' => $instruksi,
+                                ':deadline' => $deadline
+                            ]);
+
+                            $db->commit();
+                            $_SESSION['upload_success'] = "Modul dan tugas berhasil diunggah!";
+                        } catch (Exception $e) {
+                            $db->rollBack();
+                            $_SESSION['upload_error'] = "Gagal menyimpan ke database: " . $e->getMessage();
+                        }
+                    } else {
+                        $_SESSION['upload_error'] = "Gagal memindahkan file ke folder tujuan.";
+                    }
+                } else {
+                    $_SESSION['upload_error'] = "Hanya file PDF yang diperbolehkan.";
+                }
+            } else {
+                $_SESSION['upload_error'] = "Semua field wajib diisi dan file harus diunggah.";
+            }
+
+            header('Location: /rpl/public/index.php?action=upload_modul');
+            exit;
+        }
+
+        // GET request - fetch data for view
+        $myClasses = $this->kelasModel->getClassesByUserId($userId);
+        if (empty($myClasses)) {
+            $myClasses = $this->kelasModel->getAllClasses();
+        }
+
+        // Fetch all modules with deadline
+        $query = "SELECT m.*, t.Deadline_Upload 
+                  FROM Tabel_Modul m
+                  LEFT JOIN Tabel_Tugas t ON m.ID_Modul = t.ID_Modul
+                  ORDER BY m.ID_Modul ASC";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        $savedModuls = $stmt->fetchAll();
+
+        require_once __DIR__ . '/../Views/upload_modul.php';
+    }
 }
