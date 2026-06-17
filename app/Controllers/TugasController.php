@@ -231,7 +231,7 @@ class TugasController {
             $attendance = $stmt->fetchAll();
         } else {
             // Dosen/Asisten can manage attendance
-            $allClasses = $this->kelasModel->getAllClasses();
+            $allClasses = $this->kelasModel->getClassesByUserId($userId);
             
             // Get modules
             $queryModuls = "SELECT * FROM Tabel_Modul ORDER BY ID_Modul ASC";
@@ -243,32 +243,40 @@ class TugasController {
             $selectedClass = isset($_GET['class_id']) ? (int)$_GET['class_id'] : ($allClasses[0]['ID_Kelas'] ?? 0);
             $selectedModul = isset($_GET['modul_id']) ? (int)$_GET['modul_id'] : ($moduls[0]['ID_Modul'] ?? 0);
 
+            $groupsData = [];
             if ($selectedClass > 0) {
-                // Fetch groups in class
-                $queryGroups = "SELECT ID_Kelompok FROM Tabel_Kelompok WHERE ID_Kelas = :classId";
+                // Fetch groups in this class
+                $queryGroups = "SELECT * FROM Tabel_Kelompok WHERE ID_Kelas = :classId ORDER BY Nama_Kelompok ASC";
                 $stmtGroups = $db->prepare($queryGroups);
                 $stmtGroups->bindParam(':classId', $selectedClass);
                 $stmtGroups->execute();
-                $groups = $stmtGroups->fetchAll(PDO::FETCH_COLUMN);
+                $groups = $stmtGroups->fetchAll();
 
-                if (!empty($groups)) {
-                    $inQuery = implode(',', array_map('intval', $groups));
-                    // Get all students
-                    $queryMhs = "SELECT u.ID_User, u.Username as NIM, u.Nama_Lengkap, k.Nama_Kelompok,
-                                        p.Status_Kehadiran, p.ID_Presensi
-                                 FROM Tabel_User u
-                                 JOIN Tabel_Kelompok k ON u.ID_Kelompok = k.ID_Kelompok
-                                 LEFT JOIN Tabel_Presensi p ON u.ID_User = p.ID_User AND p.ID_Modul = :modulId
-                                 WHERE u.ID_Kelompok IN ($inQuery) AND u.Role = 'Mahasiswa'
-                                 ORDER BY u.Username ASC";
-                    $stmtMhs = $db->prepare($queryMhs);
-                    $stmtMhs->bindParam(':modulId', $selectedModul);
-                    $stmtMhs->execute();
-                    $studentsList = $stmtMhs->fetchAll();
+                foreach ($groups as $g) {
+                    $groupId = $g['ID_Kelompok'];
+
+                    // Fetch students in this group with their attendance for this module
+                    $queryStudents = "SELECT u.ID_User, u.Username as NIM, u.Nama_Lengkap,
+                                             p.Status_Kehadiran, p.ID_Presensi
+                                      FROM Tabel_User u
+                                      LEFT JOIN Tabel_Presensi p ON u.ID_User = p.ID_User AND p.ID_Modul = :modulId
+                                      WHERE u.ID_Kelompok = :groupId AND u.Role = 'Mahasiswa'
+                                      ORDER BY u.Username ASC";
+                    $stmtStudents = $db->prepare($queryStudents);
+                    $stmtStudents->bindParam(':modulId', $selectedModul);
+                    $stmtStudents->bindParam(':groupId', $groupId);
+                    $stmtStudents->execute();
+                    $students = $stmtStudents->fetchAll();
+
+                    $groupsData[] = [
+                        'group_id' => $groupId,
+                        'group_name' => $g['Nama_Kelompok'],
+                        'students' => $students
+                    ];
                 }
             }
         }
-
+ 
         require_once __DIR__ . '/../Views/presensi.php';
     }
 
@@ -535,6 +543,7 @@ class TugasController {
         $classInfo = null;
         $finalGrades = [];
         $studentClassesData = [];
+        $allClasses = [];
 
         if ($role === 'Mahasiswa') {
             $classInfo = $this->kelasModel->getStudentClass($userId);
@@ -612,7 +621,7 @@ class TugasController {
                 $stmtFinal->execute();
                 $finalGrades = $stmtFinal->fetch();
 
-                // Merge actual dynamic class information into mockup array
+                 // Merge actual dynamic class information into mockup array
                 $actualClassName = $classInfo['Nama_Kelas'];
                 $found = false;
                 foreach ($studentClassesData as &$cData) {
@@ -636,7 +645,51 @@ class TugasController {
                     ]);
                 }
             }
+        } elseif ($role === 'Dosen') {
+            $allClasses = $this->kelasModel->getAllClasses();
         } else {
+            // Staff view: Fetch grading queue and final grades
+            $queryQueue = "SELECT p.ID_Pengumpulan, p.File_Tugas, p.Waktu_Submit, 
+                                  u.ID_User, u.Nama_Lengkap as Nama_Mahasiswa, u.Username as NIM_Mahasiswa,
+                                  kp.Nama_Kelompok, m.Judul_Modul, m.ID_Modul,
+                                  n.Nilai_Angka, n.Feedback, n.Status_Tugas, n.ID_Nilai
+                           FROM Tabel_Pengumpulan p
+                           JOIN Tabel_User u ON p.ID_User = u.ID_User
+                           JOIN Tabel_Kelompok kp ON u.ID_Kelompok = kp.ID_Kelompok
+                           JOIN Tabel_Kelas k ON kp.ID_Kelas = k.ID_Kelas
+                           JOIN Tabel_Plotting_Asisten pa ON k.ID_Kelas = pa.ID_Kelas
+                           JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                           JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
+                           LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                           WHERE pa.ID_User = :staffId
+                           ORDER BY p.Waktu_Submit DESC";
+            $stmtQueue = $db->prepare($queryQueue);
+            $stmtQueue->bindParam(':staffId', $userId);
+            $stmtQueue->execute();
+            $submissionsQueue = $stmtQueue->fetchAll();
+
+            $pendingCount = 0;
+            foreach ($submissionsQueue as $sub) {
+                if (empty($sub['Nilai_Angka']) || $sub['Nilai_Angka'] == 0.00) {
+                    $pendingCount++;
+                }
+            }
+
+            $selectedSubId = isset($_GET['pengumpulan_id']) ? (int)$_GET['pengumpulan_id'] : 0;
+            $selectedSubmission = null;
+            if ($selectedSubId > 0) {
+                foreach ($submissionsQueue as $sub) {
+                    if ((int)$sub['ID_Pengumpulan'] === $selectedSubId) {
+                        $selectedSubmission = $sub;
+                        break;
+                    }
+                }
+            }
+            if (!$selectedSubmission && !empty($submissionsQueue)) {
+                $selectedSubmission = $submissionsQueue[0];
+            }
+
+            // Also fetch rekapitulasi final grades
             $queryFinal = "SELECT na.*, u.Nama_Lengkap as Nama_Mahasiswa, u.Username as NIM, k.Nama_Kelas
                            FROM Tabel_Nilai_Akhir na
                            JOIN Tabel_User u ON na.ID_User = u.ID_User
@@ -651,5 +704,234 @@ class TugasController {
         }
 
         require_once __DIR__ . '/../Views/kelulusan.php';
+    }
+
+    // Export Rekapitulasi Grades as Excel or CSV
+    public function exportRekap() {
+        if (!isset($_SESSION['user_id']) || ($_SESSION['active_role'] ?? '') !== 'Dosen') {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        $classId = isset($_GET['class_id']) ? $_GET['class_id'] : 'all';
+        $semester = isset($_GET['semester']) ? $_GET['semester'] : 'Genap 2024/2025';
+        $format = isset($_GET['format']) ? $_GET['format'] : 'excel';
+        
+        $db = (new Database())->getConnection();
+
+        if ($classId === 'all') {
+            $query = "SELECT na.*, u.Nama_Lengkap as Nama_Mahasiswa, u.Username as NIM, k.Nama_Kelas
+                      FROM Tabel_Nilai_Akhir na
+                      JOIN Tabel_User u ON na.ID_User = u.ID_User
+                      JOIN Tabel_Kelas k ON na.ID_Kelas = k.ID_Kelas
+                      ORDER BY k.Nama_Kelas ASC, u.Username ASC";
+            $stmt = $db->prepare($query);
+        } else {
+            $query = "SELECT na.*, u.Nama_Lengkap as Nama_Mahasiswa, u.Username as NIM, k.Nama_Kelas
+                      FROM Tabel_Nilai_Akhir na
+                      JOIN Tabel_User u ON na.ID_User = u.ID_User
+                      JOIN Tabel_Kelas k ON na.ID_Kelas = k.ID_Kelas
+                      WHERE na.ID_Kelas = :classId
+                      ORDER BY u.Username ASC";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':classId', $classId, PDO::PARAM_INT);
+        }
+        $stmt->execute();
+        $grades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($format === 'csv') {
+            $filename = 'rekap_nilai_' . ($classId === 'all' ? 'semua_kelas' : 'kelas_' . $classId) . '_' . date('YmdHis') . '.csv';
+            header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            
+            $output = fopen('php://output', 'w');
+            fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF)); // UTF-8 BOM
+            
+            fputcsv($output, ['NIM', 'Nama Mahasiswa', 'Kelas', 'Nilai Akhir', 'Status Kelulusan']);
+            
+            foreach ($grades as $row) {
+                fputcsv($output, [
+                    $row['NIM'],
+                    $row['Nama_Mahasiswa'],
+                    $row['Nama_Kelas'],
+                    $row['Nilai_Akhir'],
+                    $row['Status_Kelulusan']
+                ]);
+            }
+            fclose($output);
+            exit;
+        } else {
+            // Excel HTML Format
+            $filename = 'rekap_nilai_' . ($classId === 'all' ? 'semua_kelas' : 'kelas_' . $classId) . '_' . date('YmdHis') . '.xls';
+            header('Content-Type: application/vnd.ms-excel; charset=utf-8');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            header('Pragma: no-cache');
+            header('Expires: 0');
+            
+            echo '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+            echo '<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>';
+            echo '<body>';
+            echo '<table border="1">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>NIM</th>';
+            echo '<th>Nama Mahasiswa</th>';
+            echo '<th>Kelas</th>';
+            echo '<th>Nilai Akhir</th>';
+            echo '<th>Status Kelulusan</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+            foreach ($grades as $row) {
+                echo '<tr>';
+                echo '<td>' . htmlspecialchars($row['NIM']) . '</td>';
+                echo '<td>' . htmlspecialchars($row['Nama_Mahasiswa']) . '</td>';
+                echo '<td>' . htmlspecialchars($row['Nama_Kelas']) . '</td>';
+                echo '<td>' . htmlspecialchars($row['Nilai_Akhir']) . '</td>';
+                echo '<td>' . htmlspecialchars($row['Status_Kelulusan']) . '</td>';
+                echo '</tr>';
+            }
+            echo '</tbody>';
+            echo '</table>';
+            echo '</body>';
+            echo '</html>';
+            exit;
+        }
+    }
+
+    // Render Task Verification View
+    public function verifikasiTugas() {
+        if (!isset($_SESSION['user_id']) || !in_array($_SESSION['active_role'] ?? '', ['Dosen', 'Asisten'])) {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        $userId = $_SESSION['user_id'];
+        $role = $_SESSION['active_role'];
+        $db = (new Database())->getConnection();
+
+        $allClasses = $this->kelasModel->getClassesByUserId($userId);
+        
+        // Fetch all modules
+        $queryModuls = "SELECT * FROM Tabel_Modul ORDER BY ID_Modul ASC";
+        $stmtModuls = $db->prepare($queryModuls);
+        $stmtModuls->execute();
+        $moduls = $stmtModuls->fetchAll();
+
+        // Selected filter values (default to first class and first module if none selected)
+        $selectedClass = isset($_GET['class_id']) ? (int)$_GET['class_id'] : ($allClasses[0]['ID_Kelas'] ?? 0);
+        $selectedModul = isset($_GET['modul_id']) ? (int)$_GET['modul_id'] : ($moduls[0]['ID_Modul'] ?? 0);
+
+        // Fetch students and their submissions in the selected class and module
+        $studentsData = [];
+        if ($selectedClass > 0) {
+            // First find the task associated with the selected module
+            $queryTugas = "SELECT ID_Tugas FROM Tabel_Tugas WHERE ID_Modul = :modulId LIMIT 1";
+            $stmtTugas = $db->prepare($queryTugas);
+            $stmtTugas->bindParam(':modulId', $selectedModul);
+            $stmtTugas->execute();
+            $tugas = $stmtTugas->fetch();
+            $tugasId = $tugas ? $tugas['ID_Tugas'] : 0;
+
+            // Query all students belonging to the selected class (through their groups)
+            // Left join with their submission for the found task (if any) and its grade
+            $queryStudents = "SELECT u.ID_User, u.Username as NIM, u.Nama_Lengkap, kp.Nama_Kelompok,
+                                     p.ID_Pengumpulan, p.File_Tugas, p.Waktu_Submit,
+                                     n.Nilai_Angka, n.Feedback, n.Status_Tugas, n.ID_Nilai
+                              FROM Tabel_User u
+                              JOIN Tabel_Kelompok kp ON u.ID_Kelompok = kp.ID_Kelompok
+                              LEFT JOIN Tabel_Pengumpulan p ON u.ID_User = p.ID_User AND p.ID_Tugas = :tugasId
+                              LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                              WHERE kp.ID_Kelas = :classId AND u.Role = 'Mahasiswa'
+                              ORDER BY kp.Nama_Kelompok ASC, u.Username ASC";
+            $stmtStudents = $db->prepare($queryStudents);
+            $stmtStudents->bindParam(':classId', $selectedClass);
+            $stmtStudents->bindParam(':tugasId', $tugasId);
+            $stmtStudents->execute();
+            $studentsData = $stmtStudents->fetchAll();
+        }
+
+        require_once __DIR__ . '/../Views/verifikasi_tugas.php';
+    }
+
+    // Handle Verification Submission POST (Option A)
+    public function submitVerification() {
+        if (!isset($_SESSION['user_id']) || !in_array($_SESSION['active_role'] ?? '', ['Dosen', 'Asisten'])) {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /rpl/public/index.php?action=verifikasi_tugas');
+            exit;
+        }
+
+        $asistenId = $_SESSION['user_id'];
+        $pengumpulanId = isset($_POST['id_pengumpulan']) ? (int)$_POST['id_pengumpulan'] : 0;
+        $status = isset($_POST['status_tugas']) ? $_POST['status_tugas'] : 'Selesai';
+        $feedback = isset($_POST['feedback']) ? trim($_POST['feedback']) : '';
+        
+        $redirectUrl = "/rpl/public/index.php?action=verifikasi_tugas";
+        if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
+            $redirectUrl = $_POST['redirect_url'];
+        }
+
+        if ($pengumpulanId <= 0) {
+            $_SESSION['grade_error'] = "Data pengumpulan tidak valid.";
+            header("Location: $redirectUrl");
+            exit;
+        }
+
+        // Save verification status
+        $success = $this->tugasModel->saveVerification($pengumpulanId, $asistenId, $status, $feedback);
+
+        if ($success) {
+            $_SESSION['grade_success'] = "Verifikasi tugas berhasil disimpan.";
+        } else {
+            $_SESSION['grade_error'] = "Gagal menyimpan verifikasi ke database.";
+        }
+
+        header("Location: $redirectUrl");
+        exit;
+    }
+
+    // Stream student submission file inline (Option 1)
+    public function viewFile() {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        $file = isset($_GET['file']) ? $_GET['file'] : '';
+        if (empty($file)) {
+            die("File tidak ditemukan.");
+        }
+
+        // Clean filename to prevent path traversal vulnerability
+        $file = basename($file);
+        $filepath = __DIR__ . '/../../public/assets/uploads/tugas/' . $file;
+
+        if (!file_exists($filepath)) {
+            die("Berkas tugas tidak ditemukan di server.");
+        }
+
+        // Get content type based on extension
+        $ext = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
+        $contentType = 'application/octet-stream';
+        if ($ext === 'pdf') {
+            $contentType = 'application/pdf';
+        } elseif ($ext === 'jpg' || $ext === 'jpeg') {
+            $contentType = 'image/jpeg';
+        } elseif ($ext === 'png') {
+            $contentType = 'image/png';
+        } elseif ($ext === 'zip') {
+            $contentType = 'application/zip';
+        }
+
+        header("Content-Type: $contentType");
+        header("Content-Disposition: inline; filename=\"$file\"");
+        header("Content-Length: " . filesize($filepath));
+        readfile($filepath);
+        exit;
     }
 }

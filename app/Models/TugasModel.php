@@ -172,4 +172,36 @@ class TugasModel {
             return $stmt->execute();
         }
     }
+
+    // Save or update verification status (Option A - without changing numeric grade if exists)
+    public function saveVerification($pengumpulanId, $asistenId, $status, $feedback) {
+        $queryCheck = "SELECT ID_Nilai, Nilai_Angka FROM Tabel_Nilai WHERE ID_Pengumpulan = :pengumpulanId LIMIT 1";
+        $stmtCheck = $this->db->prepare($queryCheck);
+        $stmtCheck->bindParam(':pengumpulanId', $pengumpulanId);
+        $stmtCheck->execute();
+        $existing = $stmtCheck->fetch();
+
+        if ($existing) {
+            $query = "UPDATE Tabel_Nilai 
+                      SET ID_Asisten = :asistenId, Feedback = :feedback, Status_Tugas = :status 
+                      WHERE ID_Nilai = :id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':asistenId', $asistenId);
+            $stmt->bindParam(':feedback', $feedback);
+            $stmt->bindParam(':status', $status);
+            $stmt->bindParam(':id', $existing['ID_Nilai']);
+            return $stmt->execute();
+        } else {
+            $nilai = 0.00; // Default score before grading
+            $query = "INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) 
+                      VALUES (:pengumpulanId, :asistenId, :nilai, :feedback, :status)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':pengumpulanId', $pengumpulanId);
+            $stmt->bindParam(':asistenId', $asistenId);
+            $stmt->bindParam(':nilai', $nilai);
+            $stmt->bindParam(':feedback', $feedback);
+            $stmt->bindParam(':status', $status);
+            return $stmt->execute();
+        }
+    }
 }

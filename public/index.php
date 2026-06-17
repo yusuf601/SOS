@@ -172,6 +172,12 @@ switch ($action) {
         $tugasController->kelulusan();
         break;
 
+    case 'export_rekap':
+        require_once __DIR__ . '/../app/Controllers/TugasController.php';
+        $tugasController = new TugasController();
+        $tugasController->exportRekap();
+        break;
+
     default:
         // If already logged in, redirect to active dashboard
         if (isset($_SESSION['user_id']) && isset($_SESSION['active_role'])) {

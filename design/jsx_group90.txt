@@ -1,0 +1,122 @@
+<Frame name="Group 90" x={71} y={149} w={721} h={383}>
+  <Frame name="Group 88" w={721} h={383}>
+    <Frame name="Group 86" w={721} h={383}>
+      <Frame name="Group 58" w={721} h={383}>
+        <Rectangle name="Rectangle 18" w={721} h={383} bg="#FFFFFF" rounded={11} />
+        <Text name="Kelompok 1" x={19} y={14} size={18} weight={600} textAlign="center" lineHeight={22} color="#000000">Kelompok 1</Text>
+        <Line name="Line 1" x={28} y={88} w={666} stroke="#00000066" strokeWidth={0.5} />
+        <Line name="Line 4" x={28} y={221} w={666.000732421875} stroke="#00000066" strokeWidth={0.20000000298023224} />
+        <Line name="Line 5" x={28} y={269} w={666.000732421875} stroke="#00000066" strokeWidth={0.20000000298023224} />
+        <Line name="Line 6" x={28} y={321} w={666.000732421875} stroke="#00000066" strokeWidth={0.20000000298023224} />
+        <Text name="Nama" x={34} y={64} weight={600} textAlign="center" lineHeight={17} color="#00000080">Nama</Text>
+        <Text name="Tandai" x={555} y={64} weight={600} textAlign="center" lineHeight={17} color="#00000080">Tandai</Text>
+        <Text name="Status" x={310} y={64} weight={600} textAlign="center" lineHeight={17} color="#00000080">Status</Text>
+        <Line name="Line 2" x={31} y={132} w={663.000732421875} stroke="#00000066" strokeWidth={0.20000000298023224} />
+        <Line name="Line 3" x={28} y={172.99999994906207} w={666.0120239257812} stroke="#00000066" strokeWidth={0.20000000298023224} rotate={-0.34} />
+        <Frame name="judul modul" x={34} y={103} w={112} h={255}>
+          <Text name="Leon S. Kennedy" size={12} weight="medium" lineHeight={15} color="#000000">Leon S. Kennedy</Text>
+          <Text name="Ada Wong" y={41} size={12} weight="medium" lineHeight={15} color="#000000">Ada Wong</Text>
+          <Text name="Sherry Birkin" y={89} size={12} weight="medium" lineHeight={15} color="#000000">Sherry Birkin</Text>
+          <Text name="Jill Valentine" y={137} size={12} weight="medium" lineHeight={15} color="#000000">Jill Valentine</Text>
+          <Text name="Rebecca Chambers" y={187} size={12} weight="medium" lineHeight={15} color="#000000">Rebecca Chambers</Text>
+          <Text name="Ethan Winters" y={240} size={12} weight="medium" lineHeight={15} color="#000000">Ethan Winters</Text>
+        </Frame>
+      </Frame>
+    </Frame>
+    <Frame name="tag hadir" x={313} y={102} w={38} h={15}>
+      <Rectangle name="Rectangle 41" w={38} h={15} bg="#EAF3DE" rounded={30} />
+      <Text name="Hadir" x={7} y={2} w={27} h={9} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+    </Frame>
+    <Frame name="tag hadir" x={313} y={144} w={38} h={15}>
+      <Rectangle name="Rectangle 41" w={38} h={15} bg="#EAF3DE" rounded={30} />
+      <Text name="Hadir" x={7} y={2} w={27} h={9} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+    </Frame>
+    <Frame name="tag hadir" x={313} y={192} w={38} h={15}>
+      <Rectangle name="Rectangle 41" w={38} h={15} bg="#EAF3DE" rounded={30} />
+      <Text name="Hadir" x={7} y={2} w={27} h={9} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+    </Frame>
+    <Frame name="tag hadir" x={313} y={236} w={38} h={15}>
+      <Rectangle name="Rectangle 41" w={38} h={15} bg="#EAF3DE" rounded={30} />
+      <Text name="Hadir" x={7} y={2} w={27} h={9} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+    </Frame>
+    <Frame name="tag hadir" x={313} y={290} w={38} h={15}>
+      <Rectangle name="Rectangle 41" w={38} h={15} bg="#EAF3DE" rounded={30} />
+      <Text name="Hadir" x={7} y={2} w={27} h={9} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+    </Frame>
+    <Frame name="kehadiran tag" x={507} y={104} w={141.99957275390625} h={15}>
+      <Frame name="tag hadir" w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" w={36.850154876708984} h={14.546112060546875} bg="#EAF3DE" rounded={30} />
+        <Text name="Hadir" x={6.788186073303223} y={1.9394816160202026} w={26.18300437927246} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+      </Frame>
+      <Frame name="tag izin" x={105.14984893798828} y={0.4538879096508026} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" x={0.00043295498471707106} y={-3.404829840292223e-8} w={36.850154876708984} h={14.546112060546875} bg="#FFF7D3" rounded={30} />
+        <Text name="Izin" x={9.69784164428711} y={1.9394816160202026} w={17.45533561706543} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#D78F00">Izin</Text>
+      </Frame>
+      <Frame name="tag alpa" x={53.98551940917969} y={0.2269434779882431} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" x={0.00016797272837720811} y={-4.938613074045861e-7} w={36.850154876708984} h={14.546112060546875} bg="#FCEBEB" rounded={30} />
+        <Text name="Alpa" x={7.758094787597656} y={1.9394811391830444} w={21.334299087524414} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#791F1F">Alpa</Text>
+      </Frame>
+    </Frame>
+    <Frame name="kehadiran tag" x={507} y={144} w={141.99957275390625} h={15}>
+      <Frame name="tag hadir" w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" w={36.850154876708984} h={14.546112060546875} bg="#EAF3DE" rounded={30} />
+        <Text name="Hadir" x={6.788186073303223} y={1.9394816160202026} w={26.18300437927246} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+      </Frame>
+      <Frame name="tag izin" x={105.14984893798828} y={0.4538879096508026} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" x={0.00043295498471707106} y={-3.404829840292223e-8} w={36.850154876708984} h={14.546112060546875} bg="#FFF7D3" rounded={30} />
+        <Text name="Izin" x={9.69784164428711} y={1.9394816160202026} w={17.45533561706543} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#D78F00">Izin</Text>
+      </Frame>
+      <Frame name="tag alpa" x={53.98551940917969} y={0.2269434779882431} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" x={0.00016797272837720811} y={-4.938613074045861e-7} w={36.850154876708984} h={14.546112060546875} bg="#FCEBEB" rounded={30} />
+        <Text name="Alpa" x={7.758094787597656} y={1.9394811391830444} w={21.334299087524414} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#791F1F">Alpa</Text>
+      </Frame>
+    </Frame>
+    <Frame name="kehadiran tag" x={507} y={192} w={141.99957275390625} h={15}>
+      <Frame name="tag hadir" w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" w={36.850154876708984} h={14.546112060546875} bg="#EAF3DE" rounded={30} />
+        <Text name="Hadir" x={6.788186073303223} y={1.9394816160202026} w={26.18300437927246} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+      </Frame>
+      <Frame name="tag izin" x={105.14984893798828} y={0.4538879096508026} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" x={0.00043295498471707106} y={-3.404829840292223e-8} w={36.850154876708984} h={14.546112060546875} bg="#FFF7D3" rounded={30} />
+        <Text name="Izin" x={9.69784164428711} y={1.9394816160202026} w={17.45533561706543} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#D78F00">Izin</Text>
+      </Frame>
+      <Frame name="tag alpa" x={53.98551940917969} y={0.2269434779882431} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" x={0.00016797272837720811} y={-4.938613074045861e-7} w={36.850154876708984} h={14.546112060546875} bg="#FCEBEB" rounded={30} />
+        <Text name="Alpa" x={7.758094787597656} y={1.9394811391830444} w={21.334299087524414} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#791F1F">Alpa</Text>
+      </Frame>
+    </Frame>
+    <Frame name="kehadiran tag" x={507} y={290} w={141.99957275390625} h={15}>
+      <Frame name="tag hadir" w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" w={36.850154876708984} h={14.546112060546875} bg="#EAF3DE" rounded={30} />
+        <Text name="Hadir" x={6.788186073303223} y={1.9394816160202026} w={26.18300437927246} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+      </Frame>
+      <Frame name="tag izin" x={105.14984893798828} y={0.4538879096508026} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" x={0.00043295498471707106} y={-3.404829840292223e-8} w={36.850154876708984} h={14.546112060546875} bg="#FFF7D3" rounded={30} />
+        <Text name="Izin" x={9.69784164428711} y={1.9394816160202026} w={17.45533561706543} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#D78F00">Izin</Text>
+      </Frame>
+      <Frame name="tag alpa" x={53.98551940917969} y={0.2269434779882431} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" x={0.00016797272837720811} y={-4.938613074045861e-7} w={36.850154876708984} h={14.546112060546875} bg="#FCEBEB" rounded={30} />
+        <Text name="Alpa" x={7.758094787597656} y={1.9394811391830444} w={21.334299087524414} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#791F1F">Alpa</Text>
+      </Frame>
+    </Frame>
+    <Frame name="kehadiran tag" x={507} y={343} w={141.99957275390625} h={15}>
+      <Frame name="tag hadir" w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" w={36.850154876708984} h={14.546112060546875} bg="#EAF3DE" rounded={30} />
+        <Text name="Hadir" x={6.788186073303223} y={1.9394816160202026} w={26.18300437927246} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+      </Frame>
+      <Frame name="tag izin" x={105.14984893798828} y={0.4538879096508026} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" x={0.00043295498471707106} y={-3.404829840292223e-8} w={36.850154876708984} h={14.546112060546875} bg="#FFF7D3" rounded={30} />
+        <Text name="Izin" x={9.69784164428711} y={1.9394816160202026} w={17.45533561706543} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#D78F00">Izin</Text>
+      </Frame>
+      <Frame name="tag alpa" x={53.98551940917969} y={0.2269434779882431} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" x={0.00016797272837720811} y={-4.938613074045861e-7} w={36.850154876708984} h={14.546112060546875} bg="#FCEBEB" rounded={30} />
+        <Text name="Alpa" x={7.758094787597656} y={1.9394811391830444} w={21.334299087524414} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#791F1F">Alpa</Text>
+      </Frame>
+    </Frame>
+    <Frame name="kehadiran tag" x={507} y={240} w={141.99957275390625} h={15}>
+      <Frame name="tag hadir" w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangle 41" w={36.850154876708984} h={14.546112060546875} bg="#EAF3DE" rounded={30} />
+        <Text name="Hadir" x={6.788186073303223} y={1.9394816160202026} w={26.18300437927246} h={8.727666854858398} size={9} weight={600} lineHeight={11} letterSpacing={0.45} color="#27500A">Hadir</Text>
+      </Frame>
+      <Frame name="tag izin" x={105.14984893798828} y={0.4538879096508026} w={36.850154876708984} h={14.546112060546875}>
+        <Rectangle name="Rectangl

@@ -199,6 +199,40 @@ $initials = substr($initials, 0, 2);
         .search-input:focus {
             border-color: var(--btn-primary);
         }
+
+        /* CSS for Format File selection cards in Dosen export rekap view */
+        .format-card-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .format-card-inner {
+            height: 114px;
+            border-radius: 10px;
+            border: 1px solid #C8C8C8;
+            background-color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .format-card-input:checked + .format-card-inner {
+            background-color: rgba(189, 193, 217, 0.42) !important;
+            border: 1px solid #29316B !important;
+        }
+
+        .format-card-input:checked + .format-card-inner span {
+            color: #29316B !important;
+        }
+
+        .format-card-input:checked + .format-card-inner svg path {
+            stroke: #29316B !important;
+        }
     </style>
 </head>
 <body>
@@ -525,8 +559,79 @@ $initials = substr($initials, 0, 2);
                     </section>
                 <?php endif; ?>
 
+            <?php elseif ($role === 'Dosen'): ?>
+                <!-- DOSEN EXPORT REKAP VIEW -->
+                <div style="margin-bottom: 24px; max-width: 1078px; width: 100%;">
+                    <h2 class="kelulusan-title" style="margin: 0; font-size: 28px; font-weight: 700; color: #1E293B;">
+                        Export Rekap Nilai
+                    </h2>
+                </div>
+
+                <section class="export-card" style="background-color: #FFFFFF; border-radius: 15px; box-shadow: -6px 6px 4px rgba(0, 0, 0, 0.25); padding: 32px 28px; max-width: 1078px; width: 100%; box-sizing: border-box;">
+                    <form action="/rpl/public/index.php" method="GET">
+                        <input type="hidden" name="action" value="export_rekap">
+
+                        <!-- Pilih Kelas Dropdown -->
+                        <div style="margin-bottom: 24px; text-align: left;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #6C6C6C; margin-bottom: 8px;">Pilih Kelas</label>
+                            <select name="class_id" style="width: 100%; height: 39px; border-radius: 8px; border: 1px solid #C8C8C8; padding: 0 16px; font-size: 13px; font-weight: 500; color: #6C6C6C; outline: none; background: #FFFFFF; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%228%22 viewBox=%220 0 14 8%22 fill=%22none%22><path d=%22M1 1L7 7L13 1%22 stroke=%22%231F1F1F%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>'); background-repeat: no-repeat; background-position: right 16px center; cursor: pointer;">
+                                <option value="all">Semua Kelas</option>
+                                <?php foreach ($allClasses as $c): ?>
+                                    <option value="<?= $c['ID_Kelas'] ?>"><?= htmlspecialchars($c['Nama_Kelas']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <!-- Semester Input Dropdown -->
+                        <div style="margin-bottom: 24px; text-align: left;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #6C6C6C; margin-bottom: 8px;">Semester</label>
+                            <select name="semester" style="width: 100%; height: 43px; border-radius: 8px; border: 1px solid #C8C8C8; padding: 0 16px; font-size: 13px; font-weight: 500; color: #6C6C6C; outline: none; background: #FFFFFF; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%228%22 viewBox=%220 0 14 8%22 fill=%22none%22><path d=%22M1 1L7 7L13 1%22 stroke=%22%231F1F1F%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>'); background-repeat: no-repeat; background-position: right 16px center; cursor: pointer;">
+                                <option value="Genap 2024/2025" selected>Genap 2024/2025</option>
+                                <option value="Ganjil 2024/2025">Ganjil 2024/2025</option>
+                            </select>
+                        </div>
+
+                        <!-- Format File Cards -->
+                        <div style="margin-bottom: 32px; text-align: left;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #6C6C6C; margin-bottom: 8px;">Format File</label>
+                            <div class="format-options" style="display: flex; gap: 32px; width: 100%;">
+                                <!-- Excel Format Card -->
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" class="format-card-input" name="format" value="excel" checked>
+                                    <div class="format-card-inner">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="#8E8989" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="#8E8989" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span style="font-size: 13px; font-weight: 700; color: #8E8989;">Excel (.xlsx)</span>
+                                    </div>
+                                </label>
+
+                                <!-- CSV Format Card -->
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" class="format-card-input" name="format" value="csv">
+                                    <div class="format-card-inner">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="#8E8989" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M14 2v6h6m-8 6h.01M16 14h.01M8 14h.01M12 18h.01M16 18h.01M8 18h.01" stroke="#8E8989" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span style="font-size: 13px; font-weight: 700; color: #8E8989;">CSV (.csv)</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Download Button -->
+                        <div style="display: flex; justify-content: center; width: 100%;">
+                            <button type="submit" style="width: 536px; height: 35px; background-color: #364087; color: #FFFFFF; font-size: 15px; font-weight: 600; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=1;">
+                                Download
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
             <?php else: ?>
-                <!-- DOSEN / ASISTEN VIEW -->
+                <!-- DOSEN / ASISTEN VIEW (Original View for Asisten) -->
                 
                 <?php 
                 // Toggle view based on view_recap parameter
