@@ -3,8 +3,15 @@
 // EduLab UHO - Verifikasi Tugas View
 // ==============================================================================
 
-$fullName = $_SESSION['full_name'] ?? 'Chris Redfield';
+$fullName = $_SESSION['name'] ?? $_SESSION['full_name'] ?? 'Chris Redfield';
 $role = $_SESSION['active_role'] ?? 'Asisten';
+
+$words = explode(" ", $fullName);
+$initials = "";
+foreach ($words as $w) {
+    $initials .= strtoupper($w[0] ?? '');
+}
+$initials = substr($initials, 0, 2);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -12,202 +19,8 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verifikasi Tugas - EduLab</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link class="style-link" rel="stylesheet" href="/rpl/public/assets/css/style.css">
     <style>
-        :root {
-            --bg-primary: #EEEEEE;
-            --sidebar-bg: #29316B;
-            --sidebar-active: #364087;
-            --btn-primary: #364087;
-            --text-main: #000000;
-            --text-muted: #797979;
-            --card-bg: #FFFFFF;
-            --border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-        }
-
-        /* Sidebar Container */
-        .sidebar {
-            width: 282px;
-            background-color: var(--sidebar-bg);
-            color: #FFFFFF;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 16px;
-            min-height: 100vh;
-            flex-shrink: 0;
-        }
-
-        /* Logo Area */
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 8px;
-            margin-bottom: 24px;
-        }
-
-        .logo-img {
-            width: 40px;
-            height: 40px;
-            background-color: #FFFFFF;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-text {
-            font-size: 24px;
-            font-weight: 800;
-            color: #FFFFFF;
-        }
-
-        /* User Card */
-        .user-card {
-            background-color: #7C94B8;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 24px;
-            color: #1E293B;
-        }
-
-        .user-name {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .user-role {
-            font-size: 13px;
-            font-weight: 500;
-            color: #FFFFFF;
-        }
-
-        .menu-section-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: #7C94B8;
-            margin-bottom: 12px;
-            padding-left: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Sidebar Menu */
-        .menu-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex-grow: 1;
-        }
-
-        .menu-item a {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 16px;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .menu-item a:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: #FFFFFF;
-        }
-
-        .menu-item.active a {
-            background-color: var(--sidebar-active);
-            color: #FFFFFF;
-        }
-
-        .menu-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .menu-divider {
-            height: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
-            margin: 20px 0;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-
-        /* Header Navbar */
-        .navbar {
-            height: 95px;
-            background-color: #364087;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            color: #FFFFFF;
-            flex-shrink: 0;
-        }
-
-        .navbar-title {
-            font-size: 32px;
-            font-weight: 600;
-        }
-
-        .navbar-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .profile-avatar {
-            width: 55px;
-            height: 55px;
-            background-color: #7C94B8;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 700;
-            color: #FFFFFF;
-        }
-
-        /* Page Container */
-        .page-container {
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-
         /* Filters Bar */
         .filters-container {
             display: flex;
@@ -240,7 +53,7 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
 
         /* Table Card */
         .card {
-            background-color: var(--card-bg);
+            background-color: #FFFFFF;
             border-radius: 20px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             padding: 24px 32px;
@@ -545,128 +358,247 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
 </head>
 <body>
 
-    <!-- Sidebar Menu -->
+<?php
+// ==============================================================================
+// EduLab UHO - Verifikasi Tugas View
+// ==============================================================================
+
+$fullName = $_SESSION['name'] ?? $_SESSION['full_name'] ?? 'Chris Redfield';
+$role = $_SESSION['active_role'] ?? 'Asisten';
+
+$words = explode(" ", $fullName);
+$initials = "";
+foreach ($words as $w) {
+    $initials .= strtoupper($w[0] ?? '');
+}
+$initials = substr($initials, 0, 2);
+?>
+
+<div class="dashboard-container">
+    <!-- Sidebar -->
     <aside class="sidebar">
-        <div class="logo-container">
-            <div class="logo-img">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#29316B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg>
+        <div>
+            <!-- Sidebar Brand -->
+            <div class="sidebar-header">
+                <img src="/rpl/public/assets/images/logo_uho.png" alt="Logo UHO" class="sidebar-logo">
+                <span class="sidebar-brand-name">EduLab</span>
             </div>
-            <span class="logo-text">EduLab</span>
+
+            <!-- User profile summary -->
+            <div class="sidebar-user-card">
+                <div class="sidebar-user-name"><?= htmlspecialchars($fullName) ?></div>
+                <div class="sidebar-user-role"><?= htmlspecialchars($role) ?></div>
+            </div>
+
+            <!-- Menu Navigation -->
+            <nav>
+                <div class="sidebar-menu-title">Menu Utama</div>
+                <ul class="sidebar-menu-list">
+                    <?php if ($role === 'Mahasiswa'): ?>
+                        <li class="sidebar-menu-item">
+                            <a href="/rpl/public/index.php?action=dashboard_student">
+                                <span>Dashboard</span>
+                                <span class="sidebar-menu-item-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a href="/rpl/public/index.php?action=my_classes">
+                                <span>Kelas Saya</span>
+                                <span class="sidebar-menu-item-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                </span>
+                            </a>
+                            <ul class="sidebar-submenu-list">
+                                <li class="sidebar-submenu-item">
+                                    <a href="/rpl/public/index.php?action=bank_modul">
+                                        <span>Bank Modul</span>
+                                        <span class="sidebar-menu-item-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a href="/rpl/public/index.php?action=upload_tugas">
+                                <span>Upload Tugas</span>
+                                <span class="sidebar-menu-item-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a href="/rpl/public/index.php?action=sanggah_nilai">
+                                <span>Lihat Nilai</span>
+                                <span class="sidebar-menu-item-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a href="/rpl/public/index.php?action=presensi">
+                                <span>Data Presensi</span>
+                                <span class="sidebar-menu-item-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a href="/rpl/public/index.php?action=sanggah_form">
+                                <span>Sanggah Nilai</span>
+                                <span class="sidebar-menu-item-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a href="/rpl/public/index.php?action=kelulusan">
+                                <span>Status Kelulusan</span>
+                                <span class="sidebar-menu-item-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                                </span>
+                            </a>
+                        </li>
+                    <?php else: ?>
+                        <!-- Dosen / Asisten Menu -->
+                        <?php if ($role === 'Dosen'): ?>
+                            <!-- Dosen Menu -->
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=dashboard_dosen">
+                                    <span>Dashboard</span>
+                                    <span class="sidebar-menu-item-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=my_classes">
+                                    <span>Buat Kelas</span>
+                                    <span class="sidebar-menu-item-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=data_kelompok">
+                                    <span>Buat Kelompok</span>
+                                    <span class="sidebar-menu-item-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=upload_modul">
+                                    <span>Upload Modul</span>
+                                    <span class="sidebar-menu-item-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=monitoring_kelas">
+                                    <span>Monitoring Kelas</span>
+                                    <span class="sidebar-menu-item-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=kelulusan">
+                                    <span>Export Rekapitulasi</span>
+                                    <span class="sidebar-menu-item-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=sanggah_nilai">
+                                    <span>Tinjau Sanggahan</span>
+                                    <span class="sidebar-menu-item-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                    </span>
+                                </a>
+                            </li>
+                        <?php else: ?>
+                            <!-- Asisten Menu -->
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=dashboard_asisten">
+                                    <span>Dashboard</span>
+                                    <span class="sidebar-menu-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=presensi">
+                                    <span>Input Presensi</span>
+                                    <span class="sidebar-menu-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item active">
+                                <a href="/rpl/public/index.php?action=verifikasi_tugas">
+                                    <span>Verifikasi Tugas</span>
+                                    <span class="sidebar-menu-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=monitoring_kelas">
+                                    <span>Monitoring Kelas</span>
+                                    <span class="sidebar-menu-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=kelulusan">
+                                    <span>Input Nilai</span>
+                                    <span class="sidebar-menu-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <a href="/rpl/public/index.php?action=sanggah_nilai">
+                                    <span>Tinjau Sanggahan</span>
+                                    <span class="sidebar-menu-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </ul>
+            </nav>
         </div>
 
-        <div class="user-card">
-            <div class="user-name"><?= htmlspecialchars($fullName) ?></div>
-            <div class="user-role"><?= htmlspecialchars($role) ?></div>
+        <div>
+            <div class="sidebar-divider"></div>
+            <ul class="sidebar-menu-list">
+                <li class="sidebar-menu-item">
+                    <a href="/rpl/public/index.php?action=pengaturan" class="settings-open-label">
+                        <span>Pengaturan</span>
+                        <span class="sidebar-menu-item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="/rpl/public/index.php?action=logout" style="color: #FF8A8A;">
+                        <span>Keluar</span>
+                        <span class="sidebar-menu-item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        </span>
+                    </a>
+                </li>
+            </ul>
         </div>
-
-        <nav class="menu-list">
-            <div class="menu-section-title">Menu Utama</div>
-            
-            <li class="menu-item">
-                <a href="/rpl/public/index.php?action=dashboard_<?= strtolower($role) ?>">
-                    <span>Dashboard</span>
-                    <span class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
-                    </span>
-                </a>
-            </li>
-            
-            <li class="menu-item">
-                <a href="/rpl/public/index.php?action=my_classes">
-                    <span>Kelas Saya</span>
-                    <span class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                    </span>
-                </a>
-            </li>
-
-            <li class="menu-item">
-                <a href="/rpl/public/index.php?action=data_kelompok">
-                    <span>Data Kelompok</span>
-                    <span class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                    </span>
-                </a>
-            </li>
-
-            <li class="menu-item">
-                <a href="/rpl/public/index.php?action=presensi">
-                    <span>Input Presensi</span>
-                    <span class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                    </span>
-                </a>
-            </li>
-
-            <li class="menu-item active">
-                <a href="/rpl/public/index.php?action=verifikasi_tugas">
-                    <span>Verifikasi Tugas</span>
-                    <span class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                    </span>
-                </a>
-            </li>
-
-            <li class="menu-item">
-                <a href="/rpl/public/index.php?action=kelulusan">
-                    <span>Input Nilai</span>
-                    <span class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                    </span>
-                </a>
-            </li>
-
-            <li class="menu-item">
-                <a href="/rpl/public/index.php?action=sanggah_nilai">
-                    <span>Tinjau Sanggahan</span>
-                    <span class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                    </span>
-                </a>
-            </li>
-
-            <div class="menu-divider"></div>
-
-            <li class="menu-item">
-                <a href="/rpl/public/index.php?action=pengaturan">
-                    <span>Pengaturan</span>
-                    <span class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                    </span>
-                </a>
-            </li>
-
-            <li class="menu-item">
-                <a href="/rpl/public/index.php?action=logout" style="color: #FF8A8A;">
-                    <span>Keluar</span>
-                    <span class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    </span>
-                </a>
-            </li>
-        </nav>
     </aside>
 
-    <!-- Main Content Area -->
-    <main class="main-content">
-        <header class="navbar">
-            <h1 class="navbar-title">Verifikasi Tugas</h1>
+    <!-- Main Workspace -->
+    <main class="main-workspace">
+        <!-- Top Navbar -->
+        <header class="workspace-navbar">
+            <h2 class="navbar-title">Verifikasi Tugas</h2>
             <div class="navbar-profile">
-                <span style="font-weight: 500; font-size: 16px; margin-right: 8px;"><?= htmlspecialchars($fullName) ?></span>
-                <div class="profile-avatar">
-                    <?php 
-                        $nameParts = explode(' ', $fullName);
-                        $initials = '';
-                        foreach ($nameParts as $part) {
-                            $initials .= strtoupper(substr($part, 0, 1));
-                        }
-                        echo htmlspecialchars(substr($initials, 0, 2));
-                    ?>
-                </div>
+                <div class="navbar-avatar"><?= htmlspecialchars($initials) ?></div>
             </div>
         </header>
 
-        <div class="page-container">
+        <div class="workspace-content">
             <!-- Filter Dropdowns -->
             <div class="filters-container">
                 <form id="filterForm" method="GET" action="/rpl/public/index.php" style="display: flex; gap: 16px;">
@@ -827,6 +759,7 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
             </section>
         </div>
     </main>
+</div>
 
     <!-- Verification Modal (Opsi A - Sederhana) -->
     <div class="modal" id="gradeModal" aria-hidden="true" role="dialog">

@@ -1297,4 +1297,20 @@ body.bg-campus-theme::before {
     flex-shrink: 0;
 }
 
+/* Hide browser-default eye icons in password inputs on Windows */
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+
+/* Hide WebKit browser-default auto-fill key icons in password inputs */
+input[type="password"]::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    height: 0;
+    width: 0;
+    margin: 0;
+}
+
 
