@@ -856,4 +856,261 @@ class DashboardController {
 
         require_once __DIR__ . '/../Views/data_kelompok.php';
     }
+
+    // Render Settings Page (Pengaturan)
+    public function pengaturan() {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        $userId = $_SESSION['user_id'];
+        $role = $_SESSION['active_role'] ?? 'Mahasiswa';
+
+        // Auto-migration check: ensure Email and No_Telepon columns exist
+        $db = (new Database())->getConnection();
+        try {
+            // Check if column exists, if not, add it
+            $stmt = $db->query("SHOW COLUMNS FROM Tabel_User LIKE 'Email'");
+            if (!$stmt->fetch()) {
+                $db->exec("ALTER TABLE Tabel_User ADD COLUMN Email VARCHAR(255) DEFAULT NULL");
+            }
+            $stmt = $db->query("SHOW COLUMNS FROM Tabel_User LIKE 'No_Telepon'");
+            if (!$stmt->fetch()) {
+                $db->exec("ALTER TABLE Tabel_User ADD COLUMN No_Telepon VARCHAR(50) DEFAULT NULL");
+            }
+        } catch (Exception $e) {
+            // Ignore alter errors
+        }
+
+        // Fetch user data
+        $userData = $this->userModel->getUserById($userId);
+        
+        // Fetch class info for student (to display NIM / Semester details)
+        $classInfo = null;
+        if ($role === 'Mahasiswa') {
+            $classInfo = $this->kelasModel->getStudentClass($userId);
+        }
+
+        require_once __DIR__ . '/../Views/pengaturan.php';
+    }
+
+    // Handle Profile Update POST
+    public function updateProfil() {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /rpl/public/index.php?action=pengaturan');
+            exit;
+        }
+
+        $userId = $_SESSION['user_id'];
+        $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
+
+        if (empty($name)) {
+            $_SESSION['settings_error'] = "Nama lengkap tidak boleh kosong.";
+            header('Location: /rpl/public/index.php?action=pengaturan');
+            exit;
+        }
+
+        $success = $this->userModel->updateProfile($userId, $name, $email, $phone);
+
+        if ($success) {
+            $_SESSION['name'] = $name; // Update session name
+            $_SESSION['settings_success'] = "Profil berhasil diperbarui.";
+        } else {
+            $_SESSION['settings_error'] = "Gagal memperbarui profil.";
+        }
+
+        header('Location: /rpl/public/index.php?action=pengaturan');
+        exit;
+    }
+
+    // Handle Password Update POST
+    public function ubahPassword() {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /rpl/public/index.php?action=pengaturan');
+            exit;
+        }
+
+        $userId = $_SESSION['user_id'];
+        $oldPass = isset($_POST['old_password']) ? $_POST['old_password'] : '';
+        $newPass = isset($_POST['new_password']) ? $_POST['new_password'] : '';
+        $confirmPass = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : '';
+
+        if (empty($oldPass) || empty($newPass) || empty($confirmPass)) {
+            $_SESSION['settings_error'] = "Semua field password harus diisi.";
+            header('Location: /rpl/public/index.php?action=pengaturan');
+            exit;
+        }
+
+        // Validate password strength: min 8 chars, combination of letters and numbers
+        if (strlen($newPass) < 8 || !preg_match('/[A-Za-z]/', $newPass) || !preg_match('/[0-9]/', $newPass)) {
+            $_SESSION['settings_error'] = "Password baru minimal 8 karakter, kombinasi huruf dan angka.";
+            header('Location: /rpl/public/index.php?action=pengaturan');
+            exit;
+        }
+
+        if ($newPass !== $confirmPass) {
+            $_SESSION['settings_error'] = "Konfirmasi password baru tidak cocok.";
+            header('Location: /rpl/public/index.php?action=pengaturan');
+            exit;
+        }
+
+        $user = $this->userModel->getUserById($userId);
+        if (!$user || !$this->userModel->verifyPassword($oldPass, $user['Password'])) {
+            $_SESSION['settings_error'] = "Password lama tidak benar.";
+            header('Location: /rpl/public/index.php?action=pengaturan');
+            exit;
+        }
+
+        $hashedPass = password_hash($newPass, PASSWORD_BCRYPT);
+        $success = $this->userModel->updatePassword($userId, $hashedPass);
+
+        if ($success) {
+            $_SESSION['settings_success'] = "Password berhasil diubah.";
+        } else {
+            $_SESSION['settings_error'] = "Gagal mengubah password.";
+        }
+
+        header('Location: /rpl/public/index.php?action=pengaturan');
+        exit;
+    }
+
+    // Render Class Monitoring (Monitoring Kelas) Page for Dosen/Staff
+    public function monitoringKelas() {
+        if (!isset($_SESSION['user_id']) || !in_array($_SESSION['active_role'] ?? '', ['Dosen', 'Asisten'])) {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        $userId = $_SESSION['user_id'];
+        $role   = $_SESSION['active_role'];
+        $db     = (new Database())->getConnection();
+
+        // 1. Fetch classes this user is plotted to
+        $queryClasses = "SELECT k.* FROM Tabel_Plotting_Asisten p
+                         JOIN Tabel_Kelas k ON p.ID_Kelas = k.ID_Kelas
+                         WHERE p.ID_User = :userId";
+        $stmt = $db->prepare($queryClasses);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+        $myClasses = $stmt->fetchAll();
+
+        // 2. Determine selected class
+        $selectedClassId = isset($_GET['class_id']) ? (int)$_GET['class_id'] : 0;
+        if ($selectedClassId <= 0 && !empty($myClasses)) {
+            $selectedClassId = (int)$myClasses[0]['ID_Kelas'];
+        }
+
+        $groupedData  = [];
+        $classSummary = ['total_students' => 0, 'avg_nilai' => '-', 'avg_kehadiran' => '-'];
+
+        if ($selectedClassId > 0) {
+            // 3. Fetch groups in selected class (with asisten name)
+            $queryGroups = "SELECT k.ID_Kelompok, k.Nama_Kelompok,
+                                   (SELECT u2.Nama_Lengkap FROM Tabel_User u2
+                                    WHERE u2.ID_Kelompok = k.ID_Kelompok AND u2.Role = 'Asisten'
+                                    LIMIT 1) AS Nama_Asisten
+                            FROM Tabel_Kelompok k
+                            WHERE k.ID_Kelas = :classId
+                            ORDER BY k.Nama_Kelompok ASC";
+            $stmtG = $db->prepare($queryGroups);
+            $stmtG->bindParam(':classId', $selectedClassId);
+            $stmtG->execute();
+            $groups = $stmtG->fetchAll();
+
+            $totalNilaiSum   = 0.0; $totalNilaiCount  = 0;
+            $totalHadirSum   = 0.0; $totalHadirCount  = 0;
+            $totalStudents   = 0;
+
+            foreach ($groups as $g) {
+                $groupId = $g['ID_Kelompok'];
+
+                // 4. Fetch students in group
+                $queryStu = "SELECT u.ID_User, u.Username AS NIM, u.Nama_Lengkap
+                             FROM Tabel_User u
+                             WHERE u.ID_Kelompok = :groupId AND u.Role = 'Mahasiswa'
+                             ORDER BY u.Username ASC";
+                $stmtStu = $db->prepare($queryStu);
+                $stmtStu->bindParam(':groupId', $groupId);
+                $stmtStu->execute();
+                $students = $stmtStu->fetchAll();
+
+                $groupStudents    = [];
+                $grpNilaiSum      = 0.0; $grpNilaiCount = 0;
+                $grpHadirSum      = 0.0; $grpHadirCount = 0;
+
+                foreach ($students as $s) {
+                    $sId = $s['ID_User'];
+
+                    // Kehadiran %
+                    $queryAtt = "SELECT COUNT(*) AS total,
+                                        SUM(CASE WHEN Status_Kehadiran = 'Hadir' THEN 1 ELSE 0 END) AS hadir
+                                 FROM Tabel_Presensi WHERE ID_User = :sId";
+                    $stmtAtt = $db->prepare($queryAtt);
+                    $stmtAtt->bindParam(':sId', $sId);
+                    $stmtAtt->execute();
+                    $att      = $stmtAtt->fetch();
+                    $kehadiran = ($att && $att['total'] > 0)
+                        ? round(($att['hadir'] / $att['total']) * 100) : null;
+
+                    // Rata-rata nilai
+                    $queryAvg = "SELECT AVG(n.Nilai_Angka) AS avg_score
+                                 FROM Tabel_Nilai n
+                                 JOIN Tabel_Pengumpulan p ON n.ID_Pengumpulan = p.ID_Pengumpulan
+                                 WHERE p.ID_User = :sId AND n.Nilai_Angka IS NOT NULL";
+                    $stmtAvg = $db->prepare($queryAvg);
+                    $stmtAvg->bindParam(':sId', $sId);
+                    $stmtAvg->execute();
+                    $avgRow   = $stmtAvg->fetch();
+                    $avgNilai = ($avgRow && $avgRow['avg_score'] !== null)
+                        ? round((float)$avgRow['avg_score'], 1) : null;
+
+                    // Status
+                    if ($avgNilai === null)       $status = 'Belum Ada Nilai';
+                    elseif ($avgNilai >= 70)      $status = 'Lulus';
+                    else                          $status = 'Tidak Lulus';
+
+                    $groupStudents[] = [
+                        'nim'       => $s['NIM'],
+                        'name'      => $s['Nama_Lengkap'],
+                        'kehadiran' => $kehadiran,
+                        'avg_nilai' => $avgNilai,
+                        'status'    => $status,
+                    ];
+
+                    if ($avgNilai !== null)  { $grpNilaiSum += $avgNilai; $grpNilaiCount++; $totalNilaiSum += $avgNilai; $totalNilaiCount++; }
+                    if ($kehadiran !== null) { $grpHadirSum += $kehadiran; $grpHadirCount++; $totalHadirSum += $kehadiran; $totalHadirCount++; }
+                    $totalStudents++;
+                }
+
+                $groupedData[] = [
+                    'group_name'    => $g['Nama_Kelompok'],
+                    'asisten'       => $g['Nama_Asisten'] ?? 'Tidak Ada',
+                    'students'      => $groupStudents,
+                    'avg_nilai'     => $grpNilaiCount > 0 ? round($grpNilaiSum / $grpNilaiCount, 1) : null,
+                    'avg_kehadiran' => $grpHadirCount > 0 ? round($grpHadirSum / $grpHadirCount) : null,
+                ];
+            }
+
+            $classSummary = [
+                'total_students' => $totalStudents,
+                'avg_nilai'      => $totalNilaiCount > 0 ? round($totalNilaiSum / $totalNilaiCount, 1) : '-',
+                'avg_kehadiran'  => $totalHadirCount > 0 ? round($totalHadirSum / $totalHadirCount) : '-',
+            ];
+        }
+
+        require_once __DIR__ . '/../Views/monitoring_kelas.php';
+    }
 }

@@ -178,6 +178,30 @@ switch ($action) {
         $tugasController->exportRekap();
         break;
 
+    case 'pengaturan':
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->pengaturan();
+        break;
+
+    case 'update_profil':
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->updateProfil();
+        break;
+
+    case 'ubah_password':
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->ubahPassword();
+        break;
+
+    case 'monitoring_kelas':
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->monitoringKelas();
+        break;
+
     default:
         // If already logged in, redirect to active dashboard
         if (isset($_SESSION['user_id']) && isset($_SESSION['active_role'])) {

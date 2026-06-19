@@ -37,6 +37,26 @@ class UserModel {
         return password_verify($password, $hash);
     }
 
+    // Update user profile details
+    public function updateProfile($id, $name, $email, $phone) {
+        $query = "UPDATE " . $this->table . " SET Nama_Lengkap = :name, Email = :email, No_Telepon = :phone WHERE ID_User = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+
+    // Update user password
+    public function updatePassword($id, $hashedPassword) {
+        $query = "UPDATE " . $this->table . " SET Password = :pass WHERE ID_User = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':pass', $hashedPassword);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+
     // Get all roles available for a user (Mahasiswa/Asisten check)
     public function getAvailableRoles($userId, $baseRole) {
         $roles = [$baseRole];
