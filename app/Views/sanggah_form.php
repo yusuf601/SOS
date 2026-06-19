@@ -406,7 +406,7 @@ $monthsIndo = [
                     <div class="form-group">
                         <label class="form-label" for="kelas_select">Kelas</label>
                         <select id="kelas_select" class="form-select" disabled>
-                            <option value="1"><?= htmlspecialchars($classInfo['Nama_Kelas'] ?? 'Sistem Digital') ?></option>
+                            <option value="1"><?= htmlspecialchars((is_array($classInfo) && isset($classInfo['Nama_Kelas'])) ? $classInfo['Nama_Kelas'] : 'Sistem Digital') ?></option>
                         </select>
                     </div>
 

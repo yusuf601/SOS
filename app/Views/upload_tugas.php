@@ -589,7 +589,7 @@ $initials = substr($initials, 0, 2);
                 $sub = $item['submission'];
                 
                 $deadlinePassed = time() > strtotime($tugas['Deadline_Upload']);
-                $hasSubmitted = ($sub !== null && ($sub['Status_Tugas'] === 'Selesai' || $sub['Status_Tugas'] === 'Pending' || $sub['Status_Tugas'] === 'Revisi' || $sub['Status_Tugas'] === 'Sanggah'));
+                $hasSubmitted = ($sub && ($sub['Status_Tugas'] === 'Selesai' || $sub['Status_Tugas'] === 'Pending' || $sub['Status_Tugas'] === 'Revisi' || $sub['Status_Tugas'] === 'Sanggah'));
                 
                 if (!$deadlinePassed && $activeTugasItem === null) {
                     $activeTugasItem = $item;
@@ -820,7 +820,7 @@ $initials = substr($initials, 0, 2);
                                     $formattedDeadline = date('j', strtotime($tugas['Deadline_Upload'])) . ' ' . $indMonth . ' ' . date('Y', strtotime($tugas['Deadline_Upload']));
                                     
                                     // Class name
-                                    $className = $classInfo['Nama_Kelas'] ?? 'Pemrograman Web';
+                                    $className = (is_array($classInfo) && isset($classInfo['Nama_Kelas'])) ? $classInfo['Nama_Kelas'] : 'Pemrograman Web';
                                 ?>
                                     <tr>
                                         <td style="text-align: center; color: #64748B; font-weight: 600;"><?= $index + 1 ?></td>

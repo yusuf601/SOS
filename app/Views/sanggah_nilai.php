@@ -905,7 +905,7 @@ $initials = substr($initials, 0, 2);
             <?php if ($role === 'Mahasiswa'): ?>
                 <!-- STUDENT VIEW -->
                 <?php
-                $className = $classInfo['Nama_Kelas'] ?? 'Sistem Digital A';
+                $className = (is_array($classInfo) && isset($classInfo['Nama_Kelas'])) ? $classInfo['Nama_Kelas'] : 'Sistem Digital A';
                 
                 // Calculate dynamic stats
                 $avgScoreVal = $progress ? number_format((float)$progress['average_score'], 1) : '82.4';

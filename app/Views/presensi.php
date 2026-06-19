@@ -901,7 +901,7 @@ if ($role === 'Mahasiswa' && !empty($attendance)) {
             <?php if ($role === 'Mahasiswa'): ?>
                 <!-- STUDENT PRESENSI VIEW -->
                 <?php
-                $className = $classInfo['Nama_Kelas'] ?? 'Sistem Digital A';
+                $className = (is_array($classInfo) && isset($classInfo['Nama_Kelas'])) ? $classInfo['Nama_Kelas'] : 'Sistem Digital A';
 
                 $monthsIndo = [
                     1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
