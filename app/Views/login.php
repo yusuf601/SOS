@@ -66,7 +66,7 @@
                         <input type="checkbox" name="remember" id="remember">
                         <span>Ingat saya</span>
                     </label>
-                    <a href="#" class="help-link">Butuh bantuan?</a>
+                    <a href="/rpl/public/index.php?action=help" class="help-link">Butuh bantuan?</a>
                 </div>
 
                 <!-- Submit Button -->

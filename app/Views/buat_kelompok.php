@@ -285,7 +285,7 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
         <!-- Content Body -->
         <div class="workspace-content" style="padding: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                <h2 style="font-size: 20px; font-weight: 600; color: #000000; margin: 0;">Data Kelompok Praktikum</h2>
+                <h2 style="font-size: 20px; font-weight: 600; color: #000000; margin: 0;">Buat Kelompok Praktikum</h2>
             </div>
 
             <?php if (isset($_SESSION['group_success'])): ?>
@@ -294,9 +294,46 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                 </div>
             <?php endif; ?>
 
-            <div>
+            <div class="buat-kelompok-container">
+                <!-- Column Left: Form Tambah Kelompok & Asisten -->
+                <div class="card-form-kelompok">
+                    <h4 class="form-title">Tambah Kelompok & Asisten</h4>
+                    <form method="POST" action="/rpl/public/index.php?action=buat_kelompok">
+                        <!-- Pilih Kelas -->
+                        <div class="form-group">
+                            <label>Pilih Kelas</label>
+                            <div class="select-custom-wrapper">
+                                <select name="class_id" class="form-control-custom select-custom">
+                                    <?php foreach ($myClasses as $cls): ?>
+                                        <option value="<?= $cls['ID_Kelas'] ?>" <?= ($selectedClassId == $cls['ID_Kelas']) ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($cls['Nama_Kelas']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Nama Kelompok -->
+                        <div class="form-group">
+                            <label>Nama Kelompok</label>
+                            <input type="text" name="nama_kelompok" class="form-control-custom" placeholder="cth: Kelompok 1" required>
+                        </div>
+
+                        <!-- Anggota Kelompok -->
+                        <div class="form-group">
+                            <label>Anggota Kelompok</label>
+                            <input type="text" name="anggota_nim" class="form-control-custom" placeholder="Cari NIM atau nama mahasiswa">
+                        </div>
+
+                        <!-- Button Simpan -->
+                        <div style="margin-top: 24px;">
+                            <button type="submit" class="btn-simpan-kelompok">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+
                 <!-- Column Right: Daftar Kelompok -->
-                <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1000px; margin: 0 auto;">
+                <div style="display: flex; flex-direction: column; gap: 24px;">
                     <div class="card-daftar-kelompok">
                         <h3 class="tabel-title" style="margin-bottom: 24px;">Daftar Kelompok</h3>
                     <table class="daftar-kelompok-tabel">
@@ -337,6 +374,22 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Detailed Kelompok Card -->
+                <div class="card-daftar-kelompok" style="display: flex; flex-direction: column; gap: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 18px; font-weight: 600; color: #3B3B3B; margin: 0;">Kelompok 1</h3>
+                        <span style="font-size: 12px; font-weight: 600; color: rgba(0,0,0,0.5);">6 anggota</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; box-sizing: border-box; z-index: 1;"></div>
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 2;"></div>
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 3;"></div>
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 4;"></div>
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 5;"></div>
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #C8C8C8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 6; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: #6C6C6C;">+1</div>
+                    </div>
                 </div>
             </div>
         </div>

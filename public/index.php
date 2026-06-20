@@ -16,7 +16,7 @@ $authController = new AuthController();
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 // Authentication Guard Middleware
-$publicActions = ['', 'login'];
+$publicActions = ['', 'login', 'help'];
 if (!in_array($action, $publicActions) && !isset($_SESSION['user_id'])) {
     // Redirect to login if user is not logged in and action is not public
     header('Location: /rpl/public/index.php');
@@ -74,6 +74,12 @@ switch ($action) {
         require_once __DIR__ . '/../app/Controllers/DashboardController.php';
         $dashboardController = new DashboardController();
         $dashboardController->myClasses();
+        break;
+
+    case 'buat_kelompok':
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->buatKelompok();
         break;
 
     case 'data_kelompok':
@@ -200,6 +206,10 @@ switch ($action) {
         require_once __DIR__ . '/../app/Controllers/DashboardController.php';
         $dashboardController = new DashboardController();
         $dashboardController->monitoringKelas();
+        break;
+
+    case 'help':
+        require_once __DIR__ . '/../app/Views/help.php';
         break;
 
     default:
