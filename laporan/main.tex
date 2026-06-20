@@ -12,6 +12,7 @@
 \usepackage[indonesian]{babel}
 \usepackage{tocloft}
 \usepackage{enumitem}
+\usepackage{float}
 \usepackage[
     backend=biber,
     style=ieee,
@@ -31,6 +32,11 @@
 }
 \renewcommand{\bibname}{Daftar Pustaka}
 \onehalfspacing
+
+\renewcommand{\figureautorefname}{Gambar}
+\renewcommand{\tableautorefname}{Tabel}
+\renewcommand{\chapterautorefname}{Bab}
+\renewcommand{\sectionautorefname}{Bagian}
 
 % ================= HEADER FOOTER =================
 \fancyhf{}
@@ -90,7 +96,7 @@
 \begin{titlepage}
 \thispagestyle{empty}
 \centering
-{\large\textbf{Perancangan dan Pengembangan EduLab: Sistem Manajemen Tugas & Penilaian Praktikum}} \\[2cm]
+{\large\textbf{Perancangan dan Pengembangan EduLab: Sistem Manajemen Tugas \& Penilaian Praktikum}} \\[2cm]
 \includegraphics[width=5cm]{logo.png} \\[2cm]
 {\large\textbf{OLEH}}\\[0.8cm]
 {\large\textbf{Muh Yusuf}}\\[0.3cm]
@@ -113,16 +119,25 @@
 \newpage
 
 % ---------- DAFTAR GAMBAR ----------
+\renewcommand{\listfigurename}{}
+
 \begin{center}
-    \Large\textbf{\listfigurename}
+    \Large\textbf{DAFTAR GAMBAR}
 \end{center}
+
 \listoffigures
 \newpage
 
 % ---------- DAFTAR TABEL ----------
+\renewcommand{\listtablename}{}
+
 \begin{center}
-    \Large\textbf{\listtablename}
+    \Large\textbf{DAFTAR TABEL}
 \end{center}
+
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+
 \listoftables
 \newpage
 
@@ -140,7 +155,7 @@ Kondisi tersebut menyebabkan beberapa permasalahan yang signifikan. Pertama, tid
 
 Ketiga, umpan balik ke mahasiswa yang tidak terstruktur dan tersebar di berbagai chat atau file. Mahasiswa seringkali menerima feedback dalam bentuk komentar di file, pesan di chat pribadi, atau email, yang tidak terorganisir dalam satu tempat. Hal ini menyebabkan mahasiswa sulit untuk melacak perkembangan pembelajaran mereka dan mereferensi feedback sebelumnya untuk perbaikan di tugas berikutnya. Keempat, rekap nilai dan statistik yang harus dilakukan manual sehingga memakan waktu. Asisten praktikum dan dosen harus melakukan perhitungan dan rekap secara manual setiap kali diperlukan data statistik seperti rata-rata nilai, distribusi nilai, atau analisis performa per kelompok.
 
-Selain itu, mahasiswa baru sering bingung memilih kelas atau kelompok karena menu yang tidak jelas. Sistem yang tidak terstruktur menyebabkan kesulitan navigasi bagi mahasiswa yang baru pertama kali menggunakan platform praktikum, sehingga mereka memerlukan bantuan tambahan dari asisten atau teman untuk memahami alur kerja yang benar. Hal ini menambah beban kerja asisten dan mengurangi waktu yang seharusnya dapat digunakan untuk指导 akademik.
+Selain itu, mahasiswa baru sering bingung memilih kelas atau kelompok karena menu yang tidak jelas. Sistem yang tidak terstruktur menyebabkan kesulitan navigasi bagi mahasiswa yang baru pertama kali menggunakan platform praktikum, sehingga mereka memerlukan bantuan tambahan dari asisten atau teman untuk memahami alur kerja yang benar. Hal ini menambah beban kerja asisten dan mengurangi waktu yang seharusnya dapat digunakan untuk akademik.
 
 Kekurangan sistem yang ada menyebabkan beban kerja dosen dan asisten meningkat secara signifikan, karena mereka harus melakukan tugas administrasi yang berulang dan memakan waktu. Potensi ketidakadilan dalam penilaian juga meningkat karena tidak ada dokumentasi yang terpusat dan auditabel yang dapat memastikan konsistensi penilaian antar mahasiswa dan antar kelompok. Penurunan efisiensi pembelajaran juga terjadi akibat feedback yang tidak terstruktur, sehingga mahasiswa tidak mendapatkan umpan balik yang jelas dan dapat ditindaklanjuti untuk perbaikan.
 
@@ -180,7 +195,7 @@ Berdasarkan rumusan masalah yang telah diuraikan, tujuan dari penelitian ini ada
     \item Merancang sistem EduLab yang mampu memfasilitasi pengumpulan dan pelacakan tugas praktikum secara terpusat dan efisien.
     \item Mendokumentasikan proses penilaian dalam EduLab agar bersifat auditabel, transparan, dan konsisten.
     \item Merancang antarmuka umpan balik terstruktur dalam EduLab guna mendukung perkembangan belajar mahasiswa.
-    \item Menerapkan sistem manajemen peran --- meliputi dosen, asisten praktikum, dan mahasiswa --- dalam platform EduLab.
+    \item Menerapkan sistem manajemen peran meliputi dosen, asisten praktikum, dan mahasiswa dalam platform EduLab.
 \end{enumerate}
 
 
@@ -215,9 +230,6 @@ Penelitian ini diharapkan memberikan manfaat bagi berbagai pihak, antara lain:
     \item Menghasilkan dokumentasi penilaian yang auditabel sebagai bentuk akuntabilitas akademik.
     \item Memberikan referensi pengembangan sistem informasi akademik berbasis manajemen peran di lingkungan perguruan tinggi.
 \end{enumerate}
-\chapter{TINJAUAN PUSTAKA}
-
-\section{Konsep Sistem Informasi}
 \chapter{TINJAUAN PUSTAKA}
 
 \section{Konsep Sistem Informasi}
@@ -307,52 +319,212 @@ Pada sistem yang belum terintegrasi, manajemen tugas dan penilaian praktikum ser
 
 Berdasarkan hal tersebut, manajemen tugas dan penilaian praktikum dalam penelitian ini dipahami sebagai proses pengelolaan tugas dan evaluasi hasil praktikum yang dilakukan secara terstruktur melalui sistem informasi. EduLab dirancang untuk mendukung proses tersebut dengan menyediakan fitur pengumpulan tugas, penilaian berbasis rubrik, pencatatan nilai, serta pemberian umpan balik dalam satu platform yang terintegrasi. Dengan adanya sistem ini, diharapkan proses praktikum dapat berjalan lebih efisien, transparan, dan mudah dipantau oleh seluruh pihak yang terlibat.
 \section{Rekayasa Perangkat Lunak}
-Isi...
 
-\section{Metodologi Pengembangan (Waterfall / Agile)}
-Isi...
+Rekayasa perangkat lunak (\textit{software engineering}) merupakan disiplin ilmu yang berkaitan dengan penerapan pendekatan sistematis, terstruktur, dan terukur dalam pengembangan, pengoperasian, serta pemeliharaan perangkat lunak \cite{sommerville2016}. Disiplin ini tidak hanya berfokus pada aspek teknis pemrograman, tetapi juga mencakup berbagai aktivitas penting seperti manajemen proyek, analisis kebutuhan, perancangan sistem, pengujian, dokumentasi, implementasi, serta pemeliharaan. Seluruh proses tersebut bertujuan untuk menghasilkan perangkat lunak yang memiliki kualitas tinggi dan mampu memenuhi kebutuhan pengguna secara optimal.
 
-\newpage
+Menurut Pressman, rekayasa perangkat lunak dapat dipandang sebagai teknologi berlapis yang terdiri atas proses (\textit{process}), metode (\textit{methods}), alat bantu (\textit{tools}), dan fokus pada kualitas (\textit{quality focus}) \cite{pressman2014}. Keempat lapisan ini saling berhubungan dan bekerja secara terpadu dalam mendukung pengembangan perangkat lunak yang efektif. Proses menjadi kerangka kerja utama yang mengatur tahapan pengembangan, metode menyediakan teknik-teknik yang digunakan dalam setiap tahap, alat bantu mendukung otomatisasi dan efisiensi kerja, sedangkan fokus kualitas memastikan bahwa hasil akhir sesuai dengan standar yang diharapkan. Pressman juga menekankan bahwa rekayasa perangkat lunak merupakan penerapan prinsip-prinsip rekayasa untuk menghasilkan perangkat lunak yang andal dan efisien secara ekonomis, sehingga pendekatan yang digunakan harus terstruktur dan terukur, bukan sekadar aktivitas pengkodean.
+
+Tujuan utama dari rekayasa perangkat lunak adalah menghasilkan perangkat lunak yang memenuhi standar kualitas tertentu dalam batas waktu dan anggaran yang telah ditetapkan \cite{sommerville2016}. Untuk mencapai tujuan tersebut, proses pengembangan perangkat lunak umumnya dilakukan melalui beberapa tahapan yang saling berkaitan. Tahap pertama adalah \textit{brainstorming} dan penetapan tujuan, yaitu proses awal untuk mengidentifikasi permasalahan, menentukan arah pengembangan, dan menetapkan sasaran sistem yang akan dibangun. Tahap kedua adalah analisis kebutuhan dan perencanaan, yang berfokus pada identifikasi, dokumentasi, serta validasi kebutuhan pengguna dan sistem. Dalam konteks pengembangan EduLab, tahap ini mencakup kebutuhan fungsional seperti fitur pengumpulan tugas dan penilaian, serta kebutuhan non-fungsional seperti keamanan dan performa sistem.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{sdlc.png}
+    \caption{Tahapan SDLC}
+    \label{fig:sdlc}
+\end{figure}
+
+Tahap berikutnya adalah perancangan sistem dan arsitektur yang bertujuan untuk mendefinisikan struktur sistem, komponen, antarmuka, dan karakteristik aplikasi secara menyeluruh \cite{pressman2014}. Pada sistem EduLab, perancangan dilakukan melalui pembuatan berbagai model seperti DFD, ERD, diagram UML, serta desain antarmuka pengguna. Setelah perancangan selesai, proses dilanjutkan dengan coding dan implementasi, yaitu tahap pengkodean berdasarkan desain yang telah dibuat \cite{sommerville2016}. Implementasi EduLab dilakukan menggunakan bahasa pemrograman PHP dengan dukungan framework modern serta MySQL sebagai basis data.
+
+Selanjutnya dilakukan tahap \textit{testing} dan \textit{quality assurance} untuk memastikan bahwa perangkat lunak yang dikembangkan telah sesuai dengan kebutuhan yang ditentukan \cite{pressman2014}. Pada pengembangan EduLab, pengujian dilakukan menggunakan metode \textit{blackbox testing} untuk memverifikasi bahwa setiap fungsi berjalan dengan benar. Setelah sistem dinyatakan layak, tahap berikutnya adalah \textit{deployment}, yaitu proses penerapan sistem ke lingkungan pengguna agar dapat digunakan secara nyata. Tahap terakhir adalah pemeliharaan dan umpan balik, yang mencakup perbaikan kesalahan, peningkatan kinerja, serta penyesuaian sistem berdasarkan masukan pengguna \cite{sommerville2016}.
+
+Secara umum, tahapan-tahapan tersebut menunjukkan bahwa rekayasa perangkat lunak bukan hanya kegiatan menulis kode, tetapi merupakan proses yang mencakup seluruh siklus hidup perangkat lunak dari perencanaan hingga pemeliharaan. Dalam konteks aplikasi berbasis web, pendekatan ini menjadi sangat penting karena sistem harus mampu diakses dari berbagai perangkat, menangani banyak pengguna secara bersamaan, memiliki skalabilitas yang baik, serta menyediakan antarmuka yang responsif dan mudah digunakan \cite{pressman2014}. Penerapan prinsip-prinsip ini pada EduLab bertujuan untuk memastikan bahwa sistem yang dihasilkan memiliki keandalan tinggi, mudah dipelihara, dan efektif dalam mendukung proses pembelajaran serta evaluasi akademik. Selain itu, penerapan rekayasa perangkat lunak berbasis web secara terstruktur juga terbukti mampu meningkatkan kepuasan pengguna, kualitas penggunaan, dan efektivitas evaluasi pendidikan \cite{alqurni2023}.
+
+Kualitas perangkat lunak merupakan aspek penting yang mencerminkan tingkat kesesuaian antara perangkat lunak dengan kebutuhan yang telah ditetapkan \cite{pressman2014}. Salah satu model awal dalam pengukuran kualitas adalah model McCall yang mengelompokkan kualitas ke dalam tiga perspektif, yaitu operasi produk, revisi produk, dan transisi produk. Perspektif operasi berkaitan dengan kemampuan sistem dalam menjalankan fungsinya secara benar dan efisien, revisi berfokus pada kemudahan dalam pemeliharaan dan pengembangan lebih lanjut, sedangkan transisi berkaitan dengan kemampuan perangkat lunak untuk beradaptasi dengan lingkungan yang berbeda.
+
+Seiring perkembangan teknologi, evaluasi kualitas perangkat lunak mengacu pada standar yang lebih komprehensif seperti ISO/IEC 25010. Standar ini mencakup berbagai karakteristik kualitas yang lebih luas, antara lain \textit{functional suitability}, \textit{performance efficiency}, \textit{compatibility}, \textit{usability}, \textit{reliability}, \textit{security}, \textit{maintainability}, dan \textit{portability} \cite{sarwosri2023}. Pendekatan ini memungkinkan pengukuran kualitas perangkat lunak secara lebih sistematis dan terukur sesuai dengan kebutuhan modern.
+
+\section{Metodologi Pengembangan (Waterfall)}
+
+Model Waterfall adalah salah satu metodologi pengembangan perangkat lunak yang paling klasik dan banyak digunakan dalam rekayasa perangkat lunak tradisional. Model ini pertama kali diperkenalkan oleh Winston W. Royce pada tahun 1970, meskipun istilah "Waterfall" sendiri kemudian dipopulerkan oleh Benjamin Weingrad pada tahun 1976. Model Waterfall menggunakan pendekatan sekuensial-linear di mana setiap fase pengembangan harus selesai sepenuhnya sebelum fase berikutnya dimulai, mirip dengan aliran air yang jatuh dari atas ke bawah\cite{thesing2021}.
+
+Model Waterfall adalah pendekatan pengembangan perangkat lunak yang membagi proses pengembangan dalam serangkaian fase yang berurutan dan tidak tumpang tindih, di mana setiap fase menghasilkan output yang menjadi input untuk fase berikutnya\cite{pressman2014}. Pendekatan ini bersifat disiplin dan terstruktur, sehingga memudahkan manajemen proyek dalam memantau progress dan mengontrol kualitas. Menurut Sommerville, model Waterfall membagi proses pengembangan perangkat lunak dalam fase-fase yang jelas dan terpisah, dengan setiap fase memiliki tujuan dan hasil yang spesifik. Keunggulan utama dari pendekatan ini adalah kemudahan dalam pengelolaan dan dokumentasi yang sistematis, namun kekurangannya adalah sulit untuk mengakomodasi perubahan kebutuhan di tengah proses pengembangan.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{waterfall.png}
+    \caption{Tahapan model Waterfall}
+    \label{fig:waterfall}
+\end{figure}
+
+
+Seperti ditunjukkan pada \autoref{fig:waterfall}, model Waterfall terdiri dari enam fase utama yang dijalankan secara berurutan. Tahap pertama adalah Analisis Kebutuhan, yaitu fase awal dalam pengembangan perangkat lunak di mana kebutuhan pengguna dan sistem diidentifikasi, dianalisis, dan dokumentasikan secara lengkap. Dalam pengembangan EduLab, fase ini mencakup identifikasi kebutuhan fungsional seperti fitur pengumpulan tugas, pelacakan status, penilaian berbasis rubrik, dan umpan balik terstruktur, serta kebutuhan non-fungsional seperti keamanan, performa, dan kemudahan penggunaan. Tahap kedua adalah Perancangan Sistem, yaitu setelah kebutuhan ditentukan, fase ini mendefinisikan arsitektur sistem, komponen, antarmuka, dan karakteristik lain yang diperlukan untuk memenuhi kebutuhan yang telah diidentifikasi. Dalam EduLab, perancangan sistem mencakup pembuatan DFD Level 0 dan Level 1, ERD untuk basis data, diagram UML (Use Case, Activity, Sequence, Class, Collaboration), serta desain antarmuka pengguna (UI/UX).
+
+Tahap ketiga adalah Implementasi, yaitu proses pengkodean dan pengembangan sistem berdasarkan hasil perancangan yang telah dibuat. Pada EduLab, implementasi dilakukan menggunakan bahasa pemrograman PHP, framework modern untuk pengembangan web, dan MySQL sebagai basis data. Kode program ditulis sesuai dengan desain sistem yang telah dibuat sebelumnya. Tahap keempat adalah Pengujian, yaitu setelah implementasi selesai, sistem diuji untuk memastikan bahwa perangkat lunak yang dikembangkan berfungsi sesuai dengan kebutuhan yang telah ditentukan. Pengujian EduLab dilakukan menggunakan metode blackbox testing untuk memverifikasi bahwa setiap fitur seperti pengumpulan tugas, penilaian, dan umpan balik berjalan sesuai harapan tanpa error.
+
+Tahap kelima adalah Penerapan, yaitu sistem yang telah diuji dan divalidasi kemudian diterapkan ke lingkungan produksi untuk digunakan oleh pengguna nyata. Dalam konteks EduLab, penerapan mencakup instalasi sistem di server kampus, konfigurasi database, dan pelatihan pengguna (dosen, asisten praktikum, dan mahasiswa) untuk menggunakan sistem. Tahap terakhir adalah Pemeliharaan, yaitu setelah sistem diterapkan, fase ini dilakukan untuk memperbaiki kesalahan yang terdeteksi, meningkatkan kinerja, atau menyesuaikan sistem dengan perubahan kebutuhan pengguna. Pemeliharaan EduLab mencakup perbaikan bug, penambahan fitur baru, dan optimasi performa sistem berdasarkan feedback pengguna.
+
+Model Waterfall memiliki beberapa karakteristik utama yang membedakannya dari model pengembangan perangkat lunak lainnya. Pertama adalah pendekatan sekuensial di mana setiap fase harus selesai sepenuhnya sebelum fase berikutnya dimulai, tidak ada overlap atau iterasi. Kedua adalah dokumentasi lengkap di mana setiap fase menghasilkan dokumentasi yang lengkap dan formal, yang menjadi dasar untuk fase berikutnya. Ketiga adalah keteraturan dan disiplin di mana proses development terstruktur dan mudah dipantau oleh manajer proyek. Keempat adalah sulit mengakomodasi perubahan di mana perubahan kebutuhan di tengah proses pengembangan sulit dilaksanakan tanpa mengulang fase sebelumnya.
+
+Keunggulan utama model Waterfall adalah kemudahan dalam pengelolaan proyek karena alur yang jelas dan dokumentasi yang lengkap. Namun, kekurangan utamanya adalah sulit untuk mengakomodasi perubahan kebutuhan di tengah proses pengembangan, yang dapat menjadi masalah jika kebutuhan pengguna tidak sepenuhnya jelas di awal proyek. Model Waterfall juga tidak menghasilkan produk yang dapat digunakan sampai fase akhir, sehingga pengguna tidak dapat melihat hasil hingga deployment, dan risiko tinggi jika ada kesalahan di fase awal karena tidak ada mekanisme untuk koreksi mundur.
+
 \section{UML}
 
+Unified Modeling Language (UML) adalah bahasa standar visual untuk spesifikasi, konstruksi, dokumentasi, dan komunikasi elemen-elemen sistem berbasis objek \cite{booch2005}. UML diciptakan oleh Object Management Group (OMG) dengan versi awal 1.0 pada Januari 1997 dan sejak saat itu telah berevolusi menjadi standar internasional (ISO/IEC 19505) untuk pemodelan arsitektur perangkat lunak \cite{fowler2004}. Dalam rekayasa perangkat lunak modern, penggunaan UML tidak hanya terbatas pada sistem berorientasi objek tradisional, tetapi juga diadaptasi secara luas untuk merancang arsitektur aplikasi berbasis web dan sistem manajemen basis data kompeks \cite{conallen1999}. Pada pengembangan EduLab, UML digunakan sebagai instrumen utama untuk memodelkan perilaku dinamis sistem, memetakan struktur data, mendefinisikan interaksi antar-objek, dan merancang alur aktivitas secara visual, sehingga menjembatani kesenjangan antara fase perancangan konseptual dan implementasi kode pemrograman.
+
 \subsection{Use Case Diagram}
+
+Use Case Diagram merupakan salah satu diagram perilaku dalam UML yang berfungsi untuk menggambarkan fungsionalitas sistem dari perspektif interaksi antara aktor (pengguna atau entitas eksternal) dengan sistem itu sendiri guna mencapai tujuan spesifik \cite{dennis2015}. Diagram ini berperan sebagai fondasi untuk tahapan pengembangan selanjutnya karena memvisualisasikan apa yang seharusnya dilakukan oleh sistem tanpa menjelaskan detail teknis implementasinya \cite{booch2005}. Dalam konteks EduLab, diagram ini memetakan aktor-aktor utama yang terdiri dari Dosen, Asisten Praktikum, dan Mahasiswa. Aktor-aktor tersebut dihubungkan dengan berbagai \textit{use case} krusial seperti proses login, pengumpulan tugas, pelacakan status pengerjaan, pelaksanaan penilaian berbasis rubrik, hingga pemberian umpan balik terstruktur. Melalui identifikasi fungsionalitas ini, pengembang dapat memastikan bahwa seluruh kebutuhan operasional laboratorium akademik telah terakomodasi dalam skenario sistem \cite{adekunle2024}.
+
 \subsection{Activity Diagram}
+
+Sebagai kelanjutan dari Use Case, Activity Diagram digunakan untuk menggambarkan aspek dinamis dari sistem dengan memperlihatkan aliran kontrol dari satu aktivitas ke aktivitas lainnya secara berurutan \cite{dennis2015}. Secara visual, diagram ini menyerupai \textit{flowchart} tingkat lanjut yang tidak hanya memetakan proses sekuensial, tetapi juga mampu merepresentasikan proses percabangan (\textit{decision}), penggabungan (\textit{merge}), serta eksekusi paralel yang berjalan secara bersamaan di dalam sistem \cite{fowler2004}. Pada sistem EduLab, diagram aktivitas dirancang untuk mengurai logika operasional pada setiap \textit{use case}. Misalnya, diagram ini memetakan langkah demi langkah alur pengumpulan tugas yang dimulai dari mahasiswa mengunggah berkas tugas, proses validasi oleh sistem, hingga proses pendistribusian status penyerahan. Demikian pula pada alur penilaian, diagram ini mendeskripsikan transisi dari saat asisten membuka dokumen tugas, memberikan skor berdasarkan kriteria rubrik, hingga sistem mengkalkulasi dan mempublikasikan umpan balik (\textit{feedback}) kepada mahasiswa.
+
 \subsection{Sequence Diagram}
+
+Untuk memodelkan dinamika interaksi yang lebih spesifik, Sequence Diagram digunakan dengan fokus utama pada urutan waktu (\textit{chronological order}) terjadinya pertukaran pesan antar-objek \cite{fowler2004}. Diagram interaksi ini memetakan objek-objek yang berpartisipasi dalam sebuah \textit{use case} dan secara detail menampilkan rentetan pesan (\textit{messages}) yang dikirim dan diterima seiring berjalannya waktu ekseskusi \cite{dennis2015}. Idealnya, setiap skenario utama dalam sistem memiliki diagram sekuensnya masing-masing. Dalam perancangan EduLab, Sequence Diagram mengilustrasikan bagaimana aktor seperti Mahasiswa, Dosen, atau Asisten berinteraksi dengan komponen antarmuka, \textit{controller}, dan entitas basis data. Contohnya, pada proses pengumpulan tugas, diagram ini memperlihatkan urutan komunikasi mulai dari antarmuka login, proses \textit{Upload Tugas}, manipulasi data pada \textit{Sistem Penilaian}, hingga instruksi penyimpanan ke dalam \textit{Database} \textit{Dashboard}, sehingga memberikan panduan teknis yang presisi bagi pemrogram saat fase implementasi \cite{valdez2018}.
+
 \subsection{Class Diagram}
+
+Class Diagram adalah diagram struktural paling fundamental dalam UML yang berfungsi untuk memodelkan arsitektur statis dari sebuah sistem dengan mendeskripsikan kelas, atribut, operasi (metode), serta berbagai jenis relasi antar-kelas tersebut \cite{booch2005}. Diagram ini memberikan cetak biru dari skema basis data dan struktur pemrograman berorientasi objek yang akan dibangun \cite{dennis2015}. Dalam arsitektur EduLab, Class Diagram merangkum entitas-entitas utama yang meliputi kelas \textit{User} sebagai induk (dengan atribut ID, nama, email, \textit{password}), yang kemudian berelasi dengan kelas spesifik seperti \textit{Mahasiswa} (atribut ID, nama, kelas, kelompok), \textit{Dosen} (atribut ID, nama, mata kuliah), dan \textit{Asisten} (atribut ID, nama, mata kuliah yang diampu). Selain itu, terdapat kelas \textit{Tugas} (atribut ID, judul, deskripsi, \textit{deadline}), \textit{Penilaian} (atribut ID, tugas ID, nilai, \textit{feedback}), dan \textit{Rubrik} (atribut ID, penilaian ID, kriteria, skor). Diagram ini juga memvisualisasikan kardinalitas relasi, seperti relasi \textit{one-to-many} antara Dosen dan Tugas, \textit{many-to-one} antara Mahasiswa dan Tugas, serta asosiasi \textit{one-to-many} antara Tugas dan Penilaian, yang secara langsung merepresentasikan arsitektur basis data relasional MySQL yang digunakan.
+
 \subsection{Collaboration Diagram}
+
+Collaboration Diagram, yang pada spesifikasi UML versi 2.x ke atas lebih dikenal sebagai Communication Diagram, merupakan bentuk diagram interaksi lain yang menekankan pada organisasi struktural objek-objek yang berpartisipasi dalam suatu pertukaran pesan \cite{fowler2004}. Berbeda dengan Sequence Diagram yang berfokus pada dimensi waktu, Communication Diagram merupakan perluasan dari Object Diagram yang menonjolkan bagaimana topologi dan asosiasi antar-objek terbentuk saat sistem merespons sebuah perintah \cite{booch2005}. Pada pemodelan EduLab, diagram ini diaplikasikan untuk memvisualisasikan jalur komunikasi antar-komponen, seperti interaksi dan asosiasi antara objek \textit{Student}, \textit{RegistrationController}, \textit{CourseCatalogSystem}, dan \textit{Course} dalam skenario registrasi kelas praktikum atau alur pengumpulan tugas. Setiap pesan yang melintasi relasi antar-objek ditandai dengan nomor sekuens hierarkis (misalnya nomor 1 untuk pesan tertinggi, lalu 1.1, 1.2 untuk \textit{prefiks} di level yang sama) untuk mengindikasikan urutan eksekusinya, sehingga proses aliran data dapat dianalisis secara menyeluruh.
+
 \subsection{State Diagram}
 
+State Machine Diagram, atau yang sering disebut Statechart Diagram, adalah diagram yang mengilustrasikan keadaan (\textit{state}) yang dapat dicapai oleh sebuah objek dinamis, serta transisi antar-keadaan tersebut yang dipicu oleh suatu peristiwa (\textit{event}) \cite{fowler2004}. Pemodelan ini sangat penting untuk objek-objek yang perilakunya berubah secara signifikan tergantung pada status spesifiknya pada waktu tertentu \cite{dennis2015}. Di dalam ekosistem EduLab, State Diagram digunakan secara krusial untuk melacak siklus hidup (\textit{lifecycle}) dari objek \textit{Tugas} dan objek \textit{Penilaian}. Untuk objek \textit{Tugas}, diagram memetakan transisi mulai dari keadaan \textit{Belum Pengumpulan}, berubah menjadi \textit{Sudah Pengumpulan} saat mahasiswa mengunggah hasil kerjanya, beralih ke \textit{Dalam Penilaian} saat asisten mengakses berkas tersebut, dan berakhir pada keadaan \textit{Sudah Dinilai} atau \textit{Revisi}. Demikian pula pada objek \textit{Penilaian}, transisinya dilacak dari \textit{Belum}, \textit{Dalam Proses}, hingga status \textit{Final}. Melalui pendefinisian \textit{state} ini, sistem dapat merespons sebab dan akibat (\textit{causes and effects}) dari aktivitas pengguna dengan logika operasional yang ketat \cite{valdez2018}.
+
 \section{Data Flow Diagram (DFD)}
-Isi...
+
+Data Flow Diagram (DFD) adalah instrumen pemodelan visual yang digunakan dalam analisis dan perancangan sistem untuk merepresentasikan aliran data yang melewati sebuah sistem informasi \cite{kendall2014}. Berbeda dengan \textit{flowchart} yang menitikberatkan pada urutan kendali atau sekuens eksekusi program, DFD berfokus secara eksklusif pada pergerakan data dari dan ke dalam sistem beserta transformasinya. Menurut Kendall dan Kendall, DFD menyediakan model konseptual yang kuat dengan memvisualisasikan bagaimana sebuah sistem memproses data dari sudut pandang masukan (\textit{input}) dan keluaran (\textit{output}) \cite{kendall2014}. Dengan menggunakan notasi grafis yang terstandarisasi dan minim jargon teknis, diagram aliran data ini menjadi alat komunikasi yang efektif untuk menjembatani pemahaman antara analis sistem, tim pengembang perangkat lunak, dan pengguna akhir mengenai bagaimana arsitektur informasi seharusnya beroperasi.
+
+Secara konseptual, pembangunan sebuah DFD selalu bertumpu pada empat komponen dasar. Komponen pertama adalah entitas eksternal (\textit{external entity}), yang merepresentasikan sumber asal atau tujuan akhir dari sebuah data yang berada di luar batasan sistem perangkat lunak yang sedang dibangun. Komponen kedua adalah proses (\textit{process}), yang melambangkan suatu aktivitas operasional atau transformasi logika yang mengubah aliran data masukan menjadi aliran data keluaran. Komponen ketiga adalah penyimpanan data (\textit{data store}), yang merujuk pada data yang sedang tidak bergerak atau repositori penyimpanan persisten, seperti tabel dalam basis data relasional. Komponen terakhir adalah aliran data (\textit{data flow}), yang divisualisasikan dengan simbol anak panah terarah untuk menunjukkan jalur pergerakan informasi dari satu komponen ke komponen lainnya \cite{kendall2014}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{simbol-DFD.png}
+    \caption{Simbol-simbol pada DFD}
+    \label{fig:symbol-dfd}
+\end{figure}
+
+Seperti ditunjukkan pada \autoref{fig:symbol-dfd}, simbol DFD terdiri atas entitas eksternal, proses, aliran data, dan penyimpanan data untuk mengelola kompleksitas perancangan arsitektur perangkat lunak, DFD diorganisasikan secara hierarkis dan dipecah melalui metode dekomposisi \textit{top-down}. Tingkatan tertinggi dalam hierarki ini dikenal sebagai Diagram Konteks (\textit{Context Diagram}) atau DFD Level 0, yang menggambarkan keseluruhan sistem sebagai satu proses tunggal yang berinteraksi langsung dengan berbagai entitas eksternal di sekitarnya. Diagram Konteks berfungsi secara krusial untuk menetapkan batasan sistem (\textit{system boundary}) dan mengidentifikasi antarmuka pertukaran data dengan dunia luar.
+
+Tingkatan selanjutnya adalah DFD Level 1, yang memecah proses tunggal dari Diagram Konteks menjadi beberapa subproses fungsional utama, serta mulai memperlihatkan entitas penyimpanan data inti dan aliran data internal sistem. Jika spesifikasi teknis membutuhkan rincian yang lebih mendalam, dekomposisi tersebut dapat diteruskan ke DFD Level 2 atau Level 3, yang secara spesifik memecah proses-proses di Level 1 menjadi transformasi logika dasar hingga setiap fungsionalitas siap didokumentasikan ke dalam bentuk kode \cite{kendall2014}. Penerapan pemetaan aliran data yang terstruktur menggunakan DFD ini tidak hanya menjamin seluruh prasyarat fungsional sistem terpenuhi, tetapi juga membantu menjaga konsistensi integritas data di seluruh siklus hidup transaksi. Sebagai sebuah pendekatan \textit{engineering}, penggunaan DFD terbukti mampu meminimalkan redundansi arsitektur dan meningkatkan efisiensi pelacakan aliran data, khususnya pada pengembangan sistem informasi berbasis web yang kompleks \cite{adekunle2024}.
+
+Data Flow Diagram (DFD) adalah instrumen pemodelan visual yang digunakan dalam analisis dan perancangan sistem untuk merepresentasikan aliran data yang melewati sebuah sistem informasi \cite{kendall2014}. Berbeda dengan \textit{flowchart} yang menitikberatkan pada urutan kendali atau sekuens eksekusi program, DFD berfokus secara eksklusif pada pergerakan data dari dan ke dalam sistem beserta transformasinya. Menurut Kendall dan Kendall, DFD menyediakan model konseptual yang tangguh dengan memvisualisasikan bagaimana sebuah sistem memproses data dari sudut pandang masukan (\textit{input}) dan keluaran (\textit{output}) \cite{kendall2014}. Dengan menggunakan notasi grafis yang terstandarisasi dan minim jargon teknis, diagram aliran data ini menjadi alat komunikasi yang sangat efektif untuk menjembatani pemahaman antara analis sistem, tim pengembang perangkat lunak, dan pengguna akhir mengenai bagaimana arsitektur informasi seharusnya beroperasi.
+
+\subsection{Komponen Utama DFD}
+
+Secara konseptual, pembangunan sebuah DFD—baik menggunakan pendekatan notasi Gane-Sarson maupun Yourdon-DeMarco selalu bertumpu pada empat komponen dasar. Komponen pertama adalah Entitas Eksternal (\textit{External Entity}), yang merepresentasikan sumber asal atau tujuan akhir dari sebuah data yang berada di luar batasan sistem perangkat lunak yang sedang dibangun. Komponen kedua adalah Proses (\textit{Process}), yang melambangkan suatu aktivitas operasional, manipulasi, atau transformasi logika yang mengubah aliran data masukan menjadi aliran data keluaran. Komponen ketiga adalah Penyimpanan Data (\textit{Data Store}), yang merujuk pada data yang sedang tidak bergerak (\textit{data at rest}) atau repositori penyimpanan persisten, seperti tabel dalam basis data relasional. Komponen terakhir adalah Aliran Data (\textit{Data Flow}), yang divisualisasikan dengan simbol anak panah terarah untuk menunjukkan jalur pergerakan atau transmisi informasi dari satu entitas, proses, atau penyimpanan data ke komponen lainnya \cite{kendall2014}.
+
+\subsection{Tingkatan Hierarki DFD}
+
+Untuk mengelola kompleksitas perancangan arsitektur perangkat lunak yang masif, DFD diorganisasikan secara hierarkis dan dipecah melalui metode dekomposisi \textit{top-down}. Tingkatan tertinggi dalam hierarki ini dikenal sebagai Diagram Konteks (\textit{Context Diagram}) atau DFD Level 0, yang menggambarkan keseluruhan sistem sebagai satu proses tunggal yang berinteraksi langsung dengan berbagai entitas eksternal di sekitarnya. Diagram Konteks berfungsi secara krusial untuk menetapkan batasan sistem (\textit{system boundary}) dan mengidentifikasi antarmuka pertukaran data dengan dunia luar. Tingkatan selanjutnya adalah DFD Level 1, yang memecah proses tunggal dari Diagram Konteks menjadi beberapa sub-proses fungsional utama, serta mulai memperlihatkan entitas penyimpanan data inti dan aliran data internal sistem. Jika spesifikasi teknis membutuhkan rincian yang lebih mendalam, dekomposisi tersebut dapat diteruskan ke DFD Level 2 atau Level 3, yang secara spesifik memecah proses-proses di Level 1 menjadi transformasi logika dasar (\textit{primitive process}) hingga setiap fungsionalitas siap didokumentasikan ke dalam bentuk kode \cite{kendall2014}.
 
 \section{Entity Relationship Diagram (ERD)}
-Isi...
+
+Entity Relationship Diagram (ERD) merupakan sebuah instrumen pemodelan data konseptual yang digunakan untuk merancang, menganalisis, dan merepresentasikan struktur logis dari sebuah pangkalan data \cite{elmasri2015}. Pemodelan ini pertama kali diperkenalkan oleh Peter Chen pada tahun 1976 sebagai pendekatan terpadu untuk mendeskripsikan data di dunia nyata dalam bentuk entitas dan hubungan matematisnya \cite{chen1976}. Dalam rekayasa perangkat lunak, ERD berfungsi sebagai cetak biru visual yang memfasilitasi komunikasi antara perancang basis data, pengembang sistem, dan pemangku kepentingan mengenai aturan bisnis serta batasan data sebelum sistem tersebut diimplementasikan secara fisik ke dalam \textit{Database Management System} (DBMS). Melalui pendekatan grafis yang representatif, ERD membantu memetakan kompleksitas informasi menjadi struktur relasional yang lebih terorganisir, konsisten, dan bebas dari anomali struktural.
+
+Secara fundamental, arsitektur logis dari sebuah ERD dibangun di atas tiga komponen pembentuk utama, yaitu entitas, atribut, dan relasi. Entitas merepresentasikan sekumpulan objek, konsep, atau peristiwa dunia nyata yang keberadaannya bersifat unik dan dapat diidentifikasi secara independen di dalam lingkup sistem \cite{silberschatz2019}. Setiap entitas memiliki sekumpulan karakteristik spesifik yang disebut sebagai atribut, yang berfungsi untuk mendeskripsikan sifat, properti, atau detail informasi dari entitas tersebut. Di antara sekumpulan atribut tersebut, terdapat atribut kunci (\textit{primary key}) yang bertugas secara spesifik untuk membedakan setiap baris data secara unik di dalam sebuah entitas. Sementara itu, relasi menggambarkan ikatan asosiatif tentang bagaimana dua atau lebih entitas saling berinteraksi satu sama lain. Relasi ini selalu diiringi dengan batasan kardinalitas yang mendefinisikan rasio pemetaan kuantitatif antar-entitas, yang secara umum diklasifikasikan menjadi hubungan satu-ke-satu (\textit{one-to-one}), satu-ke-banyak (\textit{one-to-many}), serta banyak-ke-banyak (\textit{many-to-many}) \cite{elmasri2015}.
+
+Transformasi pemodelan konseptual ERD ke dalam skema fisik basis data relasional merupakan tahapan kritis yang secara langsung menentukan tingkat integritas dan efisiensi operasi manajemen data. Pemetaan entitas dan kardinalitas relasi yang dianalisis secara akurat akan menghasilkan rancangan tabel-tabel yang ternormalisasi, yang pada gilirannya mampu meminimalisasi redundansi penyimpanan dan mencegah terjadinya inkonsistensi saat proses manipulasi data dilakukan \cite{silberschatz2019}. Dalam arsitektur sistem informasi modern, khususnya aplikasi berbasis web yang harus melayani tingkat konkurensi pertukaran data yang tinggi, desain ERD yang komprehensif menjadi fondasi mutlak untuk memastikan optimalisasi kueri dan skalabilitas pangkalan data. Penerapan metodologi perancangan pangkalan data konseptual menggunakan ERD ini telah terbukti secara empiris mampu memberikan tingkat keandalan yang sangat tinggi dalam mengelola integritas data transaksional, mengamankan rekam jejak relasi entitas, serta mendukung arsitektur pelacakan sumber daya yang presisi pada berbagai sistem manajemen informasi \cite{adekunle2024}.
 
 \section{UI/UX Design Principles}
-Isi...
 
-\chapter{METODOLOGI PENELITIAN / PENGEMBANGAN}
+\textit{User Interface} (UI) dan \textit{User Experience} (UX) merupakan dua disiplin ilmu yang saling terintegrasi dalam ruang lingkup perancangan antarmuka manusia dan komputer (\textit{Human-Computer Interaction}). Meskipun dalam praktik pengembangannya sering dianggap sebagai kesatuan, keduanya berfokus pada dimensi perancangan yang berbeda namun saling melengkapi. Menurut Garrett, UI berfokus pada arsitektur visual, elemen interaktif, tata letak, tipografi, dan estetika presentasi dari sebuah sistem perangkat lunak, yang bertujuan untuk mengoptimalkan aksesibilitas fisik serta kejelasan penyampaian informasi \cite{garrett2010}. Di sisi lain, UX mencakup ruang lingkup yang lebih holistik dan psikologis, berkaitan erat dengan pengalaman kognitif, respons emosional, serta tingkat kepuasan fungsional pengguna selama berinteraksi dengan sistem tersebut. Desain UX yang berkualitas menuntut pemahaman yang mendalam mengenai perilaku pengguna, memastikan bahwa sistem tidak hanya menyajikan fungsi teknis yang berjalan dengan baik, tetapi juga menghadirkan alur kerja yang intuitif, dapat diprediksi, dan bermakna \cite{norman2013}.
+
+Perancangan antarmuka dan pengalaman pengguna yang andal harus dibangun di atas fondasi prinsip-prinsip heuristik usabilitas yang telah teruji secara akademis maupun praktis. Evaluasi usabilitas klasik yang dirumuskan oleh Nielsen menetapkan sejumlah kaidah fundamental, di antaranya meliputi konsistensi desain, visibilitas status sistem, pencegahan kesalahan operasional, serta fleksibilitas kontrol bagi pengguna \cite{nielsen1994}. Prinsip konsistensi mewajibkan sebuah antarmuka menggunakan konvensi visual, terminologi, dan pola interaksi yang seragam di seluruh modul sistem, sehingga secara drastis meminimalkan kebingungan adaptasi pengguna. Lebih lanjut, perancangan yang berpusat pada pengguna menuntut penyederhanaan antarmuka untuk mengurangi beban kognitif (\textit{cognitive load}), di mana arsitektur informasi harus disajikan secara hierarkis dan logis. Penyediaan umpan balik (\textit{feedback}) yang cepat dan informatif setiap kali pengguna melakukan sebuah tindakan juga menjadi kriteria krusial agar interaksi manusia dengan mesin terasa lebih transparan dan mudah dikendalikan \cite{norman2013}.
+
+Transformasi prinsip-prinsip UI/UX ke dalam arsitektur perangkat lunak berbasis web modern merupakan faktor determinan terhadap tingkat adopsi dan efektivitas operasional sebuah sistem informasi. Antarmuka aplikasi web masa kini tidak hanya dituntut untuk memiliki estetika visual yang modern, tetapi juga harus bersifat responsif, mengutamakan kemudahan navigasi, dan terstruktur sedemikian rupa sehingga pengguna dapat menyelesaikan tugas-tugas fungsionalnya dengan tingkat efisiensi yang tinggi. Mengabaikan aspek UX dalam siklus hidup rekayasa perangkat lunak sering kali berakibat fatal pada tingginya rasio kesalahan \textit{input}, frustrasi pengguna akhir, dan penurunan produktivitas akibat alur sistem yang tidak intuitif \cite{garrett2010}. Sebaliknya, berbagai penelitian empiris membuktikan bahwa integrasi dan evaluasi kaidah desain UI/UX yang terstruktur sejak fase konseptual secara signifikan mampu meminimalisasi kompleksitas sistem, meningkatkan kepuasan subjektif pengguna, serta memastikan pencapaian tujuan fungsional (\textit{usability success}) pada berbagai platform perangkat lunak yang kompleks \cite{lallemand2015}.
+
+\newpage
+\chapter{METODOLOGI PENELITIAN}
 
 \section{Metode Pengembangan Sistem}
-Isi...
+
+Metode pengembangan sistem yang digunakan dalam penelitian ini adalah model Waterfall. Model ini dipilih karena memiliki alur pengembangan yang sistematis, terstruktur, dan berurutan, sehingga sesuai digunakan pada penelitian yang kebutuhan sistemnya telah dapat diidentifikasi sejak awal. Selain itu, model Waterfall memudahkan proses dokumentasi pada setiap tahap pengembangan, mulai dari analisis kebutuhan hingga pemeliharaan sistem \cite{pressman2014}\cite{sommerville2016}.
+
+Model Waterfall merupakan pendekatan pengembangan perangkat lunak yang membagi proses pengembangan ke dalam beberapa tahap yang dilakukan secara berurutan. Setiap tahap harus diselesaikan terlebih dahulu sebelum melanjutkan ke tahap berikutnya, sehingga hasil dari satu tahap menjadi masukan bagi tahap selanjutnya \cite{royce1970}\cite{pressman2014}. Dalam penelitian ini, tahapan Waterfall yang digunakan meliputi analisis kebutuhan, perancangan sistem, implementasi, pengujian, dan pemeliharaan.
+
+Tahap analisis kebutuhan dilakukan untuk mengidentifikasi kebutuhan fungsional dan non-fungsional dari sistem yang akan dikembangkan. Pada tahap ini, dilakukan pengumpulan informasi mengenai proses yang berjalan, permasalahan yang dihadapi, serta kebutuhan pengguna terhadap sistem. Hasil dari tahap ini menjadi dasar dalam menyusun rancangan sistem yang akan dibangun \cite{sommerville2016}.
+
+Tahap perancangan sistem dilakukan setelah kebutuhan sistem berhasil diidentifikasi. Pada tahap ini, dilakukan perancangan arsitektur sistem, perancangan basis data, perancangan antarmuka, serta pemodelan sistem menggunakan diagram seperti DFD, ERD, dan UML. Perancangan ini bertujuan untuk memberikan gambaran yang jelas mengenai struktur dan alur kerja sistem sebelum dilakukan proses implementasi \cite{pressman2014}.
+
+Tahap implementasi merupakan proses penerjemahan rancangan sistem ke dalam bentuk kode program. Pada tahap ini, sistem dikembangkan menggunakan bahasa pemrograman PHP dengan dukungan framework web modern serta basis data MySQL. Implementasi dilakukan sesuai dengan rancangan yang telah dibuat pada tahap sebelumnya agar sistem dapat berjalan sesuai kebutuhan pengguna \cite{sommerville2016}.
+
+Tahap pengujian dilakukan untuk memastikan bahwa sistem yang telah dikembangkan berfungsi sesuai dengan kebutuhan yang telah ditentukan. Pengujian dalam penelitian ini dilakukan menggunakan metode \textit{blackbox testing} untuk memverifikasi setiap fungsi pada sistem, seperti proses input data, pengolahan data, penyimpanan data, dan output yang dihasilkan. Tahap ini penting untuk memastikan bahwa tidak terdapat kesalahan fungsional pada sistem \cite{pressman2014}.
+
+Tahap terakhir adalah pemeliharaan. Tahap ini dilakukan setelah sistem digunakan oleh pengguna untuk memperbaiki kesalahan yang mungkin ditemukan, meningkatkan kinerja sistem, atau menyesuaikan sistem dengan kebutuhan baru yang muncul di kemudian hari. Dengan adanya tahap pemeliharaan, sistem dapat terus digunakan secara optimal dan tetap relevan terhadap kebutuhan pengguna \cite{sommerville2016}.
+
+Secara keseluruhan, penerapan model Waterfall dalam penelitian ini memberikan alur pengembangan yang jelas dan terstruktur. Setiap tahap menghasilkan keluaran yang menjadi dasar bagi tahap berikutnya, sehingga proses pengembangan sistem dapat dilakukan secara lebih terkontrol, terdokumentasi dengan baik, dan sesuai dengan tujuan penelitian.
 
 \section{Tahapan Pengembangan}
 
-\subsection{Planning (Perencanaan)}
-\subsection{Analysis (Analisis)}
-\subsection{Design (Perancangan)}
-\subsection{Implementation (Implementasi)}
-\subsection{Testing (Pengujian)}
+\subsection{Analisis Kebutuhan}
+Pada tahap ini, analisis dilakukan terhadap masalah pengelolaan praktikum yang sedang berjalan. Melalui observasi, diidentifikasi kebutuhan utama pengguna yang meliputi sistem manajemen tugas terpusat, fitur penilaian berbasis rubrik untuk asisten praktikum, pengelolaan kelas untuk dosen, serta pengajuan sanggahan nilai oleh mahasiswa. Selain itu, ditentukan pula kebutuhan non-fungsional sistem seperti antarmuka yang intuitif dan hak akses yang berlapis berdasarkan peran (dosen, asisten, mahasiswa).
+
+\subsection{Perancangan Sistem}
+Setelah kebutuhan didefinisikan, langkah selanjutnya adalah menerjemahkannya ke dalam bentuk rancangan teknis. Perancangan aliran data dimodelkan menggunakan \textit{Data Flow Diagram} (DFD) dengan perangkat lunak Microsoft Visio. Struktur pangkalan data dan relasi antar entitas dirancang menggunakan MySQL Workbench ke dalam bentuk \textit{Entity Relationship Diagram} (ERD). Perilaku dan interaksi sistem dimodelkan melalui diagram UML (\textit{Unified Modeling Language}) dengan bantuan perangkat lunak IBM Rational Rose. Sementara itu, rancangan antarmuka pengguna (UI/UX) dirancang menggunakan platform Figma agar menghasilkan desain yang representatif.
+
+\subsection{Implementasi}
+Tahap implementasi merupakan proses penulisan kode program (\textit{coding}) berdasarkan cetak biru perancangan yang telah dibuat. Sistem EduLab dibangun berbasis web menggunakan bahasa pemrograman PHP yang didukung oleh \textit{framework} CodeIgniter. Manajemen basis data menggunakan MySQL, sedangkan lingkungan pengembangan dieksekusi secara lokal menggunakan XAMPP sebagai penyedia layanan server web (Apache).
+
+\subsection{Pengujian}
+Pengujian sistem dilakukan dengan menggunakan metode \textit{Black Box Testing} untuk memastikan setiap fungsionalitas berjalan sesuai dengan rancangan. Pengujian difokuskan pada pengujian antarmuka, validasi input pengguna, perhitungan nilai otomatis, serta batasan akses pengguna agar tidak terjadi celah keamanan.
+
+\subsection{Pemeliharaan}
+Tahap pemeliharaan mencakup perbaikan jika terdapat galat (\textit{bug}) setelah sistem mulai dioperasikan, serta penambahan fitur minor sesuai dengan umpan balik dari pengguna akhir (dosen, asisten, dan mahasiswa).
 
 \chapter{ANALISIS DAN PERANCANGAN SISTEM}
 
 \section{Analisis Sistem}
 
 \subsection{Analisis Sistem Berjalan (Flowmap)}
+
+Sistem berjalan merupakan mekanisme operasional yang saat ini diterapkan dalam mengelola kegiatan praktikum sebelum adanya sistem EduLab. Berdasarkan observasi, manajemen praktikum masih dilakukan secara konvensional menggunakan berbagai platform pihak ketiga yang tidak saling terintegrasi.
+
+Berikut adalah uraian proses sistem berjalan:
+\begin{enumerate}
+    \item Distribusi materi dan tugas dilakukan asisten melalui grup pesan instan atau folder Google Drive.
+    \item Mahasiswa mengumpulkan laporan dengan mengunggahnya ke Google Drive atau mengirim langsung ke asisten, yang memicu penumpukan berkas tak terorganisasi dan menyulitkan validasi batas waktu pengumpulan.
+    \item Asisten mengunduh laporan dan menilai secara manual di Microsoft Excel tanpa rubrik terpadu, yang rentan terhadap inkonsistensi penilaian.
+    \item Keluhan nilai disampaikan melalui pesan pribadi tanpa dokumentasi resmi, menyulitkan pengawasan oleh dosen.
+\end{enumerate}
+
+Untuk mengatasi kendala tersebut, dirancanglah usulan alur kerja baru yang terpusat. Alur sistem usulan ini dapat dilihat secara visual melalui Flowmap pada \autoref{fig:flowmap_sistem}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{"flowmap/Flow Map_page-0001.jpg"}
+    \caption{Flowmap Sistem Usulan EduLab}
+    \label{fig:flowmap_sistem}
+\end{figure}
+
 \subsection{Identifikasi Masalah}
+
+Berdasarkan hasil analisis terhadap sistem yang berjalan, ditemukan beberapa permasalahan utama yang menghambat efektivitas pelaksanaan praktikum:
+\begin{itemize}
+    \item Desentralisasi data di berbagai platform menyebabkan pencarian berkas menjadi sulit dan berisiko kehilangan data.
+    \item Proses pengumpulan manual membuat penegakan batas waktu pengumpulan tidak dapat dilakukan secara otomatis dan akurat.
+    \item Penilaian tanpa rubrik terintegrasi seringkali memunculkan subjektivitas dan perbedaan standar antar asisten praktikum.
+    \item Tidak adanya wadah resmi untuk menangani sanggahan nilai membuat proses penyelesaian keluhan menjadi tidak transparan.
+\end{itemize}
+
 \subsection{Analisis Kebutuhan Sistem}
 
+Tahap analisis kebutuhan sistem bertujuan untuk menjabarkan spesifikasi perangkat lunak yang akan dibangun agar dapat menyelesaikan permasalahan yang telah diidentifikasi. Kebutuhan ini dibagi menjadi dua kategori utama, yaitu kebutuhan fungsional dan kebutuhan non-fungsional.
+
 \subsubsection{Kebutuhan Fungsional}
+Kebutuhan fungsional mendefinisikan fitur-fitur dan proses utama yang harus dapat dilakukan oleh sistem. Untuk sistem EduLab, kebutuhan fungsional meliputi:
+\begin{itemize}
+    \item Sistem harus mampu memfasilitasi autentikasi pengguna (dosen, asisten praktikum, mahasiswa) berdasarkan hak akses masing-masing.
+    \item Dosen dapat mengelola data kelas, kelompok praktikum, dan mengunggah modul pembelajaran.
+    \item Sistem harus memungkinkan mahasiswa mengunggah laporan praktikum secara terpusat dengan penegakan otomatis pada batas waktu (deadline).
+    \item Asisten praktikum dapat memberikan nilai langsung melalui sistem menggunakan rubrik penilaian yang telah disiapkan.
+    \item Sistem menyediakan fasilitas bagi mahasiswa untuk mengajukan sanggahan nilai yang nantinya ditinjau oleh asisten praktikum.
+\end{itemize}
+
 \subsubsection{Kebutuhan Non-Fungsional}
 
 \section{Perancangan Sistem}
