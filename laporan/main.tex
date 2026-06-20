@@ -124,6 +124,7 @@
 \begin{center}
     \Large\textbf{DAFTAR GAMBAR}
 \end{center}
+\addcontentsline{toc}{chapter}{DAFTAR GAMBAR}
 
 \listoffigures
 \newpage
@@ -134,6 +135,7 @@
 \begin{center}
     \Large\textbf{DAFTAR TABEL}
 \end{center}
+\addcontentsline{toc}{chapter}{DAFTAR TABEL}
 
 \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
 \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
@@ -175,16 +177,16 @@ Berdasarkan latar belakang yang telah dijelaskan, rumusan masalah dalam peneliti
 Agar penelitian ini lebih terarah dan terfokus, maka ditetapkan batasan-batasan masalah sebagai berikut:
 
 \begin{enumerate}
-    \item Sistem yang dikembangkan hanya mencakup tiga peran pengguna, yaitu \textit{mahasiswa}, \textit{asisten praktikum}, dan \textit{dosen}, dengan hak akses yang berbeda pada setiap peran.
-    \item Proses autentikasi dilakukan berdasarkan NIM untuk mahasiswa dan NIP untuk dosen dan asisten praktikum yang telah terdaftar dalam basis data pengguna (\texttt{DB\_Pengguna}).
+    \item Sistem yang dikembangkan hanya mencakup tiga peran pengguna, yaitu mahasiswa, asisten praktikum, dan dosen, dengan hak akses yang berbeda pada setiap peran.
+    \item Proses autentikasi dilakukan berdasarkan NIM untuk mahasiswa dan NIP untuk dosen dan asisten praktikum yang telah terdaftar dalam basis data pengguna.
     \item Fitur pengumpulan tugas hanya mendukung unggah berkas laporan dalam batas waktu (\textit{deadline}) yang telah ditentukan; berkas yang diunggah melewati \textit{deadline} akan ditolak secara otomatis oleh sistem.
-    \item Penilaian dilakukan oleh asisten praktikum melalui verifikasi dan evaluasi tugas, kemudian nilai disimpan ke basis data nilai (\texttt{DB\_Nilai}) dan nilai akhir dihitung secara otomatis oleh sistem.
-    \item Mekanisme sanggah hanya dapat diajukan oleh mahasiswa dan ditinjau oleh asisten praktikum, dengan dua kemungkinan keputusan: \textit{setuju} (nilai diperbarui) atau \textit{tolak} (tanggapan penolakan disimpan).
-    \item Status kelulusan ditentukan berdasarkan perbandingan nilai akhir terhadap nilai minimal yang ditetapkan, dengan indikator visual berupa warna hijau untuk \textit{lulus} dan warna merah untuk \textit{mengulang}.
+    \item Penilaian dilakukan oleh asisten praktikum melalui verifikasi dan evaluasi tugas, kemudian nilai disimpan ke basis data nilai dan nilai akhir dihitung secara otomatis oleh sistem.
+    \item Mekanisme sanggah hanya dapat diajukan oleh mahasiswa dan ditinjau oleh asisten praktikum, dengan dua kemungkinan keputusan: setuju (nilai diperbarui) atau tolak (tanggapan penolakan disimpan).
+    \item Status kelulusan ditentukan berdasarkan perbandingan nilai akhir terhadap nilai minimal yang ditetapkan, dengan indikator visual berupa warna hijau untuk lulus dan warna merah untuk mengulang.
     \item Pengelolaan kelas dan kelompok praktikum, termasuk unggah modul, sepenuhnya menjadi wewenang dosen.
     \item Sistem menyediakan fitur rekap nilai per kelas yang dapat diekspor dalam bentuk berkas oleh dosen.
     \item Sistem tidak mencakup fitur komunikasi langsung antara pengguna seperti \textit{chat} atau forum diskusi.
-    \item Sistem dikembangkan sebagai aplikasi berbasis web dan tidak mencakup pengembangan aplikasi \textit{mobile}.
+    \item Sistem dikembangkan sebagai aplikasi berbasis web dan tidak mencakup pengembangan aplikasi seluler.
 \end{enumerate}
 
 \section{Tujuan Penelitian}
@@ -264,7 +266,6 @@ Sistem informasi terdiri dari lima komponen utama yang saling terkait:
     \item Prosedur (Procedures): Aturan, kebijakan, dan langkah-langkah yang mengatur penggunaan sistem. Dalam EduLab, prosedur mencakup alur pengumpulan tugas, proses penilaian, dan mekanisme umpan balik \cite{stair2018}.
 \end{enumerate}
 \subsection{Fungsi Sistem Informasi}
-
 Sistem informasi memiliki beberapa fungsi utama dalam organisasi:
 
 \begin{enumerate}
@@ -462,25 +463,25 @@ Secara keseluruhan, penerapan model Waterfall dalam penelitian ini memberikan al
 \section{Tahapan Pengembangan}
 
 \subsection{Analisis Kebutuhan}
-Pada tahap ini, analisis dilakukan terhadap masalah pengelolaan praktikum yang sedang berjalan. Melalui observasi, diidentifikasi kebutuhan utama pengguna yang meliputi sistem manajemen tugas terpusat, fitur penilaian berbasis rubrik untuk asisten praktikum, pengelolaan kelas untuk dosen, serta pengajuan sanggahan nilai oleh mahasiswa. Selain itu, ditentukan pula kebutuhan non-fungsional sistem seperti antarmuka yang intuitif dan hak akses yang berlapis berdasarkan peran (dosen, asisten, mahasiswa).
+Pada tahap ini, analisis dilakukan secara mendalam terhadap permasalahan pengelolaan praktikum yang selama ini berjalan secara konvensional. Berdasarkan hasil observasi partisipatif, diidentifikasi kebutuhan utama pengguna (dosen, asisten praktikum, dan mahasiswa). Kebutuhan fungsional yang dirumuskan meliputi: sistem login dan manajemen multi-peran, pengumpulan berkas laporan praktikum dalam batas waktu tertentu, verifikasi dan penilaian tugas berbasis rubrik oleh asisten, perhitungan dan rekapitulasi nilai akhir otomatis, \textit{dashboard} pemantauan kelas bagi dosen, serta mekanisme pengajuan sanggah nilai oleh mahasiswa. Selain itu, ditentukan pula kebutuhan non-fungsional sistem, yakni aplikasi harus berbasis web agar mudah diakses melalui peramban standar tanpa instalasi, memiliki antarmuka yang intuitif dan responsif, serta menjamin keamanan dan kerahasiaan data nilai mahasiswa.
 
 \subsection{Perancangan Sistem}
-Setelah kebutuhan didefinisikan, langkah selanjutnya adalah menerjemahkannya ke dalam bentuk rancangan teknis. Perancangan aliran data dimodelkan menggunakan \textit{Data Flow Diagram} (DFD) dengan perangkat lunak Microsoft Visio. Struktur pangkalan data dan relasi antar entitas dirancang menggunakan MySQL Workbench ke dalam bentuk \textit{Entity Relationship Diagram} (ERD). Perilaku dan interaksi sistem dimodelkan melalui diagram UML (\textit{Unified Modeling Language}) dengan bantuan perangkat lunak IBM Rational Rose. Sementara itu, rancangan antarmuka pengguna (UI/UX) dirancang menggunakan platform Figma agar menghasilkan desain yang representatif.
+Setelah seluruh kebutuhan didefinisikan secara komprehensif, langkah selanjutnya adalah menerjemahkannya ke dalam bentuk rancangan teknis yang terstruktur. Perancangan aliran data dari dan menuju sistem dimodelkan secara terperinci menggunakan \textit{Data Flow Diagram} (DFD). Struktur pangkalan data relasional dan keterkaitan antar-entitas dirancang menggunakan \textit{Entity Relationship Diagram} (ERD). Perilaku sistem dan interaksi fungsional antara pengguna (aktor) dan sistem dimodelkan melalui berbagai diagram \textit{Unified Modeling Language} (UML) seperti \textit{Use Case Diagram}, \textit{Activity Diagram}, \textit{Sequence Diagram}, dan \textit{Class Diagram}. Sementara itu, rancangan purwarupa antarmuka pengguna (UI/UX) didesain menggunakan platform Figma untuk memastikan interaksi visual yang ramah pengguna (\textit{user-friendly}) sebelum proses pemrograman dimulai.
 
 \subsection{Implementasi}
-Tahap implementasi merupakan proses penulisan kode program (\textit{coding}) berdasarkan cetak biru perancangan yang telah dibuat. Sistem EduLab dibangun berbasis web menggunakan bahasa pemrograman PHP yang didukung oleh \textit{framework} CodeIgniter. Manajemen basis data menggunakan MySQL, sedangkan lingkungan pengembangan dieksekusi secara lokal menggunakan XAMPP sebagai penyedia layanan server web (Apache).
+Tahap implementasi merupakan proses penulisan kode program (\textit{coding}) yang secara langsung menerjemahkan cetak biru perancangan ke dalam perangkat lunak yang fungsional. Sistem EduLab dibangun sebagai aplikasi berbasis web yang menitikberatkan pada kinerja ringan dan kontrol arsitektur yang kuat, sehingga pengembangannya menggunakan bahasa pemrograman PHP secara \textit{native} (tanpa framework pihak ketiga) dengan mengadopsi pola arsitektur \textit{Front Controller} dan struktur \textit{Model-View-Controller} (MVC) secara mandiri. Manajemen basis data dioperasikan menggunakan sistem manajemen basis data relasional MySQL melalui koneksi PDO (\textit{PHP Data Objects}) demi keamanan dari injeksi SQL. Antarmuka sisi klien (\textit{front-end}) dibangun murni menggunakan standar HTML5, CSS3 murni (\textit{Vanilla CSS}), dan sedikit interaksi JavaScript. Selama proses pengembangan, lingkungan eksekusi dijalankan secara lokal dengan mengandalkan paket perangkat lunak XAMPP yang bertindak sebagai penyedia layanan server web Apache.
 
 \subsection{Pengujian}
-Pengujian sistem dilakukan dengan menggunakan metode \textit{Black Box Testing} untuk memastikan setiap fungsionalitas berjalan sesuai dengan rancangan. Pengujian difokuskan pada pengujian antarmuka, validasi input pengguna, perhitungan nilai otomatis, serta batasan akses pengguna agar tidak terjadi celah keamanan.
+Pengujian sistem dilakukan dengan menggunakan metode \textit{Black Box Testing} untuk memvalidasi seluruh fungsionalitas sistem tanpa perlu meninjau struktur internal kode program. Fokus utama pengujian adalah untuk memastikan bahwa setiap masukan pengguna dan proses manipulasi data menghasilkan keluaran yang benar dan sesuai dengan spesifikasi yang dirancang di awal. Skenario pengujian mencakup verifikasi mekanisme login dan pembatasan hak akses antar peran, pengujian unggahan file (memastikan ekstensi yang diizinkan dan batas ukuran dokumen), validasi perhitungan otomatis untuk agregat dan rerata nilai, konsistensi status kelulusan dinamis, serta kelancaran fitur ekspor data laporan ke dalam format \textit{spreadsheet} (Excel/CSV). Pengujian yang ketat menjamin bahwa aplikasi bebas dari \textit{bug} kritis sebelum diserahkan untuk operasional akademik.
 
 \subsection{Pemeliharaan}
-Tahap pemeliharaan mencakup perbaikan jika terdapat galat (\textit{bug}) setelah sistem mulai dioperasikan, serta penambahan fitur minor sesuai dengan umpan balik dari pengguna akhir (dosen, asisten, dan mahasiswa).
+Tahap pemeliharaan mencakup strategi perbaikan dan penyempurnaan sistem yang dilakukan pasca-implementasi dan operasional awal. Pemeliharaan bertujuan untuk mengatasi galat (\textit{bug}) atau perilaku anomali yang baru terdeteksi setelah sistem menghadapi beban penggunaan dan skenario data yang sebenarnya. Proses ini melibatkan perbaikan logika sistem secara iteratif, penyesuaian perhitungan atau sinkronisasi laporan otomatis berdasarkan laporan pengguna, dan optimalisasi performa antarmuka sistem. Selain pemeliharaan perbaikan (\textit{corrective maintenance}), tahap ini juga memfasilitasi penambahan atau modifikasi fitur-fitur minor berdasarkan umpan balik langsung dari dosen, asisten praktikum, dan mahasiswa untuk menjaga sistem agar tetap relevan dengan kebutuhan lingkungan akademik praktikum.
 
 \chapter{ANALISIS DAN PERANCANGAN SISTEM}
 
 \section{Analisis Sistem}
 
-\subsection{Analisis Sistem Berjalan (Flowmap)}
+\subsection{Analisis Sistem Berjalan}
 
 Sistem berjalan merupakan mekanisme operasional yang saat ini diterapkan dalam mengelola kegiatan praktikum sebelum adanya sistem EduLab. Berdasarkan observasi, manajemen praktikum masih dilakukan secara konvensional menggunakan berbagai platform pihak ketiga yang tidak saling terintegrasi.
 
@@ -492,15 +493,6 @@ Berikut adalah uraian proses sistem berjalan:
     \item Keluhan nilai disampaikan melalui pesan pribadi tanpa dokumentasi resmi, menyulitkan pengawasan oleh dosen.
 \end{enumerate}
 
-Untuk mengatasi kendala tersebut, dirancanglah usulan alur kerja baru yang terpusat. Alur sistem usulan ini dapat dilihat secara visual melalui Flowmap pada \autoref{fig:flowmap_sistem}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{"flowmap/Flow Map_page-0001.jpg"}
-    \caption{Flowmap Sistem Usulan EduLab}
-    \label{fig:flowmap_sistem}
-\end{figure}
-
 \subsection{Identifikasi Masalah}
 
 Berdasarkan hasil analisis terhadap sistem yang berjalan, ditemukan beberapa permasalahan utama yang menghambat efektivitas pelaksanaan praktikum:
@@ -510,6 +502,19 @@ Berdasarkan hasil analisis terhadap sistem yang berjalan, ditemukan beberapa per
     \item Penilaian tanpa rubrik terintegrasi seringkali memunculkan subjektivitas dan perbedaan standar antar asisten praktikum.
     \item Tidak adanya wadah resmi untuk menangani sanggahan nilai membuat proses penyelesaian keluhan menjadi tidak transparan.
 \end{itemize}
+
+\subsection{Analisis Sistem Usulan (Flowmap)}
+
+Untuk mengatasi berbagai kendala pada sistem berjalan tersebut, dirancanglah usulan alur kerja baru yang terpusat dalam satu platform terintegrasi (EduLab). Sistem usulan ini dirancang untuk memfasilitasi pengumpulan laporan, penilaian berbasis rubrik, hingga rekapitulasi nilai secara otomatis. Alur kerja dari sistem usulan ini dapat dilihat secara visual melalui Flowmap pada \autoref{fig:flowmap_sistem}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{"flowmap/flowmap_fix.png"}
+    \caption{Flowmap Sistem Usulan EduLab}
+    \label{fig:flowmap_sistem}
+\end{figure}
+
+Berdasarkan Flowmap di atas, alur operasional dimulai dengan dosen yang mengelola kelas dan mengunggah modul praktikum ke dalam sistem. Selanjutnya, mahasiswa dapat mengunduh materi dan mengunggah berkas laporan tugas sesuai batas waktu (\textit{deadline}) yang telah ditetapkan secara terpusat. Setelah laporan terkumpul, asisten praktikum akan melakukan verifikasi dan memberikan penilaian langsung melalui antarmuka penilaian yang terintegrasi dengan rubrik. Sistem kemudian akan mengakumulasikan nilai tersebut menjadi nilai akhir secara otomatis. Apabila terdapat ketidaksesuaian, mahasiswa memiliki kesempatan untuk mengajukan sanggah nilai yang akan ditinjau kembali oleh asisten praktikum sebelum nilai ditetapkan secara permanen. Alur terpadu ini meniadakan pertukaran berkas secara manual dan mengurangi risiko tercecernya data evaluasi.
 
 \subsection{Analisis Kebutuhan Sistem}
 
@@ -529,7 +534,44 @@ Kebutuhan fungsional mendefinisikan fitur-fitur dan proses utama yang harus dapa
 
 \section{Perancangan Sistem}
 
+Tahap perancangan sistem merupakan tindak lanjut dari tahap analisis kebutuhan. Pada bagian ini, seluruh spesifikasi dan kebutuhan perangkat lunak yang telah didefinisikan sebelumnya diterjemahkan ke dalam bentuk cetak biru (\textit{blueprint}) atau rancangan teknis. Perancangan ini mencakup beberapa aspek utama, mulai dari pemodelan aliran data menggunakan \textit{Data Flow Diagram} (DFD), perancangan struktur pangkalan data menggunakan \textit{Entity Relationship Diagram} (ERD), hingga pemodelan perilaku dan interaksi sistem menggunakan \textit{Unified Modeling Language} (UML).
+
 \subsection{Diagram Konteks (DFD Level 0)}
+
+Diagram Konteks atau DFD Level 0 merupakan tingkatan tertinggi dalam pemodelan aliran data yang berfungsi untuk memetakan batasan sistem secara keseluruhan. Pada tingkatan ini, seluruh operasi EduLab direpresentasikan sebagai satu proses tunggal utama yang berinteraksi dengan lingkungan luarnya. Interaksi tersebut ditunjukkan melalui aliran data yang masuk dari dan keluar menuju entitas-entitas eksternal yang terlibat. Sistem EduLab berinteraksi dengan empat entitas utama, yaitu Mahasiswa Praktikan, Asisten Praktikum, Admin, dan Dosen/Koordinator, seperti yang ditunjukkan pada \autoref{fig:context_diagram}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{dfd/context.jpg}
+    \caption{Diagram Konteks (DFD Level 0) Sistem EduLab}
+    \label{fig:context_diagram}
+\end{figure}
+
+Berdasarkan \autoref{fig:context_diagram}, berikut adalah rincian aliran data untuk masing-masing entitas eksternal:
+
+\begin{enumerate}
+    \item Mahasiswa Praktikan
+    \begin{itemize}
+        \item Data Masuk (Input): Mahasiswa memberikan input berupa unggahan berkas laporan praktikum (\textit{upload} tugas) dan pengajuan permohonan sanggah nilai apabila terdapat ketidaksesuaian.
+        \item Data Keluar (Output): Mahasiswa menerima informasi dari sistem berupa hasil evaluasi nilai akhir serta status kelulusan praktikum.
+    \end{itemize}
+    \item Asisten Praktikum
+    \begin{itemize}
+        \item Data Masuk (Input): Asisten praktikum bertugas menginput hasil penilaian tugas, memberikan umpan balik (\textit{feedback}), serta mengelola data presensi kehadiran mahasiswa.
+        \item Data Keluar (Output): Asisten praktikum menerima daftar atau berkas data tugas yang telah dikumpulkan oleh mahasiswa, beserta notifikasi data pengajuan sanggahan nilai untuk ditinjau ulang.
+    \end{itemize}
+    \item Admin
+    \begin{itemize}
+        \item Data Masuk (Input): Admin memiliki kewenangan untuk memasukkan data master ke dalam sistem, yang meliputi data pengguna (dosen, asisten, mahasiswa), data kelas, dan data kelompok praktikum.
+        \item Data Keluar (Output): Admin menerima konfirmasi berhasilnya proses manipulasi data dan laporan rekapitulasi data sistem secara umum.
+    \end{itemize}
+    \item Dosen/Koordinato
+    \begin{itemize}
+        \item Data Masuk (Input): Dosen memberikan input berupa instruksi permintaan unduh laporan (\textit{request export}) ke dalam sistem.
+        \item Data Keluar (Output): Sistem memberikan output berupa dokumen transkrip nilai keseluruhan dan laporan rekapitulasi kelas yang siap digunakan sebagai bahan evaluasi.
+    \end{itemize}
+\end{enumerate}
+
 \subsection{DFD Level 1}
 \subsection{Perancangan Basis Data (ERD + Relasi Tabel)}
 
