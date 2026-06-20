@@ -53,4 +53,30 @@ class KelasModel {
         $stmt->execute();
         return $stmt->fetch();
     }
+    // Create a new class and assign the Dosen to it
+    public function createClass($namaKelas, $userId) {
+        try {
+            $this->db->beginTransaction();
+
+            // Insert new class
+            $queryKelas = "INSERT INTO Tabel_Kelas (Nama_Kelas) VALUES (:namaKelas)";
+            $stmtKelas = $this->db->prepare($queryKelas);
+            $stmtKelas->bindParam(':namaKelas', $namaKelas);
+            $stmtKelas->execute();
+            $newClassId = $this->db->lastInsertId();
+
+            // Assign Dosen to the new class
+            $queryPlotting = "INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES (:userId, :classId)";
+            $stmtPlotting = $this->db->prepare($queryPlotting);
+            $stmtPlotting->bindParam(':userId', $userId);
+            $stmtPlotting->bindParam(':classId', $newClassId);
+            $stmtPlotting->execute();
+
+            $this->db->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->db->rollBack();
+            return false;
+        }
+    }
 }

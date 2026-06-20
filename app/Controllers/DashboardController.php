@@ -1255,4 +1255,36 @@ class DashboardController {
 
         require_once __DIR__ . '/../Views/monitoring_kelas.php';
     }
+
+    public function submitClass() {
+        if (!isset($_SESSION['user_id']) || $_SESSION['active_role'] !== 'Dosen') {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $namaMatkul = trim($_POST['nama_matkul'] ?? '');
+            $kodeKelas = trim($_POST['kode_kelas'] ?? '');
+            $semester = trim($_POST['semester'] ?? '');
+
+            if (!empty($namaMatkul) && !empty($kodeKelas) && !empty($semester)) {
+                // Combine into a single string
+                $namaKelasUtuh = "$namaMatkul - Kelas $kodeKelas ($semester)";
+
+                $userId = $_SESSION['user_id'];
+                $success = $this->kelasModel->createClass($namaKelasUtuh, $userId);
+
+                if ($success) {
+                    $_SESSION['class_success'] = "Kelas baru berhasil dibuat.";
+                } else {
+                    $_SESSION['class_error'] = "Terjadi kesalahan saat membuat kelas.";
+                }
+            } else {
+                $_SESSION['class_error'] = "Harap isi semua kolom untuk membuat kelas.";
+            }
+        }
+
+        header('Location: /rpl/public/index.php?action=my_classes');
+        exit;
+    }
 }

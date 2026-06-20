@@ -76,6 +76,12 @@ switch ($action) {
         $dashboardController->myClasses();
         break;
 
+    case 'submit_class':
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->submitClass();
+        break;
+
     case 'buat_kelompok':
         require_once __DIR__ . '/../app/Controllers/DashboardController.php';
         $dashboardController = new DashboardController();

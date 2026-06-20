@@ -750,12 +750,13 @@ class TugasController {
             fputcsv($output, ['NIM', 'Nama Mahasiswa', 'Kelas', 'Nilai Akhir', 'Status Kelulusan']);
             
             foreach ($grades as $row) {
+                $statusKelulusan = ($row['Nilai_Akhir'] >= 60) ? 'Lulus' : 'Mengulang';
                 fputcsv($output, [
                     $row['NIM'],
                     $row['Nama_Mahasiswa'],
                     $row['Nama_Kelas'],
                     $row['Nilai_Akhir'],
-                    $row['Status_Kelulusan']
+                    $statusKelulusan
                 ]);
             }
             fclose($output);
@@ -783,12 +784,13 @@ class TugasController {
             echo '</thead>';
             echo '<tbody>';
             foreach ($grades as $row) {
+                $statusKelulusan = ($row['Nilai_Akhir'] >= 60) ? 'Lulus' : 'Mengulang';
                 echo '<tr>';
                 echo '<td>' . htmlspecialchars($row['NIM']) . '</td>';
                 echo '<td>' . htmlspecialchars($row['Nama_Mahasiswa']) . '</td>';
                 echo '<td>' . htmlspecialchars($row['Nama_Kelas']) . '</td>';
                 echo '<td>' . htmlspecialchars($row['Nilai_Akhir']) . '</td>';
-                echo '<td>' . htmlspecialchars($row['Status_Kelulusan']) . '</td>';
+                echo '<td>' . htmlspecialchars($statusKelulusan) . '</td>';
                 echo '</tr>';
             }
             echo '</tbody>';

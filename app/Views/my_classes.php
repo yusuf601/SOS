@@ -458,24 +458,24 @@ $initials = substr($initials, 0, 2);
                     <!-- Column Right: Buat Kelas Baru -->
                     <div class="card-buat-baru">
                         <h4 class="buat-baru-title">Buat Kelas Baru</h4>
-                        <form method="POST" action="#" style="display: flex; flex-direction: column; gap: 16px; margin-top: 8px; width: 100%;">
+                        <form method="POST" action="/rpl/public/index.php?action=submit_class" style="display: flex; flex-direction: column; gap: 16px; margin-top: 8px; width: 100%;">
                             <div style="text-align: left;">
                                 <label class="form-label-buat">Nama Mata Kuliah Praktikum</label>
-                                <input type="text" class="form-input-buat" placeholder="cth: Praktikum Sistem Digital" required>
+                                <input type="text" name="nama_matkul" class="form-input-buat" placeholder="cth: Praktikum Sistem Digital" required>
                             </div>
                             <div style="text-align: left;">
                                 <label class="form-label-buat">Kode Kelas</label>
-                                <input type="text" class="form-input-buat" style="height: 39px;" placeholder="A / B / C" required>
+                                <input type="text" name="kode_kelas" class="form-input-buat" style="height: 39px;" placeholder="A / B / C" required>
                             </div>
                             <div style="text-align: left;">
                                 <label class="form-label-buat">Semester</label>
-                                <select class="form-select-buat">
-                                    <option>Genap 2025/2026</option>
-                                    <option>Ganjil 2025/2026</option>
+                                <select name="semester" class="form-select-buat">
+                                    <option value="Genap 2025/2026">Genap 2025/2026</option>
+                                    <option value="Ganjil 2025/2026">Ganjil 2025/2026</option>
                                 </select>
                             </div>
                             <div style="margin-top: 8px;">
-                                <button type="button" class="btn-plus-besar" style="font-size: 14px; font-weight: 600; background-color: #29316B; border-radius: 8px; height: 35px;" onclick="alert('Fitur Buat Kelas Baru sedang dalam pengembangan.')">Buat Kelas</button>
+                                <button type="submit" class="btn-plus-besar" style="font-size: 14px; font-weight: 600; background-color: #29316B; border-radius: 8px; height: 35px;">Buat Kelas</button>
                             </div>
                         </form>
                     </div>
