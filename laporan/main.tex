@@ -658,9 +658,155 @@ Aliran data pada \autoref{fig:dfd_level1_8} terdiri dari:
     \item 8.3 Putuskan Sanggah: Asisten menetapkan keputusan akhir (setuju/tolak).
     \item 8.4 Update Nilai \& Kirim Hasil: Jika disetujui, sistem memperbarui D5: Data Nilai dan mengirimkan status hasil ke mahasiswa.
 \end{enumerate}
-\subsection{Perancangan Basis Data (ERD + Relasi Tabel)}
+\clearpage
+\section{Perancangan UML}
+
+Setelah menjabarkan alur data terstruktur melalui DFD, sistem EduLab dimodelkan secara \textit{behavioral} menggunakan \textit{Unified Modeling Language} (UML). Pemodelan ini bertujuan untuk memetakan perilaku, interaksi pengguna, dan struktur objek di dalam sistem.
+
+\subsection{Use Case Diagram}
+
+\textit{Use Case Diagram} menggambarkan fungsionalitas sistem dari sudut pandang interaksi antar aktor. Pada sistem EduLab, terdapat tiga aktor utama yang berinteraksi secara aktif.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{UML/use_case.png}
+    \caption{Use Case Diagram Sistem EduLab}
+    \label{fig:use_case}
+\end{figure}
+
+Berdasarkan \autoref{fig:use_case}, hak akses dan fungsionalitas setiap aktor dirincikan sebagai berikut:
+\begin{enumerate}[nosep]
+    \item Mahasiswa: Aktor utama dari sisi praktikan. Interaksi utamanya berpusat pada pengerjaan praktikum seperti mengunggah laporan tugas, melihat nilai, mengajukan sanggah nilai, melihat data presensi, dan melihat status kelulusan.
+    \item Asisten: Bertanggung jawab dalam manajemen dan evaluasi praktikum. Aktor ini memiliki wewenang untuk mengunggah modul praktikum, membuat kelompok modul, memverifikasi tugas, menginput nilai, menginput presensi, serta meninjau sanggahan mahasiswa.
+    \item Dosen: Berperan sebagai pengawas dan koordinator tertinggi. Dosen berwenang untuk membuat kelas praktikum, melakukan \textit{plotting} asisten, memvalidasi asisten, memonitoring kelas, merubah nilai jika terjadi sanggah, dan mengekspor rekap nilai akhir.
+\end{enumerate}
+
+\subsection{Activity Diagram}
+
+\textit{Activity Diagram} pada bagian ini memetakan alur kerja (\textit{workflow}) sistem EduLab secara komprehensif. Diagram ini memperlihatkan bagaimana proses bisnis berjalan secara paralel maupun berurutan, melibatkan kolaborasi antara pengguna dan sistem.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth, height=0.8\textheight, keepaspectratio]{"UML/activity/Activity Diagram_fixx.png"}
+    \caption{Activity Diagram Keseluruhan Sistem EduLab}
+    \label{fig:activity_diagram}
+\end{figure}
+
+Berdasarkan \autoref{fig:activity_diagram}, alur aktivitas dibagi ke dalam 4 jalur utama (\textit{swimlane}):
+\begin{enumerate}[nosep]
+    \item Dosen: Bertindak pada tahap awal dan akhir siklus. Dosen menginisiasi proses dengan membuat kelas praktikum dan mengunggah modul dasar. Di akhir siklus, dosen melakukan \textit{monitoring} dan mengelola rekapitulasi nilai akhir.
+    \item Sistem: Bertindak sebagai penengah dan pengeksekusi logika otomatis. Sistem menangani autentikasi akun, memverifikasi hak akses, menyimpan data ke dalam basis data, serta mengatur logika visual penentuan kelulusan (seperti menampilkan warna hijau/merah).
+    \item Mahasiswa: Berperan sebagai eksekutor aktivitas utama. Mahasiswa memilih kelas praktikum, melihat pedoman tugas, mengunggah laporan, hingga melihat nilai dan mengajukan sanggahan jika diperlukan.
+    \item Asisten Praktikum: Menjalankan operasional dan evaluasi harian. Asisten bertugas menginput tingkat kehadiran, memverifikasi \textit{file} tugas mahasiswa, memberikan penilaian beserta umpan balik (\textit{feedback}), dan merespons keluhan nilai.
+\end{enumerate}
+\subsection{Sequence Diagram}
+
+\textit{Sequence Diagram} digunakan untuk menggambarkan kronologi interaksi dan pengiriman pesan (\textit{message passing}) antar objek dalam sebuah skenario secara berurutan. Pada bagian ini, pemodelan difokuskan pada tiga skenario proses krusial di dalam sistem EduLab:
+
+\vspace{0.5em}
+\noindent\textbf{1. Sequence Diagram Login Dosen}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{UML/sequence/login_dosen.png}
+    \caption{Sequence Diagram - Skenario Login Dosen}
+    \label{fig:seq_login}
+\end{figure}
+Pada skenario \autoref{fig:seq_login}, alur dimulai ketika Dosen memasukkan \textit{username} dan \textit{password} melalui antarmuka Login. Kredensial tersebut diteruskan ke Sistem Autentikasi untuk divalidasi dengan data di \textit{Database}. Setelah data dikonfirmasi valid, sistem melakukan verifikasi hak akses (\textit{self-call}), lalu mengembalikan status login sukses dan mengarahkan dosen ke halaman \textit{Dashboard}.
+
+\vspace{0.5em}
+\noindent\textbf{2. Sequence Diagram Upload Tugas (Mahasiswa)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{UML/sequence/uploud_tugas.png}
+    \caption{Sequence Diagram - Skenario Upload Tugas}
+    \label{fig:seq_upload}
+\end{figure}
+Pada \autoref{fig:seq_upload}, Mahasiswa berinteraksi dengan Form Upload Tugas untuk memilih berkas. Form mengirimkan perintah ke Kontrol Upload Tugas yang secara internal memanggil fungsi pengecekan tenggat waktu (\textit{cek deadline}). Jika waktu masih valid, berkas diteruskan ke objek Data Tugas untuk disimpan. Respon berhasil kemudian dikembalikan secara berantai hingga tampil di antarmuka mahasiswa.
+
+\vspace{0.5em}
+\noindent\textbf{3. Sequence Diagram Sanggahan Nilai}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{UML/sequence/sanggahan.png}
+    \caption{Sequence Diagram - Skenario Sanggahan Nilai}
+    \label{fig:seq_sanggah}
+\end{figure}
+Skenario \autoref{fig:seq_sanggah} menggambarkan alur ketika Mahasiswa mengisi form keluhan nilai. Data keluhan diproses oleh Kontrol Sanggah Nilai yang melakukan validasi isian secara mandiri. Apabila data keluhan dinyatakan sah, \textit{controller} meneruskannya ke objek Data Sanggahan untuk direkam ke dalam basis data. \textit{Feedback} bahwa keluhan berhasil terkirim akan dikembalikan secara asinkron ke layar mahasiswa.
+\subsection{Class Diagram}
+
+Struktur kode dan kelas pada sistem EduLab dirancang menggunakan pola arsitektur \textit{Model-View-Controller} (MVC). Diagram kelas (\textit{Class Diagram}) ini berfokus pada pemetaan hubungan antara kelas pengendali (\textit{Controller}) yang mengatur alur bisnis, dengan kelas pengolah data (\textit{Model}) yang berinteraksi langsung dengan basis data.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{"UML/class/Class Diagram.png"}
+    \caption{Class Diagram Sistem EduLab}
+    \label{fig:class_diagram}
+\end{figure}
+
+Berdasarkan \autoref{fig:class_diagram}, arsitektur kelas sistem terbagi menjadi tiga kelompok utama:
+\begin{enumerate}[nosep]
+    \item Kelas Database: Merupakan kelas inti (utilitas) yang mensentralisasi seluruh koneksi ke basis data. Kelas ini membungkus fungsi-fungsi fundamental seperti menghubungkan (\textit{connect}), eksekusi \textit{query}, dan menutup koneksi.
+    \item Kelompok Model: Terdiri dari UserModel, KelasModel, ModulModel, dan TugasModel. Kelas-kelas ini bergantung secara langsung pada kelas Database dan memuat seluruh logika manipulasi serta pengambilan data dari tabel yang bersangkutan.
+    \item Kelompok Controller: Terdiri dari AuthController untuk urusan autentikasi, DashboardController untuk menyajikan tampilan utama, ModulController, serta TugasController yang sarat akan logika bisnis praktikum (seperti pengunggahan tugas, presensi, dan sanggah nilai). Kelompok \textit{controller} ini merespons permintaan pengguna dengan memanggil fungsi-fungsi spesifik di dalam kelas model.
+\end{enumerate}
+\subsection{State Machine Diagram}
+
+\textit{State Machine Diagram} ini memodelkan siklus hidup (\textit{lifecycle}) dan transisi status dari sebuah objek sentral, yaitu "Tugas" praktikum di dalam sistem EduLab. Fokus utama pemodelan ini adalah untuk melihat bagaimana sistem bereaksi terhadap tenggat waktu pengumpulan (\textit{deadline}) serta intervensi dari alur sanggahan nilai.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{"UML/state/Statechart Diagram.png"}
+    \caption{State Machine Diagram - Siklus Hidup Tugas Praktikum}
+    \label{fig:state_machine}
+\end{figure}
+
+Berdasarkan \autoref{fig:state_machine}, siklus status tugas dapat dibagi ke dalam empat fase utama:
+\begin{enumerate}[nosep]
+    \item Fase Pengumpulan: Dimulai dari \textit{state} awal menuju status Menunggu Upload. Sistem mengevaluasi kondisi tenggat waktu; jika terlewat, status berubah menjadi Upload Ditolak dan siklus berakhir mati. Jika lolos, status menjadi Tugas Diterima.
+    \item Fase Penilaian: Tugas yang diterima berpindah ke status Sedang Dinilai oleh asisten, kemudian transisi ke Nilai Disimpan, dan kalkulasi sementara menghasilkan status Nilai Akhir Dihitung.
+    \item Fase Sanggahan: Sistem masuk ke \textit{state} Menunggu Sanggahan. Jika tidak ada keluhan, status melompat langsung ke perhitungan final. Namun, jika praktikan mengajukan keluhan, status berubah menjadi Sanggahan Diproses. Keputusan peninjauan akan mengubah status menjadi Simpan Tanggapan Ditolak atau Nilai Direvisi. Seluruh alur ini bermuara kembali ke \textit{state} Hitung Ulang Nilai Akhir.
+    \item Fase Kelulusan: Kalkulasi akhir memicu transisi ke Status Kelulusan. Sistem kemudian mengevaluasi aturan kelulusan, yang berujung pada \textit{state} final Lulus atau Mengulang.
+\end{enumerate}
+\subsection{Collaboration Diagram}
+
+\textit{Collaboration Diagram} (atau \textit{Communication Diagram}) menitikberatkan pemodelan pada organisasi struktural objek-objek yang berinteraksi di dalam sistem. Tidak seperti \textit{Sequence Diagram} yang berbasis waktu secara vertikal, diagram ini menggunakan penomoran urut pada pesan untuk menunjukkan alur eksekusi logika. Berikut adalah pemodelan struktural dari tiga skenario utama:
+
+\vspace{0.5em}
+1. Collaboration Diagram Login Dosen
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{UML/col/CD_Login_Dosen_fix.png}
+    \caption{Collaboration Diagram - Skenario Login Dosen}
+    \label{fig:col_login}
+\end{figure}
+Skenario \autoref{fig:col_login} menyoroti hubungan struktural di mana objek Sistem Autentikasi bertindak sebagai pusat (\textit{hub}) yang memproses pengiriman kredensial dari antarmuka Login untuk dicocokkan langsung dengan entitas Database User.
+
+\vspace{0.5em}
+2. Collaboration Diagram Upload Tugas
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{UML/col/CD_Upload_Tugas_fix.png}
+    \caption{Collaboration Diagram - Skenario Upload Tugas}
+    \label{fig:col_upload}
+\end{figure}
+Pada pemodelan \autoref{fig:col_upload}, topologi objek memperlihatkan bahwa Kontrol Upload Tugas memegang kendali terpusat. Pesan dari Form Upload Tugas dievaluasi secara internal oleh kontroler ini sebelum diteruskan ke penyimpanan akhir di objek Data Tugas.
+
+\vspace{0.5em}
+3. Collaboration Diagram Sanggahan Nilai
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{UML/col/CD_AJukann_Sanggah_Nilai_fix.png}
+    \caption{Collaboration Diagram - Skenario Sanggahan Nilai}
+    \label{fig:col_sanggah}
+\end{figure}
+Skenario \autoref{fig:col_sanggah} menggambarkan rute pesan interaksi yang mengalir dari Mahasiswa menuju Form Sanggah Nilai. Pesan kemudian ditangkap oleh Kontrol Sanggah Nilai untuk divalidasi keabsahannya, dan bermuara pada penyimpanan permanen di entitas Data Sanggahan.
+
+\clearpage
+\section{Perancangan Basis Data}
 
 Perancangan basis data merupakan tahapan penting untuk menstrukturkan penyimpanan informasi dalam sistem EduLab. Model data yang digunakan adalah model relasional, yang divisualisasikan melalui \textit{Entity Relationship Diagram} (ERD). Basis data ini dirancang untuk memastikan integritas data, mengurangi redundansi, dan mendukung seluruh alur proses bisnis yang telah dijabarkan pada bagian DFD. Terdapat 9 tabel utama yang saling berelasi untuk mendukung jalannya sistem.
+
+\subsection{ERD}
 
 \begin{figure}[H]
     \centering
@@ -679,20 +825,12 @@ Berdasarkan \autoref{fig:erd_edulab}, struktur basis data dapat dikelompokkan ke
     \item Data Presensi: Tabel Presensi menghubungkan pengguna dengan modul tertentu untuk merekam status kehadiran.
 \end{enumerate}
 
-\subsection{Perancangan UML}
-
-\subsubsection{Use Case Diagram}
-\subsubsection{Activity Diagram}
-\subsubsection{Sequence Diagram}
-\subsubsection{Class Diagram}
-\subsubsection{Collaboration Diagram}
-\subsubsection{State Diagram}
+\subsection{Relasi Tabel}
 
 \section{Perancangan Antarmuka (UI/UX)}
 
 \subsection{Wireframe / Mockup}
 \subsection{Desain Tampilan}
-\subsection{User Flow}
 
 \chapter{IMPLEMENTASI DAN PENGUJIAN}
 

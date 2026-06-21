@@ -1,0 +1,1099 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{laudon2016}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=2a3d8893ad04ba3c98081349c47e2f6c}{%
+           family={Laudon},
+           familyi={L\bibinitperiod},
+           given={Kenneth\bibnamedelima C.},
+           giveni={K\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=7104f050b378ef23f0bc36c2b73e5ea2}{%
+           family={Laudon},
+           familyi={L\bibinitperiod},
+           given={Jane\bibnamedelima P.},
+           giveni={J\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New Jersey}%
+      }
+      \list{publisher}{1}{%
+        {Pearson}%
+      }
+      \strng{namehash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{fullhash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{fullhashraw}{a99ce1573b42821945806f73f25db5a4}
+      \strng{bibnamehash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{authorbibnamehash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{authornamehash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{authorfullhash}{a99ce1573b42821945806f73f25db5a4}
+      \strng{authorfullhashraw}{a99ce1573b42821945806f73f25db5a4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{14th}
+      \field{isbn}{978-0134672351}
+      \field{title}{Management Information Systems: Managing the Digital Firm}
+      \field{year}{2016}
+    \endentry
+    \entry{stair2018}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=c303a69e2904de5b26c545a578671050}{%
+           family={Stair},
+           familyi={S\bibinitperiod},
+           given={Ralph},
+           giveni={R\bibinitperiod}}}%
+        {{hash=f73315690d58d24cdee8ed857c163a08}{%
+           family={Reynolds},
+           familyi={R\bibinitperiod},
+           given={George},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Boston}%
+      }
+      \list{publisher}{1}{%
+        {Cengage Learning}%
+      }
+      \strng{namehash}{9fd377970fb33bc09a57d0749b982599}
+      \strng{fullhash}{9fd377970fb33bc09a57d0749b982599}
+      \strng{fullhashraw}{9fd377970fb33bc09a57d0749b982599}
+      \strng{bibnamehash}{9fd377970fb33bc09a57d0749b982599}
+      \strng{authorbibnamehash}{9fd377970fb33bc09a57d0749b982599}
+      \strng{authornamehash}{9fd377970fb33bc09a57d0749b982599}
+      \strng{authorfullhash}{9fd377970fb33bc09a57d0749b982599}
+      \strng{authorfullhashraw}{9fd377970fb33bc09a57d0749b982599}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{13th}
+      \field{isbn}{978-1337616714}
+      \field{title}{Principles of Information Systems}
+      \field{year}{2018}
+    \endentry
+    \entry{bourgeois2014}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=5fb6c9a7d509f86d8334cf77294959ef}{%
+           family={Bourgeois},
+           familyi={B\bibinitperiod},
+           given={David\bibnamedelima T.},
+           giveni={D\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {The Saylor Foundation}%
+      }
+      \strng{namehash}{5fb6c9a7d509f86d8334cf77294959ef}
+      \strng{fullhash}{5fb6c9a7d509f86d8334cf77294959ef}
+      \strng{fullhashraw}{5fb6c9a7d509f86d8334cf77294959ef}
+      \strng{bibnamehash}{5fb6c9a7d509f86d8334cf77294959ef}
+      \strng{authorbibnamehash}{5fb6c9a7d509f86d8334cf77294959ef}
+      \strng{authornamehash}{5fb6c9a7d509f86d8334cf77294959ef}
+      \strng{authorfullhash}{5fb6c9a7d509f86d8334cf77294959ef}
+      \strng{authorfullhashraw}{5fb6c9a7d509f86d8334cf77294959ef}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Information Systems for Business and Beyond}
+      \field{year}{2014}
+      \verb{urlraw}
+      \verb https://open.umn.edu/opentextbooks/textbooks/information-systems-for-business-and-beyond
+      \endverb
+      \verb{url}
+      \verb https://open.umn.edu/opentextbooks/textbooks/information-systems-for-business-and-beyond
+      \endverb
+    \endentry
+    \entry{alfraihat2020}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=30b6a3822380c24c9617802b20c09ac8}{%
+           family={Al-Fraihat},
+           familyi={A\bibinithyphendelim F\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=1f2d5d8e2b96e5bf807ba69d0c6233a1}{%
+           family={Joy},
+           familyi={J\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=9e25f756c4bde45bef3737ed09397017}{%
+           family={Sinclair},
+           familyi={S\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{ffe9980308660267585ad0157d36b5ba}
+      \strng{fullhash}{c3f0613bd2df08cb34e8126ea1f82e52}
+      \strng{fullhashraw}{c3f0613bd2df08cb34e8126ea1f82e52}
+      \strng{bibnamehash}{c3f0613bd2df08cb34e8126ea1f82e52}
+      \strng{authorbibnamehash}{c3f0613bd2df08cb34e8126ea1f82e52}
+      \strng{authornamehash}{ffe9980308660267585ad0157d36b5ba}
+      \strng{authorfullhash}{c3f0613bd2df08cb34e8126ea1f82e52}
+      \strng{authorfullhashraw}{c3f0613bd2df08cb34e8126ea1f82e52}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers in Human Behavior}
+      \field{title}{Evaluating E-learning systems success: An empirical study}
+      \field{volume}{102}
+      \field{year}{2020}
+      \field{pages}{67\bibrangedash 86}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1016/j.chb.2019.08.011
+      \endverb
+    \endentry
+    \entry{adekunle2024}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=05bbf8a8eea783576e3975113b2daf4e}{%
+           family={Adekunle},
+           familyi={A\bibinitperiod},
+           given={A.\bibnamedelimi A.},
+           giveni={A\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=dd3801b4ea5fb3b9d911dce6e228c522}{%
+           family={Abolore},
+           familyi={A\bibinitperiod},
+           given={B.\bibnamedelimi L.},
+           giveni={B\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=fa3e212988f8c7e88cc45667253356e1}{%
+           family={Mutiu},
+           familyi={M\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=c9cda4c4e1c40196cac1b11f7e90d8a4}{%
+           family={Olalekan},
+           familyi={O\bibinitperiod},
+           given={A.\bibnamedelimi M.},
+           giveni={A\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \strng{namehash}{8fc1f36b72e1aa9154d794f870aba1a4}
+      \strng{fullhash}{f07393c69afbba98e828e30a1e77bfe2}
+      \strng{fullhashraw}{f07393c69afbba98e828e30a1e77bfe2}
+      \strng{bibnamehash}{f07393c69afbba98e828e30a1e77bfe2}
+      \strng{authorbibnamehash}{f07393c69afbba98e828e30a1e77bfe2}
+      \strng{authornamehash}{8fc1f36b72e1aa9154d794f870aba1a4}
+      \strng{authorfullhash}{f07393c69afbba98e828e30a1e77bfe2}
+      \strng{authorfullhashraw}{f07393c69afbba98e828e30a1e77bfe2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Asian Journal of Electrical Sciences}
+      \field{number}{2}
+      \field{title}{Design and Implementation of a Web-Based Laboratory Management System for Efficient Resource Tracking}
+      \field{volume}{13}
+      \field{year}{2024}
+      \field{pages}{19\bibrangedash 24}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.70112/ajes-2024.13.2.4248
+      \endverb
+    \endentry
+    \entry{ihantola2010}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=f123ccaa730ad2f34bff0cccec5360ad}{%
+           family={Ihantola},
+           familyi={I\bibinitperiod},
+           given={Petri},
+           giveni={P\bibinitperiod}}}%
+        {{hash=b8beea13c4652b681686557210c43812}{%
+           family={Ahoniemi},
+           familyi={A\bibinitperiod},
+           given={Tuukka},
+           giveni={T\bibinitperiod}}}%
+        {{hash=16edae3de69a32074dd9f649a61aca49}{%
+           family={Karavirta},
+           familyi={K\bibinitperiod},
+           given={Ville},
+           giveni={V\bibinitperiod}}}%
+        {{hash=8bfd870964d615b4179cd6c0ce628ee9}{%
+           family={Seppälä},
+           familyi={S\bibinitperiod},
+           given={Otto},
+           giveni={O\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{d05222ee68d35e63129cb84826551957}
+      \strng{fullhash}{ae15e0194ac1dec3d1bf6f1d6cad6d19}
+      \strng{fullhashraw}{ae15e0194ac1dec3d1bf6f1d6cad6d19}
+      \strng{bibnamehash}{ae15e0194ac1dec3d1bf6f1d6cad6d19}
+      \strng{authorbibnamehash}{ae15e0194ac1dec3d1bf6f1d6cad6d19}
+      \strng{authornamehash}{d05222ee68d35e63129cb84826551957}
+      \strng{authorfullhash}{ae15e0194ac1dec3d1bf6f1d6cad6d19}
+      \strng{authorfullhashraw}{ae15e0194ac1dec3d1bf6f1d6cad6d19}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 10th Koli Calling International Conference on Computing Education Research}
+      \field{title}{Review of recent systems for automatic assessment of programming assignments}
+      \field{year}{2010}
+      \field{pages}{86\bibrangedash 93}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1145/1930464.1930480
+      \endverb
+    \endentry
+    \entry{dawson2017}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=1e9e285ed7330eb437fe8727320072b6}{%
+           family={Dawson},
+           familyi={D\bibinitperiod},
+           given={Phillip},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Routledge}%
+      }
+      \strng{namehash}{1e9e285ed7330eb437fe8727320072b6}
+      \strng{fullhash}{1e9e285ed7330eb437fe8727320072b6}
+      \strng{fullhashraw}{1e9e285ed7330eb437fe8727320072b6}
+      \strng{bibnamehash}{1e9e285ed7330eb437fe8727320072b6}
+      \strng{authorbibnamehash}{1e9e285ed7330eb437fe8727320072b6}
+      \strng{authornamehash}{1e9e285ed7330eb437fe8727320072b6}
+      \strng{authorfullhash}{1e9e285ed7330eb437fe8727320072b6}
+      \strng{authorfullhashraw}{1e9e285ed7330eb437fe8727320072b6}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Assessment \& Evaluation in Higher Education}
+      \field{number}{3}
+      \field{title}{Assessment rubrics: towards a clearer and more replicable design, research and practice}
+      \field{volume}{42}
+      \field{year}{2017}
+      \field{pages}{347\bibrangedash 360}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1080/02602938.2015.1111294
+      \endverb
+    \endentry
+    \entry{nicol2006}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=aafb4753f18a21fdb329e9d2db9101fe}{%
+           family={Nicol},
+           familyi={N\bibinitperiod},
+           given={David\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=64e0fd7f0d411601e5dffcf5f04917cc}{%
+           family={Macfarlane-Dick},
+           familyi={M\bibinithyphendelim D\bibinitperiod},
+           given={Debra},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Routledge}%
+      }
+      \strng{namehash}{a10f44e44c11935bb6a505fc51f0cf87}
+      \strng{fullhash}{a10f44e44c11935bb6a505fc51f0cf87}
+      \strng{fullhashraw}{a10f44e44c11935bb6a505fc51f0cf87}
+      \strng{bibnamehash}{a10f44e44c11935bb6a505fc51f0cf87}
+      \strng{authorbibnamehash}{a10f44e44c11935bb6a505fc51f0cf87}
+      \strng{authornamehash}{a10f44e44c11935bb6a505fc51f0cf87}
+      \strng{authorfullhash}{a10f44e44c11935bb6a505fc51f0cf87}
+      \strng{authorfullhashraw}{a10f44e44c11935bb6a505fc51f0cf87}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Studies in Higher Education}
+      \field{number}{2}
+      \field{title}{Formative assessment and self-regulated learning: A model and seven principles of good feedback practice}
+      \field{volume}{31}
+      \field{year}{2006}
+      \field{pages}{199\bibrangedash 218}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1080/03075070600572090
+      \endverb
+    \endentry
+    \entry{romero2020}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=ac7f540e550afe7c4c72c3b6370f59bf}{%
+           family={Romero},
+           familyi={R\bibinitperiod},
+           given={Cristóbal},
+           giveni={C\bibinitperiod}}}%
+        {{hash=e023d2410adba40dc741193f0b109c02}{%
+           family={Ventura},
+           familyi={V\bibinitperiod},
+           given={Sebastián},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons, Inc.}%
+      }
+      \strng{namehash}{a10a97a4f7013fa10b6eabca9b8a5f61}
+      \strng{fullhash}{a10a97a4f7013fa10b6eabca9b8a5f61}
+      \strng{fullhashraw}{a10a97a4f7013fa10b6eabca9b8a5f61}
+      \strng{bibnamehash}{a10a97a4f7013fa10b6eabca9b8a5f61}
+      \strng{authorbibnamehash}{a10a97a4f7013fa10b6eabca9b8a5f61}
+      \strng{authornamehash}{a10a97a4f7013fa10b6eabca9b8a5f61}
+      \strng{authorfullhash}{a10a97a4f7013fa10b6eabca9b8a5f61}
+      \strng{authorfullhashraw}{a10a97a4f7013fa10b6eabca9b8a5f61}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{WIREs Data Mining and Knowledge Discovery}
+      \field{number}{3}
+      \field{title}{Educational data mining and learning analytics: An updated survey}
+      \field{volume}{10}
+      \field{year}{2020}
+      \field{pages}{e1355}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1002/widm.1355
+      \endverb
+    \endentry
+    \entry{bradley2021}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=998b15274a309932928e6b0119396d11}{%
+           family={Bradley},
+           familyi={B\bibinitperiod},
+           given={Virginia\bibnamedelima M.},
+           giveni={V\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{publisher}{2}{%
+        {International Society for Technology, Education,}%
+        {Science}%
+      }
+      \strng{namehash}{998b15274a309932928e6b0119396d11}
+      \strng{fullhash}{998b15274a309932928e6b0119396d11}
+      \strng{fullhashraw}{998b15274a309932928e6b0119396d11}
+      \strng{bibnamehash}{998b15274a309932928e6b0119396d11}
+      \strng{authorbibnamehash}{998b15274a309932928e6b0119396d11}
+      \strng{authornamehash}{998b15274a309932928e6b0119396d11}
+      \strng{authorfullhash}{998b15274a309932928e6b0119396d11}
+      \strng{authorfullhashraw}{998b15274a309932928e6b0119396d11}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Technology in Education}
+      \field{number}{1}
+      \field{title}{Learning Management System ({LMS}) use with online instruction}
+      \field{volume}{4}
+      \field{year}{2021}
+      \field{pages}{68\bibrangedash 92}
+      \range{pages}{25}
+      \verb{doi}
+      \verb 10.46328/ijte.36
+      \endverb
+    \endentry
+    \entry{sommerville2016}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=70341b3bfcce7026902f4eb1e4111b58}{%
+           family={Sommerville},
+           familyi={S\bibinitperiod},
+           given={Ian},
+           giveni={I\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {London}%
+      }
+      \list{publisher}{1}{%
+        {Pearson}%
+      }
+      \strng{namehash}{70341b3bfcce7026902f4eb1e4111b58}
+      \strng{fullhash}{70341b3bfcce7026902f4eb1e4111b58}
+      \strng{fullhashraw}{70341b3bfcce7026902f4eb1e4111b58}
+      \strng{bibnamehash}{70341b3bfcce7026902f4eb1e4111b58}
+      \strng{authorbibnamehash}{70341b3bfcce7026902f4eb1e4111b58}
+      \strng{authornamehash}{70341b3bfcce7026902f4eb1e4111b58}
+      \strng{authorfullhash}{70341b3bfcce7026902f4eb1e4111b58}
+      \strng{authorfullhashraw}{70341b3bfcce7026902f4eb1e4111b58}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{10th}
+      \field{isbn}{978-0133943030}
+      \field{title}{Software Engineering}
+      \field{year}{2016}
+    \endentry
+    \entry{pressman2014}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=4d3f81788d99cf425c4b6e0a454baab0}{%
+           family={Pressman},
+           familyi={P\bibinitperiod},
+           given={Roger\bibnamedelima S.},
+           giveni={R\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=13b3d71ce7fd3614b4e2e9ce804597f3}{%
+           family={Maxim},
+           familyi={M\bibinitperiod},
+           given={Bruce\bibnamedelima R.},
+           giveni={B\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {McGraw-Hill Education}%
+      }
+      \strng{namehash}{da6ec91488daec8c3c9eddf18c78dad8}
+      \strng{fullhash}{da6ec91488daec8c3c9eddf18c78dad8}
+      \strng{fullhashraw}{da6ec91488daec8c3c9eddf18c78dad8}
+      \strng{bibnamehash}{da6ec91488daec8c3c9eddf18c78dad8}
+      \strng{authorbibnamehash}{da6ec91488daec8c3c9eddf18c78dad8}
+      \strng{authornamehash}{da6ec91488daec8c3c9eddf18c78dad8}
+      \strng{authorfullhash}{da6ec91488daec8c3c9eddf18c78dad8}
+      \strng{authorfullhashraw}{da6ec91488daec8c3c9eddf18c78dad8}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{8th}
+      \field{isbn}{978-0078022128}
+      \field{title}{Software Engineering: A Practitioner's Approach}
+      \field{year}{2014}
+    \endentry
+    \entry{alqurni2023}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=ec2cea357a82a02f2dd07da6dc689075}{%
+           family={Alqurni},
+           familyi={A\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{ec2cea357a82a02f2dd07da6dc689075}
+      \strng{fullhash}{ec2cea357a82a02f2dd07da6dc689075}
+      \strng{fullhashraw}{ec2cea357a82a02f2dd07da6dc689075}
+      \strng{bibnamehash}{ec2cea357a82a02f2dd07da6dc689075}
+      \strng{authorbibnamehash}{ec2cea357a82a02f2dd07da6dc689075}
+      \strng{authornamehash}{ec2cea357a82a02f2dd07da6dc689075}
+      \strng{authorfullhash}{ec2cea357a82a02f2dd07da6dc689075}
+      \strng{authorfullhashraw}{ec2cea357a82a02f2dd07da6dc689075}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Information Technology and Web Engineering}
+      \field{number}{1}
+      \field{title}{Assessing the Usability of E-Learning Software Among University Students: A Study on Student Satisfaction and Performance}
+      \field{volume}{18}
+      \field{year}{2023}
+      \field{pages}{1\bibrangedash 26}
+      \range{pages}{26}
+      \verb{doi}
+      \verb 10.4018/IJITWE.329198
+      \endverb
+    \endentry
+    \entry{sarwosri2023}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=2bbf0fa0d87e39cc08a3f2b24dbf0c8f}{%
+           family={Sarwosri},
+           familyi={S\bibinitperiod},
+           given={Sarwosri},
+           giveni={S\bibinitperiod}}}%
+        {{hash=a396cf565043661bb26be79463fd779b}{%
+           family={Muklason},
+           familyi={M\bibinitperiod},
+           given={Ahmad},
+           giveni={A\bibinitperiod}}}%
+        {{hash=76eb93725ea0f8da606aedf34fd2b43b}{%
+           family={Astrini},
+           familyi={A\bibinitperiod},
+           given={Winda},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{3c58eda00f1f244c97fabe60bbe3026f}
+      \strng{fullhash}{e41ebea58cd52b3f250f457e06a41c1a}
+      \strng{fullhashraw}{e41ebea58cd52b3f250f457e06a41c1a}
+      \strng{bibnamehash}{e41ebea58cd52b3f250f457e06a41c1a}
+      \strng{authorbibnamehash}{e41ebea58cd52b3f250f457e06a41c1a}
+      \strng{authornamehash}{3c58eda00f1f244c97fabe60bbe3026f}
+      \strng{authorfullhash}{e41ebea58cd52b3f250f457e06a41c1a}
+      \strng{authorfullhashraw}{e41ebea58cd52b3f250f457e06a41c1a}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{JOIV : International Journal on Informatics Visualization}
+      \field{number}{4}
+      \field{title}{Software Quality Measurement for Functional Suitability, Performance Efficiency, and Reliability Characteristics Using Analytical Hierarchy Process}
+      \field{volume}{7}
+      \field{year}{2023}
+      \field{pages}{1080\bibrangedash 1086}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.62527/joiv.7.4.2441
+      \endverb
+    \endentry
+    \entry{thesing2021}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=d0dbe20f42229a6cea0e87b6c4326354}{%
+           family={Thesing},
+           familyi={T\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod}}}%
+        {{hash=dc3d82695788bdf77c6b3b85598053e3}{%
+           family={Feldmann},
+           familyi={F\bibinitperiod},
+           given={Carsten},
+           giveni={C\bibinitperiod}}}%
+        {{hash=000660a1968744c7fc51ffa9b1316356}{%
+           family={Burchardt},
+           familyi={B\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{e1808690757ceb4a90cf8c4f9a90ed40}
+      \strng{fullhash}{d9d81b86f4bf79ed0eff803fc7d5c9cc}
+      \strng{fullhashraw}{d9d81b86f4bf79ed0eff803fc7d5c9cc}
+      \strng{bibnamehash}{d9d81b86f4bf79ed0eff803fc7d5c9cc}
+      \strng{authorbibnamehash}{d9d81b86f4bf79ed0eff803fc7d5c9cc}
+      \strng{authornamehash}{e1808690757ceb4a90cf8c4f9a90ed40}
+      \strng{authorfullhash}{d9d81b86f4bf79ed0eff803fc7d5c9cc}
+      \strng{authorfullhashraw}{d9d81b86f4bf79ed0eff803fc7d5c9cc}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Procedia Computer Science}
+      \field{title}{Agile versus Waterfall Project Management: Decision Model for Selecting the Appropriate Approach to a Project}
+      \field{volume}{181}
+      \field{year}{2021}
+      \field{pages}{746\bibrangedash 756}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/j.procs.2021.01.227
+      \endverb
+    \endentry
+    \entry{booch2005}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=e4f07715269e006a4d4a4efa3ce3f996}{%
+           family={Booch},
+           familyi={B\bibinitperiod},
+           given={Grady},
+           giveni={G\bibinitperiod}}}%
+        {{hash=b8ace965f1ffa84dd4512f7e64c62d75}{%
+           family={Rumbaugh},
+           familyi={R\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=3e8f03cc324f52193ab00c1fab4df61a}{%
+           family={Jacobson},
+           familyi={J\bibinitperiod},
+           given={Ivar},
+           giveni={I\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Boston, MA}%
+      }
+      \list{publisher}{1}{%
+        {Addison-Wesley Professional}%
+      }
+      \strng{namehash}{c3345176bc96f17c7ea4c60e61223be4}
+      \strng{fullhash}{be6f3ff47123ebcb32f54f571b015ebc}
+      \strng{fullhashraw}{be6f3ff47123ebcb32f54f571b015ebc}
+      \strng{bibnamehash}{be6f3ff47123ebcb32f54f571b015ebc}
+      \strng{authorbibnamehash}{be6f3ff47123ebcb32f54f571b015ebc}
+      \strng{authornamehash}{c3345176bc96f17c7ea4c60e61223be4}
+      \strng{authorfullhash}{be6f3ff47123ebcb32f54f571b015ebc}
+      \strng{authorfullhashraw}{be6f3ff47123ebcb32f54f571b015ebc}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2nd}
+      \field{isbn}{978-0321267979}
+      \field{title}{The Unified Modeling Language User Guide}
+      \field{year}{2005}
+    \endentry
+    \entry{fowler2004}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=312ac886938a9b2be4f8eb607567fe4c}{%
+           family={Fowler},
+           familyi={F\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Boston, MA}%
+      }
+      \list{publisher}{1}{%
+        {Addison-Wesley Professional}%
+      }
+      \strng{namehash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{fullhash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{fullhashraw}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{bibnamehash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{authorbibnamehash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{authornamehash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{authorfullhash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{authorfullhashraw}{312ac886938a9b2be4f8eb607567fe4c}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3rd}
+      \field{isbn}{978-0321193681}
+      \field{title}{UML Distilled: A Brief Guide to the Standard Object Modeling Language}
+      \field{year}{2004}
+    \endentry
+    \entry{conallen1999}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=2ec702a15a67a669d6adca8c777195b6}{%
+           family={Conallen},
+           familyi={C\bibinitperiod},
+           given={Jim},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{2ec702a15a67a669d6adca8c777195b6}
+      \strng{fullhash}{2ec702a15a67a669d6adca8c777195b6}
+      \strng{fullhashraw}{2ec702a15a67a669d6adca8c777195b6}
+      \strng{bibnamehash}{2ec702a15a67a669d6adca8c777195b6}
+      \strng{authorbibnamehash}{2ec702a15a67a669d6adca8c777195b6}
+      \strng{authornamehash}{2ec702a15a67a669d6adca8c777195b6}
+      \strng{authorfullhash}{2ec702a15a67a669d6adca8c777195b6}
+      \strng{authorfullhashraw}{2ec702a15a67a669d6adca8c777195b6}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Communications of the ACM}
+      \field{number}{10}
+      \field{title}{Modeling Web Application Architectures with UML}
+      \field{volume}{42}
+      \field{year}{1999}
+      \field{pages}{63\bibrangedash 70}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1145/317208.317220
+      \endverb
+    \endentry
+    \entry{dennis2015}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=9da4736e8ec078ff9ba7d4ede2ab7473}{%
+           family={Dennis},
+           familyi={D\bibinitperiod},
+           given={Alan},
+           giveni={A\bibinitperiod}}}%
+        {{hash=762c3e0a378f9e2b3d0e39c2e80aa309}{%
+           family={Wixom},
+           familyi={W\bibinitperiod},
+           given={Haley},
+           giveni={H\bibinitperiod}}}%
+        {{hash=591f4f139f95b146c066adeef4354989}{%
+           family={Tegarden},
+           familyi={T\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Hoboken, NJ}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons}%
+      }
+      \strng{namehash}{a93d21af79cb510591183000cb982b78}
+      \strng{fullhash}{762f9ccddf5ff36b9f361ba3921a2af7}
+      \strng{fullhashraw}{762f9ccddf5ff36b9f361ba3921a2af7}
+      \strng{bibnamehash}{762f9ccddf5ff36b9f361ba3921a2af7}
+      \strng{authorbibnamehash}{762f9ccddf5ff36b9f361ba3921a2af7}
+      \strng{authornamehash}{a93d21af79cb510591183000cb982b78}
+      \strng{authorfullhash}{762f9ccddf5ff36b9f361ba3921a2af7}
+      \strng{authorfullhashraw}{762f9ccddf5ff36b9f361ba3921a2af7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{5th}
+      \field{isbn}{978-1118804674}
+      \field{title}{Systems Analysis and Design: An Object-Oriented Approach with UML}
+      \field{year}{2015}
+    \endentry
+    \entry{valdez2018}{inproceedings}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{3}{}{%
+        {{hash=d190fa757f126345e9a43e0883c0fae1}{%
+           family={Valdez},
+           familyi={V\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=f226886409f19f7eec8c0d93b711ccf7}{%
+           family={Zavala},
+           familyi={Z\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=60993c6ee55e7186e4299180228f5d4a}{%
+           family={Cabrera},
+           familyi={C\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{1242324e89972516fda0017fb890432a}
+      \strng{fullhash}{5830616484b229ff261aa5bc916f3507}
+      \strng{fullhashraw}{5830616484b229ff261aa5bc916f3507}
+      \strng{bibnamehash}{5830616484b229ff261aa5bc916f3507}
+      \strng{authorbibnamehash}{5830616484b229ff261aa5bc916f3507}
+      \strng{authornamehash}{1242324e89972516fda0017fb890432a}
+      \strng{authorfullhash}{5830616484b229ff261aa5bc916f3507}
+      \strng{authorfullhashraw}{5830616484b229ff261aa5bc916f3507}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{6th International Conference in Software Engineering Research and Innovation (CONISOFT)}
+      \field{title}{Educational Software Design Using UML and Open Source Tools}
+      \field{year}{2018}
+      \field{pages}{56\bibrangedash 61}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/CONISOFT.2018.8645851
+      \endverb
+    \endentry
+    \entry{kendall2014}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=7754a2c1b8b13f4e2233ec83acb8279d}{%
+           family={Kendall},
+           familyi={K\bibinitperiod},
+           given={Kenneth\bibnamedelima E.},
+           giveni={K\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=e600a4dfcf60c3134aef69d007d282f0}{%
+           family={Kendall},
+           familyi={K\bibinitperiod},
+           given={Julie\bibnamedelima E.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Upper Saddle River, NJ}%
+      }
+      \list{publisher}{1}{%
+        {Pearson}%
+      }
+      \strng{namehash}{b237d862e36a3febb8873424981cdd05}
+      \strng{fullhash}{b237d862e36a3febb8873424981cdd05}
+      \strng{fullhashraw}{b237d862e36a3febb8873424981cdd05}
+      \strng{bibnamehash}{b237d862e36a3febb8873424981cdd05}
+      \strng{authorbibnamehash}{b237d862e36a3febb8873424981cdd05}
+      \strng{authornamehash}{b237d862e36a3febb8873424981cdd05}
+      \strng{authorfullhash}{b237d862e36a3febb8873424981cdd05}
+      \strng{authorfullhashraw}{b237d862e36a3febb8873424981cdd05}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{9th}
+      \field{isbn}{978-0133023442}
+      \field{title}{Systems Analysis and Design}
+      \field{year}{2014}
+    \endentry
+    \entry{elmasri2015}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=c7e2fe1a0e649bf469f3feb7c5aa840d}{%
+           family={Elmasri},
+           familyi={E\bibinitperiod},
+           given={Ramez},
+           giveni={R\bibinitperiod}}}%
+        {{hash=4ae94109c6efa1688beb655559324ba2}{%
+           family={Navathe},
+           familyi={N\bibinitperiod},
+           given={Shamkant\bibnamedelima B.},
+           giveni={S\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Hoboken, NJ}%
+      }
+      \list{publisher}{1}{%
+        {Pearson}%
+      }
+      \strng{namehash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{fullhash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{fullhashraw}{2e8829be23557c692dac07b198a7df6e}
+      \strng{bibnamehash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{authorbibnamehash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{authornamehash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{authorfullhash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{authorfullhashraw}{2e8829be23557c692dac07b198a7df6e}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{7th}
+      \field{isbn}{978-0133970777}
+      \field{title}{Fundamentals of Database Systems}
+      \field{year}{2015}
+    \endentry
+    \entry{chen1976}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=9f90f0ad8baeb533067f29a90c289ca6}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Peter\bibnamedelima Pin-Shan},
+           giveni={P\bibinitperiod\bibinitdelim P\bibinithyphendelim S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{9f90f0ad8baeb533067f29a90c289ca6}
+      \strng{fullhash}{9f90f0ad8baeb533067f29a90c289ca6}
+      \strng{fullhashraw}{9f90f0ad8baeb533067f29a90c289ca6}
+      \strng{bibnamehash}{9f90f0ad8baeb533067f29a90c289ca6}
+      \strng{authorbibnamehash}{9f90f0ad8baeb533067f29a90c289ca6}
+      \strng{authornamehash}{9f90f0ad8baeb533067f29a90c289ca6}
+      \strng{authorfullhash}{9f90f0ad8baeb533067f29a90c289ca6}
+      \strng{authorfullhashraw}{9f90f0ad8baeb533067f29a90c289ca6}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Transactions on Database Systems (TODS)}
+      \field{number}{1}
+      \field{title}{The Entity-Relationship Model: Toward a Unified View of Data}
+      \field{volume}{1}
+      \field{year}{1976}
+      \field{pages}{9\bibrangedash 36}
+      \range{pages}{28}
+      \verb{doi}
+      \verb 10.1145/320434.320440
+      \endverb
+    \endentry
+    \entry{silberschatz2019}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=525ecdcf12996b3d68e3c71d7526bf35}{%
+           family={Silberschatz},
+           familyi={S\bibinitperiod},
+           given={Abraham},
+           giveni={A\bibinitperiod}}}%
+        {{hash=1640aebebaf3b1913d7477fe0f7675e0}{%
+           family={Korth},
+           familyi={K\bibinitperiod},
+           given={Henry\bibnamedelima F.},
+           giveni={H\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=61d6a2d7215571ff54eadda8d36a2d58}{%
+           family={Sudarshan},
+           familyi={S\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY}%
+      }
+      \list{publisher}{1}{%
+        {McGraw-Hill Education}%
+      }
+      \strng{namehash}{59c006bedfd0408796f05183940decf3}
+      \strng{fullhash}{4c269a32abf2e4056c1b534993062a6b}
+      \strng{fullhashraw}{4c269a32abf2e4056c1b534993062a6b}
+      \strng{bibnamehash}{4c269a32abf2e4056c1b534993062a6b}
+      \strng{authorbibnamehash}{4c269a32abf2e4056c1b534993062a6b}
+      \strng{authornamehash}{59c006bedfd0408796f05183940decf3}
+      \strng{authorfullhash}{4c269a32abf2e4056c1b534993062a6b}
+      \strng{authorfullhashraw}{4c269a32abf2e4056c1b534993062a6b}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{7th}
+      \field{isbn}{978-0078022159}
+      \field{title}{Database System Concepts}
+      \field{year}{2019}
+    \endentry
+    \entry{garrett2010}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=d061f60676574ea537a62d4635bccf11}{%
+           family={Garrett},
+           familyi={G\bibinitperiod},
+           given={Jesse\bibnamedelima James},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berkeley, CA}%
+      }
+      \list{publisher}{1}{%
+        {New Riders}%
+      }
+      \strng{namehash}{d061f60676574ea537a62d4635bccf11}
+      \strng{fullhash}{d061f60676574ea537a62d4635bccf11}
+      \strng{fullhashraw}{d061f60676574ea537a62d4635bccf11}
+      \strng{bibnamehash}{d061f60676574ea537a62d4635bccf11}
+      \strng{authorbibnamehash}{d061f60676574ea537a62d4635bccf11}
+      \strng{authornamehash}{d061f60676574ea537a62d4635bccf11}
+      \strng{authorfullhash}{d061f60676574ea537a62d4635bccf11}
+      \strng{authorfullhashraw}{d061f60676574ea537a62d4635bccf11}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2nd}
+      \field{isbn}{978-0321683687}
+      \field{title}{The Elements of User Experience: User-Centered Design for the Web and Beyond}
+      \field{year}{2010}
+    \endentry
+    \entry{norman2013}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=23f12bb124db5cb91003802eaee52457}{%
+           family={Norman},
+           familyi={N\bibinitperiod},
+           given={Don},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY}%
+      }
+      \list{publisher}{1}{%
+        {Basic Books}%
+      }
+      \strng{namehash}{23f12bb124db5cb91003802eaee52457}
+      \strng{fullhash}{23f12bb124db5cb91003802eaee52457}
+      \strng{fullhashraw}{23f12bb124db5cb91003802eaee52457}
+      \strng{bibnamehash}{23f12bb124db5cb91003802eaee52457}
+      \strng{authorbibnamehash}{23f12bb124db5cb91003802eaee52457}
+      \strng{authornamehash}{23f12bb124db5cb91003802eaee52457}
+      \strng{authorfullhash}{23f12bb124db5cb91003802eaee52457}
+      \strng{authorfullhashraw}{23f12bb124db5cb91003802eaee52457}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-0465050659}
+      \field{title}{The Design of Everyday Things: Revised and Expanded Edition}
+      \field{year}{2013}
+    \endentry
+    \entry{nielsen1994}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=753054f71283d85f82cda8e35daf6bac}{%
+           family={Nielsen},
+           familyi={N\bibinitperiod},
+           given={Jakob},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {San Francisco, CA}%
+      }
+      \list{publisher}{1}{%
+        {Morgan Kaufmann}%
+      }
+      \strng{namehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{fullhash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{fullhashraw}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bibnamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authorbibnamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authornamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authorfullhash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authorfullhashraw}{753054f71283d85f82cda8e35daf6bac}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-0125184069}
+      \field{title}{Usability Engineering}
+      \field{year}{1994}
+    \endentry
+    \entry{lallemand2015}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=e248a1cafa15131531139d42857b6588}{%
+           family={Lallemand},
+           familyi={L\bibinitperiod},
+           given={Carine},
+           giveni={C\bibinitperiod}}}%
+        {{hash=24bfb8d0cf8c4a9d509a1a86b0979b09}{%
+           family={Gronier},
+           familyi={G\bibinitperiod},
+           given={Guillaume},
+           giveni={G\bibinitperiod}}}%
+        {{hash=cb1f4afc9569ede55911544993404b9a}{%
+           family={Koenig},
+           familyi={K\bibinitperiod},
+           given={Vincent},
+           giveni={V\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{10b5aab8a2713b9250991131f803e6c9}
+      \strng{fullhash}{0f5e33d091d21d8c175e1370b2b4d2e7}
+      \strng{fullhashraw}{0f5e33d091d21d8c175e1370b2b4d2e7}
+      \strng{bibnamehash}{0f5e33d091d21d8c175e1370b2b4d2e7}
+      \strng{authorbibnamehash}{0f5e33d091d21d8c175e1370b2b4d2e7}
+      \strng{authornamehash}{10b5aab8a2713b9250991131f803e6c9}
+      \strng{authorfullhash}{0f5e33d091d21d8c175e1370b2b4d2e7}
+      \strng{authorfullhashraw}{0f5e33d091d21d8c175e1370b2b4d2e7}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers in Human Behavior}
+      \field{title}{User experience: A concept without consensus? Exploring practitioners' perspectives through an international survey}
+      \field{volume}{43}
+      \field{year}{2015}
+      \field{pages}{35\bibrangedash 48}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1016/j.chb.2014.10.048
+      \endverb
+    \endentry
+    \entry{royce1970}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=541e173109dab443b9fc826b342e8e6f}{%
+           family={Royce},
+           familyi={R\bibinitperiod},
+           given={Winston\bibnamedelima W.},
+           giveni={W\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Los Angeles}%
+      }
+      \strng{namehash}{541e173109dab443b9fc826b342e8e6f}
+      \strng{fullhash}{541e173109dab443b9fc826b342e8e6f}
+      \strng{fullhashraw}{541e173109dab443b9fc826b342e8e6f}
+      \strng{bibnamehash}{541e173109dab443b9fc826b342e8e6f}
+      \strng{authorbibnamehash}{541e173109dab443b9fc826b342e8e6f}
+      \strng{authornamehash}{541e173109dab443b9fc826b342e8e6f}
+      \strng{authorfullhash}{541e173109dab443b9fc826b342e8e6f}
+      \strng{authorfullhashraw}{541e173109dab443b9fc826b342e8e6f}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the 9th IEEE-WESTCON}
+      \field{month}{8}
+      \field{title}{Managing the Development of Large Software Systems: Concepts and Techniques}
+      \field{year}{1970}
+      \field{pages}{1\bibrangedash 9}
+      \range{pages}{9}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
