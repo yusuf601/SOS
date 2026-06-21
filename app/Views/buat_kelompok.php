@@ -303,7 +303,7 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                         <div class="form-group">
                             <label>Pilih Kelas</label>
                             <div class="select-custom-wrapper">
-                                <select name="class_id" class="form-control-custom select-custom">
+                                <select name="class_id" id="select-class-id" class="form-control-custom select-custom">
                                     <?php foreach ($myClasses as $cls): ?>
                                         <option value="<?= $cls['ID_Kelas'] ?>" <?= ($selectedClassId == $cls['ID_Kelas']) ? 'selected' : '' ?>>
                                             <?= htmlspecialchars($cls['Nama_Kelas']) ?>
@@ -322,7 +322,9 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                         <!-- Anggota Kelompok -->
                         <div class="form-group">
                             <label>Anggota Kelompok</label>
-                            <input type="text" name="anggota_nim" class="form-control-custom" placeholder="Cari NIM atau nama mahasiswa">
+                            <div id="anggota-container" style="max-height: 200px; overflow-y: auto; border: 1px solid #C8C8C8; border-radius: 8px; padding: 12px; background-color: #FFFFFF;">
+                                <span style="font-size: 13px; color: #6C6C6C;">Pilih kelas terlebih dahulu...</span>
+                            </div>
                         </div>
 
                         <!-- Button Simpan -->
@@ -398,5 +400,66 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
 
 
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const classSelect = document.getElementById('select-class-id');
+    const container = document.getElementById('anggota-container');
+
+    function fetchMahasiswa() {
+        const classId = classSelect.value;
+        if (!classId) return;
+
+        container.innerHTML = '<span style="font-size: 13px; color: #6C6C6C;">Memuat data...</span>';
+
+        fetch('/rpl/public/index.php?action=api_get_mahasiswa_kelas&class_id=' + classId)
+            .then(res => res.json())
+            .then(data => {
+                container.innerHTML = '';
+                if (data.error) {
+                    container.innerHTML = '<span style="font-size: 13px; color: #E02424;">Gagal mengambil data.</span>';
+                    return;
+                }
+                
+                if (data.length === 0) {
+                    container.innerHTML = '<span style="font-size: 13px; color: #6C6C6C;">Tidak ada mahasiswa yang tersedia.</span>';
+                    return;
+                }
+
+                data.forEach(mhs => {
+                    const div = document.createElement('div');
+                    div.style.marginBottom = '8px';
+                    
+                    const label = document.createElement('label');
+                    label.style.display = 'flex';
+                    label.style.alignItems = 'center';
+                    label.style.gap = '8px';
+                    label.style.fontSize = '13px';
+                    label.style.color = '#313131';
+                    label.style.cursor = 'pointer';
+                    label.style.fontWeight = '500';
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = 'anggota_nim[]';
+                    checkbox.value = mhs.ID_User;
+                    checkbox.style.cursor = 'pointer';
+
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(`${mhs.NIM} - ${mhs.Nama_Lengkap}`));
+                    
+                    div.appendChild(label);
+                    container.appendChild(div);
+                });
+            })
+            .catch(err => {
+                container.innerHTML = '<span style="font-size: 13px; color: #E02424;">Terjadi kesalahan saat memuat data.</span>';
+            });
+    }
+
+    classSelect.addEventListener('change', fetchMahasiswa);
+    // Fetch on initial load
+    fetchMahasiswa();
+});
+</script>
 </body>
 </html>

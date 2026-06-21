@@ -309,3 +309,11 @@ INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Stat
 ((SELECT ID_Pengumpulan FROM Tabel_Pengumpulan WHERE File_Tugas = 'tugas1_yusuf.zip' LIMIT 1), 
  (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122005'), 
  65.00, 'Ada kesalahan relasi di ERD.', 'Sanggah', 'Mohon maaf kak, relasi many-to-many sudah saya uraikan menjadi tabel perantara. Mohon diperiksa kembali.');
+
+-- Data 5 Mahasiswa dummy yang tersedia (belum memiliki kelompok)
+INSERT INTO Tabel_User (Username, Password, Role, Nama_Lengkap, ID_Kelompok) VALUES
+('E1E121001', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Ahmad Faisal', NULL),
+('E1E121002', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Siti Nurhaliza', NULL),
+('E1E121003', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Budi Santoso', NULL),
+('E1E121004', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Rina Melati', NULL),
+('E1E121005', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Joko Anwar', NULL);

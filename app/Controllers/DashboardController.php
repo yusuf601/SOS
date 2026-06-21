@@ -806,6 +806,26 @@ class DashboardController {
         require_once __DIR__ . '/../Views/data_kelompok.php';
     }
 
+    public function apiGetMahasiswaKelas() {
+        if (!isset($_SESSION['user_id']) || !in_array($_SESSION['active_role'] ?? '', ['Dosen', 'Asisten'])) {
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'Unauthorized']);
+            exit;
+        }
+
+        $db = (new Database())->getConnection();
+        // Since there's no explicit class-student plotting table in this DB schema, 
+        // we fetch all Mahasiswa who are not yet assigned to any group.
+        $query = "SELECT ID_User, Username as NIM, Nama_Lengkap FROM Tabel_User WHERE Role = 'Mahasiswa' AND ID_Kelompok IS NULL";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        $mahasiswa = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        header('Content-Type: application/json');
+        echo json_encode($mahasiswa);
+        exit;
+    }
+
     public function buatKelompok() {
         if (!isset($_SESSION['user_id']) || !in_array($_SESSION['active_role'] ?? '', ['Dosen', 'Asisten'])) {
             header('Location: /rpl/public/index.php');
@@ -822,6 +842,7 @@ class DashboardController {
             $classIdInput = isset($_POST['class_id']) ? (int)$_POST['class_id'] : 0;
             $groupName = isset($_POST['nama_kelompok']) ? trim($_POST['nama_kelompok']) : '';
             $assistantNim = isset($_POST['asisten_nim']) ? trim($_POST['asisten_nim']) : '';
+            $anggotaNimIds = isset($_POST['anggota_nim']) && is_array($_POST['anggota_nim']) ? $_POST['anggota_nim'] : [];
 
             if ($classIdInput > 0 && !empty($groupName)) {
                 // Check if group already exists in this class
@@ -862,7 +883,16 @@ class DashboardController {
                     }
                 }
 
-                $_SESSION['group_success'] = "Kelompok dan Asisten berhasil ditambahkan.";
+                // Assign selected students to this group
+                if (!empty($anggotaNimIds)) {
+                    $placeholders = implode(',', array_fill(0, count($anggotaNimIds), '?'));
+                    $queryUpdateMhs = "UPDATE Tabel_User SET ID_Kelompok = ? WHERE ID_User IN ($placeholders) AND Role = 'Mahasiswa'";
+                    $stmtUpdateMhs = $db->prepare($queryUpdateMhs);
+                    $params = array_merge([$newGroupId], $anggotaNimIds);
+                    $stmtUpdateMhs->execute($params);
+                }
+
+                $_SESSION['group_success'] = "Kelompok dan Anggota berhasil ditambahkan.";
                 header("Location: /rpl/public/index.php?action=data_kelompok&class_id=" . $classIdInput);
                 exit;
             }

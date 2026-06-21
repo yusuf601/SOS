@@ -13,6 +13,8 @@
 \usepackage{tocloft}
 \usepackage{enumitem}
 \usepackage{float}
+\usepackage{caption}
+\usepackage{longtable}
 \usepackage[
     backend=biber,
     style=ieee,
@@ -753,13 +755,6 @@ Berdasarkan \autoref{fig:class_diagram}, arsitektur kelas sistem terbagi menjadi
 
 \textit{State Machine Diagram} ini memodelkan siklus hidup (\textit{lifecycle}) dan transisi status dari sebuah objek sentral, yaitu "Tugas" praktikum di dalam sistem EduLab. Fokus utama pemodelan ini adalah untuk melihat bagaimana sistem bereaksi terhadap tenggat waktu pengumpulan (\textit{deadline}) serta intervensi dari alur sanggahan nilai.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{"UML/state/Statechart Diagram.png"}
-    \caption{State Machine Diagram - Siklus Hidup Tugas Praktikum}
-    \label{fig:state_machine}
-\end{figure}
-
 Berdasarkan \autoref{fig:state_machine}, siklus status tugas dapat dibagi ke dalam empat fase utama:
 \begin{enumerate}[nosep]
     \item Fase Pengumpulan: Dimulai dari \textit{state} awal menuju status Menunggu Upload. Sistem mengevaluasi kondisi tenggat waktu; jika terlewat, status berubah menjadi Upload Ditolak dan siklus berakhir mati. Jika lolos, status menjadi Tugas Diterima.
@@ -767,6 +762,13 @@ Berdasarkan \autoref{fig:state_machine}, siklus status tugas dapat dibagi ke dal
     \item Fase Sanggahan: Sistem masuk ke \textit{state} Menunggu Sanggahan. Jika tidak ada keluhan, status melompat langsung ke perhitungan final. Namun, jika praktikan mengajukan keluhan, status berubah menjadi Sanggahan Diproses. Keputusan peninjauan akan mengubah status menjadi Simpan Tanggapan Ditolak atau Nilai Direvisi. Seluruh alur ini bermuara kembali ke \textit{state} Hitung Ulang Nilai Akhir.
     \item Fase Kelulusan: Kalkulasi akhir memicu transisi ke Status Kelulusan. Sistem kemudian mengevaluasi aturan kelulusan, yang berujung pada \textit{state} final Lulus atau Mengulang.
 \end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{"UML/state/Statechart Diagram.png"}
+    \caption{State Machine Diagram - Siklus Hidup Tugas Praktikum}
+    \label{fig:state_machine}
+\end{figure}
 \subsection{Collaboration Diagram}
 
 \textit{Collaboration Diagram} (atau \textit{Communication Diagram}) menitikberatkan pemodelan pada organisasi struktural objek-objek yang berinteraksi di dalam sistem. Tidak seperti \textit{Sequence Diagram} yang berbasis waktu secara vertikal, diagram ini menggunakan penomoran urut pada pesan untuk menunjukkan alur eksekusi logika. Berikut adalah pemodelan struktural dari tiga skenario utama:
@@ -810,7 +812,7 @@ Perancangan basis data merupakan tahapan penting untuk menstrukturkan penyimpana
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{erd/erd_tmp.png}
+    \includegraphics[width=0.8\textwidth, height=0.45\textheight, keepaspectratio]{erd/erd_tmp.png}
     \caption{Entity Relationship Diagram (ERD) Sistem EduLab}
     \label{fig:erd_edulab}
 \end{figure}
@@ -827,34 +829,169 @@ Berdasarkan \autoref{fig:erd_edulab}, struktur basis data dapat dikelompokkan ke
 
 \subsection{Relasi Tabel}
 
+Pada tahap implementasi fisik, konseptual ERD diterjemahkan menjadi kardinalitas antartabel melalui penghubungan \textit{Primary Key} (PK) dan \textit{Foreign Key} (FK). Berikut adalah rincian relasi tabel-tabel utama di dalam sistem EduLab:
+
+\begin{itemize}
+    \item Relasi Tabel Modul dengan Tabel Tugas (1-to-Many): Satu modul praktikum dapat memuat beberapa penugasan. Kolom id\_modul (PK) dari Tabel Modul ditarik menjadi FK di Tabel Tugas.
+    \item Relasi Tabel User dengan Tabel Pengumpulan (1-to-Many): Seorang mahasiswa dapat mengumpulkan berbagai tugas yang berbeda. Kolom id\_user (PK) dari Tabel User ditanamkan sebagai FK ke dalam Tabel Pengumpulan.
+    \item Relasi Tabel Tugas dengan Tabel Pengumpulan (1-to-Many): Sebuah definisi tugas direspons oleh banyak mahasiswa. Oleh karena itu, id\_tugas (PK) menjadi FK pada Tabel Pengumpulan.
+    \item Relasi Tabel Pengumpulan dengan Tabel Nilai (1-to-1): Setiap \textit{file} atau rekaman pengumpulan tugas yang sukses divalidasi akan memiliki tepat satu lembar penilaian. Kolom id\_pengumpulan (PK) bertindak sebagai FK di Tabel Nilai.
+    \item Relasi Tabel User (Asisten) dengan Tabel Nilai (1-to-Many): Untuk keperluan rekam jejak (\textit{audit trail}), identitas asisten yang memberikan evaluasi dicatat. id\_user (PK) milik asisten menjadi FK id\_asisten pada Tabel Nilai.
+    \item Relasi Tabel Nilai dengan Tabel Sanggahan (1-to-1 / 0-to-1): Tidak semua nilai disanggah, namun jika diajukan, satu lembar nilai hanya merujuk pada satu proses sanggahan aktif. Kolom id\_nilai (PK) menjadi referensi (FK) di Tabel Sanggahan.
+\end{itemize}
+
 \section{Perancangan Antarmuka (UI/UX)}
 
 \subsection{Wireframe / Mockup}
+
+\textit{Wireframe} merupakan sketsa purwarupa (\textit{prototype}) kasar dengan tingkat fidelitas rendah (\textit{low-fidelity}) yang difokuskan pada penataan kerangka struktural, hierarki informasi, dan tata letak elemen antarmuka sebelum tahap pewarnaan dan desain visual dilakukan.
+
+1. Wireframe Halaman Login Utama
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wireframe/Wireframe - login.png}
+    \caption{Wireframe - Halaman Login Utama}
+    \label{fig:wf_login}
+\end{figure}
+Berdasarkan Gambar \ref{fig:wf_login}, halaman masuk merupakan gerbang autentikasi awal untuk semua entitas di dalam sistem EduLab. Desain layar terbagi menjadi dua area utama: area sebelah kiri didedikasikan untuk ruang identitas visual (\textit{branding}, maskot, logo institusi), sedangkan sisi kanan difokuskan sepenuhnya untuk interaksi form pengisian kredensial pengguna dan tombol masuk (\textit{login}).
+
+2. Wireframe Pemilihan Peran (Conditional Login)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wireframe/Wireframe - login_conditional.png}
+    \caption{Wireframe - Pemilihan Peran Kondisional}
+    \label{fig:wf_login_cond}
+\end{figure}
+Skenario pada Gambar \ref{fig:wf_login_cond} menampilkan antarmuka yang bersifat kondisional. Jendela dialog ini secara eksklusif hanya muncul bagi pengguna yang terdeteksi memiliki peran ganda di dalam basis data (sebagai contoh: seorang mahasiswa yang sedang menempuh mata kuliah, namun ia juga menjabat sebagai Asisten Dosen di praktikum lain). Setelah berhasil melewati layar \textit{login} utama, sistem mewajibkan pengguna untuk memilih ruang kerja mana yang ingin ia akses pada sesi tersebut, guna menyesuaikan muatan \textit{dashboard} dan menu yang akan ditampilkan.
 \subsection{Desain Tampilan}
+Setelah kerangka struktural disetujui, tahap selanjutnya adalah merancang \textit{high-fidelity prototype} yang memuat elemen visual secara utuh, seperti pewarnaan, tipografi, logo, dan tata letak akhir.
+
+1. Desain Tampilan Login Utama
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{design/login.png}
+    \caption{Desain Antarmuka - Halaman Login Utama}
+    \label{fig:ui_login_main}
+\end{figure}
+Skenario pada Gambar \ref{fig:ui_login_main} memperlihatkan hasil pewarnaan visual dari \textit{wireframe} sebelumnya. Sisi kiri kini diisi oleh maskot edukasi interaktif dan logo Universitas Halu Oleo di atas latar belakang gambar lanskap kampus yang sedikit diredupkan (\textit{overlay}). Sementara sisi kanan berisi kotak \textit{login} solid putih yang menampung form interaktif berpenampilan \textit{modern-clean}.
+
+2. Desain Tampilan Pemilihan Peran (Conditional Login)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{design/login_conditional.png}
+    \caption{Desain Antarmuka - Pemilihan Peran Kondisional}
+    \label{fig:ui_login_cond}
+\end{figure}
+Skenario pada Gambar \ref{fig:ui_login_cond} menunjukkan antarmuka \textit{pop-up} (modal) yang muncul di atas layar gelap (\textit{overlay}). Desain ini secara khusus menyapa pengguna beserta instruksi untuk memilih peran (Asisten Dosen atau Mahasiswa) guna menyesuaikan hak akses mereka di sesi tersebut.
 
 \chapter{IMPLEMENTASI DAN PENGUJIAN}
 
-\section{Implementasi}
+\section{Implementasi Sistem}
 
-\subsection{Implementasi Sistem (Frontend \& Backend)}
-\subsection{Implementasi Database}
-\subsection{Screenshot Hasil Sistem}
+\subsection{Implementasi Frontend}
+Antarmuka pengguna pada sistem EduLab dibangun menggunakan pendekatan fundamental, yaitu HTML5 semantik dan CSS3 murni tanpa mengandalkan kerangka kerja eksternal pihak ketiga. Keputusan ini diambil untuk memaksimalkan performa muat halaman serta memberikan kontrol penuh atas setiap detail visual.
+
+\subsection{Implementasi Backend}
+Arsitektur sisi server dikembangkan menggunakan bahasa pemrograman PHP murni dengan mengadaptasi arsitektur Model-View-Controller (MVC) kustom. Pola desain ini memisahkan secara tegas antara logika akses basis data, proses bisnis, dan tampilan. 
+
+\subsection{Implementasi Basis Data}
+Penyimpanan data pada sistem EduLab diimplementasikan menggunakan DBMS MariaDB. Struktur ERD dari Bab 4 ditransformasikan secara fisik ke dalam \textit{database}. Pengelolaan data dilakukan menggunakan antarmuka \textit{phpMyAdmin}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{basis_data/php.png}
+    \caption{Implementasi Basis Data pada phpMyAdmin}
+    \label{fig:impl_db}
+\end{figure}
+Berdasarkan Gambar \ref{fig:impl_db}, sistem berisi 10 tabel utama yang seluruhnya menggunakan mesin \textit{InnoDB} untuk menjaga integritas relasional (\textit{foreign key}).
+
+\subsection{Implementasi Antarmuka}
+Implementasi antarmuka (\textit{Frontend Implementation}) membuktikan hasil \textit{coding} fungsional aplikasi berbasis web.
+
+1. Implementasi Halaman Login
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{implementasi/login.png}
+    \caption{Implementasi Sistem - Halaman Login Utama}
+    \label{fig:impl_login}
+\end{figure}
+Gambar \ref{fig:impl_login} adalah aplikasi web \textit{localhost} sungguhan yang mampu me-render secara sempurna elemen visual \textit{branding} kampus dan form input data.
+
+2. Implementasi Jendela Pemilihan Peran
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{implementasi/conditional.png}
+    \caption{Implementasi Sistem - Jendela Pemilihan Peran}
+    \label{fig:impl_cond}
+\end{figure}
+Gambar \ref{fig:impl_cond} menunjukkan \textit{overlay} dialog \textit{Role Switcher} aslinya. Terdapat evolusi berupa penambahan tombol "Keluar" merah yang tak ada di desain asli, sebagai mitigasi jika sesi salah.
 
 \section{Pengujian}
 
 \subsection{Metode Pengujian (Black Box)}
-\subsection{Hasil Pengujian}
-\subsection{Evaluasi Sistem}
 
+Pengujian fungsionalitas sistem pada EduLab dilakukan menggunakan metode \textit{Black Box Testing}. Metode ini merupakan pendekatan pengujian yang berfokus sepenuhnya pada spesifikasi fungsional antarmuka tanpa mempertimbangkan atau melihat struktur kontrol logika dan algoritma di dalam kode sumber. Pengujian ini bertujuan memastikan bahwa setiap modul mampu memberikan respons keluaran (\textit{output}) yang akurat dan aman ketika diberikan masukan (\textit{input}) tertentu oleh pengguna. Untuk menjamin akurasi dan objektivitas, eksekusi pengujian ini diotomatisasi secara \textit{End-to-End} menggunakan instrumen \textit{Playwright}.
+
+\subsection{Hasil Pengujian}
+
+Berdasarkan proses otomatisasi pengujian \textit{Black Box} menggunakan Playwright, berikut adalah 12 skenario pengujian utama yang merangkum seluruh alur fungsionalitas aplikasi EduLab:
+
+\begin{longtable}{|c|p{3.5cm}|p{4cm}|p{4cm}|c|}
+\caption{Hasil Pengujian \textit{Black Box} EduLab UHO} \label{tab:hasil_pengujian} \\
+\hline
+\textbf{ID} & \textbf{Skenario Pengujian} & \textbf{Langkah/Input} & \textbf{Hasil yang Diharapkan} & \textbf{Status} \\
+\hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Skenario Pengujian} & \textbf{Langkah/Input} & \textbf{Hasil yang Diharapkan} & \textbf{Status} \\
+\hline
+\endhead
+\hline
+\endfoot
+\hline
+\endlastfoot
+
+TC-AUTH-1 & Login Dosen Sukses & Mengisi form login dengan kredensial NIP Dosen dan \textit{password} valid. & Sistem mengarahkan \textit{user} ke halaman Dashboard Dosen tanpa \textit{error}. & Valid \\
+\hline
+TC-AUTH-2 & Uji Gagal Login & Mengisi form login dengan \textit{password} yang salah secara sengaja. & Sistem menolak \textit{login} dan memunculkan \textit{alert} peringatan. & Valid \\
+\hline
+TC-AUTH-5 & Fungsi Logout Sesi & Menekan tombol 'Keluar' pada navigasi \textit{sidebar}. & Sesi dihancurkan dan dikembalikan ke form login awal. & Valid \\
+\hline
+TC-DOSEN-1 & Pembuatan Kelas Baru & Dosen mengisi form pembuatan kelas dan menyimpannya. & Data tersimpan dan tabel "Kelas" langsung memperbarui tampilannya. & Valid \\
+\hline
+TC-DOSEN-2 & Ekspor Rekap Nilai & Dosen memilih \textit{Format File} Excel dan menekan "Download". & Sistem merekap nilai dan mengunduh laporan Excel (\textit{.xlsx}). & Valid \\
+\hline
+TC-MHS-1 & Upload Laporan Tugas & Mahasiswa mengunggah file \textit{.pdf} pada form "Upload Tugas". & File diunggah, muncul \textit{alert} sukses, status berubah "Dikumpulkan". & Valid \\
+\hline
+TC-ASISTEN-1 & Input Nilai Dinamis & Asisten memasukkan angka nilai pada modal penilaian tugas mahasiswa. & Modal tertutup, nilai tercatat, dan status tabel "Sudah Dinilai". & Valid \\
+\hline
+TC-ASISTEN-3 & Pengisian Data Presensi & Asisten menetapkan status kehadiran mahasiswa dan menyimpan data. & Status presensi terbarui di basis data dan \textit{alert} berhasil tampil. & Valid \\
+\hline
+TC-MHS-2 & Pengajuan Sanggah Nilai & Mahasiswa mengisi form alasan sanggah pada tugas yang dipilih. & Data tersimpan, \textit{alert} sukses muncul, status riwayat menjadi "Diproses". & Valid \\
+\hline
+TC-ASISTEN-2 & Tindak Lanjut Sanggah & Asisten mengetik respons dan mengoreksi nilai pada modal penyetujuan. & Respons tersimpan, sanggahan hilang dari daftar tunggu, nilai terbarui. & Valid \\
+\hline
+TC-SEC-1 & Bypass URL (RBAC Check) & Mahasiswa mencoba mengakses paksa halaman \textit{Dashboard} Dosen via URL. & Sistem menghentikan akses dan menendang \textit{user} kembali ke \textit{dashboard} asalnya. & Valid \\
+\hline
+TC-SEC-2 & Validasi Keamanan Upload & Mahasiswa mencoba mengunggah \textit{file} berbahaya (\textit{.php}). & Sistem menolak unggahan dan menampilkan \textit{error} format tidak didukung. & Valid \\
+
+\end{longtable}
+\subsection{Evaluasi Sistem}
+Berdasarkan serangkaian uji coba otomatis yang dilakukan secara menyeluruh, sistem EduLab menunjukkan tingkat stabilitas absolut dalam mengelola seluruh alur operasional utama. Fungsionalitas esensial yang mencakup pembentukan kelas oleh dosen, pengunggahan laporan praktikum oleh mahasiswa, verifikasi dan pembobotan nilai oleh asisten, hingga kalkulasi akhir rekapitulasi kelulusan terbukti tereksekusi secara akurat tanpa anomali logika. Seluruh komponen antarmuka terbukti responsif dan tersinkronisasi sempurna dengan pergerakan data di pangkalan data secara seketika.
+
+Di samping pengujian alur positif, sistem juga menunjukkan ketahanan yang kukuh dalam menghadapi skenario negatif dan ancaman siber fundamental. Penerapan sistem kontrol akses berbasis peran (\textit{Role-Based Access Control}) secara sukses memblokir manuver akses tanpa izin, secara mutlak mencegah entitas mahasiswa yang berupaya memintas masuk ke dalam dasbor dosen. Lebih lanjut, modul penapisan unggahan di sisi server terbukti efektif menolak injeksi berkas eksekusi berbahaya (seperti skrip dengan format ekstensi non-dokumen). Secara keseluruhan, seluruh hasil pengujian ini mengonfirmasi bahwa aplikasi EduLab telah memenuhi metrik penjaminan mutu perangkat lunak dan sepenuhnya siap serta layak diimplementasikan secara riil di lingkungan praktikum akademik.
 \chapter{PENUTUP}
 
 \section{Kesimpulan}
+Berdasarkan hasil perancangan, implementasi, dan pengujian yang telah dilakukan, dapat disimpulkan bahwa Sistem Manajemen Praktikum Terintegrasi (EduLab) Universitas Halu Oleo telah berhasil dibangun dan beroperasi dengan baik. Sistem ini terbukti mampu mendigitalisasi alur praktikum secara utuh, mulai dari manajemen modul, pengunggahan laporan tugas, hingga proses penilaian dan ekspor transkrip. Hasil pengujian fungsional juga menunjukkan tingkat validitas 100\% pada seluruh modul, memastikan sistem berjalan lancar sesuai dengan kebutuhan akademis.
 
 \section{Saran}
+Meski sistem EduLab saat ini sudah memenuhi kebutuhan fundamental pengadministrasian praktikum, untuk pengembangan di masa mendatang sangat disarankan untuk menambahkan \textbf{fitur notifikasi secara \textit{real-time}}. Integrasi \textit{real-time} ini akan sangat membantu memberikan peringatan instan kepada mahasiswa dan asisten, seperti pengingat tenggat waktu tugas, adanya modul baru, atau hasil proses sanggah nilai, sehingga komunikasi di dalam platform menjadi lebih proaktif.
 
 \printbibliography[heading=bibintoc, title={Daftar Pustaka}]
 
 \begin{appendices}
+\captionsetup{list=no}
 % Override format judul bab agar mencetak "LAMPIRAN A" bukan "BAB A"
 \titleformat{\chapter}[block]
   {\centering\bfseries\large}

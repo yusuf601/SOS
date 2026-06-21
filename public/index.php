@@ -88,6 +88,12 @@ switch ($action) {
         $dashboardController->buatKelompok();
         break;
 
+    case 'api_get_mahasiswa_kelas':
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->apiGetMahasiswaKelas();
+        break;
+
     case 'data_kelompok':
         require_once __DIR__ . '/../app/Controllers/DashboardController.php';
         $dashboardController = new DashboardController();
