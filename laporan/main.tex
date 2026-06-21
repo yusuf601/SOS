@@ -21,6 +21,10 @@
     isbn=false
 ]{biblatex}
 \usepackage{hyperref}
+\usepackage[toc,page]{appendix}
+\renewcommand{\appendixname}{Lampiran}
+\renewcommand{\appendixtocname}{DAFTAR LAMPIRAN}
+\renewcommand{\appendixpagename}{LAMPIRAN}
 
 \DeclareFieldFormat{doi}
 {\mkbibacro{DOI}\addcolon\space
@@ -32,6 +36,7 @@
 }
 \renewcommand{\bibname}{Daftar Pustaka}
 \onehalfspacing
+\raggedbottom
 
 \renewcommand{\figureautorefname}{Gambar}
 \renewcommand{\tableautorefname}{Tabel}
@@ -536,44 +541,143 @@ Kebutuhan fungsional mendefinisikan fitur-fitur dan proses utama yang harus dapa
 
 Tahap perancangan sistem merupakan tindak lanjut dari tahap analisis kebutuhan. Pada bagian ini, seluruh spesifikasi dan kebutuhan perangkat lunak yang telah didefinisikan sebelumnya diterjemahkan ke dalam bentuk cetak biru (\textit{blueprint}) atau rancangan teknis. Perancangan ini mencakup beberapa aspek utama, mulai dari pemodelan aliran data menggunakan \textit{Data Flow Diagram} (DFD), perancangan struktur pangkalan data menggunakan \textit{Entity Relationship Diagram} (ERD), hingga pemodelan perilaku dan interaksi sistem menggunakan \textit{Unified Modeling Language} (UML).
 
-\subsection{Diagram Konteks (DFD Level 0)}
+\subsection{Diagram Konteks}
 
-Diagram Konteks atau DFD Level 0 merupakan tingkatan tertinggi dalam pemodelan aliran data yang berfungsi untuk memetakan batasan sistem secara keseluruhan. Pada tingkatan ini, seluruh operasi EduLab direpresentasikan sebagai satu proses tunggal utama yang berinteraksi dengan lingkungan luarnya. Interaksi tersebut ditunjukkan melalui aliran data yang masuk dari dan keluar menuju entitas-entitas eksternal yang terlibat. Sistem EduLab berinteraksi dengan empat entitas utama, yaitu Mahasiswa Praktikan, Asisten Praktikum, Admin, dan Dosen/Koordinator, seperti yang ditunjukkan pada \autoref{fig:context_diagram}.
+Diagram Konteks merupakan tingkatan tertinggi dalam pemodelan aliran data yang berfungsi untuk memetakan batasan sistem secara keseluruhan. Pada tingkatan ini, seluruh operasi EduLab direpresentasikan sebagai satu proses tunggal utama yang berinteraksi dengan lingkungan luarnya. Interaksi tersebut ditunjukkan melalui aliran data yang masuk dari dan keluar menuju entitas-entitas eksternal yang terlibat. Sistem EduLab berinteraksi dengan empat entitas utama, yaitu Mahasiswa Praktikan, Asisten Praktikum, Admin, dan Dosen/Koordinator, seperti yang ditunjukkan pada \autoref{fig:context_diagram}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{dfd/context.jpg}
-    \caption{Diagram Konteks (DFD Level 0) Sistem EduLab}
+    \caption{Diagram Konteks Sistem EduLab}
     \label{fig:context_diagram}
 \end{figure}
 
 Berdasarkan \autoref{fig:context_diagram}, berikut adalah rincian aliran data untuk masing-masing entitas eksternal:
 
-\begin{enumerate}
+\begin{enumerate}[nosep]
     \item Mahasiswa Praktikan
-    \begin{itemize}
+    \begin{itemize}[nosep]
         \item Data Masuk (Input): Mahasiswa memberikan input berupa unggahan berkas laporan praktikum (\textit{upload} tugas) dan pengajuan permohonan sanggah nilai apabila terdapat ketidaksesuaian.
         \item Data Keluar (Output): Mahasiswa menerima informasi dari sistem berupa hasil evaluasi nilai akhir serta status kelulusan praktikum.
     \end{itemize}
     \item Asisten Praktikum
-    \begin{itemize}
+    \begin{itemize}[nosep]
         \item Data Masuk (Input): Asisten praktikum bertugas menginput hasil penilaian tugas, memberikan umpan balik (\textit{feedback}), serta mengelola data presensi kehadiran mahasiswa.
         \item Data Keluar (Output): Asisten praktikum menerima daftar atau berkas data tugas yang telah dikumpulkan oleh mahasiswa, beserta notifikasi data pengajuan sanggahan nilai untuk ditinjau ulang.
     \end{itemize}
     \item Admin
-    \begin{itemize}
+    \begin{itemize}[nosep]
         \item Data Masuk (Input): Admin memiliki kewenangan untuk memasukkan data master ke dalam sistem, yang meliputi data pengguna (dosen, asisten, mahasiswa), data kelas, dan data kelompok praktikum.
         \item Data Keluar (Output): Admin menerima konfirmasi berhasilnya proses manipulasi data dan laporan rekapitulasi data sistem secara umum.
     \end{itemize}
-    \item Dosen/Koordinato
-    \begin{itemize}
+    \item Dosen/Koordinator
+    \begin{itemize}[nosep]
         \item Data Masuk (Input): Dosen memberikan input berupa instruksi permintaan unduh laporan (\textit{request export}) ke dalam sistem.
         \item Data Keluar (Output): Sistem memberikan output berupa dokumen transkrip nilai keseluruhan dan laporan rekapitulasi kelas yang siap digunakan sebagai bahan evaluasi.
     \end{itemize}
 \end{enumerate}
 
+\subsection{DFD Level 0}
+
+Data Flow Diagram (DFD) Level 0 merupakan penjabaran lebih rinci dari Diagram Konteks. Pada tingkatan ini, proses tunggal pada Diagram Konteks dipecah menjadi 10 sub-proses utama yang merepresentasikan fungsionalitas inti dari sistem EduLab. Selain itu, DFD Level 0 juga memperlihatkan penyimpanan data (\textit{Data Store}) yang digunakan oleh masing-masing proses.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{dfd/lvel-0.jpg}
+    \caption{DFD Level 0 Sistem EduLab}
+    \label{fig:dfd_level_0}
+\end{figure}
+
+Berdasarkan \autoref{fig:dfd_level_0}, berikut rincian proses dan \textit{Data Store} yang terlibat:
+
+\begin{enumerate}[nosep]
+    \item 1.0 Manajemen Hak Akses: Autentikasi dan pengaturan akses semua entitas. Disimpan di D1: Data Pengguna.
+    \item 2.0 Manajemen Kelas \& Kelompok: Penyusunan kelas dan kelompok jadwal praktikum. Disimpan di D2: Data Kelas.
+    \item 3.0 Bank Modul \& Materi: Pengelolaan modul praktikum dari dosen. Disimpan di D3: Data Modul.
+    \item 4.0 Pengumpulan Tugas: Penerimaan berkas laporan praktikum dari mahasiswa. Disimpan di D4: Data Tugas.
+    \item 5.0 Grading \& Feedback: Evaluasi dan pemberian umpan balik oleh asisten. Disimpan di D5: Data Nilai.
+    \item 6.0 Presensi Digital: Verifikasi kehadiran praktikan oleh asisten. Disimpan di D6: Data Presensi.
+    \item 7.0 Rekap Nilai Otomatis: Kalkulasi akumulasi nilai harian. Disimpan di D7: Data Rekap Nilai.
+    \item 8.0 Sanggah Nilai: Penanganan keberatan nilai oleh mahasiswa, diteruskan ke asisten/dosen.
+    \item 9.0 Status Kelulusan: Penentuan kelulusan berdasarkan rekapitulasi akhir.
+    \item 10.0 Export Transkrip Nilai: Penyusunan dokumen akhir (PDF/Excel) oleh dosen.
+\end{enumerate}
+
 \subsection{DFD Level 1}
+
+Data Flow Diagram (DFD) Level 1 merupakan dekomposisi dari setiap proses yang ada pada DFD Level 0. Untuk menjaga fokus pembahasan pada fungsionalitas utama sistem EduLab, bagian ini hanya merincikan 3 proses inti, yaitu Pengumpulan Tugas, Grading \& Feedback, dan Sanggah Nilai. Proses lainnya dilampirkan pada halaman lampiran.
+
+\subsubsection{Proses 4.0 - Pengumpulan Tugas}
+Proses Pengumpulan Tugas (4.0) merupakan salah satu proses krusial dalam sistem EduLab, di mana interaksi utama antara mahasiswa dan sistem mulai terjadi secara intensif. Pada proses ini, mahasiswa diharuskan untuk mengunggah berkas laporan praktikum yang telah diselesaikan. Sistem dirancang untuk dapat mengelola tenggat waktu (\textit{deadline}) secara otomatis dan ketat. Validasi pertama yang dilakukan sistem adalah memastikan bahwa waktu unggah belum melewati batas waktu yang ditetapkan oleh dosen atau koordinator. Apabila waktu unggah masih dalam rentang yang diizinkan, berkas tersebut akan diterima, divalidasi keutuhannya, dan direkam dengan aman ke dalam penyimpanan utama. Hal ini menjamin bahwa seluruh data tugas terpusat, mengurangi risiko kehilangan berkas, dan mempermudah asisten praktikum saat akan melakukan tahap evaluasi atau penilaian selanjutnya.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{dfd/level1_4.0.jpg}
+    \caption{DFD Level 1 - Proses 4.0 Pengumpulan Tugas}
+    \label{fig:dfd_level1_4}
+\end{figure}
+
+Aliran data pada \autoref{fig:dfd_level1_4} terdiri dari:
+\begin{enumerate}[nosep]
+    \item 4.1 Cek Deadline Tugas: Mahasiswa mengakses tugas, sistem mengecek batas waktu pada D2: Data Kelas.
+    \item 4.2 Upload File Tugas: Jika waktu masih tersedia, mahasiswa mengunggah berkas.
+    \item 4.3 Validasi \& Rekam Tugas: Berkas yang diterima divalidasi dan disimpan secara permanen ke dalam D4: Data Tugas.
+\end{enumerate}
+
+\subsubsection{Proses 5.0 - Grading \& Feedback}
+Setelah mahasiswa berhasil mengunggah berkas tugas pada proses sebelumnya, alur sistem berlanjut ke tahap penilaian (5.0). Proses ini sangat penting karena melibatkan evaluasi langsung dari asisten praktikum terhadap hasil kerja mahasiswa. Asisten praktikum terlebih dahulu akan memverifikasi kesesuaian dan kelengkapan tugas yang diambil dari basis data. Setelah tahap verifikasi selesai, asisten akan memberikan penilaian (grading) berdasarkan rubrik yang telah disepakati bersama. Selain sekadar angka, sistem EduLab juga mewajibkan asisten untuk memberikan umpan balik (\textit{feedback}) yang membangun. Semua rincian nilai dan catatan evaluasi ini kemudian disimpan secara permanen di dalam sistem. Pada tahap akhir proses ini, mahasiswa dapat dengan mudah mengakses dan membaca nilai serta catatan umpan balik tersebut langsung melalui dasbor antarmuka mereka secara \textit{real-time}, sehingga transparansi penilaian selalu terjaga.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{dfd/level1_5_0.jpg}
+    \caption{DFD Level 1 - Proses 5.0 Grading \& Feedback}
+    \label{fig:dfd_level1_5}
+\end{figure}
+
+Aliran data pada \autoref{fig:dfd_level1_5} terdiri dari:
+\begin{enumerate}[nosep]
+    \item 5.1 Verifikasi Tugas: Asisten menarik data dari D4: Data Tugas untuk memvalidasi kelengkapan berkas.
+    \item 5.2 Input Nilai \& Feedback: Asisten memberikan nilai dan umpan balik, kemudian menyimpannya ke D5: Data Nilai.
+    \item 5.3 Tampilkan Nilai \& Feedback: Sistem membaca data dari D5: Data Nilai agar dapat dilihat oleh mahasiswa.
+\end{enumerate}
+
+\subsubsection{Proses 8.0 - Sanggah Nilai}
+Sanggah Nilai (8.0) adalah fitur inovatif yang menjadi salah satu keunggulan utama dari sistem EduLab dalam menjamin keadilan akademik. Seringkali terjadi kesalahpahaman atau ketidakpuasan mahasiswa terhadap nilai yang diberikan oleh asisten praktikum. Untuk memfasilitasi hal tersebut tanpa harus melakukan komplain secara manual atau tatap muka yang tidak terdata, sistem ini menyediakan wadah pengajuan sanggah nilai secara formal. Mahasiswa dapat mengisi formulir sanggahan yang secara otomatis masuk ke dalam basis data khusus sanggahan. Data ini kemudian ditinjau secara saksama oleh asisten praktikum yang bersangkutan. Asisten berhak memberikan keputusan untuk menyetujui (jika memang terdapat kekeliruan penilaian) atau menolak (jika nilai sudah sesuai rubrik). Apabila sanggahan disetujui, sistem akan memperbarui data nilai akhir secara otomatis, dan mahasiswa akan langsung menerima pembaruan status tersebut.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{dfd/level1_8_0.jpg}
+    \caption{DFD Level 1 - Proses 8.0 Sanggah Nilai}
+    \label{fig:dfd_level1_8}
+\end{figure}
+
+Aliran data pada \autoref{fig:dfd_level1_8} terdiri dari:
+\begin{enumerate}[nosep]
+    \item 8.1 Ajukan Sanggah: Mahasiswa mengirimkan form keberatan yang langsung disimpan ke D10: Data Sanggahan.
+    \item 8.2 Tinjau Sanggah: Asisten membaca data sanggahan dari D10 untuk dipelajari.
+    \item 8.3 Putuskan Sanggah: Asisten menetapkan keputusan akhir (setuju/tolak).
+    \item 8.4 Update Nilai \& Kirim Hasil: Jika disetujui, sistem memperbarui D5: Data Nilai dan mengirimkan status hasil ke mahasiswa.
+\end{enumerate}
 \subsection{Perancangan Basis Data (ERD + Relasi Tabel)}
+
+Perancangan basis data merupakan tahapan penting untuk menstrukturkan penyimpanan informasi dalam sistem EduLab. Model data yang digunakan adalah model relasional, yang divisualisasikan melalui \textit{Entity Relationship Diagram} (ERD). Basis data ini dirancang untuk memastikan integritas data, mengurangi redundansi, dan mendukung seluruh alur proses bisnis yang telah dijabarkan pada bagian DFD. Terdapat 9 tabel utama yang saling berelasi untuk mendukung jalannya sistem.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{erd/erd_tmp.png}
+    \caption{Entity Relationship Diagram (ERD) Sistem EduLab}
+    \label{fig:erd_edulab}
+\end{figure}
+
+Berdasarkan \autoref{fig:erd_edulab}, struktur basis data dapat dikelompokkan ke dalam beberapa relasi kunci berikut:
+
+\begin{enumerate}[nosep]
+    \item Data Master Pengguna \& Akses: Tabel User menyimpan seluruh data entitas (mahasiswa, asisten, dosen) dan berelasi dengan Tabel Kelompok serta Tabel Plotting Asisten untuk menentukan alokasi kelas praktikum.
+    \item Data Modul \& Tugas: Tabel Modul menyimpan materi praktikum dan berelasi dengan Tabel Tugas. Satu modul dapat memiliki beberapa tugas.
+    \item Data Transaksi Pengumpulan: Tabel Pengumpulan menghubungkan Tabel User (mahasiswa) dengan Tabel Tugas. Tabel ini mencatat waktu submit dan berkas.
+    \item Data Transaksi Penilaian: Tabel Nilai bergantung pada Tabel Pengumpulan. Tabel ini merekam nilai angka dan umpan balik yang diberikan oleh asisten.
+    \item Data Presensi: Tabel Presensi menghubungkan pengguna dengan modul tertentu untuk merekam status kehadiran.
+\end{enumerate}
 
 \subsection{Perancangan UML}
 
@@ -611,4 +715,63 @@ Berdasarkan \autoref{fig:context_diagram}, berikut adalah rincian aliran data un
 \section{Saran}
 
 \printbibliography[heading=bibintoc, title={Daftar Pustaka}]
+
+\begin{appendices}
+% Override format judul bab agar mencetak "LAMPIRAN A" bukan "BAB A"
+\titleformat{\chapter}[block]
+  {\centering\bfseries\large}
+  {LAMPIRAN \thechapter}{1em}
+  {\\\vspace{0.2em}}
+
+% Override format Daftar Isi agar mencetak "LAMPIRAN A" bukan "BAB A"
+\addtocontents{toc}{\protect\renewcommand{\protect\cftchappresnum}{LAMPIRAN~}}
+\addtocontents{toc}{\protect\setlength{\protect\cftchapnumwidth}{7em}}
+
+\chapter{DFD Level 1 (Sisa Proses)}
+
+Bagian ini memuat diagram DFD Level 1 untuk proses-proses tambahan yang mendukung berjalannya sistem EduLab secara keseluruhan, meliputi Manajemen Hak Akses, Manajemen Kelas, Bank Modul, Presensi, Rekap Nilai, Status Kelulusan, dan Export Transkrip.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{dfd/level1_1.0.jpg}
+    \caption{DFD Level 1 - Proses 1.0 Manajemen Hak Akses}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{dfd/level1_2.0.jpg}
+    \caption{DFD Level 1 - Proses 2.0 Manajemen Kelas \& Kelompok}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{dfd/level1_3.0.jpg}
+    \caption{DFD Level 1 - Proses 3.0 Bank Modul \& Materi}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{dfd/level1_6.0.jpg}
+    \caption{DFD Level 1 - Proses 6.0 Presensi Digital}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{dfd/level1_7.0.jpg}
+    \caption{DFD Level 1 - Proses 7.0 Rekap Nilai Otomatis}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{dfd/level1_9.0.jpg}
+    \caption{DFD Level 1 - Proses 9.0 Status Kelulusan}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{dfd/level1_10.0.jpg}
+    \caption{DFD Level 1 - Proses 10.0 Export Transkrip Nilai}
+\end{figure}
+
+\end{appendices}
 \end{document}
