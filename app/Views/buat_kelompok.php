@@ -316,7 +316,11 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                         <!-- Nama Kelompok -->
                         <div class="form-group">
                             <label>Nama Kelompok</label>
-                            <input type="text" name="nama_kelompok" class="form-control-custom" placeholder="cth: Kelompok 1" required>
+                            <div class="select-custom-wrapper">
+                                <select name="nama_kelompok" id="select-nama-kelompok" class="form-control-custom select-custom" required>
+                                    <option value="">Pilih kelas terlebih dahulu...</option>
+                                </select>
+                            </div>
                         </div>
 
                         <!-- Anggota Kelompok -->
@@ -404,11 +408,13 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
 document.addEventListener('DOMContentLoaded', function() {
     const classSelect = document.getElementById('select-class-id');
     const container = document.getElementById('anggota-container');
+    const namaSelect = document.getElementById('select-nama-kelompok');
 
-    function fetchMahasiswa() {
+    function fetchDataKelas() {
         const classId = classSelect.value;
         if (!classId) return;
 
+        // Fetch Mahasiswa
         container.innerHTML = '<span style="font-size: 13px; color: #6C6C6C;">Memuat data...</span>';
 
         fetch('/rpl/public/index.php?action=api_get_mahasiswa_kelas&class_id=' + classId)
@@ -454,11 +460,43 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(err => {
                 container.innerHTML = '<span style="font-size: 13px; color: #E02424;">Terjadi kesalahan saat memuat data.</span>';
             });
+
+        // Fetch Kelompok
+        namaSelect.innerHTML = '<option value="">Memuat data...</option>';
+        fetch('/rpl/public/index.php?action=api_get_kelompok_kelas&class_id=' + classId)
+            .then(res => res.json())
+            .then(data => {
+                namaSelect.innerHTML = '';
+                if (data.error) {
+                    namaSelect.innerHTML = '<option value="">Gagal memuat kelompok</option>';
+                    return;
+                }
+                
+                const existingGroups = data.map(g => g.Nama_Kelompok.toLowerCase());
+                
+                for(let i = 1; i <= 15; i++) {
+                    const groupName = `Kelompok ${i}`;
+                    const opt = document.createElement('option');
+                    opt.value = groupName;
+                    
+                    if(existingGroups.includes(groupName.toLowerCase())) {
+                        opt.text = `${groupName} (Sudah Ada - Tambah Anggota)`;
+                        opt.style.color = '#B76E00';
+                        opt.style.fontWeight = '600';
+                    } else {
+                        opt.text = `${groupName} (Buat Baru)`;
+                    }
+                    namaSelect.appendChild(opt);
+                }
+            })
+            .catch(err => {
+                namaSelect.innerHTML = '<option value="">Terjadi kesalahan</option>';
+            });
     }
 
-    classSelect.addEventListener('change', fetchMahasiswa);
+    classSelect.addEventListener('change', fetchDataKelas);
     // Fetch on initial load
-    fetchMahasiswa();
+    fetchDataKelas();
 });
 </script>
 </body>

@@ -312,27 +312,50 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                             $displayGroups = [];
                             foreach ($groupsData as $g) {
                                 $displayGroups[] = [
+                                    'id' => md5($g['group_name']),
                                     'name' => $g['group_name'],
                                     'assistant' => $g['assistant_name'] ?? 'Tidak Ada Asisten',
-                                    'count' => $g['students_count']
+                                    'count' => $g['students_count'],
+                                    'students' => $g['students'] ?? []
                                 ];
                             }
 
                             if (count($displayGroups) < 4) {
                                 if (empty($displayGroups)) {
-                                    $displayGroups[] = ['name' => 'Kelompok 1', 'assistant' => 'Chris Redfield', 'count' => 6];
-                                    $displayGroups[] = ['name' => 'Kelompok 2', 'assistant' => 'Chris Redfield', 'count' => 6];
-                                    $displayGroups[] = ['name' => 'Kelompok 3', 'assistant' => 'Rose Winter', 'count' => 5];
-                                    $displayGroups[] = ['name' => 'Kelompok 4', 'assistant' => 'Rose Winter', 'count' => 6];
+                                    $displayGroups[] = ['id' => md5('Kelompok 1'), 'name' => 'Kelompok 1', 'assistant' => 'Chris Redfield', 'count' => 6, 'students' => []];
+                                    $displayGroups[] = ['id' => md5('Kelompok 2'), 'name' => 'Kelompok 2', 'assistant' => 'Chris Redfield', 'count' => 6, 'students' => []];
+                                    $displayGroups[] = ['id' => md5('Kelompok 3'), 'name' => 'Kelompok 3', 'assistant' => 'Rose Winter', 'count' => 5, 'students' => []];
+                                    $displayGroups[] = ['id' => md5('Kelompok 4'), 'name' => 'Kelompok 4', 'assistant' => 'Rose Winter', 'count' => 6, 'students' => []];
                                 }
                             }
 
                             foreach ($displayGroups as $dg):
                             ?>
-                                <tr>
-                                    <td style="font-weight: 500;"><?= htmlspecialchars($dg['name']) ?></td>
+                                <tr style="cursor: pointer; transition: background-color 0.2s;" onclick="toggleAccordion('<?= $dg['id'] ?>')" onmouseover="this.style.backgroundColor='#F1F5F9'" onmouseout="this.style.backgroundColor='transparent'">
+                                    <td style="font-weight: 500;">
+                                        <div style="display: flex; align-items: center; gap: 4px;">
+                                            <img src="/rpl/public/assets/icons/arrow_drop_down_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" id="icon-<?= $dg['id'] ?>" style="transition: transform 0.3s ease; width: 20px; height: 20px;" alt="Toggle">
+                                            <?= htmlspecialchars($dg['name']) ?>
+                                        </div>
+                                    </td>
                                     <td><?= htmlspecialchars($dg['assistant']) ?></td>
                                     <td style="text-align: center; font-weight: 500;"><?= htmlspecialchars($dg['count']) ?></td>
+                                </tr>
+                                <tr id="details-<?= $dg['id'] ?>" style="display: none; background-color: #F8FAFC;">
+                                    <td colspan="3" style="padding: 16px 36px; border-top: none;">
+                                        <div style="font-size: 13px; color: #475569;">
+                                            <strong style="color: #333;">Daftar Anggota Kelompok:</strong>
+                                            <ul style="margin-top: 8px; padding-left: 16px; margin-bottom: 0;">
+                                                <?php if (!empty($dg['students'])): ?>
+                                                    <?php foreach ($dg['students'] as $mhs): ?>
+                                                        <li style="margin-bottom: 6px;"><?= htmlspecialchars($mhs['nim']) ?> &nbsp;&mdash;&nbsp; <?= htmlspecialchars($mhs['name']) ?></li>
+                                                    <?php endforeach; ?>
+                                                <?php else: ?>
+                                                    <li style="color: #94A3B8; font-style: italic;">Belum ada anggota.</li>
+                                                <?php endif; ?>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -344,6 +367,20 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
 </div>
 
 
+
+<script>
+function toggleAccordion(id) {
+    const detailsRow = document.getElementById('details-' + id);
+    const icon = document.getElementById('icon-' + id);
+    if (detailsRow.style.display === 'none') {
+        detailsRow.style.display = 'table-row';
+        icon.style.transform = 'rotate(-180deg)';
+    } else {
+        detailsRow.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+    }
+}
+</script>
 
 </body>
 </html>

@@ -94,6 +94,12 @@ switch ($action) {
         $dashboardController->apiGetMahasiswaKelas();
         break;
 
+    case 'api_get_kelompok_kelas':
+        require_once __DIR__ . '/../app/Controllers/DashboardController.php';
+        $dashboardController = new DashboardController();
+        $dashboardController->apiGetKelompokKelas();
+        break;
+
     case 'data_kelompok':
         require_once __DIR__ . '/../app/Controllers/DashboardController.php';
         $dashboardController = new DashboardController();

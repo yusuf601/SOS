@@ -826,6 +826,27 @@ class DashboardController {
         exit;
     }
 
+    public function apiGetKelompokKelas() {
+        if (!isset($_SESSION['user_id']) || !in_array($_SESSION['active_role'] ?? '', ['Dosen', 'Asisten'])) {
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'Unauthorized']);
+            exit;
+        }
+
+        $classId = isset($_GET['class_id']) ? (int)$_GET['class_id'] : 0;
+        $db = (new Database())->getConnection();
+        
+        $query = "SELECT ID_Kelompok, Nama_Kelompok FROM Tabel_Kelompok WHERE ID_Kelas = :classId";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':classId', $classId, PDO::PARAM_INT);
+        $stmt->execute();
+        $kelompok = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        header('Content-Type: application/json');
+        echo json_encode($kelompok);
+        exit;
+    }
+
     public function buatKelompok() {
         if (!isset($_SESSION['user_id']) || !in_array($_SESSION['active_role'] ?? '', ['Dosen', 'Asisten'])) {
             header('Location: /rpl/public/index.php');
