@@ -95,30 +95,30 @@ class TugasModel {
     }
 
     // Calculate student progress metrics
-    public function getStudentProgress($userId, $className = null) {
-        // 1. Get tasks filtered by class if className given
-        $allTugas = $this->getAllTugas();
-        if ($className) {
-            $searchKey = trim(str_ireplace(['Praktikum', 'Kelas'], '', $className));
-            $allTugas = array_filter($allTugas, function($t) use ($searchKey) {
-                return stripos($t['Judul_Modul'], $searchKey) !== false;
-            });
+    public function getStudentProgress($userId, $classId = null) {
+        // 1. Get tasks filtered by class if classId given
+        if ($classId) {
+            $query = "SELECT t.* FROM Tabel_Tugas t JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul WHERE m.ID_Kelas = :classId";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':classId', $classId);
+            $stmt->execute();
+            $allTugas = $stmt->fetchAll();
+        } else {
+            $allTugas = $this->getAllTugas();
         }
         $totalTasks = count($allTugas);
 
         // 2. Query student submissions and grades - filtered by class
-        if ($className) {
-            $searchKey = trim(str_ireplace(['Praktikum', 'Kelas'], '', $className));
-            $searchParam = '%' . $searchKey . '%';
+        if ($classId) {
             $query = "SELECT p.ID_Tugas, n.Nilai_Angka, n.Status_Tugas 
                       FROM Tabel_Pengumpulan p
                       JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                       JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
                       LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
-                      WHERE p.ID_User = :userId AND m.Judul_Modul LIKE :searchClass";
+                      WHERE p.ID_User = :userId AND m.ID_Kelas = :classId";
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':userId', $userId);
-            $stmt->bindParam(':searchClass', $searchParam);
+            $stmt->bindParam(':classId', $classId);
         } else {
             $query = "SELECT p.ID_Tugas, n.Nilai_Angka, n.Status_Tugas 
                       FROM Tabel_Pengumpulan p

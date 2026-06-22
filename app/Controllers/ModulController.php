@@ -29,11 +29,37 @@ class ModulController {
         $allClasses = [];
 
         if ($role === 'Mahasiswa') {
-            // Get student's class
-            $classInfo = $this->kelasModel->getStudentClass($userId);
+            // Get student's class (default first class)
+            $studentClasses = $this->kelasModel->getStudentClasses($userId);
+            
+            if (isset($_GET['class_id'])) {
+                $requestedId = (int)$_GET['class_id'];
+                foreach ($studentClasses as $sc) {
+                    if ($sc['ID_Kelas'] === $requestedId) {
+                        $classInfo = $sc;
+                        break;
+                    }
+                }
+                // Fallback if not found
+                if (!$classInfo && !empty($studentClasses)) $classInfo = $studentClasses[0];
+            } else {
+                if (!empty($studentClasses)) $classInfo = $studentClasses[0];
+            }
         } else {
             // Dosen/Asisten see only their plotted classes
             $allClasses = $this->kelasModel->getClassesByUserId($userId);
+            if (isset($_GET['class_id'])) {
+                $requestedId = (int)$_GET['class_id'];
+                foreach ($allClasses as $ac) {
+                    if ($ac['ID_Kelas'] === $requestedId) {
+                        $classInfo = $ac;
+                        break;
+                    }
+                }
+                if (!$classInfo && !empty($allClasses)) $classInfo = $allClasses[0];
+            } else {
+                if (!empty($allClasses)) $classInfo = $allClasses[0];
+            }
         }
 
         // Fetch plotted lecturer and assistant details
@@ -66,17 +92,23 @@ class ModulController {
         }
 
         // Fetch all modules enriched with task deadline and student grade
-        $db = (new Database())->getConnection();
-        $query = "SELECT m.*, t.ID_Tugas, t.Deadline_Upload, p.ID_Pengumpulan, n.Nilai_Angka, n.Status_Tugas
-                  FROM Tabel_Modul m
-                  LEFT JOIN Tabel_Tugas t ON m.ID_Modul = t.ID_Modul
-                  LEFT JOIN Tabel_Pengumpulan p ON t.ID_Tugas = p.ID_Tugas AND p.ID_User = :userId
-                  LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
-                  ORDER BY m.ID_Modul ASC";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':userId', $userId);
-        $stmt->execute();
-        $modules = $stmt->fetchAll();
+        $modules = [];
+        if ($classInfo) {
+            $classId = $classInfo['ID_Kelas'];
+            $db = (new Database())->getConnection();
+            $query = "SELECT m.*, t.ID_Tugas, t.Deadline_Upload, p.ID_Pengumpulan, n.Nilai_Angka, n.Status_Tugas
+                      FROM Tabel_Modul m
+                      LEFT JOIN Tabel_Tugas t ON m.ID_Modul = t.ID_Modul
+                      LEFT JOIN Tabel_Pengumpulan p ON t.ID_Tugas = p.ID_Tugas AND p.ID_User = :userId
+                      LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                      WHERE m.ID_Kelas = :classId
+                      ORDER BY m.ID_Modul ASC";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->bindParam(':classId', $classId);
+            $stmt->execute();
+            $modules = $stmt->fetchAll();
+        }
 
         require_once __DIR__ . '/../Views/bank_modul.php';
     }
@@ -152,8 +184,9 @@ class ModulController {
                             $db->beginTransaction();
 
                             // 1. Insert to Tabel_Modul
-                            $stmt = $db->prepare("INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES (:judul, :file)");
+                            $stmt = $db->prepare("INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES (:classId, :judul, :file)");
                             $stmt->execute([
+                                ':classId' => $classId,
                                 ':judul' => $judulModul,
                                 ':file' => $safeFileName
                             ]);

@@ -55,8 +55,10 @@ class TugasController {
             ];
         }
 
-        // Fetch student progress metrics
-        $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['Nama_Kelas'] ?? null);
+        $progress = null;
+        if ($classInfo) {
+            $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['ID_Kelas']);
+        }
 
         require_once __DIR__ . '/../Views/upload_tugas.php';
     }
@@ -363,28 +365,42 @@ class TugasController {
         $attendanceRate = 100.0;
 
         if ($role === 'Mahasiswa') {
-            $classInfo = $this->kelasModel->getStudentClass($userId);
-            
-            $searchClass = trim(str_ireplace(['Praktikum', 'Kelas'], '', $classInfo['Nama_Kelas'] ?? ''));
-            $searchParam = "%" . $searchClass . "%";
+            $studentClasses = $this->kelasModel->getStudentClasses($userId);
+            if (isset($_GET['class_id'])) {
+                $requestedId = (int)$_GET['class_id'];
+                foreach ($studentClasses as $sc) {
+                    if ($sc['ID_Kelas'] === $requestedId) {
+                        $classInfo = $sc;
+                        break;
+                    }
+                }
+                if (!$classInfo && !empty($studentClasses)) $classInfo = $studentClasses[0];
+            } else {
+                if (!empty($studentClasses)) $classInfo = $studentClasses[0];
+            }
 
-            $query = "SELECT p.ID_Pengumpulan, p.File_Tugas, p.Waktu_Submit, 
-                             t.Instruksi_Tugas, m.Judul_Modul,
-                             n.Nilai_Angka, n.Feedback, n.Status_Tugas, n.Alasan_Sanggah, n.Tanggapan_Sanggah, n.ID_Nilai
-                      FROM Tabel_Pengumpulan p
-                      JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
-                      JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
-                      JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
-                      WHERE p.ID_User = :userId AND m.Judul_Modul LIKE :searchClass
-                      ORDER BY m.ID_Modul ASC";
-            $stmt = $db->prepare($query);
-            $stmt->bindParam(':userId', $userId);
-            $stmt->bindParam(':searchClass', $searchParam);
-            $stmt->execute();
-            $gradesList = $stmt->fetchAll();
+            if ($classInfo) {
+                $classId = $classInfo['ID_Kelas'];
+                $query = "SELECT p.ID_Pengumpulan, p.File_Tugas, p.Waktu_Submit, 
+                                 t.Instruksi_Tugas, m.Judul_Modul,
+                                 n.Nilai_Angka, n.Feedback, n.Status_Tugas, n.Alasan_Sanggah, n.Tanggapan_Sanggah, n.ID_Nilai
+                          FROM Tabel_Pengumpulan p
+                          JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                          JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
+                          JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                          WHERE p.ID_User = :userId AND m.ID_Kelas = :classId
+                          ORDER BY m.ID_Modul ASC";
+                $stmt = $db->prepare($query);
+                $stmt->bindParam(':userId', $userId);
+                $stmt->bindParam(':classId', $classId);
+                $stmt->execute();
+                $gradesList = $stmt->fetchAll();
+            }
 
             // Fetch progress and attendance rate
-            $progress = $this->tugasModel->getStudentProgress($userId);
+            if ($classInfo) {
+                $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['ID_Kelas']);
+            }
             require_once __DIR__ . '/../Models/UserModel.php';
             $attendanceRate = (new UserModel())->getAttendanceRate($userId);
         } else {
@@ -429,42 +445,59 @@ class TugasController {
         }
 
         // Fetch student class info
-        $classInfo = $this->kelasModel->getStudentClass($userId);
+        $studentClasses = $this->kelasModel->getStudentClasses($userId);
+        $classInfo = null;
+        if (isset($_GET['class_id'])) {
+            $requestedId = (int)$_GET['class_id'];
+            foreach ($studentClasses as $sc) {
+                if ($sc['ID_Kelas'] === $requestedId) {
+                    $classInfo = $sc;
+                    break;
+                }
+            }
+            if (!$classInfo && !empty($studentClasses)) $classInfo = $studentClasses[0];
+        } else {
+            if (!empty($studentClasses)) $classInfo = $studentClasses[0];
+        }
 
-        $searchClass = trim(str_ireplace(['Praktikum', 'Kelas'], '', $classInfo['Nama_Kelas'] ?? ''));
-        $searchParam = "%" . $searchClass . "%";
+        $gradesList = [];
+        $appealsHistory = [];
 
-        // Fetch student grades list (only graded ones)
-        $query = "SELECT p.ID_Pengumpulan, m.Judul_Modul, m.ID_Modul, n.Nilai_Angka, n.ID_Nilai, n.Alasan_Sanggah, n.Status_Tugas, n.Tanggapan_Sanggah
-                  FROM Tabel_Pengumpulan p
-                  JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
-                  JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
-                  JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
-                  WHERE p.ID_User = :userId AND m.Judul_Modul LIKE :searchClass
-                  ORDER BY m.ID_Modul ASC";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':userId', $userId);
-        $stmt->bindParam(':searchClass', $searchParam);
-        $stmt->execute();
-        $gradesList = $stmt->fetchAll();
+        if ($classInfo) {
+            $classId = $classInfo['ID_Kelas'];
 
-        // Fetch appeal history (where Alasan_Sanggah is not null)
-        $historyQuery = "SELECT p.ID_Pengumpulan, m.Judul_Modul, k.Nama_Kelas, n.Nilai_Angka, n.ID_Nilai, n.Alasan_Sanggah, n.Status_Tugas, n.Tanggapan_Sanggah, p.Waktu_Submit
-                         FROM Tabel_Pengumpulan p
-                         JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
-                         JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
-                         JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
-                         JOIN Tabel_User u ON p.ID_User = u.ID_User
-                         JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
-                         JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
-                         JOIN Tabel_Kelas k ON krs.ID_Kelas = k.ID_Kelas
-                         WHERE p.ID_User = :userId AND n.Alasan_Sanggah IS NOT NULL AND m.Judul_Modul LIKE :searchClass
-                         ORDER BY n.ID_Nilai DESC";
-        $stmtHistory = $db->prepare($historyQuery);
-        $stmtHistory->bindParam(':userId', $userId);
-        $stmtHistory->bindParam(':searchClass', $searchParam);
-        $stmtHistory->execute();
-        $appealsHistory = $stmtHistory->fetchAll();
+            // Fetch student grades list (only graded ones)
+            $query = "SELECT p.ID_Pengumpulan, m.Judul_Modul, m.ID_Modul, n.Nilai_Angka, n.ID_Nilai, n.Alasan_Sanggah, n.Status_Tugas, n.Tanggapan_Sanggah
+                      FROM Tabel_Pengumpulan p
+                      JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                      JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
+                      JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                      WHERE p.ID_User = :userId AND m.ID_Kelas = :classId
+                      ORDER BY m.ID_Modul ASC";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->bindParam(':classId', $classId);
+            $stmt->execute();
+            $gradesList = $stmt->fetchAll();
+
+            // Fetch appeal history (where Alasan_Sanggah is not null)
+            $historyQuery = "SELECT p.ID_Pengumpulan, m.Judul_Modul, k.Nama_Kelas, n.Nilai_Angka, n.ID_Nilai, n.Alasan_Sanggah, n.Status_Tugas, n.Tanggapan_Sanggah, p.Waktu_Submit
+                             FROM Tabel_Pengumpulan p
+                             JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                             JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
+                             JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                             JOIN Tabel_User u ON p.ID_User = u.ID_User
+                             JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                             JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                             JOIN Tabel_Kelas k ON krs.ID_Kelas = k.ID_Kelas
+                             WHERE p.ID_User = :userId AND n.Alasan_Sanggah IS NOT NULL AND m.ID_Kelas = :classId
+                             ORDER BY n.ID_Nilai DESC";
+            $stmtHistory = $db->prepare($historyQuery);
+            $stmtHistory->bindParam(':userId', $userId);
+            $stmtHistory->bindParam(':classId', $classId);
+            $stmtHistory->execute();
+            $appealsHistory = $stmtHistory->fetchAll();
+        }
 
         require_once __DIR__ . '/../Views/sanggah_form.php';
     }
@@ -572,7 +605,7 @@ class TugasController {
             if ($classInfo) {
                 $classId = $classInfo['ID_Kelas'];
 
-                $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['Nama_Kelas']);
+                $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['ID_Kelas']);
                 require_once __DIR__ . '/../Models/UserModel.php';
                 $attendanceRate = (new UserModel())->getAttendanceRate($userId);
 
@@ -735,7 +768,7 @@ class TugasController {
         
         $grades = [];
         foreach ($students as $stu) {
-            $progress = $this->tugasModel->getStudentProgress($stu['ID_User']);
+            $progress = $this->tugasModel->getStudentProgress($stu['ID_User'], $stu['ID_Kelas']);
             $attendanceRate = $userModel->getAttendanceRate($stu['ID_User']);
             
             $actualPresensi = $attendanceRate !== null ? round($attendanceRate) : 0;

@@ -21,6 +21,26 @@ class ModulModel {
         return $stmt->fetchAll();
     }
 
+    // Get modules by class ID
+    public function getModulesByClass($classId) {
+        $query = "SELECT * FROM Tabel_Modul WHERE ID_Kelas = :classId ORDER BY ID_Modul ASC";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':classId', $classId);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    // Create a new module
+    public function createModul($idKelas, $judul, $fileMateri) {
+        $query = "INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES (:idKelas, :judul, :file)";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([
+            ':idKelas' => $idKelas,
+            ':judul' => $judul,
+            ':file' => $fileMateri
+        ]);
+    }
+
     // Get module by ID
     public function getModulById($id) {
         $query = "SELECT * FROM Tabel_Modul WHERE ID_Modul = :id LIMIT 1";
