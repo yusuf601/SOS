@@ -464,32 +464,38 @@ INSERT INTO Tabel_User (Username, Password, Role, Nama_Lengkap) VALUES
 ('E1E125049', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'La Ode Erlan Al Azham Are'),
 ('E1E125065', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Mahasiswa', 'Reva Aurel Amanda');
 
-INSERT INTO Tabel_Kelas (Nama_Kelas) VALUES
-('PEMROGRAMAN BERORIENTASI OBJEK'),
-('Pemrograman Web'),
-('REKAYASA PERANGKAT LUNAK'),
-('Struktur Data'),
-('Sistem Basis Data'),
-('Jaringan Komputer'),
-('Sistem Operasi'),
-('Analisis dan Desain Perangkat Lunak'),
-('Cloud Computing'),
-('Kecerdasan Buatan'),
-('Pembelajaran Mesin'),
-('Data Mining (Pilihan 1)'),
-('Keamanan Data dan Informasi (Cyber Security)'),
-('INTERAKSI MANUSIA DAN KOMPUTER'),
-('Sistem Paralel dan Terdistribusi'),
-('METODE RISET'),
-('ETIKA PROFESI'),
-('Analisis Jejaring Sosial'),
-('Pemrograman Dasar'),
-('Matematika Diskrit'),
-('Sistem Digital'),
-('Organisasi dan Arsitektur Komputer'),
-('Statistika'),
-('ALJABAR LINEAR'),
-('METODE NUMERIK');
+INSERT INTO Tabel_Kelas (Nama_Kelas, Token_Kelas) VALUES
+('PEMROGRAMAN BERORIENTASI OBJEK', 'PBO001'),
+('Pemrograman Web', 'WEB002'),
+('REKAYASA PERANGKAT LUNAK', 'RPL003'),
+('Struktur Data', 'STD004'),
+('Sistem Basis Data', 'SBD005'),
+('Jaringan Komputer', 'JRK006'),
+('Sistem Operasi', 'SOS007'),
+('Analisis dan Desain Perangkat Lunak', 'ADP008'),
+('Cloud Computing', 'CLD009'),
+('Kecerdasan Buatan', 'KBU010'),
+('Pembelajaran Mesin', 'PLM011'),
+('Data Mining (Pilihan 1)', 'DTM012'),
+('Keamanan Data dan Informasi (Cyber Security)', 'KDI013'),
+('INTERAKSI MANUSIA DAN KOMPUTER', 'IMK014'),
+('Sistem Paralel dan Terdistribusi', 'SPT015'),
+('METODE RISET', 'MRI016'),
+('ETIKA PROFESI', 'ETK017'),
+('Analisis Jejaring Sosial', 'AJS018'),
+('Pemrograman Dasar', 'PDR019'),
+('Matematika Diskrit', 'MDK020'),
+('Sistem Digital', 'SDG021'),
+('Organisasi dan Arsitektur Komputer', 'OAK022'),
+('Statistika', 'STK023'),
+('ALJABAR LINEAR', 'ALJ024'),
+('METODE NUMERIK', 'MNU025');
+
+-- Fallback: generate token untuk kelas yang belum punya (jika import parsial)
+UPDATE Tabel_Kelas
+SET Token_Kelas = UPPER(SUBSTRING(MD5(CONCAT(ID_Kelas, Nama_Kelas)), 1, 6))
+WHERE Token_Kelas IS NULL OR Token_Kelas = '';
+
 
 -- Plotting Dosen ke Kelas
 INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES
