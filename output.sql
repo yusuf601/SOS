@@ -205,23 +205,23 @@ CREATE TABLE Tabel_Nilai_Akhir (
 -- ==========================================
 
 -- Insert Dosen (Lecturers) from daftar_dosen.md
-INSERT INTO Tabel_User (Username, Password, Role, Nama_Lengkap, ID_Kelompok) VALUES
-('0017117606', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Isnawaty, S.Si., M.T', NULL),
-('0022078406', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'L.M. Fid Aksara, S.Kom., M.Kom.', NULL),
-('0007118106', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Statiswaty, S.T., M.MSI', NULL),
-('0017089402', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Asa Hari Wibowo, S.T., M.Eng.', NULL),
-('0022027607', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Sutardi, S.Kom., M.T.', NULL),
-('0020107601', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Prof. Dr. Ir. Laode Muh. Golok Jaya, S.T., M.T.', NULL),
-('0025047107', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Bambang Pramono, S.Si., M.T.', NULL),
-('0006049104', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Rizal Adi Saputra, S.T., M.Kom', NULL),
-('0906028701', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Jumadil Nangi, S.Kom., M.T.', NULL),
-('0009096503', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Dr. Ir. Muhammad Ihsan Sarita, M.Kom.', NULL),
-('0016018306', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Ika Purwanti Ningrum Purnama, S.Kom., M.Cs.', NULL),
-('0929098602', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'La Ode Muhammad Bahtiar Aksara, S.T., M.T.', NULL),
-('0014068304', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Dr. Ir. Muh. Yamin, S.T., M.Eng', NULL),
-('0023069101', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Adha Mashur Sajiah, S.T., M.Eng.', NULL),
-('0912069303', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Muhammad Irwan Syahib, S.T., M.Kom.', NULL),
-('0117019203', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Ryan Rinaldi Hadistio, S.Kom., M.Kom.', NULL);
+INSERT INTO Tabel_User (Username, Password, Role, Nama_Lengkap) VALUES
+('0017117606', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Isnawaty, S.Si., M.T'),
+('0022078406', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'L.M. Fid Aksara, S.Kom., M.Kom.'),
+('0007118106', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Statiswaty, S.T., M.MSI'),
+('0017089402', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Asa Hari Wibowo, S.T., M.Eng.'),
+('0022027607', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Sutardi, S.Kom., M.T.'),
+('0020107601', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Prof. Dr. Ir. Laode Muh. Golok Jaya, S.T., M.T.'),
+('0025047107', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Bambang Pramono, S.Si., M.T.'),
+('0006049104', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Rizal Adi Saputra, S.T., M.Kom'),
+('0906028701', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Jumadil Nangi, S.Kom., M.T.'),
+('0009096503', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Dr. Ir. Muhammad Ihsan Sarita, M.Kom.'),
+('0016018306', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Ika Purwanti Ningrum Purnama, S.Kom., M.Cs.'),
+('0929098602', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'La Ode Muhammad Bahtiar Aksara, S.T., M.T.'),
+('0014068304', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Dr. Ir. Muh. Yamin, S.T., M.Eng'),
+('0023069101', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Adha Mashur Sajiah, S.T., M.Eng.'),
+('0912069303', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Muhammad Irwan Syahib, S.T., M.Kom.'),
+('0117019203', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dosen', 'Ryan Rinaldi Hadistio, S.Kom., M.Kom.');
 
 -- ==========================================
 -- 5. MASSIVE DATA SEEDING (merged from old sections 5, 6, 7)
@@ -528,31 +528,31 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'PEMROGRAMAN BERORIENTASI OBJEK')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'PEMROGRAMAN BERORIENTASI OBJEK'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124021';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124052';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124051';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124016';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124050';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124077';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124076';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124012';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124046';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124071';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E123038';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124064';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124039';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124036';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124033';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124004';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124057';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E123060';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124025';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124022';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124080';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124020';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124019';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124053';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124015';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124021'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124052'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124051'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124016'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124050'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124077'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124076'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124012'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124046'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124071'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123038'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124064'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124039'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124036'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124033'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124004'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124057'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123060'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124025'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124022'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124080'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124020'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124019'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124053'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124015'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 PEMROGRAMAN BERORIENTASI OBJEK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -926,31 +926,31 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Web')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Web'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124034';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124013';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124047';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E123072';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124069';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124068';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E123067';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124008';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124007';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124063';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124062';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124035';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124060';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124032';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124005';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124030';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124029';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124056';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124002';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124055';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124042';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E123019';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124054';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124018';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124017';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124034'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124013'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124047'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123072'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124069'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124068'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123067'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124008'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124007'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124063'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124062'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124035'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124060'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124032'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124005'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124030'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124029'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124056'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124002'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124055'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124042'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123019'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124054'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124018'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124017'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Pemrograman Web', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -1352,31 +1352,31 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'REKAYASA PERANGKAT LUNAK')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'REKAYASA PERANGKAT LUNAK'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124014';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124048';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124010';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124073';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124044';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124043';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124082';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124041';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124067';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124066';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124040';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E124037';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124006';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E123073';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124031';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124058';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124003';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124028';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124027';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124026';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124024';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124001';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E123040';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E122126';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124072';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124014'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124048'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124010'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124073'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124044'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124043'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124082'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124041'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124067'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124066'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124040'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124037'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124006'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123073'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124031'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124058'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124003'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124028'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124027'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124026'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124024'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124001'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123040'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122126'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124072'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 REKAYASA PERANGKAT LUNAK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -1768,7 +1768,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Struktur Data')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Struktur Data'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E122084';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122084'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Struktur Data', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -1809,7 +1809,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Basis Data')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Basis Data'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124081';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124081'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Sistem Basis Data', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -1850,7 +1850,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Jaringan Komputer')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Jaringan Komputer'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E120096';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E120096'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Jaringan Komputer', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -1891,7 +1891,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Operasi')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Operasi'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124078';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124078'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Sistem Operasi', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -1930,7 +1930,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis dan Desain Perangkat Lunak')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis dan Desain Perangkat Lunak'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E123077';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123077'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Analisis dan Desain Perangkat Lunak', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -1973,7 +1973,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Cloud Computing')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Cloud Computing'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E122022';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122022'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Cloud Computing', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -2015,7 +2015,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Kecerdasan Buatan')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Kecerdasan Buatan'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124074';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124074'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Kecerdasan Buatan', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -2055,7 +2055,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pembelajaran Mesin')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pembelajaran Mesin'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E121061';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E121061'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Pembelajaran Mesin', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -2097,7 +2097,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Data Mining (Pilihan 1)')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Data Mining (Pilihan 1)'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E122054';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122054'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Data Mining (Pilihan 1)', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -2139,7 +2139,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Keamanan Data dan Informasi (Cyber Security)')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Keamanan Data dan Informasi (Cyber Security)'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E122092';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122092'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Keamanan Data dan Informasi (Cyber Security)', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -2177,7 +2177,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'INTERAKSI MANUSIA DAN KOMPUTER')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'INTERAKSI MANUSIA DAN KOMPUTER'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E123059';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123059'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 INTERAKSI MANUSIA DAN KOMPUTER', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -2220,7 +2220,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Paralel dan Terdistribusi')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Paralel dan Terdistribusi'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124079';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124079'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Sistem Paralel dan Terdistribusi', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -2259,7 +2259,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE RISET')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE RISET'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124038';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124038'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 METODE RISET', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -2297,7 +2297,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ETIKA PROFESI')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ETIKA PROFESI'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124045';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124045'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 ETIKA PROFESI', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -2340,7 +2340,7 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis Jejaring Sosial')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis Jejaring Sosial'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E124061';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124061'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Analisis Jejaring Sosial', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -2383,46 +2383,46 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Dasar')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Dasar'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125003';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125026';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125047';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125088';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125076';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125052';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125027';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125095';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125081';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125064';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125029';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125038';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125092';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125039';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125041';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125051';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125055';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125017';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125011';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125087';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125101';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125093';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125040';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125089';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125099';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E123027';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125034';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125103';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125044';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125083';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125013';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125016';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125053';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125001';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125062';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125104';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125025';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125084';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125075';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125043';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125003'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125026'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125047'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125088'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125076'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125052'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125027'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125095'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125081'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125064'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125029'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125038'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125092'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125039'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125041'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125051'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125055'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125017'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125011'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125087'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125101'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125093'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125040'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125089'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125099'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123027'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125034'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125103'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125044'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125083'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125013'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125016'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125053'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125001'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125062'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125104'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125025'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125084'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125075'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125043'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Pemrograman Dasar', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -3033,16 +3033,16 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Matematika Diskrit')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Matematika Diskrit'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125077';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125071';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125012';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E12510';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125061';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125054';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125020';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125066';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125068';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125102';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125077'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125071'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125012'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E12510'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125061'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125054'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125020'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125066'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125068'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125102'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Matematika Diskrit', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -3218,16 +3218,16 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Digital')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Digital'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125035';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125009';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125008';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125024';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125059';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125074';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125019';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125018';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125080';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125105';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125035'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125009'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125008'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125024'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125059'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125074'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125019'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125018'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125080'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125105'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Sistem Digital', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -3396,16 +3396,16 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Organisasi dan Arsitektur Komputer')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Organisasi dan Arsitektur Komputer'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125006';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125063';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125100';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125086';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125096';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125014';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125067';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125037';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125004';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125042';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125006'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125063'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125100'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125086'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125096'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125014'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125067'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125037'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125004'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125042'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Organisasi dan Arsitektur Komputer', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -3577,16 +3577,16 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Statistika')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Statistika'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125056';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125045';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125007';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125015';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125050';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125078';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125091';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125069';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125082';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125021';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125056'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125045'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125007'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125015'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125050'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125078'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125091'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125069'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125082'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125021'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Statistika', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -3757,16 +3757,16 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ALJABAR LINEAR')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ALJABAR LINEAR'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125070';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125098';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125046';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125032';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125048';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125028';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125060';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125058';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125033';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125023';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125070'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125098'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125046'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125032'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125048'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125028'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125060'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125058'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125033'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125023'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 ALJABAR LINEAR', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
@@ -3931,18 +3931,18 @@ INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE NUMERIK')), ('Kelompok 2', (SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE NUMERIK'));
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125036';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125057';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125005';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125079';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125094';
-UPDATE Tabel_User SET ID_Kelompok = @k1 WHERE Username = 'E1E125097';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125002';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125090';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125073';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125085';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125049';
-UPDATE Tabel_User SET ID_Kelompok = @k2 WHERE Username = 'E1E125065';
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125036'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125057'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125005'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125079'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125094'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125097'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k1), @k1);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125002'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125090'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125073'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125085'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125049'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
+INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125065'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 METODE NUMERIK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));

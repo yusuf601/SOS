@@ -15,6 +15,7 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{longtable}
+\usepackage{placeins}
 \usepackage[
     backend=biber,
     style=ieee,
@@ -105,9 +106,17 @@
 \centering
 {\large\textbf{Perancangan dan Pengembangan EduLab: Sistem Manajemen Tugas \& Penilaian Praktikum}} \\[2cm]
 \includegraphics[width=5cm]{logo.png} \\[2cm]
-{\large\textbf{OLEH}}\\[0.8cm]
-{\large\textbf{Muh Yusuf}}\\[0.3cm]
-{\large\textbf{NIM: E1E124044}}\\[2.5cm]
+{\large\textbf{TIM PENYUSUN}}\\[0.6cm]
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+    \textbf{Muh Yusuf} & \textbf{(E1E124044)} & - Laporan, Aplikasi \\
+    \textbf{Neysa Razana Mahneerah} & \textbf{(E1E124046)} & - UI/UX \\
+    \textbf{La Ode Afdal Munifa} & \textbf{(E1E124062)} & - Design Databases \\
+    \textbf{Resky Yani} & \textbf{(E1E124014)} & - UML \\
+    \textbf{Frisilia Febiola} & \textbf{(E1E124036)} & - Flow Map, Gantt Chart \\
+    \textbf{Wa Ode Yurisawati} & \textbf{(E1E124080)} & - Context Diagram \\
+    \textbf{Muh. Fildan Pratama} & \textbf{(E1E124069)} & - Data Flow Diagram
+\end{tabular}\\[1.5cm]
 {\large\textbf{JURUSAN TEKNIK INFORMATIKA}}\\[0.4cm]
 {\large\textbf{FAKULTAS TEKNIK}}\\[0.4cm]
 {\large\textbf{UNIVERSITAS HALU OLEO}}\\[1cm]
@@ -484,6 +493,9 @@ Pengujian sistem dilakukan dengan menggunakan metode \textit{Black Box Testing} 
 \subsection{Pemeliharaan}
 Tahap pemeliharaan mencakup strategi perbaikan dan penyempurnaan sistem yang dilakukan pasca-implementasi dan operasional awal. Pemeliharaan bertujuan untuk mengatasi galat (\textit{bug}) atau perilaku anomali yang baru terdeteksi setelah sistem menghadapi beban penggunaan dan skenario data yang sebenarnya. Proses ini melibatkan perbaikan logika sistem secara iteratif, penyesuaian perhitungan atau sinkronisasi laporan otomatis berdasarkan laporan pengguna, dan optimalisasi performa antarmuka sistem. Selain pemeliharaan perbaikan (\textit{corrective maintenance}), tahap ini juga memfasilitasi penambahan atau modifikasi fitur-fitur minor berdasarkan umpan balik langsung dari dosen, asisten praktikum, dan mahasiswa untuk menjaga sistem agar tetap relevan dengan kebutuhan lingkungan akademik praktikum.
 
+\subsection{Jadwal Pelaksanaan}
+Adapun rincian waktu pelaksanaan untuk setiap tahapan pengembangan sistem EduLab divisualisasikan dalam bentuk \textit{Gantt Chart} yang dapat dilihat selengkapnya pada \textbf{Lampiran B}.
+
 \chapter{ANALISIS DAN PERANCANGAN SISTEM}
 
 \section{Analisis Sistem}
@@ -529,13 +541,18 @@ Tahap analisis kebutuhan sistem bertujuan untuk menjabarkan spesifikasi perangka
 
 \subsubsection{Kebutuhan Fungsional}
 Kebutuhan fungsional mendefinisikan fitur-fitur dan proses utama yang harus dapat dilakukan oleh sistem. Untuk sistem EduLab, kebutuhan fungsional meliputi:
-\begin{itemize}
-    \item Sistem harus mampu memfasilitasi autentikasi pengguna (dosen, asisten praktikum, mahasiswa) berdasarkan hak akses masing-masing.
-    \item Dosen dapat mengelola data kelas, kelompok praktikum, dan mengunggah modul pembelajaran.
-    \item Sistem harus memungkinkan mahasiswa mengunggah laporan praktikum secara terpusat dengan penegakan otomatis pada batas waktu (deadline).
-    \item Asisten praktikum dapat memberikan nilai langsung melalui sistem menggunakan rubrik penilaian yang telah disiapkan.
-    \item Sistem menyediakan fasilitas bagi mahasiswa untuk mengajukan sanggahan nilai yang nantinya ditinjau oleh asisten praktikum.
-\end{itemize}
+\begin{enumerate}[label=\arabic*.]
+    \item 3 Level Hak Akses: Dosen, Asisten, dan Mahasiswa.
+    \item Manajemen Kelas \& Kelompok Praktikum.
+    \item Bank Modul untuk unggah dan unduh materi.
+    \item Pengumpulan tugas dengan batas waktu (\textit{deadline}) otomatis.
+    \item Penilaian dan umpan balik tugas praktikum.
+    \item Presensi digital mahasiswa.
+    \item Rekap nilai otomatis berdasarkan bobot penilaian.
+    \item Sanggah nilai dan tindak lanjut revisi.
+    \item Status kelulusan praktikum secara visual.
+    \item Ekspor rekap nilai ke format CSV/Excel.
+\end{enumerate}
 
 \subsubsection{Kebutuhan Non-Fungsional}
 
@@ -785,7 +802,7 @@ Skenario \autoref{fig:col_login} menyoroti hubungan struktural di mana objek Sis
 
 \vspace{0.5em}
 2. Collaboration Diagram Upload Tugas
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{UML/col/CD_Upload_Tugas_fix.png}
     \caption{Collaboration Diagram - Skenario Upload Tugas}
@@ -846,44 +863,48 @@ Pada tahap implementasi fisik, konseptual ERD diterjemahkan menjadi kardinalitas
 
 \textit{Wireframe} merupakan sketsa purwarupa (\textit{prototype}) kasar dengan tingkat fidelitas rendah (\textit{low-fidelity}) yang difokuskan pada penataan kerangka struktural, hierarki informasi, dan tata letak elemen antarmuka sebelum tahap pewarnaan dan desain visual dilakukan.
 
-1. Wireframe Halaman Login Utama
 \begin{figure}[H]
+    \noindent 1. Wireframe Halaman Login Utama\par\vspace{0.5em}
     \centering
-    \includegraphics[width=0.7\textwidth]{wireframe/Wireframe - login.png}
+    \includegraphics[width=0.65\textwidth]{wireframe/Wireframe - login.png}
     \caption{Wireframe - Halaman Login Utama}
     \label{fig:wf_login}
 \end{figure}
 Berdasarkan Gambar \ref{fig:wf_login}, halaman masuk merupakan gerbang autentikasi awal untuk semua entitas di dalam sistem EduLab. Desain layar terbagi menjadi dua area utama: area sebelah kiri didedikasikan untuk ruang identitas visual (\textit{branding}, maskot, logo institusi), sedangkan sisi kanan difokuskan sepenuhnya untuk interaksi form pengisian kredensial pengguna dan tombol masuk (\textit{login}).
 
-2. Wireframe Pemilihan Peran (Conditional Login)
+\vspace{1em}
 \begin{figure}[H]
+    \noindent 2. Wireframe Pemilihan Peran (Conditional Login)\par\vspace{0.5em}
     \centering
-    \includegraphics[width=0.7\textwidth]{wireframe/Wireframe - login_conditional.png}
+    \includegraphics[width=0.65\textwidth]{wireframe/Wireframe - login_conditional.png}
     \caption{Wireframe - Pemilihan Peran Kondisional}
     \label{fig:wf_login_cond}
 \end{figure}
 Skenario pada Gambar \ref{fig:wf_login_cond} menampilkan antarmuka yang bersifat kondisional. Jendela dialog ini secara eksklusif hanya muncul bagi pengguna yang terdeteksi memiliki peran ganda di dalam basis data (sebagai contoh: seorang mahasiswa yang sedang menempuh mata kuliah, namun ia juga menjabat sebagai Asisten Dosen di praktikum lain). Setelah berhasil melewati layar \textit{login} utama, sistem mewajibkan pengguna untuk memilih ruang kerja mana yang ingin ia akses pada sesi tersebut, guna menyesuaikan muatan \textit{dashboard} dan menu yang akan ditampilkan.
+\FloatBarrier
 \subsection{Desain Tampilan}
-Setelah kerangka struktural disetujui, tahap selanjutnya adalah merancang \textit{high-fidelity prototype} yang memuat elemen visual secara utuh, seperti pewarnaan, tipografi, logo, dan tata letak akhir.
+Setelah kerangka struktural disetujui, tahap selanjutnya adalah merancang \textit{high-fidelity prototype} yang memuat elemen visual secara utuh, seperti pewarnaan, tipografi, logo, dan tata letak akhir. Desain antarmuka ini dibangun dengan berpedoman pada prinsip \textit{User Interface} (UI) dan \textit{User Experience} (UX) yang modern, guna memastikan kenyamanan interaksi pengguna. Pemilihan palet warna dan ornamen visual disesuaikan dengan identitas institusi (\textit{branding}) Universitas Halu Oleo untuk memberikan kesan resmi, profesional, sekaligus ramah pengguna. Selain keindahan visual, tata letak ini juga mempertimbangkan hierarki navigasi agar pengguna (baik mahasiswa maupun dosen) dapat menemukan fitur-fitur krusial secara intuitif tanpa membebani kognitif mereka. Konsistensi desain antarmuka antar-halaman ini diharapkan mampu meminimalisasi kesalahan operasi ( \textit{human error} ) saat sistem benar-benar diimplementasikan.
 
-1. Desain Tampilan Login Utama
 \begin{figure}[H]
+    \noindent 1. Desain Tampilan Login Utama\par\vspace{0.5em}
     \centering
-    \includegraphics[width=0.85\textwidth]{design/login.png}
+    \includegraphics[width=0.65\textwidth]{design/login.png}
     \caption{Desain Antarmuka - Halaman Login Utama}
     \label{fig:ui_login_main}
 \end{figure}
 Skenario pada Gambar \ref{fig:ui_login_main} memperlihatkan hasil pewarnaan visual dari \textit{wireframe} sebelumnya. Sisi kiri kini diisi oleh maskot edukasi interaktif dan logo Universitas Halu Oleo di atas latar belakang gambar lanskap kampus yang sedikit diredupkan (\textit{overlay}). Sementara sisi kanan berisi kotak \textit{login} solid putih yang menampung form interaktif berpenampilan \textit{modern-clean}.
 
-2. Desain Tampilan Pemilihan Peran (Conditional Login)
 \begin{figure}[H]
+    \noindent 2. Desain Tampilan Pemilihan Peran (Conditional Login)\par\vspace{0.5em}
     \centering
-    \includegraphics[width=0.85\textwidth]{design/login_conditional.png}
+    \includegraphics[width=0.65\textwidth]{design/login_conditional.png}
     \caption{Desain Antarmuka - Pemilihan Peran Kondisional}
     \label{fig:ui_login_cond}
 \end{figure}
+
 Skenario pada Gambar \ref{fig:ui_login_cond} menunjukkan antarmuka \textit{pop-up} (modal) yang muncul di atas layar gelap (\textit{overlay}). Desain ini secara khusus menyapa pengguna beserta instruksi untuk memilih peran (Asisten Dosen atau Mahasiswa) guna menyesuaikan hak akses mereka di sesi tersebut.
 
+\FloatBarrier
 \chapter{IMPLEMENTASI DAN PENGUJIAN}
 
 \section{Implementasi Sistem}
@@ -908,24 +929,25 @@ Berdasarkan Gambar \ref{fig:impl_db}, sistem berisi 10 tabel utama yang seluruhn
 \subsection{Implementasi Antarmuka}
 Implementasi antarmuka (\textit{Frontend Implementation}) membuktikan hasil \textit{coding} fungsional aplikasi berbasis web.
 
-1. Implementasi Halaman Login
 \begin{figure}[H]
+    \noindent 1. Implementasi Halaman Login\par\vspace{0.5em}
     \centering
-    \includegraphics[width=0.9\textwidth]{implementasi/login.png}
+    \includegraphics[width=0.65\textwidth]{implementasi/login.png}
     \caption{Implementasi Sistem - Halaman Login Utama}
     \label{fig:impl_login}
 \end{figure}
 Gambar \ref{fig:impl_login} adalah aplikasi web \textit{localhost} sungguhan yang mampu me-render secara sempurna elemen visual \textit{branding} kampus dan form input data.
 
-2. Implementasi Jendela Pemilihan Peran
 \begin{figure}[H]
+    \noindent 2. Implementasi Jendela Pemilihan Peran\par\vspace{0.5em}
     \centering
-    \includegraphics[width=0.9\textwidth]{implementasi/conditional.png}
+    \includegraphics[width=0.65\textwidth]{implementasi/conditional.png}
     \caption{Implementasi Sistem - Jendela Pemilihan Peran}
     \label{fig:impl_cond}
 \end{figure}
 Gambar \ref{fig:impl_cond} menunjukkan \textit{overlay} dialog \textit{Role Switcher} aslinya. Terdapat evolusi berupa penambahan tombol "Keluar" merah yang tak ada di desain asli, sebagai mitigasi jika sesi salah.
 
+\FloatBarrier
 \section{Pengujian}
 
 \subsection{Metode Pengujian (Black Box)}
@@ -1046,6 +1068,16 @@ Bagian ini memuat diagram DFD Level 1 untuk proses-proses tambahan yang mendukun
     \centering
     \includegraphics[width=0.85\textwidth]{dfd/level1_10.0.jpg}
     \caption{DFD Level 1 - Proses 10.0 Export Transkrip Nilai}
+\end{figure}
+
+\chapter{Jadwal Pelaksanaan Penelitian}
+
+Bagian ini memuat \textit{Gantt Chart} yang merepresentasikan rancangan jadwal pelaksanaan penelitian dan pengembangan sistem EduLab.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textheight, angle=90]{gantt/Untitled.jpg}
+    \caption{Gantt Chart Jadwal Pelaksanaan Penelitian}
 \end{figure}
 
 \end{appendices}
