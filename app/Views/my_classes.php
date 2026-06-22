@@ -491,10 +491,7 @@ $initials = substr($initials, 0, 2);
                                     <option value="Ganjil 2025/2026">Ganjil 2025/2026</option>
                                 </select>
                             </div>
-                            <div style="text-align: left;">
-                                <label class="form-label-buat">Jadwal Praktikum (Hari & Jam)</label>
-                                <input type="text" name="jadwal" class="form-input-buat" placeholder="Contoh: Senin 08:00 - 10:00" required style="width: 100%; padding: 8px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif;">
-                            </div>
+
                             <?php if (isset($listAsisten) && !empty($listAsisten)): ?>
                             <div style="text-align: left; display: flex; flex-direction: column; gap: 8px;">
                                 <label class="form-label-buat">Pilih Asisten (Bisa lebih dari 1)</label>

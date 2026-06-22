@@ -1396,10 +1396,10 @@ class DashboardController {
             $namaMatkul = trim($_POST['nama_matkul'] ?? '');
             $kodeKelas = trim($_POST['kode_kelas'] ?? '');
             $semester = trim($_POST['semester'] ?? '');
-            $jadwal = trim($_POST['jadwal'] ?? 'Belum Diatur');
+            $jadwal = 'Belum Diatur';
             $asistenIds = isset($_POST['asisten']) && is_array($_POST['asisten']) ? $_POST['asisten'] : [];
 
-            if (!empty($namaMatkul) && !empty($kodeKelas) && !empty($semester) && !empty($jadwal)) {
+            if (!empty($namaMatkul) && !empty($kodeKelas) && !empty($semester)) {
                 // Combine into a single string
                 $namaKelasUtuh = "$namaMatkul - Kelas $kodeKelas ($semester)";
 
