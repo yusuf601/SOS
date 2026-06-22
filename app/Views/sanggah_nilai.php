@@ -704,10 +704,14 @@ $initials = substr($initials, 0, 2);
                 $className = (is_array($classInfo) && isset($classInfo['Nama_Kelas'])) ? $classInfo['Nama_Kelas'] : 'Sistem Digital A';
                 
                 // Calculate dynamic stats
-                $avgScoreVal = $progress ? number_format((float)$progress['average_score'], 1) : '82.4';
-                $finalGradeVal = $progress ? number_format((float)$progress['average_score'], 1) : '83.0';
-                $presensiVal = ($attendanceRate !== null) ? round($attendanceRate) . '%' : '85%';
-                $isPass = $progress ? ((float)$progress['average_score'] >= 70) : true;
+                $numericPresensi = ($attendanceRate !== null) ? (float)$attendanceRate : 0.0;
+                $numericTugas = $progress ? (float)$progress['average_score'] : 0.0;
+                $calculatedFinalGrade = (0.3 * $numericPresensi) + (0.7 * $numericTugas);
+
+                $avgScoreVal = $progress ? number_format($numericTugas, 1) : '0.0';
+                $finalGradeVal = number_format($calculatedFinalGrade, 1);
+                $presensiVal = ($attendanceRate !== null) ? round($numericPresensi) . '%' : '0%';
+                $isPass = ($calculatedFinalGrade >= 70 && $numericPresensi >= 75);
 
                 $monthsIndo = [
                     1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',

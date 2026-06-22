@@ -374,6 +374,8 @@ foreach ($words as $w) {
 $initials = substr($initials, 0, 2);
 ?>
 
+
+
 <div class="dashboard-container">
     <!-- Sidebar -->
     <aside class="sidebar">

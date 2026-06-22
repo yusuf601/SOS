@@ -400,6 +400,25 @@ class DashboardController {
         $stmtDisputes->execute();
         $disputesCount = $stmtDisputes->fetch()['count'];
 
+        // 3b. Pending Verification Count
+        $queryPendingVerification = "SELECT COUNT(*) as count, m.ID_Modul, m.Judul_Modul, krs.ID_Kelas 
+                                     FROM Tabel_Pengumpulan p
+                                     JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                                     JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
+                                     JOIN Tabel_User u ON p.ID_User = u.ID_User
+                                     JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                                     JOIN Tabel_Plotting_Asisten pa ON krs.ID_Kelas = pa.ID_Kelas
+                                     LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                                     WHERE pa.ID_User = :userId AND (n.Status_Tugas IS NULL OR n.Status_Tugas = '')
+                                     GROUP BY m.ID_Modul, m.Judul_Modul, krs.ID_Kelas
+                                     ORDER BY count DESC LIMIT 1";
+        $stmtPendingVerif = $db->prepare($queryPendingVerification);
+        $stmtPendingVerif->bindParam(':userId', $userId);
+        $stmtPendingVerif->execute();
+        $pendingVerificationInfo = $stmtPendingVerif->fetch();
+
+
+
         // 4. Grading Progress per Group
         $activeModulId = null;
         $activeModulTitle = "";

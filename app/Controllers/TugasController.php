@@ -948,15 +948,18 @@ class TugasController {
 
         $allClasses = $this->kelasModel->getClassesByUserId($userId);
         
-        // Fetch all modules
-        $queryModuls = "SELECT * FROM Tabel_Modul ORDER BY ID_Modul ASC";
+        // Selected filter values (default to first class and first module if none selected)
+        $selectedClass = isset($_GET['class_id']) ? (int)$_GET['class_id'] : ($allClasses[0]['ID_Kelas'] ?? 0);
+
+        // Fetch modules for the selected class to prevent mixing modules across different classes
+        $queryModuls = "SELECT * FROM Tabel_Modul WHERE ID_Kelas = :classId ORDER BY ID_Modul ASC";
         $stmtModuls = $db->prepare($queryModuls);
+        $stmtModuls->bindParam(':classId', $selectedClass);
         $stmtModuls->execute();
         $moduls = $stmtModuls->fetchAll();
 
-        // Selected filter values (default to first class and first module if none selected)
-        $selectedClass = isset($_GET['class_id']) ? (int)$_GET['class_id'] : ($allClasses[0]['ID_Kelas'] ?? 0);
         $selectedModul = isset($_GET['modul_id']) ? (int)$_GET['modul_id'] : ($moduls[0]['ID_Modul'] ?? 0);
+
 
         // Fetch students and their submissions in the selected class and module
         $studentsData = [];

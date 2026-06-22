@@ -276,6 +276,7 @@ $initials = substr($initials, 0, 2);
                 if ($pendingAttendanceModule) $todoCount++;
                 if ($pendingGradesInfo) $todoCount++;
                 if ($disputesCount > 0) $todoCount++;
+                if ($pendingVerificationInfo && $pendingVerificationInfo['count'] > 0) $todoCount++;
                 ?>
                 <p class="welcome-subtext" style="font-size: 24px; font-weight: 500; color: #8A8A8A; margin: 0;">
                     Ada <?= $todoCount ?> hal yang perlu diselesaikan hari ini.
@@ -315,6 +316,23 @@ $initials = substr($initials, 0, 2);
                                     </div>
                                 </div>
                                 <a href="/rpl/public/index.php?action=presensi" style="background-color: #790000; color: #FFFFFF; font-size: 12px; font-weight: 600; text-decoration: none; padding: 8px 16px; border-radius: 8px; flex-shrink: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1;">Isi Sekarang</a>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Todo 1b: Verifikasi Tugas -->
+                        <?php if ($pendingVerificationInfo && $pendingVerificationInfo['count'] > 0): ?>
+                            <div style="background-color: #E0F2FE; border-radius: 8px; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 39px; height: 39px; background-color: #BAE6FD; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #0369A1; flex-shrink: 0;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                    </div>
+                                    <div>
+                                        <h4 style="font-size: 15px; font-weight: 500; color: #000000; margin: 0 0 2px 0;"><?= htmlspecialchars($pendingVerificationInfo['count']) ?> tugas belum diverifikasi</h4>
+                                        <span style="font-size: 12px; color: #8C8C8C;"><?= htmlspecialchars($pendingVerificationInfo['Judul_Modul']) ?></span>
+                                    </div>
+                                </div>
+                                <a href="/rpl/public/index.php?action=verifikasi_tugas&class_id=<?= $pendingVerificationInfo['ID_Kelas'] ?>&modul_id=<?= $pendingVerificationInfo['ID_Modul'] ?>" style="background-color: #0369A1; color: #FFFFFF; font-size: 12px; font-weight: 600; text-decoration: none; padding: 8px 16px; border-radius: 8px; flex-shrink: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1;">Verifikasi</a>
+
                             </div>
                         <?php endif; ?>
 
@@ -358,6 +376,7 @@ $initials = substr($initials, 0, 2);
                         <?php endif; ?>
                     </div>
                 </div>
+
 
                 <!-- Card: Progres Penilaian -->
                 <div style="background-color: #FFFFFF; border-radius: 15px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; gap: 16px;">

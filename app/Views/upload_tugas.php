@@ -646,8 +646,9 @@ $initials = substr($initials, 0, 2);
                             </span>
                             <span class="upload-text-primary">Klik atau seret file PDF laporan ke sini</span>
                             <span class="upload-text-secondary">Format PDF - Maks. 20MB</span>
-                            <input type="file" name="file_tugas" id="inlineFileInput" class="file-input-hidden" accept=".pdf" onchange="handleInlineFileSelect(event)">
                         </div>
+                        <input type="file" name="file_tugas" id="inlineFileInput" class="file-input-hidden" accept=".pdf" onchange="handleInlineFileSelect(event)">
+
 
                         <!-- Display selected file info -->
                         <div class="selected-file-display" id="inlineFileDisplay">
@@ -842,12 +843,12 @@ $initials = substr($initials, 0, 2);
         }
     }
 
-    const classSelector = document.getElementById('classSelector');
     if (classSelector) {
         classSelector.addEventListener('change', function() {
             window.location.href = '/rpl/public/index.php?action=upload_tugas&class_id=' + this.value;
         });
     }
+
 </script>
 
 
