@@ -222,17 +222,36 @@ $initials = substr($initials, 0, 2);
 
 
             <?php if ($role === 'Mahasiswa'): ?>
+                <?php if (isset($_SESSION['settings_success'])): ?>
+                    <div style="background-color: #D1FAE5; color: #065F46; padding: 12px 16px; border-radius: 8px; margin-bottom: 24px; font-weight: 500; border: 1px solid #34D399;">
+                        <?= htmlspecialchars($_SESSION['settings_success']) ?>
+                    </div>
+                    <?php unset($_SESSION['settings_success']); ?>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['settings_error'])): ?>
+                    <div style="background-color: #FEE2E2; color: #991B1B; padding: 12px 16px; border-radius: 8px; margin-bottom: 24px; font-weight: 500; border: 1px solid #F87171;">
+                        <?= htmlspecialchars($_SESSION['settings_error']) ?>
+                    </div>
+                    <?php unset($_SESSION['settings_error']); ?>
+                <?php endif; ?>
+
                 <!-- Section Header -->
-                <div class="section-heading-row">
+                <div class="section-heading-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                     <h3 class="section-title">Semua Kelas Praktikum</h3>
+                    <form method="POST" action="/rpl/public/index.php?action=join_class" style="display: flex; gap: 8px;">
+                        <input type="text" name="token_kelas" placeholder="Token Kelas..." required style="padding: 8px 12px; border: 1px solid #D9E2EC; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13px; width: 160px; outline: none;">
+                        <button type="submit" style="background-color: #29316B; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer; font-size: 13px; font-family: 'Inter', sans-serif; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#1e2450'" onmouseout="this.style.backgroundColor='#29316B'">Gabung</button>
+                    </form>
                 </div>
 
                 <!-- Classes Grid -->
                 <div class="classes-grid">
                     <?php if (empty($classesData)): ?>
-                        <p style="grid-column: 1 / -1; text-align: center; color: #9B9B9B; font-weight: 600; padding: 48px;">
-                            Anda belum terdaftar di kelas praktikum mana pun.
-                        </p>
+                        <div style="grid-column: 1 / -1; text-align: center; background: white; padding: 64px 24px; border-radius: 12px; border: 1px solid #E2E8F0;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#A0AEC0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                            <h3 style="margin: 0 0 8px 0; color: #2D3748; font-size: 18px; font-weight: 600;">Belum Ada Kelas</h3>
+                            <p style="margin: 0; color: #718096; font-size: 14px;">Anda belum bergabung di kelas praktikum manapun.<br>Silakan masukkan Token Kelas dari Dosen Anda di atas.</p>
+                        </div>
                     <?php else: ?>
                         <?php 
                         $headers = ['class-header-blue', 'class-header-orange', 'class-header-green'];
@@ -256,8 +275,7 @@ $initials = substr($initials, 0, 2);
                                         <span class="class-badge"><?= htmlspecialchars($classBadge) ?></span>
                                     </div>
                                     <div class="class-lecturer-info">
-                                        Dosen: <?= htmlspecialchars($cls['lecturer']) ?><br>
-                                        <?= htmlspecialchars($cls['schedule']) ?>
+                                        Dosen: <?= htmlspecialchars($cls['lecturer']) ?>
                                     </div>
                                 </div>
                                 <div class="class-card-body">
@@ -336,18 +354,8 @@ $initials = substr($initials, 0, 2);
                             <div style="position: relative; z-index: 2;">
                                 <h2 style="font-size: 40px; font-weight: bold; margin: 0 0 12px 0; text-align: left; line-height: 1.2;"><?= htmlspecialchars($cls['class_name']) ?></h2>
                                 
-                                <?php
-                                    $scheduleStr = $cls['schedule'];
-                                    $room = 'Lab';
-                                    if (preg_match('/\((.*?)\)/', $scheduleStr, $m)) {
-                                        $room = $m[1];
-                                    }
-                                    if (preg_match('/^(Senin|Selasa|Rabu|Kamis|Jumat|Sabtu|Minggu)\s+\d{2}:\d{2}/i', $scheduleStr, $matches)) {
-                                        $scheduleStr = $matches[0];
-                                    }
-                                ?>
                                 <p style="font-size: 20px; font-weight: 500; color: rgba(255, 255, 255, 0.68); margin: 0 0 32px 0; text-align: left;">
-                                    <?= htmlspecialchars($cls['lecturer'] ?? 'Tidak Ada Dosen') ?> · <?= htmlspecialchars($scheduleStr) ?> (<?= htmlspecialchars($room) ?>)
+                                    <?= htmlspecialchars($cls['lecturer'] ?? 'Tidak Ada Dosen') ?>
                                 </p>
 
                                 <!-- Stats Row -->
@@ -400,49 +408,41 @@ $initials = substr($initials, 0, 2);
                                     // Clean " (Kelas A)" or similar to match Figma "Sistem Digital A"
                                     $displayName = preg_replace('/\s*\(Kelas\s+([A-Z])\)/i', ' $1', $displayName);
 
-                                    $displaySchedule = $cls['schedule'];
-                                    if (preg_match('/^(Senin|Selasa|Rabu|Kamis|Jumat|Sabtu|Minggu)\s+\d{2}:\d{2}/i', $displaySchedule, $matches)) {
-                                        $displaySchedule = $matches[0];
-                                    }
-
-                                    $status = 'Belum Mulai';
-                                    $statusClass = 'badge-status-belum-mulai';
-                                    if ($cls['class_id'] == 1) {
+                                    if ($cls['total_students'] > 0) {
                                         $status = 'Aktif';
                                         $statusClass = 'badge-status-aktif';
-                                    } elseif ($cls['class_id'] == 2) {
-                                        $status = 'Aktif';
-                                        $statusClass = 'badge-status-aktif';
-                                    } elseif ($cls['class_id'] == 3) {
-                                        $status = 'Berlangsung';
-                                        $statusClass = 'badge-status-berlangsung';
+                                    } else {
+                                        $status = 'Belum Mulai';
+                                        $statusClass = 'badge-status-belum-mulai';
                                     }
 
                                     $displayClasses[] = [
                                         'name' => $displayName,
-                                        'schedule' => $displaySchedule,
+                                        'jadwal' => $cls['schedule'] ?? 'Belum Diatur',
                                         'mhs' => $cls['total_students'],
                                         'status' => $status,
-                                        'statusClass' => $statusClass
-                                    ];
-                                }
-
-                                // Fallback to match Figma exactly if we only have less than 4 classes
-                                if (count($displayClasses) < 4) {
-                                    $displayClasses[] = [
-                                        'name' => 'Basis Data B',
-                                        'schedule' => 'Jumat 08:00',
-                                        'mhs' => 37,
-                                        'status' => 'Belum Mulai',
-                                        'statusClass' => 'badge-status-belum-mulai'
+                                        'statusClass' => $statusClass,
+                                        'token' => $cls['token']
                                     ];
                                 }
 
                                 foreach ($displayClasses as $dc):
                                 ?>
                                     <tr>
-                                        <td style="font-weight: 500;"><?= htmlspecialchars($dc['name']) ?></td>
-                                        <td><?= htmlspecialchars($dc['schedule']) ?></td>
+                                        <td style="font-weight: 500;">
+                                            <?= htmlspecialchars($dc['name']) ?>
+                                            <br>
+                                            <span style="font-size: 11px; color: #6C6C6C; background: #F0F4F8; padding: 4px 8px; border-radius: 6px; border: 1px solid #D9E2EC; margin-top: 6px; display: inline-flex; align-items: center; gap: 6px; position: relative;">
+                                                Token: <strong style="color: #111827; letter-spacing: 1px; font-family: monospace; font-size: 12px;"><?= htmlspecialchars($dc['token'] ?? '-') ?></strong>
+                                                <?php if (($dc['token'] ?? '-') !== '-'): ?>
+                                                <button type="button" onclick="copyTokenFromList('<?= htmlspecialchars($dc['token']) ?>', this)" style="background: none; border: none; cursor: pointer; padding: 2px; color: #4F46E5; display: flex; align-items: center;" title="Salin Token">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                                </button>
+                                                <span class="copy-feedback" style="position: absolute; right: -50px; top: 50%; transform: translateY(-50%); font-size: 10px; color: #10B981; font-weight: bold; opacity: 0; transition: opacity 0.2s;">Tersalin!</span>
+                                                <?php endif; ?>
+                                            </span>
+                                        </td>
+                                        <td style="font-size: 13px; color: #4B5563;"><?= htmlspecialchars($dc['jadwal']) ?></td>
                                         <td><?= htmlspecialchars($dc['mhs']) ?></td>
                                         <td>
                                             <span class="badge-status <?= $dc['statusClass'] ?>">
@@ -483,15 +483,6 @@ $initials = substr($initials, 0, 2);
                                         <option value="E">Kelas E</option>
                                     </select>
                                 </div>
-                                <div style="text-align: left; flex: 1;">
-                                    <label class="form-label-buat">Angkatan Target</label>
-                                    <select name="angkatan" class="form-select-buat" required>
-                                        <option value="2024">Angkatan 2024</option>
-                                        <option value="2023">Angkatan 2023</option>
-                                        <option value="2022">Angkatan 2022</option>
-                                        <option value="2025">Angkatan 2025</option>
-                                    </select>
-                                </div>
                             </div>
                             <div style="text-align: left;">
                                 <label class="form-label-buat">Semester</label>
@@ -499,6 +490,10 @@ $initials = substr($initials, 0, 2);
                                     <option value="Genap 2025/2026">Genap 2025/2026</option>
                                     <option value="Ganjil 2025/2026">Ganjil 2025/2026</option>
                                 </select>
+                            </div>
+                            <div style="text-align: left;">
+                                <label class="form-label-buat">Jadwal Praktikum (Hari & Jam)</label>
+                                <input type="text" name="jadwal" class="form-input-buat" placeholder="Contoh: Senin 08:00 - 10:00" required style="width: 100%; padding: 8px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif;">
                             </div>
                             <?php if (isset($listAsisten) && !empty($listAsisten)): ?>
                             <div style="text-align: left; display: flex; flex-direction: column; gap: 8px;">
@@ -540,6 +535,62 @@ $initials = substr($initials, 0, 2);
 
     </div>
 </div>
+
+<!-- Token Popup Overlay -->
+<?php if (isset($_SESSION['new_class_token'])): ?>
+<div id="tokenPopup" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(4px);">
+    <div style="background: #FFFFFF; width: 420px; padding: 40px 32px; border-radius: 20px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); position: relative; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div style="width: 64px; height: 64px; background: #EEF2FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        </div>
+        <h2 style="margin: 0 0 12px 0; font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 700; color: #111827;">Kelas Berhasil Dibuat!</h2>
+        <p style="margin: 0 0 28px 0; font-family: 'Inter', sans-serif; font-size: 14px; color: #6B7280; line-height: 1.6;">Silakan salin dan bagikan token ini kepada Mahasiswa agar mereka dapat bergabung ke dalam kelas praktikum.</p>
+        
+        <div style="background: #F9FAFB; padding: 20px; border-radius: 12px; border: 2px dashed #D1D5DB; margin-bottom: 32px; position: relative; cursor: pointer; transition: all 0.2s;" onclick="copyToken('<?= htmlspecialchars($_SESSION['new_class_token']) ?>')" id="tokenBox" title="Klik untuk menyalin">
+            <span style="font-family: 'Courier New', Courier, monospace; font-size: 32px; font-weight: 800; letter-spacing: 6px; color: #1F2937;"><?= htmlspecialchars($_SESSION['new_class_token']) ?></span>
+            <div id="copyTooltip" style="position: absolute; top: -35px; left: 50%; transform: translateX(-50%); background: #111827; color: white; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; opacity: 0; transition: opacity 0.2s; pointer-events: none; white-space: nowrap; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">✓ Token Tersalin!</div>
+        </div>
+
+        <button onclick="document.getElementById('tokenPopup').style.display='none'" style="background: #364087; color: white; border: none; padding: 14px 24px; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s;" onmouseover="this.style.background='#2b336b'" onmouseout="this.style.background='#364087'">Saya Sudah Menyalinnya</button>
+    </div>
+</div>
+<style>
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+#tokenBox:hover { 
+    background: #F3F4F6 !important; 
+    border-color: #9CA3AF !important;
+}
+#tokenBox:active {
+    transform: scale(0.98);
+}
+</style>
+<?php unset($_SESSION['new_class_token']); ?>
+<?php endif; ?>
+
+<script>
+function copyToken(token) {
+    navigator.clipboard.writeText(token).then(() => {
+        const tooltip = document.getElementById('copyTooltip');
+        if (tooltip) {
+            tooltip.style.opacity = '1';
+            setTimeout(() => { tooltip.style.opacity = '0'; }, 2000);
+        }
+    });
+}
+
+function copyTokenFromList(token, btn) {
+    navigator.clipboard.writeText(token).then(() => {
+        const feedback = btn.nextElementSibling;
+        if (feedback && feedback.classList.contains('copy-feedback')) {
+            feedback.style.opacity = '1';
+            setTimeout(() => { feedback.style.opacity = '0'; }, 2000);
+        }
+    });
+}
+</script>
 
 </body>
 </html>

@@ -747,56 +747,6 @@ $initials = substr($initials, 0, 2);
                         </div>
                     </article>
 
-                    <!-- Card 2: Jaringan Komputer A (Static/Placeholder warning card) -->
-                    <article class="matkul-card">
-                        <span class="matkul-card-title">Jarigan Komputer A</span>
-                        <div class="matkul-status-box matkul-status-danger">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                            <span>Di atas nilai minimum (70)</span>
-                        </div>
-                        <hr class="matkul-stats-divider">
-                        <div class="matkul-stat-row">
-                            <span class="matkul-stat-label">Rata-rata tugas</span>
-                            <span class="matkul-stat-val">55.0</span>
-                        </div>
-                        <div class="matkul-stat-row">
-                            <span class="matkul-stat-label">Nilai presensi (30%)</span>
-                            <span class="matkul-stat-val">58%</span>
-                        </div>
-                        <div class="matkul-final-grade-block">
-                            <span class="matkul-final-label">Nilai Akhir</span>
-                            <span class="matkul-final-val" style="color: #DC2626;">56.0</span>
-                        </div>
-                    </article>
-
-                    <!-- Card 3: Student's Actual Class Duplicate (matching mockup) -->
-                    <article class="matkul-card">
-                        <span class="matkul-card-title"><?= htmlspecialchars($className) ?></span>
-                        <?php if ($isPass): ?>
-                            <div class="matkul-status-box matkul-status-success">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                <span>Di atas nilai minimum (70)</span>
-                            </div>
-                        <?php else: ?>
-                            <div class="matkul-status-box matkul-status-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                                <span>Di bawah nilai minimum (70)</span>
-                            </div>
-                        <?php endif; ?>
-                        <hr class="matkul-stats-divider">
-                        <div class="matkul-stat-row">
-                            <span class="matkul-stat-label">Rata-rata tugas</span>
-                            <span class="matkul-stat-val"><?= $avgScoreVal ?></span>
-                        </div>
-                        <div class="matkul-stat-row">
-                            <span class="matkul-stat-label">Nilai presensi (30%)</span>
-                            <span class="matkul-stat-val"><?= $presensiVal ?></span>
-                        </div>
-                        <div class="matkul-final-grade-block">
-                            <span class="matkul-final-label">Nilai Akhir</span>
-                            <span class="matkul-final-val" style="color: <?= $isPass ? '#16A34A' : '#DC2626' ?>;"><?= $finalGradeVal ?></span>
-                        </div>
-                    </article>
                 </div>
 
                 <section class="sanggah-card">
@@ -1006,7 +956,7 @@ $initials = substr($initials, 0, 2);
                                         <form method="POST" action="/rpl/public/index.php?action=respond_sanggah" class="card-form-asdos">
                                             <input type="hidden" name="id_nilai" value="<?= $grade['ID_Nilai'] ?>">
                                             <input type="hidden" name="nilai_baru" class="card-hidden-score" value="<?= htmlspecialchars($grade['Nilai_Angka']) ?>">
-                                            <input type="hidden" name="status_tugas" value="Selesai">
+                                            <input type="hidden" name="status_tugas" class="hidden-status" value="Revisi">
                                             
                                             <div class="card-textarea-wrapper">
                                                 <label class="card-textarea-label">Responmu:</label>
@@ -1109,6 +1059,11 @@ $initials = substr($initials, 0, 2);
                         const hiddenScoreInput = activeFormElement.querySelector('.card-hidden-score');
                         if (hiddenScoreInput) {
                             hiddenScoreInput.value = newScore;
+                        }
+                        
+                        const hiddenStatusInput = activeFormElement.querySelector('.hidden-status');
+                        if (hiddenStatusInput) {
+                            hiddenStatusInput.value = 'Selesai';
                         }
                         
                         activeFormElement.submit();

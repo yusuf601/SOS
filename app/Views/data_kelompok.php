@@ -286,6 +286,18 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
         <div class="workspace-content" style="padding: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                 <h2 style="font-size: 20px; font-weight: 600; color: #000000; margin: 0;">Data Kelompok Praktikum</h2>
+                
+                <?php if (!empty($myClasses)): ?>
+                <div class="select-custom-wrapper" style="width: 250px;">
+                    <select class="form-control-custom select-custom" onchange="window.location.href='/rpl/public/index.php?action=data_kelompok&class_id=' + this.value">
+                        <?php foreach ($myClasses as $cls): ?>
+                            <option value="<?= htmlspecialchars($cls['ID_Kelas']) ?>" <?= ($selectedClassId == $cls['ID_Kelas']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($cls['Nama_Kelas']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <?php endif; ?>
             </div>
 
             <?php if (isset($_SESSION['group_success'])): ?>

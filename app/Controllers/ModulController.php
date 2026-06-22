@@ -32,8 +32,8 @@ class ModulController {
             // Get student's class
             $classInfo = $this->kelasModel->getStudentClass($userId);
         } else {
-            // Dosen/Asisten see all classes
-            $allClasses = $this->kelasModel->getAllClasses();
+            // Dosen/Asisten see only their plotted classes
+            $allClasses = $this->kelasModel->getClassesByUserId($userId);
         }
 
         // Fetch plotted lecturer and assistant details
@@ -62,13 +62,7 @@ class ModulController {
             }
 
             // Dummy schedule mapped for layout
-            if ($classId == 1) {
-                $schedule = "Senin 08:00 - 10:00 (Lab Komputer 2)";
-            } elseif ($classId == 2) {
-                $schedule = "Rabu 10:00 - 12:00 (Lab Komputer 1)";
-            } else {
-                $schedule = "Jumat 14:00 - 16:00 (Lab Jaringan)";
-            }
+            $schedule = $classInfo['Jadwal'] ?? "Belum Diatur";
         }
 
         // Fetch all modules enriched with task deadline and student grade

@@ -249,7 +249,7 @@ $initials = substr($initials, 0, 2);
             <!-- User profile summary -->
             <div class="sidebar-user-card">
                 <div class="sidebar-user-name"><?= htmlspecialchars($fullName) ?></div>
-                <div class=\"sidebar-user-role\"><?php $r = $role ?? $_SESSION['active_role'] ?? ''; echo $r === 'Asisten' ? 'Asisten Dosen' : htmlspecialchars($r); ?></div>
+                <div class="sidebar-user-role"><?php $r = $role ?? $_SESSION['active_role'] ?? ''; echo $r === 'Asisten' ? 'Asisten Dosen' : htmlspecialchars($r); ?></div>
             </div>
 
             <!-- Menu Navigation -->

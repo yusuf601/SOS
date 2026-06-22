@@ -441,7 +441,16 @@ $monthsIndo = [
                 } else if (selected.Status_Tugas === 'Revisi') {
                     IndonesianStatus = 'Revisi';
                 }
-                warningMsg.innerText = 'Modul ini sudah disanggah (Status: ' + IndonesianStatus + ')';
+                let msgHtml = 'Modul ini sudah disanggah (Status: <strong>' + IndonesianStatus + '</strong>)';
+                if (selected.Tanggapan_Sanggah) {
+                    // Make sure to escape HTML if needed, but since it's just text from DB we can insert it.
+                    // For security, using innerText was safer, but we can combine.
+                    const escapeHtml = (unsafe) => {
+                        return (unsafe || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+                    };
+                    msgHtml += '<br><br><div style="font-size: 13px; color: #475569; background-color: #ffffff; padding: 8px 12px; border-radius: 6px; border: 1px solid #E2E8F0; border-left: 3px solid #364087; margin-top: 8px;"><strong>Tanggapan Asisten:</strong><br>' + escapeHtml(selected.Tanggapan_Sanggah) + '</div>';
+                }
+                warningMsg.innerHTML = msgHtml;
             } else {
                 textareaAlasan.value = '';
                 textareaAlasan.disabled = false;

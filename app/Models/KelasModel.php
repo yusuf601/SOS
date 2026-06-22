@@ -42,26 +42,40 @@ class KelasModel {
         return $stmt->fetchAll();
     }
 
-    // Get student's class info
-    public function getStudentClass($userId) {
-        $query = "SELECT k.*, kp.Nama_Kelompok, kp.ID_Kelompok FROM Tabel_Kelas k
-                  JOIN Tabel_Kelompok kp ON k.ID_Kelas = kp.ID_Kelas
-                  JOIN Tabel_User u ON kp.ID_Kelompok = u.ID_Kelompok
-                  WHERE u.ID_User = :userId LIMIT 1";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':userId', $userId);
-        $stmt->execute();
-        return $stmt->fetch();
+    // Get all classes a student has joined
+    public function getStudentClasses($userId) {
+        try {
+            $query = "SELECT k.*, kp.Nama_Kelompok, kp.ID_Kelompok FROM Tabel_Kelas k
+                      JOIN Tabel_KRS krs ON k.ID_Kelas = krs.ID_Kelas
+                      LEFT JOIN Tabel_Kelompok kp ON krs.ID_Kelompok = kp.ID_Kelompok
+                      WHERE krs.ID_User = :userId
+                      ORDER BY k.ID_Kelas DESC";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            // Return empty array if Tabel_KRS doesn't exist yet (before migration)
+            return [];
+        }
     }
-    // Create a new class and assign the Dosen to it
-    public function createClass($namaKelas, $userId) {
+
+    // Get the first class a student has joined (for backward compatibility)
+    public function getStudentClass($userId) {
+        $classes = $this->getStudentClasses($userId);
+        return !empty($classes) ? $classes[0] : null;
+    }
+    // Create a new class and assign the Dosen and chosen Asisten to it
+    public function createClass($namaKelas, $userId, $asistenIds = [], $token = null, $jadwal = null) {
         try {
             $this->db->beginTransaction();
 
             // Insert new class
-            $queryKelas = "INSERT INTO Tabel_Kelas (Nama_Kelas) VALUES (:namaKelas)";
+            $queryKelas = "INSERT INTO Tabel_Kelas (Nama_Kelas, Token_Kelas, Jadwal) VALUES (:namaKelas, :token, :jadwal)";
             $stmtKelas = $this->db->prepare($queryKelas);
             $stmtKelas->bindParam(':namaKelas', $namaKelas);
+            $stmtKelas->bindParam(':token', $token);
+            $stmtKelas->bindParam(':jadwal', $jadwal);
             $stmtKelas->execute();
             $newClassId = $this->db->lastInsertId();
 
@@ -71,6 +85,26 @@ class KelasModel {
             $stmtPlotting->bindParam(':userId', $userId);
             $stmtPlotting->bindParam(':classId', $newClassId);
             $stmtPlotting->execute();
+
+            // Assign chosen Asistens to the new class and promote them
+            if (!empty($asistenIds)) {
+                $queryAsisten = "INSERT INTO Tabel_Plotting_Asisten (ID_User, ID_Kelas) VALUES (:asistenId, :classId)";
+                $stmtAsisten = $this->db->prepare($queryAsisten);
+                
+                $queryPromote = "UPDATE Tabel_User SET Role = 'Asisten' WHERE ID_User = :asistenId AND Role = 'Mahasiswa'";
+                $stmtPromote = $this->db->prepare($queryPromote);
+
+                foreach ($asistenIds as $asistenId) {
+                    // 1. Assign to class
+                    $stmtAsisten->bindParam(':asistenId', $asistenId);
+                    $stmtAsisten->bindParam(':classId', $newClassId);
+                    $stmtAsisten->execute();
+
+                    // 2. Promote to Asisten
+                    $stmtPromote->bindParam(':asistenId', $asistenId);
+                    $stmtPromote->execute();
+                }
+            }
 
             $this->db->commit();
             return true;

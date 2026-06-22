@@ -31,7 +31,7 @@ class TugasController {
         if ($role === 'Mahasiswa') {
             $classInfo = $this->kelasModel->getStudentClass($userId);
         } else {
-            $allClasses = $this->kelasModel->getAllClasses();
+            $allClasses = $this->kelasModel->getClassesByUserId($userId);
         }
 
         // Fetch all tasks
@@ -40,6 +40,14 @@ class TugasController {
         // Get submission details for each task
         $tasksData = [];
         foreach ($allTugas as $tugas) {
+            if ($role === 'Mahasiswa' && $classInfo) {
+                $className = $classInfo['Nama_Kelas'] ?? '';
+                $searchClass = trim(str_ireplace(['Praktikum', 'Kelas'], '', $className));
+                if (stripos($tugas['Judul_Modul'], $searchClass) === false) {
+                    continue; // Skip tasks not belonging to the student's class
+                }
+            }
+
             $submission = $this->tugasModel->getSubmission($tugas['ID_Tugas'], $userId);
             $tasksData[] = [
                 'tugas' => $tugas,
@@ -48,7 +56,7 @@ class TugasController {
         }
 
         // Fetch student progress metrics
-        $progress = $this->tugasModel->getStudentProgress($userId);
+        $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['Nama_Kelas'] ?? null);
 
         require_once __DIR__ . '/../Views/upload_tugas.php';
     }
@@ -259,20 +267,22 @@ class TugasController {
                     $queryStudents = "SELECT u.ID_User, u.Username as NIM, u.Nama_Lengkap,
                                              p.Status_Kehadiran, p.ID_Presensi
                                       FROM Tabel_User u
+                                      JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
                                       LEFT JOIN Tabel_Presensi p ON u.ID_User = p.ID_User AND p.ID_Modul = :modulId
-                                      WHERE u.ID_Kelompok = :groupId AND u.Role = 'Mahasiswa'
+                                      WHERE krs.ID_Kelompok = :groupId AND u.Role = 'Mahasiswa'
                                       ORDER BY u.Username ASC";
                     $stmtStudents = $db->prepare($queryStudents);
                     $stmtStudents->bindParam(':modulId', $selectedModul);
                     $stmtStudents->bindParam(':groupId', $groupId);
                     $stmtStudents->execute();
                     $students = $stmtStudents->fetchAll();
-
-                    $groupsData[] = [
-                        'group_id' => $groupId,
-                        'group_name' => $g['Nama_Kelompok'],
-                        'students' => $students
-                    ];
+                    if (count($students) > 0) {
+                        $groupsData[] = [
+                            'group_id' => $groupId,
+                            'group_name' => $g['Nama_Kelompok'],
+                            'students' => $students
+                        ];
+                    }
                 }
             }
         }
@@ -355,6 +365,9 @@ class TugasController {
         if ($role === 'Mahasiswa') {
             $classInfo = $this->kelasModel->getStudentClass($userId);
             
+            $searchClass = trim(str_ireplace(['Praktikum', 'Kelas'], '', $classInfo['Nama_Kelas'] ?? ''));
+            $searchParam = "%" . $searchClass . "%";
+
             $query = "SELECT p.ID_Pengumpulan, p.File_Tugas, p.Waktu_Submit, 
                              t.Instruksi_Tugas, m.Judul_Modul,
                              n.Nilai_Angka, n.Feedback, n.Status_Tugas, n.Alasan_Sanggah, n.Tanggapan_Sanggah, n.ID_Nilai
@@ -362,10 +375,11 @@ class TugasController {
                       JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                       JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
                       JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
-                      WHERE p.ID_User = :userId
+                      WHERE p.ID_User = :userId AND m.Judul_Modul LIKE :searchClass
                       ORDER BY m.ID_Modul ASC";
             $stmt = $db->prepare($query);
             $stmt->bindParam(':userId', $userId);
+            $stmt->bindParam(':searchClass', $searchParam);
             $stmt->execute();
             $gradesList = $stmt->fetchAll();
 
@@ -380,8 +394,9 @@ class TugasController {
                              n.Nilai_Angka, n.Feedback, n.Status_Tugas, n.Alasan_Sanggah, n.Tanggapan_Sanggah, n.ID_Nilai
                       FROM Tabel_Pengumpulan p
                       JOIN Tabel_User u ON p.ID_User = u.ID_User
-                      JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
-                      JOIN Tabel_Kelas k ON kl.ID_Kelas = k.ID_Kelas
+                      JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                      JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                      JOIN Tabel_Kelas k ON krs.ID_Kelas = k.ID_Kelas
                       JOIN Tabel_Plotting_Asisten pa ON k.ID_Kelas = pa.ID_Kelas
                       JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                       JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
@@ -416,16 +431,20 @@ class TugasController {
         // Fetch student class info
         $classInfo = $this->kelasModel->getStudentClass($userId);
 
+        $searchClass = trim(str_ireplace(['Praktikum', 'Kelas'], '', $classInfo['Nama_Kelas'] ?? ''));
+        $searchParam = "%" . $searchClass . "%";
+
         // Fetch student grades list (only graded ones)
-        $query = "SELECT p.ID_Pengumpulan, m.Judul_Modul, m.ID_Modul, n.Nilai_Angka, n.ID_Nilai, n.Alasan_Sanggah, n.Status_Tugas
+        $query = "SELECT p.ID_Pengumpulan, m.Judul_Modul, m.ID_Modul, n.Nilai_Angka, n.ID_Nilai, n.Alasan_Sanggah, n.Status_Tugas, n.Tanggapan_Sanggah
                   FROM Tabel_Pengumpulan p
                   JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                   JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
                   JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
-                  WHERE p.ID_User = :userId
+                  WHERE p.ID_User = :userId AND m.Judul_Modul LIKE :searchClass
                   ORDER BY m.ID_Modul ASC";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':searchClass', $searchParam);
         $stmt->execute();
         $gradesList = $stmt->fetchAll();
 
@@ -436,12 +455,14 @@ class TugasController {
                          JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
                          JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
                          JOIN Tabel_User u ON p.ID_User = u.ID_User
-                         JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
-                         JOIN Tabel_Kelas k ON kl.ID_Kelas = k.ID_Kelas
-                         WHERE p.ID_User = :userId AND n.Alasan_Sanggah IS NOT NULL
+                         JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                         JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                         JOIN Tabel_Kelas k ON krs.ID_Kelas = k.ID_Kelas
+                         WHERE p.ID_User = :userId AND n.Alasan_Sanggah IS NOT NULL AND m.Judul_Modul LIKE :searchClass
                          ORDER BY n.ID_Nilai DESC";
         $stmtHistory = $db->prepare($historyQuery);
         $stmtHistory->bindParam(':userId', $userId);
+        $stmtHistory->bindParam(':searchClass', $searchParam);
         $stmtHistory->execute();
         $appealsHistory = $stmtHistory->fetchAll();
 
@@ -548,35 +569,10 @@ class TugasController {
         if ($role === 'Mahasiswa') {
             $classInfo = $this->kelasModel->getStudentClass($userId);
             
-            // Initial mockup classes data matching the mockup layout
-            $studentClassesData = [
-                [
-                    'name' => 'Sistem Digital',
-                    'presensi' => 85,
-                    'tugas' => 86,
-                    'nilai_akhir' => 89,
-                    'status' => 'Lulus'
-                ],
-                [
-                    'name' => 'Praktikum Basis Data',
-                    'presensi' => 86,
-                    'tugas' => 86,
-                    'nilai_akhir' => 89,
-                    'status' => 'Lulus'
-                ],
-                [
-                    'name' => 'Praktikum Pemrograman Web',
-                    'presensi' => 58,
-                    'tugas' => 55,
-                    'nilai_akhir' => 56,
-                    'status' => 'Mengulang'
-                ]
-            ];
-
             if ($classInfo) {
                 $classId = $classInfo['ID_Kelas'];
 
-                $progress = $this->tugasModel->getStudentProgress($userId);
+                $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['Nama_Kelas']);
                 require_once __DIR__ . '/../Models/UserModel.php';
                 $attendanceRate = (new UserModel())->getAttendanceRate($userId);
 
@@ -621,32 +617,17 @@ class TugasController {
                 $stmtFinal->execute();
                 $finalGrades = $stmtFinal->fetch();
 
-                 // Merge actual dynamic class information into mockup array
-                $actualClassName = $classInfo['Nama_Kelas'];
-                $found = false;
-                foreach ($studentClassesData as &$cData) {
-                    if (stripos($actualClassName, $cData['name']) !== false || stripos($cData['name'], $actualClassName) !== false) {
-                        $cData['name'] = $actualClassName;
-                        $cData['presensi'] = $actualPresensi;
-                        $cData['tugas'] = $actualTugas;
-                        $cData['nilai_akhir'] = $actualNilaiAkhir;
-                        $cData['status'] = $statusKelulusan;
-                        $found = true;
-                        break;
-                    }
-                }
-                if (!$found) {
-                    array_unshift($studentClassesData, [
-                        'name' => $actualClassName,
-                        'presensi' => $actualPresensi,
-                        'tugas' => $actualTugas,
-                        'nilai_akhir' => $actualNilaiAkhir,
-                        'status' => $statusKelulusan
-                    ]);
-                }
+                // Build the single real class entry for the student
+                $studentClassesData = [[
+                    'name'       => $classInfo['Nama_Kelas'],
+                    'presensi'   => $actualPresensi,
+                    'tugas'      => $actualTugas,
+                    'nilai_akhir'=> $actualNilaiAkhir,
+                    'status'     => $statusKelulusan
+                ]];
             }
         } elseif ($role === 'Dosen') {
-            $allClasses = $this->kelasModel->getAllClasses();
+            $allClasses = $this->kelasModel->getClassesByUserId($userId);
         } else {
             // Staff view: Fetch grading queue and final grades
             $queryQueue = "SELECT p.ID_Pengumpulan, p.File_Tugas, p.Waktu_Submit, 
@@ -655,8 +636,9 @@ class TugasController {
                                   n.Nilai_Angka, n.Feedback, n.Status_Tugas, n.ID_Nilai
                            FROM Tabel_Pengumpulan p
                            JOIN Tabel_User u ON p.ID_User = u.ID_User
-                           JOIN Tabel_Kelompok kp ON u.ID_Kelompok = kp.ID_Kelompok
-                           JOIN Tabel_Kelas k ON kp.ID_Kelas = k.ID_Kelas
+                           JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                           JOIN Tabel_Kelompok kp ON krs.ID_Kelompok = kp.ID_Kelompok
+                           JOIN Tabel_Kelas k ON krs.ID_Kelas = k.ID_Kelas
                            JOIN Tabel_Plotting_Asisten pa ON k.ID_Kelas = pa.ID_Kelas
                            JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                            JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
@@ -719,25 +701,56 @@ class TugasController {
         
         $db = (new Database())->getConnection();
 
+        $userId = $_SESSION['user_id'];
+
         if ($classId === 'all') {
-            $query = "SELECT na.*, u.Nama_Lengkap as Nama_Mahasiswa, u.Username as NIM, k.Nama_Kelas
-                      FROM Tabel_Nilai_Akhir na
-                      JOIN Tabel_User u ON na.ID_User = u.ID_User
-                      JOIN Tabel_Kelas k ON na.ID_Kelas = k.ID_Kelas
+            $query = "SELECT u.ID_User, u.Nama_Lengkap as Nama_Mahasiswa, u.Username as NIM, k.Nama_Kelas, k.ID_Kelas
+                      FROM Tabel_User u
+                      JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                      JOIN Tabel_Kelompok kp ON krs.ID_Kelompok = kp.ID_Kelompok
+                      JOIN Tabel_Kelas k ON krs.ID_Kelas = k.ID_Kelas
+                      JOIN Tabel_Plotting_Asisten pa ON k.ID_Kelas = pa.ID_Kelas
+                      WHERE u.Role = 'Mahasiswa' AND pa.ID_User = :userId
                       ORDER BY k.Nama_Kelas ASC, u.Username ASC";
             $stmt = $db->prepare($query);
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         } else {
-            $query = "SELECT na.*, u.Nama_Lengkap as Nama_Mahasiswa, u.Username as NIM, k.Nama_Kelas
-                      FROM Tabel_Nilai_Akhir na
-                      JOIN Tabel_User u ON na.ID_User = u.ID_User
-                      JOIN Tabel_Kelas k ON na.ID_Kelas = k.ID_Kelas
-                      WHERE na.ID_Kelas = :classId
+            $query = "SELECT u.ID_User, u.Nama_Lengkap as Nama_Mahasiswa, u.Username as NIM, k.Nama_Kelas, k.ID_Kelas
+                      FROM Tabel_User u
+                      JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                      JOIN Tabel_Kelompok kp ON krs.ID_Kelompok = kp.ID_Kelompok
+                      JOIN Tabel_Kelas k ON krs.ID_Kelas = k.ID_Kelas
+                      JOIN Tabel_Plotting_Asisten pa ON k.ID_Kelas = pa.ID_Kelas
+                      WHERE k.ID_Kelas = :classId AND u.Role = 'Mahasiswa' AND pa.ID_User = :userId
                       ORDER BY u.Username ASC";
             $stmt = $db->prepare($query);
             $stmt->bindParam(':classId', $classId, PDO::PARAM_INT);
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         }
         $stmt->execute();
-        $grades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        require_once __DIR__ . '/../Models/UserModel.php';
+        $userModel = new UserModel();
+        
+        $grades = [];
+        foreach ($students as $stu) {
+            $progress = $this->tugasModel->getStudentProgress($stu['ID_User']);
+            $attendanceRate = $userModel->getAttendanceRate($stu['ID_User']);
+            
+            $actualPresensi = $attendanceRate !== null ? round($attendanceRate) : 0;
+            $actualTugas = $progress ? round($progress['average_score']) : 0;
+            $actualNilaiAkhir = round((0.3 * $actualPresensi) + (0.7 * $actualTugas));
+            $statusKelulusan = ($actualNilaiAkhir >= 70 && $actualPresensi >= 75) ? 'Lulus' : 'Mengulang';
+
+            $grades[] = [
+                'NIM' => $stu['NIM'],
+                'Nama_Mahasiswa' => $stu['Nama_Mahasiswa'],
+                'Nama_Kelas' => $stu['Nama_Kelas'],
+                'Nilai_Akhir' => $actualNilaiAkhir,
+                'Status_Kelulusan' => $statusKelulusan
+            ];
+        }
 
         if ($format === 'csv') {
             $filename = 'rekap_nilai_' . ($classId === 'all' ? 'semua_kelas' : 'kelas_' . $classId) . '_' . date('YmdHis') . '.csv';
@@ -841,10 +854,11 @@ class TugasController {
                                      p.ID_Pengumpulan, p.File_Tugas, p.Waktu_Submit,
                                      n.Nilai_Angka, n.Feedback, n.Status_Tugas, n.ID_Nilai
                               FROM Tabel_User u
-                              JOIN Tabel_Kelompok kp ON u.ID_Kelompok = kp.ID_Kelompok
+                              JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                              JOIN Tabel_Kelompok kp ON krs.ID_Kelompok = kp.ID_Kelompok
                               LEFT JOIN Tabel_Pengumpulan p ON u.ID_User = p.ID_User AND p.ID_Tugas = :tugasId
                               LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
-                              WHERE kp.ID_Kelas = :classId AND u.Role = 'Mahasiswa'
+                              WHERE krs.ID_Kelas = :classId AND u.Role = 'Mahasiswa'
                               ORDER BY kp.Nama_Kelompok ASC, u.Username ASC";
             $stmtStudents = $db->prepare($queryStudents);
             $stmtStudents->bindParam(':classId', $selectedClass);

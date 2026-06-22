@@ -35,7 +35,7 @@ $initials = substr($initials, 0, 2);
             <!-- User profile summary -->
             <div class="sidebar-user-card">
                 <div class="sidebar-user-name"><?= htmlspecialchars($fullName) ?></div>
-                <div class=\"sidebar-user-role\"><?php $r = $role ?? $_SESSION['active_role'] ?? ''; echo $r === 'Asisten' ? 'Asisten Dosen' : htmlspecialchars($r); ?></div>
+                <div class="sidebar-user-role"><?php $r = $role ?? $_SESSION['active_role'] ?? ''; echo $r === 'Asisten' ? 'Asisten Dosen' : htmlspecialchars($r); ?></div>
             </div>
 
             <!-- Menu Navigation -->
@@ -55,6 +55,19 @@ $initials = substr($initials, 0, 2);
 
         <!-- Content Body -->
         <div class="workspace-content">
+            <?php if (isset($_SESSION['settings_success'])): ?>
+                <div style="background-color: #D1FAE5; color: #065F46; padding: 12px 16px; border-radius: 8px; margin-bottom: 24px; font-weight: 500; border: 1px solid #34D399;">
+                    <?= htmlspecialchars($_SESSION['settings_success']) ?>
+                </div>
+                <?php unset($_SESSION['settings_success']); ?>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['settings_error'])): ?>
+                <div style="background-color: #FEE2E2; color: #991B1B; padding: 12px 16px; border-radius: 8px; margin-bottom: 24px; font-weight: 500; border: 1px solid #F87171;">
+                    <?= htmlspecialchars($_SESSION['settings_error']) ?>
+                </div>
+                <?php unset($_SESSION['settings_error']); ?>
+            <?php endif; ?>
+
             <!-- Welcome Banner -->
             <section class="welcome-banner">
                 <h1 class="welcome-text">Selamat datang, <?= htmlspecialchars($firstName) ?>!</h1>
@@ -110,162 +123,86 @@ $initials = substr($initials, 0, 2);
 
             <!-- Classes Section -->
             <section style="display: flex; flex-direction: column; gap: 20px;">
-                <div class="section-heading-row">
-                    <h3 class="section-title">Kelas Saya</h3>
-                    <a href="/rpl/public/index.php?action=my_classes" class="btn-see-all">
-                        <span>Lihat semua</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </a>
+                <div class="section-heading-row" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 class="section-title" style="margin: 0;">Kelas Saya</h3>
+                    <div style="display: flex; gap: 16px; align-items: center;">
+                        <form method="POST" action="/rpl/public/index.php?action=join_class" style="display: flex; gap: 8px; margin: 0;">
+                            <input type="text" name="token_kelas" placeholder="Token Kelas..." required style="padding: 8px 12px; border: 1px solid #D9E2EC; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13px; width: 150px; outline: none;">
+                            <button type="submit" style="background-color: #29316B; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer; font-size: 13px; font-family: 'Inter', sans-serif; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#1e2450'" onmouseout="this.style.backgroundColor='#29316B'">Gabung</button>
+                        </form>
+                        <a href="/rpl/public/index.php?action=my_classes" class="btn-see-all" style="margin: 0;">
+                            <span>Lihat semua</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Classes Grid -->
                 <div class="classes-grid">
-                    <!-- Class Card 1: Web Development (Blue Header) -->
-                    <div class="class-card">
-                        <div class="class-card-header class-header-blue">
-                            <div class="class-card-title-row">
-                                <h4 class="class-title">Praktikum Pemrograman Web</h4>
-                                <span class="class-badge">Kelas A</span>
-                            </div>
-                            <div class="class-lecturer-info">
-                                Prof. Albert Wesker<br>Senin 08:00-10:00 (Lab Komputer 2)
-                            </div>
-                        </div>
-                        <div class="class-card-body">
-                            <!-- Progress Section -->
-                            <div class="progress-section">
-                                <div class="progress-label-row">
-                                    <span class="progress-title">Progress pertemuan</span>
-                                    <span class="progress-ratio">7/16</span>
+                    <?php if (!empty($classCards)): ?>
+                        <?php foreach ($classCards as $cardData): 
+                            $cInfo = $cardData['classInfo'];
+                            $cProg = $cardData['progress'];
+                        ?>
+                        <!-- Dynamic Class Card from DB -->
+                        <div class="class-card">
+                            <div class="class-card-header class-header-blue">
+                                <div class="class-card-title-row">
+                                    <h4 class="class-title"><?= htmlspecialchars($cInfo['Nama_Kelas']) ?></h4>
+                                    <span class="class-badge"><?= htmlspecialchars($cInfo['Nama_Kelompok'] ?? 'Kelompok') ?></span>
                                 </div>
-                                <div class="progress-bar-bg">
-                                    <div class="progress-bar-fill" style="width: 43.75%;"></div>
+                                <div class="class-lecturer-info">
+                                    <?= htmlspecialchars($_SESSION['user_name'] ?? 'Mahasiswa') ?>
                                 </div>
                             </div>
-                            
-                            <!-- Badges Stack -->
-                            <div class="card-tags-row">
-                                <span class="tag-pill tag-kelompok">Kel. 1</span>
-                                <span class="tag-pill tag-asdos">Asdos: Chris R.</span>
-                                <span class="tag-pill tag-deadline">Tugas due 2 hari</span>
-                            </div>
-                            
-                            <!-- Footer Specs -->
-                            <div class="card-footer-stats">
-                                <div class="footer-stat-item">
-                                    <!-- User Icon -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                    <span>32 mhs</span>
+                            <div class="class-card-body">
+                                <!-- Progress Section -->
+                                <div class="progress-section">
+                                    <div class="progress-label-row">
+                                        <span class="progress-title">Progress tugas</span>
+                                        <span class="progress-ratio"><?= $cProg['submitted'] ?? 0 ?>/<?= $cProg['total_tasks'] ?? 0 ?></span>
+                                    </div>
+                                    <?php
+                                    $pct = ($cProg['total_tasks'] ?? 0) > 0
+                                        ? round(($cProg['submitted'] / $cProg['total_tasks']) * 100, 1)
+                                        : 0;
+                                    ?>
+                                    <div class="progress-bar-bg">
+                                        <div class="progress-bar-fill" style="width: <?= $pct ?>%;"></div>
+                                    </div>
                                 </div>
-                                <div class="footer-stat-item">
-                                    <!-- Folder Icon -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                                    <span>7 modul</span>
-                                </div>
-                                <div class="footer-stat-item">
-                                    <!-- Target Icon -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-                                    <span>Min. lulus: 70</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Class Card 2: Web Development (Orange Header) -->
-                    <div class="class-card">
-                        <div class="class-card-header class-header-orange">
-                            <div class="class-card-title-row">
-                                <h4 class="class-title">Praktikum Pemrograman Web</h4>
-                                <span class="class-badge">Kelas A</span>
-                            </div>
-                            <div class="class-lecturer-info">
-                                Prof. Albert Wesker<br>Senin 08:00-10:00 (Lab Komputer 2)
-                            </div>
-                        </div>
-                        <div class="class-card-body">
-                            <!-- Progress Section -->
-                            <div class="progress-section">
-                                <div class="progress-label-row">
-                                    <span class="progress-title">Progress pertemuan</span>
-                                    <span class="progress-ratio">7/16</span>
+                                <!-- Badges Stack -->
+                                <div class="card-tags-row">
+                                    <span class="tag-pill tag-kelompok"><?= htmlspecialchars($cInfo['Nama_Kelompok'] ?? '-') ?></span>
+                                    <span class="tag-pill tag-deadline">Tugas pending: <?= $cProg['pending'] ?? 0 ?></span>
                                 </div>
-                                <div class="progress-bar-bg">
-                                    <div class="progress-bar-fill" style="width: 43.75%;"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Badges Stack -->
-                            <div class="card-tags-row">
-                                <span class="tag-pill tag-kelompok">Kel. 1</span>
-                                <span class="tag-pill tag-asdos">Asdos: Chris R.</span>
-                                <span class="tag-pill tag-deadline">Tugas due 2 hari</span>
-                            </div>
-                            
-                            <!-- Footer Specs -->
-                            <div class="card-footer-stats">
-                                <div class="footer-stat-item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                    <span>32 mhs</span>
-                                </div>
-                                <div class="footer-stat-item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                                    <span>7 modul</span>
-                                </div>
-                                <div class="footer-stat-item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-                                    <span>Min. lulus: 70</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Class Card 3: Web Development (Green Header) -->
-                    <div class="class-card">
-                        <div class="class-card-header class-header-green">
-                            <div class="class-card-title-row">
-                                <h4 class="class-title">Praktikum Pemrograman Web</h4>
-                                <span class="class-badge">Kelas A</span>
-                            </div>
-                            <div class="class-lecturer-info">
-                                Prof. Albert Wesker<br>Senin 08:00-10:00 (Lab Komputer 2)
-                            </div>
-                        </div>
-                        <div class="class-card-body">
-                            <!-- Progress Section -->
-                            <div class="progress-section">
-                                <div class="progress-label-row">
-                                    <span class="progress-title">Progress pertemuan</span>
-                                    <span class="progress-ratio">7/16</span>
-                                </div>
-                                <div class="progress-bar-bg">
-                                    <div class="progress-bar-fill" style="width: 43.75%;"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Badges Stack -->
-                            <div class="card-tags-row">
-                                <span class="tag-pill tag-kelompok">Kel. 1</span>
-                                <span class="tag-pill tag-asdos">Asdos: Chris R.</span>
-                                <span class="tag-pill tag-deadline">Tugas due 2 hari</span>
-                            </div>
-                            
-                            <!-- Footer Specs -->
-                            <div class="card-footer-stats">
-                                <div class="footer-stat-item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                    <span>32 mhs</span>
-                                </div>
-                                <div class="footer-stat-item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                                    <span>7 modul</span>
-                                </div>
-                                <div class="footer-stat-item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-                                    <span>Min. lulus: 70</span>
+                                <!-- Footer Specs -->
+                                <div class="card-footer-stats">
+                                    <div class="footer-stat-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                        <span>Nilai rata-rata: <?= $cProg['average_score'] ?? '-' ?></span>
+                                    </div>
+                                    <div class="footer-stat-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                                        <span>Min. lulus: 70</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                    <div style="color: #94A3B8; font-size: 14px; padding: 20px 0;">
+                        Anda belum terdaftar di kelas manapun.
                     </div>
+                    <?php endif; ?>
+                </div>
+
+
+
+
+
                 </div>
             </section>
         </div>

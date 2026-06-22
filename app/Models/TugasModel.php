@@ -95,18 +95,38 @@ class TugasModel {
     }
 
     // Calculate student progress metrics
-    public function getStudentProgress($userId) {
-        // 1. Get total active tasks
+    public function getStudentProgress($userId, $className = null) {
+        // 1. Get tasks filtered by class if className given
         $allTugas = $this->getAllTugas();
+        if ($className) {
+            $searchKey = trim(str_ireplace(['Praktikum', 'Kelas'], '', $className));
+            $allTugas = array_filter($allTugas, function($t) use ($searchKey) {
+                return stripos($t['Judul_Modul'], $searchKey) !== false;
+            });
+        }
         $totalTasks = count($allTugas);
 
-        // 2. Query student submissions and grades
-        $query = "SELECT p.ID_Tugas, n.Nilai_Angka, n.Status_Tugas 
-                  FROM Tabel_Pengumpulan p
-                  LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
-                  WHERE p.ID_User = :userId";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':userId', $userId);
+        // 2. Query student submissions and grades - filtered by class
+        if ($className) {
+            $searchKey = trim(str_ireplace(['Praktikum', 'Kelas'], '', $className));
+            $searchParam = '%' . $searchKey . '%';
+            $query = "SELECT p.ID_Tugas, n.Nilai_Angka, n.Status_Tugas 
+                      FROM Tabel_Pengumpulan p
+                      JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
+                      JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
+                      LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                      WHERE p.ID_User = :userId AND m.Judul_Modul LIKE :searchClass";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->bindParam(':searchClass', $searchParam);
+        } else {
+            $query = "SELECT p.ID_Tugas, n.Nilai_Angka, n.Status_Tugas 
+                      FROM Tabel_Pengumpulan p
+                      LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
+                      WHERE p.ID_User = :userId";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':userId', $userId);
+        }
         $stmt->execute();
         $submissions = $stmt->fetchAll();
 
@@ -120,7 +140,6 @@ class TugasModel {
                 $gradedCount++;
                 $totalScore += (float)$sub['Nilai_Angka'];
             } elseif ($sub['Status_Tugas'] === 'Revisi' || $sub['Status_Tugas'] === 'Sanggah') {
-                // Treated as graded or special
                 $gradedCount++;
                 $totalScore += (float)$sub['Nilai_Angka'];
             } else {

@@ -56,8 +56,8 @@ $r = $role ?? $_SESSION['active_role'] ?? '';
                     </span>
                 </a>
             </li>
-            <li class="sidebar-menu-item <?= $currentAction === 'bank_modul' ? 'active' : '' ?>">
-                <a href="/rpl/public/index.php?action=bank_modul">
+            <li class="sidebar-menu-item <?= $currentAction === 'kelulusan' ? 'active' : '' ?>">
+                <a href="/rpl/public/index.php?action=kelulusan">
                     <span>Input Nilai</span>
                     <span class="sidebar-menu-item-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
@@ -199,4 +199,5 @@ $r = $role ?? $_SESSION['active_role'] ?? '';
             </a>
         </li>
     </ul>
+</nav>
 </div>

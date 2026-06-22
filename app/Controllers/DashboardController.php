@@ -27,21 +27,57 @@ class DashboardController {
 
         $userId = $_SESSION['user_id'];
 
-        // Get class info
-        $classInfo = $this->kelasModel->getStudentClass($userId);
+        // Get all classes
+        $studentClasses = $this->kelasModel->getStudentClasses($userId);
+        $classInfo = !empty($studentClasses) ? $studentClasses[0] : null;
         
-        // Get progress metrics
-        $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['Nama_Kelas'] ?? null);
+        $progress = [
+            'pending' => 0,
+            'missing' => 0,
+            'average_score' => 0,
+            'total_tasks' => 0,
+            'submitted' => 0
+        ];
+        $attendanceRate = 0;
 
-        // Get attendance rate
-        $attendanceRate = $this->userModel->getAttendanceRate($userId);
+        $classCards = [];
+        if (!empty($studentClasses)) {
+            $totalScore = 0;
+            $gradedCount = 0;
+
+            foreach ($studentClasses as $cls) {
+                $p = $this->tugasModel->getStudentProgress($userId, $cls['Nama_Kelas']);
+                $progress['pending'] += $p['pending'] ?? 0;
+                $progress['missing'] += $p['missing'] ?? 0;
+                $progress['total_tasks'] += $p['total_tasks'] ?? 0;
+                $progress['submitted'] += $p['submitted'] ?? 0;
+                
+                if (!empty($p['graded'])) {
+                    $totalScore += ($p['average_score'] * $p['graded']);
+                    $gradedCount += $p['graded'];
+                }
+
+                // Per-class info for cards
+                $classCards[] = [
+                    'classInfo' => $cls,
+                    'progress' => $p
+                ];
+            }
+
+            if ($gradedCount > 0) {
+                $progress['average_score'] = round($totalScore / $gradedCount, 1);
+            }
+            
+            // Get attendance rate
+            $attendanceRate = $this->userModel->getAttendanceRate($userId);
+        }
 
         // Add metrics to array for easy view binding
         $stats = [
-            'active_classes' => $classInfo ? 1 : 0,
+            'active_classes' => count($studentClasses),
             'pending_tasks'  => $progress['pending'] + $progress['missing'], // Total tasks incomplete or awaiting review
-            'average_score'  => $progress['average_score'],
-            'attendance'     => $attendanceRate
+            'average_score'  => $progress['average_score'] ?: '-',
+            'attendance'     => $attendanceRate ?: '-'
         ];
 
         // Pass variables to view
@@ -61,9 +97,10 @@ class DashboardController {
         $classesData = [];
 
         if ($role === 'Mahasiswa') {
-            // Get student's class
-            $classInfo = $this->kelasModel->getStudentClass($userId);
-            if ($classInfo) {
+            // Get student's classes
+            $studentClasses = $this->kelasModel->getStudentClasses($userId);
+            
+            foreach ($studentClasses as $classInfo) {
                 // Fetch dynamic stats for this class
                 $db = (new Database())->getConnection();
                 
@@ -93,34 +130,17 @@ class DashboardController {
                 $totalModuls = $stmtModuls->fetch()['total'];
 
                 // Get count of students in this class
-                // First get all groups for this class
-                $queryGroups = "SELECT ID_Kelompok FROM Tabel_Kelompok WHERE ID_Kelas = :classId";
-                $stmtGroups = $db->prepare($queryGroups);
-                $stmtGroups->bindParam(':classId', $classInfo['ID_Kelas']);
-                $stmtGroups->execute();
-                $groups = $stmtGroups->fetchAll(PDO::FETCH_COLUMN);
-
-                $totalStudents = 0;
-                if (!empty($groups)) {
-                    $inQuery = implode(',', array_map('intval', $groups));
-                    $queryStudents = "SELECT COUNT(*) as total FROM Tabel_User WHERE ID_Kelompok IN ($inQuery) AND Role = 'Mahasiswa'";
-                    $stmtStudents = $db->prepare($queryStudents);
-                    $stmtStudents->execute();
-                    $totalStudents = $stmtStudents->fetch()['total'];
-                }
+                $queryStudents = "SELECT COUNT(*) as total FROM Tabel_KRS WHERE ID_Kelas = :classId";
+                $stmtStudents = $db->prepare($queryStudents);
+                $stmtStudents->bindParam(':classId', $classInfo['ID_Kelas']);
+                $stmtStudents->execute();
+                $totalStudents = $stmtStudents->fetch()['total'];
 
                 // Get progress metrics
                 $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['Nama_Kelas']);
 
                 // Set dummy schedule based on classId
-                $schedule = "Belum Diatur";
-                if ($classInfo['ID_Kelas'] == 1) {
-                    $schedule = "Senin 08:00 - 10:00 (Lab Komputer 2)";
-                } elseif ($classInfo['ID_Kelas'] == 2) {
-                    $schedule = "Rabu 10:00 - 12:00 (Lab Komputer 1)";
-                } else {
-                    $schedule = "Jumat 14:00 - 16:00 (Lab Jaringan)";
-                }
+                $schedule = $classInfo['Jadwal'] ?? "Belum Diatur";
 
                 $classesData[] = [
                     'class_id' => $classInfo['ID_Kelas'],
@@ -131,7 +151,6 @@ class DashboardController {
                     'schedule' => $schedule,
                     'total_students' => $totalStudents,
                     'total_modules' => $totalModuls,
-                    'total_groups' => count($groups),
                     'submitted_tasks' => $progress['submitted'],
                     'total_tasks' => $progress['total_tasks']
                 ];
@@ -174,21 +193,17 @@ class DashboardController {
                 $totalModuls = $stmtModuls->fetch()['total'];
 
                 // Get count of students
+                $queryStudents = "SELECT COUNT(*) as total FROM Tabel_KRS krs JOIN Tabel_User u ON krs.ID_User = u.ID_User WHERE krs.ID_Kelas = :classId AND u.Role = 'Mahasiswa'";
+                $stmtStudents = $db->prepare($queryStudents);
+                $stmtStudents->bindParam(':classId', $cls['ID_Kelas']);
+                $stmtStudents->execute();
+                $totalStudents = $stmtStudents->fetch()['total'];
+
                 $queryGroups = "SELECT ID_Kelompok, Nama_Kelompok FROM Tabel_Kelompok WHERE ID_Kelas = :classId";
                 $stmtGroups = $db->prepare($queryGroups);
                 $stmtGroups->bindParam(':classId', $cls['ID_Kelas']);
                 $stmtGroups->execute();
                 $groupsData = $stmtGroups->fetchAll();
-                $groups = array_column($groupsData, 'ID_Kelompok');
-
-                $totalStudents = 0;
-                if (!empty($groups)) {
-                    $inQuery = implode(',', array_map('intval', $groups));
-                    $queryStudents = "SELECT COUNT(*) as total FROM Tabel_User WHERE ID_Kelompok IN ($inQuery) AND Role = 'Mahasiswa'";
-                    $stmtStudents = $db->prepare($queryStudents);
-                    $stmtStudents->execute();
-                    $totalStudents = $stmtStudents->fetch()['total'];
-                }
 
                 // Format group names (e.g. "Kelompok 1 & 2")
                 $groupNamesFormatted = 'Tidak Ada Kelompok';
@@ -211,14 +226,7 @@ class DashboardController {
                 }
 
                 // Set schedule
-                $schedule = "Belum Diatur";
-                if ($cls['ID_Kelas'] == 1) {
-                    $schedule = "Senin 08:00 - 10:00 (Lab Komputer 2)";
-                } elseif ($cls['ID_Kelas'] == 2) {
-                    $schedule = "Rabu 10:00 - 12:00 (Lab Komputer 1)";
-                } else {
-                    $schedule = "Jumat 14:00 - 16:00 (Lab Jaringan)";
-                }
+                $schedule = $cls['Jadwal'] ?? "Belum Diatur";
 
                 $classesData[] = [
                     'class_id' => $cls['ID_Kelas'],
@@ -231,7 +239,8 @@ class DashboardController {
                     'total_modules' => $totalModuls,
                     'total_groups' => count($groupsData),
                     'submitted_tasks' => 0,
-                    'total_tasks' => 0
+                    'total_tasks' => 0,
+                    'token' => $cls['Token_Kelas'] ?? '-'
                 ];
             }
         }
@@ -277,8 +286,9 @@ class DashboardController {
                                  n.Nilai_Angka, n.Feedback, n.Status_Tugas, n.ID_Nilai
                           FROM Tabel_Pengumpulan p
                           JOIN Tabel_User u ON p.ID_User = u.ID_User
-                          JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
-                          JOIN Tabel_Kelas k ON kl.ID_Kelas = k.ID_Kelas
+                          JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                          JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                          JOIN Tabel_Kelas k ON krs.ID_Kelas = k.ID_Kelas
                           JOIN Tabel_Plotting_Asisten pa ON k.ID_Kelas = pa.ID_Kelas
                           JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                           JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
@@ -340,8 +350,9 @@ class DashboardController {
             }
 
             $queryMissingPresensi = "SELECT COUNT(*) as count FROM Tabel_User u
-                                     JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
-                                     JOIN Tabel_Plotting_Asisten pa ON kl.ID_Kelas = pa.ID_Kelas
+                                     JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                                     JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                                     JOIN Tabel_Plotting_Asisten pa ON krs.ID_Kelas = pa.ID_Kelas
                                      WHERE pa.ID_User = :userId AND u.Role = 'Mahasiswa'
                                        AND u.ID_User NOT IN (
                                            SELECT ID_User FROM Tabel_Presensi WHERE ID_Modul = :modulId
@@ -363,8 +374,9 @@ class DashboardController {
                                JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                                JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
                                JOIN Tabel_User u ON p.ID_User = u.ID_User
-                               JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
-                               JOIN Tabel_Plotting_Asisten pa ON kl.ID_Kelas = pa.ID_Kelas
+                               JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                               JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                               JOIN Tabel_Plotting_Asisten pa ON krs.ID_Kelas = pa.ID_Kelas
                                LEFT JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
                                WHERE pa.ID_User = :userId AND (n.Nilai_Angka IS NULL)
                                GROUP BY m.ID_Modul, m.Judul_Modul
@@ -378,8 +390,9 @@ class DashboardController {
         $queryDisputesCount = "SELECT COUNT(*) as count FROM Tabel_Nilai n
                                JOIN Tabel_Pengumpulan p ON n.ID_Pengumpulan = p.ID_Pengumpulan
                                JOIN Tabel_User u ON p.ID_User = u.ID_User
-                               JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
-                               JOIN Tabel_Plotting_Asisten pa ON kl.ID_Kelas = pa.ID_Kelas
+                               JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                               JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                               JOIN Tabel_Plotting_Asisten pa ON krs.ID_Kelas = pa.ID_Kelas
                                WHERE pa.ID_User = :userId AND n.Status_Tugas = 'Sanggah' AND (n.Tanggapan_Sanggah IS NULL OR n.Tanggapan_Sanggah = '')";
         $stmtDisputes = $db->prepare($queryDisputesCount);
         $stmtDisputes->bindParam(':userId', $userId);
@@ -436,7 +449,7 @@ class DashboardController {
             $groupsList = $stmtGroups->fetchAll();
 
             foreach ($groupsList as $g) {
-                $queryTotalStud = "SELECT COUNT(*) as count FROM Tabel_User WHERE ID_Kelompok = :groupId AND Role = 'Mahasiswa'";
+                $queryTotalStud = "SELECT COUNT(*) as count FROM Tabel_KRS WHERE ID_Kelompok = :groupId";
                 $stmtTotalStud = $db->prepare($queryTotalStud);
                 $stmtTotalStud->bindValue(':groupId', $g['ID_Kelompok']);
                 $stmtTotalStud->execute();
@@ -446,8 +459,9 @@ class DashboardController {
                                     FROM Tabel_Pengumpulan p
                                     JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                                     JOIN Tabel_User u ON p.ID_User = u.ID_User
+                                    JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
                                     JOIN Tabel_Nilai n ON p.ID_Pengumpulan = n.ID_Pengumpulan
-                                    WHERE u.ID_Kelompok = :groupId 
+                                    WHERE krs.ID_Kelompok = :groupId 
                                       AND t.ID_Modul = :modulId 
                                       AND n.Nilai_Angka IS NOT NULL";
                 $stmtGradedStud = $db->prepare($queryGradedStud);
@@ -468,8 +482,9 @@ class DashboardController {
                          JOIN Tabel_Pengumpulan p ON n.ID_Pengumpulan = p.ID_Pengumpulan
                          JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                          JOIN Tabel_User u ON p.ID_User = u.ID_User
-                         JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
-                         JOIN Tabel_Plotting_Asisten pa ON kl.ID_Kelas = pa.ID_Kelas
+                         JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                         JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                         JOIN Tabel_Plotting_Asisten pa ON krs.ID_Kelas = pa.ID_Kelas
                          WHERE pa.ID_User = :userId AND t.ID_Modul = :modulId AND n.Nilai_Angka IS NOT NULL";
                          
             $stmtAvg = $db->prepare($queryAvg);
@@ -486,8 +501,9 @@ class DashboardController {
                 $classIds = array_column($classes, 'ID_Kelas');
                 $inQuery = implode(',', array_map('intval', $classIds));
                 $queryTotalStudents = "SELECT COUNT(*) as total FROM Tabel_User u
-                                       JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
-                                       WHERE kl.ID_Kelas IN ($inQuery) AND u.Role = 'Mahasiswa'";
+                                       JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                                       JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                                       WHERE krs.ID_Kelas IN ($inQuery) AND u.Role = 'Mahasiswa'";
                 $stmtTotalStudents = $db->prepare($queryTotalStudents);
                 $stmtTotalStudents->execute();
                 $totalStudents = $stmtTotalStudents->fetch()['total'];
@@ -512,8 +528,9 @@ class DashboardController {
 
                 // Get Student Count
                 $queryStudCount = "SELECT COUNT(*) as count FROM Tabel_User u
-                                   JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
-                                   WHERE kl.ID_Kelas = :classId AND u.Role = 'Mahasiswa'";
+                                   JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                                   JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                                   WHERE krs.ID_Kelas = :classId AND u.Role = 'Mahasiswa'";
                 $stmtStudCount = $db->prepare($queryStudCount);
                 $stmtStudCount->bindParam(':classId', $classId);
                 $stmtStudCount->execute();
@@ -521,8 +538,9 @@ class DashboardController {
 
                 // Get Repeating & Passed Students Count (Dynamic calculation based on average score)
                 $queryStudentsInClass = "SELECT u.ID_User FROM Tabel_User u
-                                         JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
-                                         WHERE kl.ID_Kelas = :classId AND u.Role = 'Mahasiswa'";
+                                         JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                                         JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                                         WHERE krs.ID_Kelas = :classId AND u.Role = 'Mahasiswa'";
                 $stmtStudentsInClass = $db->prepare($queryStudentsInClass);
                 $stmtStudentsInClass->bindParam(':classId', $classId);
                 $stmtStudentsInClass->execute();
@@ -556,18 +574,8 @@ class DashboardController {
                 }
 
                 // Set schedule and meetings progress
-                $schedule = "Senin 08:00";
+                $schedule = $cls['Jadwal'] ?? "Belum Diatur";
                 $pertemuanProgress = "6/8";
-                if ($classId == 1) {
-                    $schedule = "Senin 08:00";
-                    $pertemuanProgress = "6/8";
-                } elseif ($classId == 2) {
-                    $schedule = "Rabu 10:00";
-                    $pertemuanProgress = "6/8";
-                } else {
-                    $schedule = "Jumat 14:00";
-                    $pertemuanProgress = "6/8";
-                }
 
                 $classesDetail[] = [
                     'class_id' => $classId,
@@ -592,8 +600,9 @@ class DashboardController {
                             JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                             JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
                             JOIN Tabel_User us ON p.ID_User = us.ID_User
-                            JOIN Tabel_Kelompok kl ON us.ID_Kelompok = kl.ID_Kelompok
-                            JOIN Tabel_Kelas k ON kl.ID_Kelas = k.ID_Kelas
+                            JOIN Tabel_KRS krs ON us.ID_User = krs.ID_User
+                            JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                            JOIN Tabel_Kelas k ON krs.ID_Kelas = k.ID_Kelas
                             JOIN Tabel_Plotting_Asisten pa ON k.ID_Kelas = pa.ID_Kelas
                             WHERE pa.ID_User = :userId AND n.Nilai_Angka IS NOT NULL
                             ORDER BY n.ID_Nilai DESC LIMIT 5";
@@ -617,8 +626,9 @@ class DashboardController {
                               JOIN Tabel_User us ON p.ID_User = us.ID_User
                               JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas
                               JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
-                              JOIN Tabel_Kelompok kl ON us.ID_Kelompok = kl.ID_Kelompok
-                              JOIN Tabel_Kelas k ON kl.ID_Kelas = k.ID_Kelas
+                              JOIN Tabel_KRS krs ON us.ID_User = krs.ID_User
+                              JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                              JOIN Tabel_Kelas k ON krs.ID_Kelas = k.ID_Kelas
                               JOIN Tabel_Plotting_Asisten pa ON k.ID_Kelas = pa.ID_Kelas
                               WHERE pa.ID_User = :userId AND n.Status_Tugas = 'Sanggah'
                               ORDER BY n.ID_Nilai DESC LIMIT 5";
@@ -764,9 +774,10 @@ class DashboardController {
                     $groupId = $g['ID_Kelompok'];
 
                     // 3. Fetch students in this group
-                    $queryStudents = "SELECT ID_User, Username, Nama_Lengkap FROM Tabel_User 
-                                      WHERE ID_Kelompok = :groupId AND Role = 'Mahasiswa' 
-                                      ORDER BY Username ASC";
+                    $queryStudents = "SELECT u.ID_User, u.Username, u.Nama_Lengkap FROM Tabel_User u
+                                      JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                                      WHERE krs.ID_Kelompok = :groupId AND u.Role = 'Mahasiswa' 
+                                      ORDER BY u.Username ASC";
                     $stmtStudents = $db->prepare($queryStudents);
                     $stmtStudents->bindParam(':groupId', $groupId);
                     $stmtStudents->execute();
@@ -812,7 +823,7 @@ class DashboardController {
                     }
 
                     // Fetch assistant assigned to this group (by checking ID_Kelompok in Tabel_User)
-                    $queryGroupAsdos = "SELECT Nama_Lengkap FROM Tabel_User WHERE ID_Kelompok = :groupId AND Role = 'Asisten' LIMIT 1";
+                    $queryGroupAsdos = "SELECT u.Nama_Lengkap FROM Tabel_Plotting_Asisten pa JOIN Tabel_User u ON pa.ID_User = u.ID_User WHERE pa.ID_Kelompok = :groupId AND u.Role = 'Asisten' LIMIT 1";
                     $stmtGroupAsdos = $db->prepare($queryGroupAsdos);
                     $stmtGroupAsdos->bindParam(':groupId', $groupId);
                     $stmtGroupAsdos->execute();
@@ -865,36 +876,30 @@ class DashboardController {
         $classId = isset($_GET['class_id']) ? (int)$_GET['class_id'] : 0;
         $db = (new Database())->getConnection();
 
-        // Retrieve Angkatan from Nama_Kelas (e.g. "[Angkatan 2024]")
-        $angkatanFilter = '';
-        if ($classId > 0) {
-            $stmtClass = $db->prepare("SELECT Nama_Kelas FROM Tabel_Kelas WHERE ID_Kelas = :classId");
-            $stmtClass->bindParam(':classId', $classId, PDO::PARAM_INT);
-            $stmtClass->execute();
-            $classData = $stmtClass->fetch(PDO::FETCH_ASSOC);
-            
-            if ($classData && preg_match('/\[Angkatan\s+(\d{4})\]/i', $classData['Nama_Kelas'], $matches)) {
-                $angkatanYear = $matches[1];
-                // Extract last 2 digits for NIM matching (e.g. 2024 -> 24)
-                $angkatanFilter = substr($angkatanYear, -2);
+        // Fetch Mahasiswa who have joined the class (via token in Tabel_KRS) 
+        // AND who are not yet assigned to any group.
+        try {
+            if ($classId > 0) {
+                $query = "SELECT u.ID_User, u.Username as NIM, u.Nama_Lengkap 
+                          FROM Tabel_User u
+                          JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                          WHERE krs.ID_Kelas = :classId 
+                          AND u.Role = 'Mahasiswa' 
+                          AND krs.ID_Kelompok IS NULL";
+                $stmt = $db->prepare($query);
+                $stmt->bindParam(':classId', $classId, PDO::PARAM_INT);
+            } else {
+                // Fallback (shouldn't happen in normal flow if class_id is passed)
+                $query = "SELECT u.ID_User, u.Username as NIM, u.Nama_Lengkap FROM Tabel_User u JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User WHERE u.Role = 'Mahasiswa' AND krs.ID_Kelompok IS NULL";
+                $stmt = $db->prepare($query);
             }
+            
+            $stmt->execute();
+            $mahasiswa = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // If Tabel_KRS doesn't exist yet, return empty list
+            $mahasiswa = [];
         }
-
-        // Fetch Mahasiswa who are not yet assigned to any group.
-        // If angkatanFilter is found, filter by NIM pattern.
-        if ($angkatanFilter !== '') {
-            // e.g. NIM E1E124080 -> LIKE '%24%'
-            $query = "SELECT ID_User, Username as NIM, Nama_Lengkap FROM Tabel_User WHERE Role = 'Mahasiswa' AND ID_Kelompok IS NULL AND Username LIKE :nimPattern";
-            $stmt = $db->prepare($query);
-            $nimPattern = '%' . $angkatanFilter . '%';
-            $stmt->bindParam(':nimPattern', $nimPattern);
-        } else {
-            $query = "SELECT ID_User, Username as NIM, Nama_Lengkap FROM Tabel_User WHERE Role = 'Mahasiswa' AND ID_Kelompok IS NULL";
-            $stmt = $db->prepare($query);
-        }
-        
-        $stmt->execute();
-        $mahasiswa = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         header('Content-Type: application/json');
         echo json_encode($mahasiswa);
@@ -963,19 +968,20 @@ class DashboardController {
 
                 // Automatically assign the logged-in user (Asisten) to this group
                 if ($role === 'Asisten') {
-                    $queryUpdateUser = "UPDATE Tabel_User SET ID_Kelompok = :groupId WHERE ID_User = :userId";
+                    $queryUpdateUser = "UPDATE Tabel_Plotting_Asisten SET ID_Kelompok = :groupId WHERE ID_User = :userId AND ID_Kelas = :classId";
                     $stmtUpdate = $db->prepare($queryUpdateUser);
                     $stmtUpdate->bindParam(':groupId', $newGroupId);
                     $stmtUpdate->bindParam(':userId', $userId);
+                    $stmtUpdate->bindParam(':classId', $classIdInput);
                     $stmtUpdate->execute();
                 }
 
                 // Assign selected students to this group
                 if (!empty($anggotaNimIds)) {
                     $placeholders = implode(',', array_fill(0, count($anggotaNimIds), '?'));
-                    $queryUpdateMhs = "UPDATE Tabel_User SET ID_Kelompok = ? WHERE ID_User IN ($placeholders) AND Role = 'Mahasiswa'";
+                    $queryUpdateMhs = "UPDATE Tabel_KRS SET ID_Kelompok = ? WHERE ID_User IN ($placeholders) AND ID_Kelas = ?";
                     $stmtUpdateMhs = $db->prepare($queryUpdateMhs);
-                    $params = array_merge([$newGroupId], $anggotaNimIds);
+                    $params = array_merge([$newGroupId], $anggotaNimIds, [$classIdInput]);
                     $stmtUpdateMhs->execute($params);
                 }
 
@@ -1025,9 +1031,10 @@ class DashboardController {
                     $groupId = $g['ID_Kelompok'];
 
                     // 3. Fetch students in this group
-                    $queryStudents = "SELECT ID_User, Username, Nama_Lengkap FROM Tabel_User 
-                                      WHERE ID_Kelompok = :groupId AND Role = 'Mahasiswa' 
-                                      ORDER BY Username ASC";
+                    $queryStudents = "SELECT u.ID_User, u.Username, u.Nama_Lengkap FROM Tabel_User u
+                                      JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                                      WHERE krs.ID_Kelompok = :groupId AND u.Role = 'Mahasiswa' 
+                                      ORDER BY u.Username ASC";
                     $stmtStudents = $db->prepare($queryStudents);
                     $stmtStudents->bindParam(':groupId', $groupId);
                     $stmtStudents->execute();
@@ -1073,7 +1080,7 @@ class DashboardController {
                     }
 
                     // Fetch assistant assigned to this group (by checking ID_Kelompok in Tabel_User)
-                    $queryGroupAsdos = "SELECT Nama_Lengkap FROM Tabel_User WHERE ID_Kelompok = :groupId AND Role = 'Asisten' LIMIT 1";
+                    $queryGroupAsdos = "SELECT u.Nama_Lengkap FROM Tabel_Plotting_Asisten pa JOIN Tabel_User u ON pa.ID_User = u.ID_User WHERE pa.ID_Kelompok = :groupId AND u.Role = 'Asisten' LIMIT 1";
                     $stmtGroupAsdos = $db->prepare($queryGroupAsdos);
                     $stmtGroupAsdos->bindParam(':groupId', $groupId);
                     $stmtGroupAsdos->execute();
@@ -1279,7 +1286,8 @@ class DashboardController {
             // 3. Fetch groups in selected class (with asisten name)
             $queryGroups = "SELECT k.ID_Kelompok, k.Nama_Kelompok,
                                    (SELECT u2.Nama_Lengkap FROM Tabel_User u2
-                                    WHERE u2.ID_Kelompok = k.ID_Kelompok AND u2.Role = 'Asisten'
+                                    JOIN Tabel_Plotting_Asisten pa2 ON u2.ID_User = pa2.ID_User
+                                    WHERE pa2.ID_Kelompok = k.ID_Kelompok AND u2.Role = 'Asisten'
                                     LIMIT 1) AS Nama_Asisten
                             FROM Tabel_Kelompok k
                             WHERE k.ID_Kelas = :classId
@@ -1299,7 +1307,8 @@ class DashboardController {
                 // 4. Fetch students in group
                 $queryStu = "SELECT u.ID_User, u.Username AS NIM, u.Nama_Lengkap
                              FROM Tabel_User u
-                             WHERE u.ID_Kelompok = :groupId AND u.Role = 'Mahasiswa'
+                             JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                             WHERE krs.ID_Kelompok = :groupId AND u.Role = 'Mahasiswa'
                              ORDER BY u.Username ASC";
                 $stmtStu = $db->prepare($queryStu);
                 $stmtStu->bindParam(':groupId', $groupId);
@@ -1383,18 +1392,22 @@ class DashboardController {
             $namaMatkul = trim($_POST['nama_matkul'] ?? '');
             $kodeKelas = trim($_POST['kode_kelas'] ?? '');
             $semester = trim($_POST['semester'] ?? '');
-            $angkatan = trim($_POST['angkatan'] ?? '');
+            $jadwal = trim($_POST['jadwal'] ?? 'Belum Diatur');
             $asistenIds = isset($_POST['asisten']) && is_array($_POST['asisten']) ? $_POST['asisten'] : [];
 
-            if (!empty($namaMatkul) && !empty($kodeKelas) && !empty($semester) && !empty($angkatan)) {
-                // Combine into a single string with Angkatan embedded at the end
-                $namaKelasUtuh = "$namaMatkul - Kelas $kodeKelas ($semester) [Angkatan $angkatan]";
+            if (!empty($namaMatkul) && !empty($kodeKelas) && !empty($semester) && !empty($jadwal)) {
+                // Combine into a single string
+                $namaKelasUtuh = "$namaMatkul - Kelas $kodeKelas ($semester)";
+
+                // Generate a random 6-character alphanumeric token (e.g., PRK-A7X9)
+                $token = strtoupper(substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 6));
 
                 $userId = $_SESSION['user_id'];
-                $success = $this->kelasModel->createClass($namaKelasUtuh, $userId, $asistenIds);
+                $success = $this->kelasModel->createClass($namaKelasUtuh, $userId, $asistenIds, $token, $jadwal);
 
                 if ($success) {
                     $_SESSION['class_success'] = "Kelas baru berhasil dibuat beserta asistennya.";
+                    $_SESSION['new_class_token'] = $token;
                 } else {
                     $_SESSION['class_error'] = "Terjadi kesalahan saat membuat kelas.";
                 }
@@ -1404,6 +1417,51 @@ class DashboardController {
         }
 
         header('Location: /rpl/public/index.php?action=my_classes');
+        exit;
+    }
+    public function joinClass() {
+        if (!isset($_SESSION['user_id']) || $_SESSION['active_role'] !== 'Mahasiswa') {
+            header('Location: /rpl/public/index.php');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $token = trim($_POST['token_kelas'] ?? '');
+            if (!empty($token)) {
+                $db = (new Database())->getConnection();
+                // Find class by token
+                $stmt = $db->prepare("SELECT ID_Kelas FROM Tabel_Kelas WHERE Token_Kelas = :token LIMIT 1");
+                $stmt->bindParam(':token', $token);
+                $stmt->execute();
+                $class = $stmt->fetch();
+
+                if ($class) {
+                    $classId = $class['ID_Kelas'];
+                    $userId = $_SESSION['user_id'];
+
+                    // Check if already joined
+                    $checkStmt = $db->prepare("SELECT 1 FROM Tabel_KRS WHERE ID_User = :userId AND ID_Kelas = :classId");
+                    $checkStmt->bindParam(':userId', $userId);
+                    $checkStmt->bindParam(':classId', $classId);
+                    $checkStmt->execute();
+                    if ($checkStmt->fetch()) {
+                        // Using settings_error for simple flash messaging
+                        $_SESSION['settings_error'] = "Anda sudah bergabung di kelas ini.";
+                    } else {
+                        // Join class
+                        $insertStmt = $db->prepare("INSERT INTO Tabel_KRS (ID_User, ID_Kelas) VALUES (:userId, :classId)");
+                        $insertStmt->bindParam(':userId', $userId);
+                        $insertStmt->bindParam(':classId', $classId);
+                        $insertStmt->execute();
+                        $_SESSION['settings_success'] = "Berhasil bergabung ke kelas.";
+                    }
+                } else {
+                    $_SESSION['settings_error'] = "Token kelas tidak valid.";
+                }
+            }
+        }
+        $referer = $_SERVER['HTTP_REFERER'] ?? '/rpl/public/index.php?action=my_classes';
+        header("Location: $referer");
         exit;
     }
 }

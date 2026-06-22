@@ -254,107 +254,7 @@ if ($role === 'Mahasiswa') {
             line-height: 1.4;
         }
 
-        /* Notifications Grid Layout (2 columns) */
-        .notif-section-desc {
-            font-size: 14px;
-            color: #64748B;
-            margin: -12px 0 12px 0;
-        }
 
-        .notif-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        @media (max-width: 1024px) {
-            .notif-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .notif-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px;
-            border: 1px solid #E2E8F0;
-            border-radius: 12px;
-            background: #FFFFFF;
-            transition: all 0.2s ease;
-            gap: 16px;
-        }
-
-        .notif-row:hover {
-            border-color: #CBD5E1;
-            background: #F8FAFC;
-        }
-
-        .notif-info-block {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .notif-item-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: #1E293B;
-        }
-
-        .notif-item-desc {
-            font-size: 13px;
-            color: #64748B;
-            line-height: 1.4;
-        }
-
-        /* Custom Toggle Switch */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 48px;
-            height: 25px;
-            flex-shrink: 0;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #E2E8F0;
-            transition: .3s;
-            border-radius: 25px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 19px;
-            width: 19px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .3s;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        input:checked + .toggle-slider {
-            background-color: #364087;
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(23px);
-        }
 
         /* Floating Toast Styling */
         .alert-toast {
@@ -516,110 +416,7 @@ if ($role === 'Mahasiswa') {
                     </form>
                 </div>
 
-                <hr class="settings-divider">
 
-                <!-- SECTION 3: NOTIFIKASI -->
-                <div class="settings-section">
-                    <h3 class="settings-section-title">Notifikasi</h3>
-                    <p class="notif-section-desc">Atur jenis notifikasi yang ingin kamu terima</p>
-
-                    <div class="notif-grid">
-                        <?php if ($role === 'Mahasiswa'): ?>
-                            
-                            <div class="notif-row">
-                                <div class="notif-info-block">
-                                    <span class="notif-item-title">Pembaruan Nilai Akademik</span>
-                                    <span class="notif-item-desc">Notifikasi ketika nilai baru dipublikasikan oleh dosen atau asisten dosen.</span>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="notif_nilai" onchange="toggleNotification('nilai')" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-
-                            <div class="notif-row">
-                                <div class="notif-info-block">
-                                    <span class="notif-item-title">Tanggapan atas Sanggahan</span>
-                                    <span class="notif-item-desc">Notifikasi ketika dosen atau asisten dosen memberikan tanggapan terhadap sanggahan yang diajukan.</span>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="notif_sanggah" onchange="toggleNotification('sanggah')" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-
-                            <div class="notif-row">
-                                <div class="notif-info-block">
-                                    <span class="notif-item-title">Pengingat Batas Waktu Tugas</span>
-                                    <span class="notif-item-desc">Notifikasi satu hari sebelum batas waktu pengumpulan tugas berakhir.</span>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="notif_deadline" onchange="toggleNotification('deadline')" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-
-                            <div class="notif-row">
-                                <div class="notif-info-block">
-                                    <span class="notif-item-title">Pemberitahuan Modul Baru</span>
-                                    <span class="notif-item-desc">Notifikasi ketika dosen mengunggah atau menerbitkan modul pembelajaran baru.</span>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="notif_modul" onchange="toggleNotification('modul')" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-
-                        <?php else: ?>
-                            <!-- Dosen / Asisten Notification list -->
-                            
-                            <div class="notif-row">
-                                <div class="notif-info-block">
-                                    <span class="notif-item-title">Pengumpulan Tugas Mahasiswa</span>
-                                    <span class="notif-item-desc">Notifikasi ketika mahasiswa mengirimkan pengumpulan tugas baru di kelas yang Anda ampu.</span>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="notif_pengumpulan" onchange="toggleNotification('pengumpulan')" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-
-                            <div class="notif-row">
-                                <div class="notif-info-block">
-                                    <span class="notif-item-title">Pengajuan Sanggahan Baru</span>
-                                    <span class="notif-item-desc">Notifikasi ketika mahasiswa mengajukan sanggah nilai baru yang memerlukan respon Anda.</span>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="notif_sanggah_masuk" onchange="toggleNotification('sanggah_masuk')" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-
-                            <div class="notif-row">
-                                <div class="notif-info-block">
-                                    <span class="notif-item-title">Pembaruan Modul Pembelajaran</span>
-                                    <span class="notif-item-desc">Notifikasi konfirmasi saat modul pembelajaran berhasil diunggah atau diedit.</span>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="notif_modul_update" onchange="toggleNotification('modul_update')" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-
-                            <div class="notif-row">
-                                <div class="notif-info-block">
-                                    <span class="notif-item-title">Pemberitahuan Sistem</span>
-                                    <span class="notif-item-desc">Notifikasi mengenai pengumuman akademik, pemeliharaan sistem, atau pembaruan platform.</span>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="notif_system" onchange="toggleNotification('system')" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-
-                        <?php endif; ?>
-                    </div>
-                </div>
 
             </section>
 
@@ -674,30 +471,10 @@ if ($role === 'Mahasiswa') {
         }
     }
 
-    // LocalStorage Notification persistent state
-    function loadNotificationPreferences() {
-        const toggles = document.querySelectorAll('.toggle-switch input');
-        toggles.forEach(toggle => {
-            const key = `notif_${toggle.id}`;
-            const val = localStorage.getItem(key);
-            if (val !== null) {
-                toggle.checked = val === 'true';
-            }
-        });
-    }
 
-    function toggleNotification(type) {
-        const targetToggle = document.getElementById(`notif_${type}`);
-        if (targetToggle) {
-            const key = `notif_${targetToggle.id}`;
-            localStorage.setItem(key, targetToggle.checked);
-            showToast('Preferensi notifikasi diperbarui!', 'success');
-        }
-    }
 
     // Handle initialization & redirect messages
     window.addEventListener('DOMContentLoaded', () => {
-        loadNotificationPreferences();
 
         // Check PHP Session messaging triggers
         <?php if (isset($_SESSION['settings_success'])): ?>
