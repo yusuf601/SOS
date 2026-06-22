@@ -444,14 +444,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     label.style.cursor = 'pointer';
                     label.style.fontWeight = '500';
 
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.name = 'anggota_nim[]';
-                    checkbox.value = mhs.ID_User;
-                    checkbox.style.cursor = 'pointer';
-
-                    label.appendChild(checkbox);
-                    label.appendChild(document.createTextNode(`${mhs.NIM} - ${mhs.Nama_Lengkap}`));
+                    const groupText = mhs.Nama_Kelompok ? ` <span style="color:#D97706; font-size:11px; margin-left:4px;">(${mhs.Nama_Kelompok})</span>` : '';
+                    label.innerHTML = `<input type="checkbox" name="anggota_nim[]" value="${mhs.ID_User}" style="cursor:pointer;"> ${mhs.NIM} - ${mhs.Nama_Lengkap}${groupText}`;
                     
                     div.appendChild(label);
                     container.appendChild(div);

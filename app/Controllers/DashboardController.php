@@ -877,21 +877,24 @@ class DashboardController {
         $classId = isset($_GET['class_id']) ? (int)$_GET['class_id'] : 0;
         $db = (new Database())->getConnection();
 
-        // Fetch Mahasiswa who have joined the class (via token in Tabel_KRS) 
-        // AND who are not yet assigned to any group.
+        // Fetch ALL Mahasiswa who have joined the class
         try {
             if ($classId > 0) {
-                $query = "SELECT u.ID_User, u.Username as NIM, u.Nama_Lengkap 
+                $query = "SELECT u.ID_User, u.Username as NIM, u.Nama_Lengkap, kl.Nama_Kelompok 
                           FROM Tabel_User u
                           JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                          LEFT JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
                           WHERE krs.ID_Kelas = :classId 
-                          AND u.Role = 'Mahasiswa' 
-                          AND krs.ID_Kelompok IS NULL";
+                          AND u.Role = 'Mahasiswa'";
                 $stmt = $db->prepare($query);
                 $stmt->bindParam(':classId', $classId, PDO::PARAM_INT);
             } else {
                 // Fallback (shouldn't happen in normal flow if class_id is passed)
-                $query = "SELECT u.ID_User, u.Username as NIM, u.Nama_Lengkap FROM Tabel_User u JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User WHERE u.Role = 'Mahasiswa' AND krs.ID_Kelompok IS NULL";
+                $query = "SELECT u.ID_User, u.Username as NIM, u.Nama_Lengkap, kl.Nama_Kelompok 
+                          FROM Tabel_User u 
+                          JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User 
+                          LEFT JOIN Tabel_Kelompok kl ON krs.ID_Kelompok = kl.ID_Kelompok
+                          WHERE u.Role = 'Mahasiswa'";
                 $stmt = $db->prepare($query);
             }
             
