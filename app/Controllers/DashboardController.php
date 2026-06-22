@@ -31,7 +31,7 @@ class DashboardController {
         $classInfo = $this->kelasModel->getStudentClass($userId);
         
         // Get progress metrics
-        $progress = $this->tugasModel->getStudentProgress($userId);
+        $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['Nama_Kelas'] ?? null);
 
         // Get attendance rate
         $attendanceRate = $this->userModel->getAttendanceRate($userId);
@@ -110,7 +110,7 @@ class DashboardController {
                 }
 
                 // Get progress metrics
-                $progress = $this->tugasModel->getStudentProgress($userId);
+                $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['Nama_Kelas']);
 
                 // Set dummy schedule based on classId
                 $schedule = "Belum Diatur";
@@ -236,6 +236,16 @@ class DashboardController {
             }
         }
 
+        // Fetch list of all candidates (Mahasiswa & Asisten) for the "Buat Kelas Baru" form
+        $listAsisten = [];
+        if ($_SESSION['active_role'] === 'Dosen') {
+            $db = (new Database())->getConnection();
+            $queryAsisten = "SELECT ID_User, Nama_Lengkap, Username FROM Tabel_User WHERE Role IN ('Mahasiswa', 'Asisten') ORDER BY Nama_Lengkap ASC";
+            $stmtAsisten = $db->prepare($queryAsisten);
+            $stmtAsisten->execute();
+            $listAsisten = $stmtAsisten->fetchAll();
+        }
+
         require_once __DIR__ . '/../Views/my_classes.php';
     }
 
@@ -300,6 +310,16 @@ class DashboardController {
             'pending' => $pendingCount
         ];
 
+        // Prepare class names for filtering
+        $myClasses = [];
+        if ($role === 'Asisten') {
+            $qC = "SELECT k.Nama_Kelas FROM Tabel_Plotting_Asisten p JOIN Tabel_Kelas k ON p.ID_Kelas = k.ID_Kelas WHERE p.ID_User = :userId";
+            $sC = $db->prepare($qC);
+            $sC->bindParam(':userId', $userId);
+            $sC->execute();
+            $myClasses = $sC->fetchAll(PDO::FETCH_COLUMN);
+        }
+
         // 1. Pending Attendance Module
         $queryModules = "SELECT * FROM Tabel_Modul ORDER BY ID_Modul DESC";
         $stmtModules = $db->prepare($queryModules);
@@ -308,6 +328,17 @@ class DashboardController {
 
         $pendingAttendanceModule = null;
         foreach ($modulesList as $m) {
+            if ($role === 'Asisten') {
+                $isRelevant = false;
+                foreach ($myClasses as $cName) {
+                    if (stripos($m['Judul_Modul'], $cName) !== false) {
+                        $isRelevant = true;
+                        break;
+                    }
+                }
+                if (!$isRelevant) continue;
+            }
+
             $queryMissingPresensi = "SELECT COUNT(*) as count FROM Tabel_User u
                                      JOIN Tabel_Kelompok kl ON u.ID_Kelompok = kl.ID_Kelompok
                                      JOIN Tabel_Plotting_Asisten pa ON kl.ID_Kelas = pa.ID_Kelas
@@ -358,17 +389,30 @@ class DashboardController {
         // 4. Grading Progress per Group
         $activeModulId = null;
         $activeModulTitle = "";
-        if ($pendingGradesInfo) {
+        if ($pendingGradesInfo && $pendingGradesInfo['ID_Modul']) {
             $activeModulId = $pendingGradesInfo['ID_Modul'];
             $activeModulTitle = $pendingGradesInfo['Judul_Modul'];
         } else {
-            $queryLatest = "SELECT ID_Modul, Judul_Modul FROM Tabel_Modul ORDER BY ID_Modul DESC LIMIT 1";
-            $stmtLatest = $db->prepare($queryLatest);
-            $stmtLatest->execute();
-            $latestM = $stmtLatest->fetch();
-            if ($latestM) {
-                $activeModulId = $latestM['ID_Modul'];
-                $activeModulTitle = $latestM['Judul_Modul'];
+            // Find the latest module that is RELEVANT to this Asisten
+            foreach ($modulesList as $m) {
+                if ($role === 'Asisten') {
+                    $isRelevant = false;
+                    foreach ($myClasses as $cName) {
+                        if (stripos($m['Judul_Modul'], $cName) !== false) {
+                            $isRelevant = true;
+                            break;
+                        }
+                    }
+                    if ($isRelevant) {
+                        $activeModulId = $m['ID_Modul'];
+                        $activeModulTitle = $m['Judul_Modul'];
+                        break;
+                    }
+                } else {
+                    $activeModulId = $m['ID_Modul'];
+                    $activeModulTitle = $m['Judul_Modul'];
+                    break;
+                }
             }
         }
 
@@ -376,13 +420,18 @@ class DashboardController {
         $averageScore = 0.0;
 
         if ($activeModulId) {
+            // Extract class name from module title (e.g. 'Modul 4 METODE NUMERIK' -> 'METODE NUMERIK')
+            $searchClass = trim(preg_replace('/Modul\s+\d+\s+/i', '', $activeModulTitle));
+            $searchParam = "%" . $searchClass . "%";
+
             $queryGroups = "SELECT k.ID_Kelompok, k.Nama_Kelompok, cl.Nama_Kelas, cl.ID_Kelas
                             FROM Tabel_Kelompok k
                             JOIN Tabel_Kelas cl ON k.ID_Kelas = cl.ID_Kelas
                             JOIN Tabel_Plotting_Asisten pa ON cl.ID_Kelas = pa.ID_Kelas
-                            WHERE pa.ID_User = :userId";
+                            WHERE pa.ID_User = :userId AND cl.Nama_Kelas LIKE :searchClass";
             $stmtGroups = $db->prepare($queryGroups);
             $stmtGroups->bindParam(':userId', $userId);
+            $stmtGroups->bindParam(':searchClass', $searchParam);
             $stmtGroups->execute();
             $groupsList = $stmtGroups->fetchAll();
 
@@ -813,11 +862,37 @@ class DashboardController {
             exit;
         }
 
+        $classId = isset($_GET['class_id']) ? (int)$_GET['class_id'] : 0;
         $db = (new Database())->getConnection();
-        // Since there's no explicit class-student plotting table in this DB schema, 
-        // we fetch all Mahasiswa who are not yet assigned to any group.
-        $query = "SELECT ID_User, Username as NIM, Nama_Lengkap FROM Tabel_User WHERE Role = 'Mahasiswa' AND ID_Kelompok IS NULL";
-        $stmt = $db->prepare($query);
+
+        // Retrieve Angkatan from Nama_Kelas (e.g. "[Angkatan 2024]")
+        $angkatanFilter = '';
+        if ($classId > 0) {
+            $stmtClass = $db->prepare("SELECT Nama_Kelas FROM Tabel_Kelas WHERE ID_Kelas = :classId");
+            $stmtClass->bindParam(':classId', $classId, PDO::PARAM_INT);
+            $stmtClass->execute();
+            $classData = $stmtClass->fetch(PDO::FETCH_ASSOC);
+            
+            if ($classData && preg_match('/\[Angkatan\s+(\d{4})\]/i', $classData['Nama_Kelas'], $matches)) {
+                $angkatanYear = $matches[1];
+                // Extract last 2 digits for NIM matching (e.g. 2024 -> 24)
+                $angkatanFilter = substr($angkatanYear, -2);
+            }
+        }
+
+        // Fetch Mahasiswa who are not yet assigned to any group.
+        // If angkatanFilter is found, filter by NIM pattern.
+        if ($angkatanFilter !== '') {
+            // e.g. NIM E1E124080 -> LIKE '%24%'
+            $query = "SELECT ID_User, Username as NIM, Nama_Lengkap FROM Tabel_User WHERE Role = 'Mahasiswa' AND ID_Kelompok IS NULL AND Username LIKE :nimPattern";
+            $stmt = $db->prepare($query);
+            $nimPattern = '%' . $angkatanFilter . '%';
+            $stmt->bindParam(':nimPattern', $nimPattern);
+        } else {
+            $query = "SELECT ID_User, Username as NIM, Nama_Lengkap FROM Tabel_User WHERE Role = 'Mahasiswa' AND ID_Kelompok IS NULL";
+            $stmt = $db->prepare($query);
+        }
+        
         $stmt->execute();
         $mahasiswa = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -886,22 +961,13 @@ class DashboardController {
                     $newGroupId = $db->lastInsertId();
                 }
 
-                // Assign assistant to this group (by mapping their ID_Kelompok if NIM exists)
-                if (!empty($assistantNim)) {
-                    $queryFindAsdos = "SELECT ID_User FROM Tabel_User WHERE Username = :nim AND Role = 'Asisten' LIMIT 1";
-                    $stmtFind = $db->prepare($queryFindAsdos);
-                    $stmtFind->bindParam(':nim', $assistantNim);
-                    $stmtFind->execute();
-                    $asdosUser = $stmtFind->fetch();
-
-                    if ($asdosUser) {
-                        $asdosId = $asdosUser['ID_User'];
-                        $queryUpdateUser = "UPDATE Tabel_User SET ID_Kelompok = :groupId WHERE ID_User = :userId";
-                        $stmtUpdate = $db->prepare($queryUpdateUser);
-                        $stmtUpdate->bindParam(':groupId', $newGroupId);
-                        $stmtUpdate->bindParam(':userId', $asdosId);
-                        $stmtUpdate->execute();
-                    }
+                // Automatically assign the logged-in user (Asisten) to this group
+                if ($role === 'Asisten') {
+                    $queryUpdateUser = "UPDATE Tabel_User SET ID_Kelompok = :groupId WHERE ID_User = :userId";
+                    $stmtUpdate = $db->prepare($queryUpdateUser);
+                    $stmtUpdate->bindParam(':groupId', $newGroupId);
+                    $stmtUpdate->bindParam(':userId', $userId);
+                    $stmtUpdate->execute();
                 }
 
                 // Assign selected students to this group
@@ -1317,16 +1383,18 @@ class DashboardController {
             $namaMatkul = trim($_POST['nama_matkul'] ?? '');
             $kodeKelas = trim($_POST['kode_kelas'] ?? '');
             $semester = trim($_POST['semester'] ?? '');
+            $angkatan = trim($_POST['angkatan'] ?? '');
+            $asistenIds = isset($_POST['asisten']) && is_array($_POST['asisten']) ? $_POST['asisten'] : [];
 
-            if (!empty($namaMatkul) && !empty($kodeKelas) && !empty($semester)) {
-                // Combine into a single string
-                $namaKelasUtuh = "$namaMatkul - Kelas $kodeKelas ($semester)";
+            if (!empty($namaMatkul) && !empty($kodeKelas) && !empty($semester) && !empty($angkatan)) {
+                // Combine into a single string with Angkatan embedded at the end
+                $namaKelasUtuh = "$namaMatkul - Kelas $kodeKelas ($semester) [Angkatan $angkatan]";
 
                 $userId = $_SESSION['user_id'];
-                $success = $this->kelasModel->createClass($namaKelasUtuh, $userId);
+                $success = $this->kelasModel->createClass($namaKelasUtuh, $userId, $asistenIds);
 
                 if ($success) {
-                    $_SESSION['class_success'] = "Kelas baru berhasil dibuat.";
+                    $_SESSION['class_success'] = "Kelas baru berhasil dibuat beserta asistennya.";
                 } else {
                     $_SESSION['class_error'] = "Terjadi kesalahan saat membuat kelas.";
                 }

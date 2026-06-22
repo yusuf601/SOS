@@ -361,42 +361,42 @@ $role = $_SESSION['active_role'] ?? 'Asisten';
                                 ];
                             }
 
-                            if (count($displayGroups) < 4) {
-                                if (empty($displayGroups)) {
-                                    $displayGroups[] = ['name' => 'Kelompok 1', 'assistant' => 'Chris Redfield', 'count' => 6];
-                                    $displayGroups[] = ['name' => 'Kelompok 2', 'assistant' => 'Chris Redfield', 'count' => 6];
-                                    $displayGroups[] = ['name' => 'Kelompok 3', 'assistant' => 'Rose Winter', 'count' => 5];
-                                    $displayGroups[] = ['name' => 'Kelompok 4', 'assistant' => 'Rose Winter', 'count' => 6];
-                                }
-                            }
-
-                            foreach ($displayGroups as $dg):
+                            if (empty($displayGroups)) {
+                                echo "<tr><td colspan='3' style='text-align:center; padding: 16px; color: #9B9B9B; font-weight: 500;'>Belum ada kelompok di kelas ini.</td></tr>";
+                            } else {
+                                foreach ($displayGroups as $dg):
                             ?>
                                 <tr>
                                     <td style="font-weight: 500;"><?= htmlspecialchars($dg['name']) ?></td>
                                     <td><?= htmlspecialchars($dg['assistant']) ?></td>
                                     <td style="text-align: center; font-weight: 500;"><?= htmlspecialchars($dg['count']) ?></td>
                                 </tr>
-                            <?php endforeach; ?>
+                            <?php 
+                                endforeach; 
+                            } 
+                            ?>
                         </tbody>
                     </table>
                 </div>
 
+                <?php if (!empty($displayGroups)): ?>
                 <!-- Detailed Kelompok Card -->
                 <div class="card-daftar-kelompok" style="display: flex; flex-direction: column; gap: 16px;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h3 style="font-size: 18px; font-weight: 600; color: #3B3B3B; margin: 0;">Kelompok 1</h3>
-                        <span style="font-size: 12px; font-weight: 600; color: rgba(0,0,0,0.5);">6 anggota</span>
+                        <h3 style="font-size: 18px; font-weight: 600; color: #3B3B3B; margin: 0;"><?= htmlspecialchars($displayGroups[0]['name']) ?></h3>
+                        <span style="font-size: 12px; font-weight: 600; color: rgba(0,0,0,0.5);"><?= htmlspecialchars($displayGroups[0]['count']) ?> anggota</span>
                     </div>
                     <div style="display: flex; align-items: center;">
                         <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; box-sizing: border-box; z-index: 1;"></div>
-                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 2;"></div>
-                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 3;"></div>
-                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 4;"></div>
-                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 5;"></div>
-                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #C8C8C8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 6; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: #6C6C6C;">+1</div>
+                        <?php for ($i = 1; $i < min((int)$displayGroups[0]['count'], 6); $i++): ?>
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #7C94B8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: <?= $i + 1 ?>;"></div>
+                        <?php endfor; ?>
+                        <?php if ((int)$displayGroups[0]['count'] > 5): ?>
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background-color: #C8C8C8; border: 3.5px solid #FFFFFF; box-sizing: border-box; margin-left: -12px; z-index: 6; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: #6C6C6C;">+<?= (int)$displayGroups[0]['count'] - 5 ?></div>
+                        <?php endif; ?>
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </main>

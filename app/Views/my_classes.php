@@ -461,11 +461,37 @@ $initials = substr($initials, 0, 2);
                         <form method="POST" action="/rpl/public/index.php?action=submit_class" style="display: flex; flex-direction: column; gap: 16px; margin-top: 8px; width: 100%;">
                             <div style="text-align: left;">
                                 <label class="form-label-buat">Nama Mata Kuliah Praktikum</label>
-                                <input type="text" name="nama_matkul" class="form-input-buat" placeholder="cth: Praktikum Sistem Digital" required>
+                                <select name="nama_matkul" class="form-select-buat" required>
+                                    <option value="" disabled selected>-- Pilih Mata Kuliah --</option>
+                                    <option value="Sistem Digital">Sistem Digital</option>
+                                    <option value="Organisasi dan Arsitektur Komputer">Organisasi dan Arsitektur Komputer</option>
+                                    <option value="Statistika">Statistika</option>
+                                    <option value="Aljabar Linear">Aljabar Linear</option>
+                                    <option value="Metode Numerik">Metode Numerik</option>
+                                    <option value="Keamanan Data dan Informasi (Cyber Security)">Keamanan Data dan Informasi (Cyber Security)</option>
+                                </select>
                             </div>
-                            <div style="text-align: left;">
-                                <label class="form-label-buat">Kode Kelas</label>
-                                <input type="text" name="kode_kelas" class="form-input-buat" style="height: 39px;" placeholder="A / B / C" required>
+                            <div style="display: flex; gap: 16px;">
+                                <div style="text-align: left; flex: 1;">
+                                    <label class="form-label-buat">Kode Kelas</label>
+                                    <select name="kode_kelas" class="form-select-buat" required>
+                                        <option value="" disabled selected>-- Kelas --</option>
+                                        <option value="A">Kelas A</option>
+                                        <option value="B">Kelas B</option>
+                                        <option value="C">Kelas C</option>
+                                        <option value="D">Kelas D</option>
+                                        <option value="E">Kelas E</option>
+                                    </select>
+                                </div>
+                                <div style="text-align: left; flex: 1;">
+                                    <label class="form-label-buat">Angkatan Target</label>
+                                    <select name="angkatan" class="form-select-buat" required>
+                                        <option value="2024">Angkatan 2024</option>
+                                        <option value="2023">Angkatan 2023</option>
+                                        <option value="2022">Angkatan 2022</option>
+                                        <option value="2025">Angkatan 2025</option>
+                                    </select>
+                                </div>
                             </div>
                             <div style="text-align: left;">
                                 <label class="form-label-buat">Semester</label>
@@ -474,6 +500,32 @@ $initials = substr($initials, 0, 2);
                                     <option value="Ganjil 2025/2026">Ganjil 2025/2026</option>
                                 </select>
                             </div>
+                            <?php if (isset($listAsisten) && !empty($listAsisten)): ?>
+                            <div style="text-align: left; display: flex; flex-direction: column; gap: 8px;">
+                                <label class="form-label-buat">Pilih Asisten (Bisa lebih dari 1)</label>
+                                <div style="border: 1px solid #CBD5E1; border-radius: 8px; padding: 12px; background-color: #F8FAFC;">
+                                    <input type="text" id="searchAsisten" class="form-input-buat" placeholder="Cari NIM atau nama calon asisten..." style="height: 35px; margin-bottom: 12px;" onkeyup="filterAsisten()">
+                                    <div id="asistenListContainer" style="max-height: 140px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px;">
+                                        <?php foreach ($listAsisten as $asisten): ?>
+                                            <label class="asisten-checkbox-item" style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #334155; cursor: pointer; padding: 4px 0;">
+                                                <input type="checkbox" name="asisten[]" value="<?= $asisten['ID_User'] ?>" style="width: 16px; height: 16px; cursor: pointer;">
+                                                <span class="asisten-name"><strong><?= htmlspecialchars($asisten['Username']) ?></strong> - <?= htmlspecialchars($asisten['Nama_Lengkap']) ?></span>
+                                            </label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                            function filterAsisten() {
+                                let input = document.getElementById('searchAsisten').value.toLowerCase();
+                                let items = document.querySelectorAll('.asisten-checkbox-item');
+                                items.forEach(item => {
+                                    let text = item.querySelector('.asisten-name').textContent || item.innerText;
+                                    item.style.display = text.toLowerCase().indexOf(input) > -1 ? 'flex' : 'none';
+                                });
+                            }
+                            </script>
+                            <?php endif; ?>
                             <div style="margin-top: 8px;">
                                 <button type="submit" class="btn-plus-besar" style="font-size: 14px; font-weight: 600; background-color: #29316B; border-radius: 8px; height: 35px;">Buat Kelas</button>
                             </div>
