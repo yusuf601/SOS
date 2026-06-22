@@ -46,7 +46,7 @@ class DashboardController {
             $gradedCount = 0;
 
             foreach ($studentClasses as $cls) {
-                $p = $this->tugasModel->getStudentProgress($userId, $cls['Nama_Kelas']);
+                $p = $this->tugasModel->getStudentProgress($userId, $cls['ID_Kelas']);
                 $progress['pending'] += $p['pending'] ?? 0;
                 $progress['missing'] += $p['missing'] ?? 0;
                 $progress['total_tasks'] += $p['total_tasks'] ?? 0;
@@ -137,7 +137,7 @@ class DashboardController {
                 $totalStudents = $stmtStudents->fetch()['total'];
 
                 // Get progress metrics
-                $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['Nama_Kelas']);
+                $progress = $this->tugasModel->getStudentProgress($userId, $classInfo['ID_Kelas']);
 
                 // Set dummy schedule based on classId
                 $schedule = $classInfo['Jadwal'] ?? "Belum Diatur";
