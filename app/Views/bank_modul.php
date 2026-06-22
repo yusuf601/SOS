@@ -467,7 +467,7 @@ $initials = substr($initials, 0, 2);
     <main class="main-workspace">
         <!-- Top Navbar -->
         <header class="workspace-navbar">
-            <h2 class="navbar-title">Bank Modul</h2>
+            <h2 class="navbar-title">Bank Modul<?= $classInfo ? ' - ' . htmlspecialchars($classInfo['Nama_Kelas']) : '' ?></h2>
             <div class="navbar-profile">
                 <div class="navbar-avatar"><?= htmlspecialchars($initials) ?></div>
             </div>
@@ -513,7 +513,9 @@ $initials = substr($initials, 0, 2);
                         <div class="custom-select-wrapper">
                             <select class="class-select" id="classSelector" aria-label="Pilih kelas praktikum">
                                 <?php foreach ($allClasses as $cls): ?>
-                                    <option value="<?= htmlspecialchars($cls['ID_Kelas']) ?>"><?= htmlspecialchars($cls['Nama_Kelas']) ?></option>
+                                    <option value="<?= htmlspecialchars($cls['ID_Kelas']) ?>" <?= ($classInfo && $classInfo['ID_Kelas'] == $cls['ID_Kelas']) ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($cls['Nama_Kelas']) ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -712,6 +714,13 @@ $initials = substr($initials, 0, 2);
         setTimeout(() => {
             toast.className = toast.className.replace("show", "");
         }, 3000);
+    }
+
+    const classSelector = document.getElementById('classSelector');
+    if (classSelector) {
+        classSelector.addEventListener('change', function() {
+            window.location.href = '/rpl/public/index.php?action=bank_modul&class_id=' + this.value;
+        });
     }
 </script>
 

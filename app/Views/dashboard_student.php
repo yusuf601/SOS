@@ -145,7 +145,8 @@ $initials = substr($initials, 0, 2);
                             $cProg = $cardData['progress'];
                         ?>
                         <!-- Dynamic Class Card from DB -->
-                        <div class="class-card">
+                        <a href="/rpl/public/index.php?action=bank_modul&class_id=<?= $cInfo['ID_Kelas'] ?>" style="text-decoration: none; color: inherit; display: block;">
+                        <div class="class-card" style="cursor: pointer; transition: transform 0.2s; border: 1px solid transparent;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='#3b82f6';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='transparent';">
                             <div class="class-card-header class-header-blue">
                                 <div class="class-card-title-row">
                                     <h4 class="class-title"><?= htmlspecialchars($cInfo['Nama_Kelas']) ?></h4>
@@ -191,6 +192,7 @@ $initials = substr($initials, 0, 2);
                                 </div>
                             </div>
                         </div>
+                        </a>
                         <?php endforeach; ?>
                     <?php else: ?>
                     <div style="color: #94A3B8; font-size: 14px; padding: 20px 0;">

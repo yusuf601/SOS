@@ -280,7 +280,7 @@ $monthsIndo = [
     <main class="main-workspace">
         <!-- Top Navbar -->
         <header class="workspace-navbar" style="background-color: #364087;">
-            <h2 class="navbar-title" style="color: #FFFFFF; font-size: 32px; font-weight: 600;">Sanggah Nilai</h2>
+            <h2 class="navbar-title" style="color: #FFFFFF; font-size: 32px; font-weight: 600;">Sanggah Nilai<?= $classInfo ? ' - ' . htmlspecialchars($classInfo['Nama_Kelas']) : '' ?></h2>
             <div class="navbar-profile">
                 <div class="navbar-avatar" style="background-color: #7C94B8; color: #FFFFFF; font-size: 25px; font-weight: bold;"><?= htmlspecialchars($initials) ?></div>
             </div>
@@ -312,8 +312,12 @@ $monthsIndo = [
                     
                     <div class="form-group">
                         <label class="form-label" for="kelas_select">Kelas</label>
-                        <select id="kelas_select" class="form-select" disabled>
-                            <option value="1"><?= htmlspecialchars((is_array($classInfo) && isset($classInfo['Nama_Kelas'])) ? $classInfo['Nama_Kelas'] : 'Sistem Digital') ?></option>
+                        <select id="classSelector" class="form-select">
+                            <?php foreach ($studentClasses as $cls): ?>
+                                <option value="<?= htmlspecialchars($cls['ID_Kelas']) ?>" <?= ($classInfo && $classInfo['ID_Kelas'] == $cls['ID_Kelas']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($cls['Nama_Kelas']) ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
@@ -414,6 +418,17 @@ $monthsIndo = [
 <script>
     const gradesMap = <?php echo json_encode($gradesList); ?>;
     const selectModul = document.getElementById('modul_select');
+
+    // Check class selector
+    const classSelector = document.getElementById('classSelector');
+    if (classSelector) {
+        classSelector.addEventListener('change', function() {
+            window.location.href = '/rpl/public/index.php?action=sanggah_nilai&class_id=' + this.value;
+        });
+    }
+
+    // Modal elements
+    const confirmModal = document.getElementById('confirmModal');
     const inputNilai = document.getElementById('nilai_tercatat');
     const hiddenIdNilai = document.getElementById('id_nilai_hidden');
     const textareaAlasan = document.getElementById('alasan_sanggah');

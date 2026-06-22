@@ -462,7 +462,7 @@ $initials = substr($initials, 0, 2);
     <main class="main-workspace">
         <!-- Top Navbar -->
         <header class="workspace-navbar">
-            <h2 class="navbar-title">Upload Tugas</h2>
+            <h2 class="navbar-title">Upload Tugas<?= $classInfo ? ' - ' . htmlspecialchars($classInfo['Nama_Kelas']) : '' ?></h2>
             <div class="navbar-profile">
                 <div class="navbar-avatar"><?= htmlspecialchars($initials) ?></div>
             </div>
@@ -520,13 +520,11 @@ $initials = substr($initials, 0, 2);
                     <span class="class-selector-title">Pilih Kelas Praktikum:</span>
                     <div class="custom-select-wrapper">
                         <select class="class-select" id="classSelector" aria-label="Pilih kelas praktikum">
-                            <?php if ($classInfo): ?>
-                                <option value="<?= htmlspecialchars($classInfo['ID_Kelas']) ?>" selected><?= htmlspecialchars($classInfo['Nama_Kelas']) ?></option>
-                            <?php else: ?>
-                                <?php foreach ($allClasses as $cls): ?>
-                                    <option value="<?= htmlspecialchars($cls['ID_Kelas']) ?>"><?= htmlspecialchars($cls['Nama_Kelas']) ?></option>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                            <?php foreach ($allClasses as $cls): ?>
+                                <option value="<?= htmlspecialchars($cls['ID_Kelas']) ?>" <?= ($classInfo && $classInfo['ID_Kelas'] == $cls['ID_Kelas']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($cls['Nama_Kelas']) ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
@@ -842,6 +840,13 @@ $initials = substr($initials, 0, 2);
         if (banner) {
             banner.style.display = 'none';
         }
+    }
+
+    const classSelector = document.getElementById('classSelector');
+    if (classSelector) {
+        classSelector.addEventListener('change', function() {
+            window.location.href = '/rpl/public/index.php?action=upload_tugas&class_id=' + this.value;
+        });
     }
 </script>
 
