@@ -28,31 +28,57 @@ class TugasController {
         $classInfo = null;
         $allClasses = [];
 
+        $classInfo = null;
+        $allClasses = [];
+
         if ($role === 'Mahasiswa') {
-            $classInfo = $this->kelasModel->getStudentClass($userId);
+            $studentClasses = $this->kelasModel->getStudentClasses($userId);
+            if (isset($_GET['class_id'])) {
+                $requestedId = (int)$_GET['class_id'];
+                foreach ($studentClasses as $sc) {
+                    if ($sc['ID_Kelas'] === $requestedId) {
+                        $classInfo = $sc;
+                        break;
+                    }
+                }
+                if (!$classInfo && !empty($studentClasses)) $classInfo = $studentClasses[0];
+            } else {
+                if (!empty($studentClasses)) $classInfo = $studentClasses[0];
+            }
         } else {
             $allClasses = $this->kelasModel->getClassesByUserId($userId);
+            if (isset($_GET['class_id'])) {
+                $requestedId = (int)$_GET['class_id'];
+                foreach ($allClasses as $ac) {
+                    if ($ac['ID_Kelas'] === $requestedId) {
+                        $classInfo = $ac;
+                        break;
+                    }
+                }
+                if (!$classInfo && !empty($allClasses)) $classInfo = $allClasses[0];
+            } else {
+                if (!empty($allClasses)) $classInfo = $allClasses[0];
+            }
         }
 
-        // Fetch all tasks
-        $allTugas = $this->tugasModel->getAllTugas();
-
-        // Get submission details for each task
+        // Fetch tasks
         $tasksData = [];
-        foreach ($allTugas as $tugas) {
-            if ($role === 'Mahasiswa' && $classInfo) {
-                $className = $classInfo['Nama_Kelas'] ?? '';
-                $searchClass = trim(str_ireplace(['Praktikum', 'Kelas'], '', $className));
-                if (stripos($tugas['Judul_Modul'], $searchClass) === false) {
-                    continue; // Skip tasks not belonging to the student's class
-                }
-            }
+        if ($classInfo) {
+            $classId = $classInfo['ID_Kelas'];
+            $db = (new Database())->getConnection();
+            $query = "SELECT t.*, m.Judul_Modul, m.ID_Kelas FROM Tabel_Tugas t JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul WHERE m.ID_Kelas = :classId";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':classId', $classId);
+            $stmt->execute();
+            $allTugas = $stmt->fetchAll();
 
-            $submission = $this->tugasModel->getSubmission($tugas['ID_Tugas'], $userId);
-            $tasksData[] = [
-                'tugas' => $tugas,
-                'submission' => $submission
-            ];
+            foreach ($allTugas as $tugas) {
+                $submission = $this->tugasModel->getSubmission($tugas['ID_Tugas'], $userId);
+                $tasksData[] = [
+                    'tugas' => $tugas,
+                    'submission' => $submission
+                ];
+            }
         }
 
         $progress = null;
@@ -88,6 +114,23 @@ class TugasController {
         $tugas = $this->tugasModel->getTugasById($tugasId);
         if (!$tugas) {
             $_SESSION['upload_error'] = "Tugas tidak ditemukan.";
+            header('Location: /rpl/public/index.php?action=upload_tugas');
+            exit;
+        }
+
+        // Check if student belongs to the class of this task
+        require_once __DIR__ . '/../Models/KelasModel.php';
+        $kelasModel = new KelasModel();
+        $studentClasses = $kelasModel->getStudentClasses($userId);
+        $isMyClass = false;
+        foreach ($studentClasses as $sc) {
+            if ($sc['ID_Kelas'] == $tugas['ID_Kelas']) {
+                $isMyClass = true;
+                break;
+            }
+        }
+        if (!$isMyClass) {
+            $_SESSION['upload_error'] = "Akses ditolak: Tugas ini bukan untuk kelas Anda.";
             header('Location: /rpl/public/index.php?action=upload_tugas');
             exit;
         }
@@ -524,6 +567,21 @@ class TugasController {
             exit;
         }
 
+        // Verify ownership
+        $queryCheck = "SELECT p.ID_User FROM Tabel_Nilai n 
+                       JOIN Tabel_Pengumpulan p ON n.ID_Pengumpulan = p.ID_Pengumpulan 
+                       WHERE n.ID_Nilai = :idNilai";
+        $stmtCheck = $db->prepare($queryCheck);
+        $stmtCheck->bindParam(':idNilai', $idNilai);
+        $stmtCheck->execute();
+        $owner = $stmtCheck->fetch();
+
+        if (!$owner || $owner['ID_User'] != $_SESSION['user_id']) {
+            $_SESSION['sanggah_error'] = "Akses ditolak: Anda bukan pemilik nilai ini.";
+            header('Location: /rpl/public/index.php?action=sanggah_form');
+            exit;
+        }
+
         $query = "UPDATE Tabel_Nilai 
                   SET Alasan_Sanggah = :alasan, Status_Tugas = 'Sanggah' 
                   WHERE ID_Nilai = :idNilai";
@@ -563,6 +621,36 @@ class TugasController {
             $_SESSION['sanggah_error'] = "Data sanggahan tidak valid.";
             header('Location: /rpl/public/index.php?action=sanggah_nilai');
             exit;
+        }
+
+        $userId = $_SESSION['user_id'];
+        // Access Control: Verify the Dosen/Asisten is plotted to the class of this ID_Nilai
+        $queryCheck = "SELECT m.ID_Kelas FROM Tabel_Nilai n 
+                       JOIN Tabel_Pengumpulan p ON n.ID_Pengumpulan = p.ID_Pengumpulan 
+                       JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas 
+                       JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul 
+                       WHERE n.ID_Nilai = :idNilai";
+        $stmtCheck = $db->prepare($queryCheck);
+        $stmtCheck->bindParam(':idNilai', $idNilai);
+        $stmtCheck->execute();
+        $classTarget = $stmtCheck->fetch();
+
+        if ($classTarget) {
+            $isPlotted = false;
+            require_once __DIR__ . '/../Models/KelasModel.php';
+            $kelasModel = new KelasModel();
+            $allClasses = $kelasModel->getClassesByUserId($userId);
+            foreach ($allClasses as $cls) {
+                if ($cls['ID_Kelas'] === $classTarget['ID_Kelas']) {
+                    $isPlotted = true;
+                    break;
+                }
+            }
+            if (!$isPlotted) {
+                $_SESSION['sanggah_error'] = "Akses ditolak: Anda tidak memiliki akses ke kelas ini.";
+                header('Location: /rpl/public/index.php?action=sanggah_nilai');
+                exit;
+            }
         }
 
         $query = "UPDATE Tabel_Nilai 
@@ -929,6 +1017,35 @@ class TugasController {
             $_SESSION['grade_error'] = "Data pengumpulan tidak valid.";
             header("Location: $redirectUrl");
             exit;
+        }
+
+        $db = (new Database())->getConnection();
+        // Access Control: Verify the Dosen/Asisten is plotted to the class of this ID_Pengumpulan
+        $queryCheck = "SELECT m.ID_Kelas FROM Tabel_Pengumpulan p 
+                       JOIN Tabel_Tugas t ON p.ID_Tugas = t.ID_Tugas 
+                       JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul 
+                       WHERE p.ID_Pengumpulan = :idPeng";
+        $stmtCheck = $db->prepare($queryCheck);
+        $stmtCheck->bindParam(':idPeng', $pengumpulanId);
+        $stmtCheck->execute();
+        $classTarget = $stmtCheck->fetch();
+
+        if ($classTarget) {
+            $isPlotted = false;
+            require_once __DIR__ . '/../Models/KelasModel.php';
+            $kelasModel = new KelasModel();
+            $allClasses = $kelasModel->getClassesByUserId($asistenId);
+            foreach ($allClasses as $cls) {
+                if ($cls['ID_Kelas'] === $classTarget['ID_Kelas']) {
+                    $isPlotted = true;
+                    break;
+                }
+            }
+            if (!$isPlotted) {
+                $_SESSION['grade_error'] = "Akses ditolak: Anda tidak memiliki akses ke kelas ini.";
+                header("Location: $redirectUrl");
+                exit;
+            }
         }
 
         // Save verification status

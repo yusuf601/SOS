@@ -163,6 +163,21 @@ class ModulController {
             $classId = (int)($_POST['class_id'] ?? 0);
             $deadline = trim($_POST['deadline'] ?? '');
 
+            // Access Control: Verify the Dosen/Asisten is plotted to this class
+            $isPlotted = false;
+            $allClasses = $this->kelasModel->getClassesByUserId($userId);
+            foreach ($allClasses as $cls) {
+                if ($cls['ID_Kelas'] === $classId) {
+                    $isPlotted = true;
+                    break;
+                }
+            }
+            if (!$isPlotted) {
+                $_SESSION['upload_error'] = "Akses ditolak: Anda tidak ditugaskan pada kelas ini.";
+                header('Location: /rpl/public/index.php?action=bank_modul');
+                exit;
+            }
+
             if ($judulModul && $deadline && isset($_FILES['file_materi']) && $_FILES['file_materi']['error'] === UPLOAD_ERR_OK) {
                 $fileTmpPath = $_FILES['file_materi']['tmp_name'];
                 $fileName = $_FILES['file_materi']['name'];

@@ -34,7 +34,7 @@ class TugasModel {
 
     // Get task by ID
     public function getTugasById($id) {
-        $query = "SELECT t.*, m.Judul_Modul FROM Tabel_Tugas t
+        $query = "SELECT t.*, m.Judul_Modul, m.ID_Kelas FROM Tabel_Tugas t
                   JOIN Tabel_Modul m ON t.ID_Modul = m.ID_Modul
                   WHERE t.ID_Tugas = :id LIMIT 1";
         $stmt = $this->db->prepare($query);
