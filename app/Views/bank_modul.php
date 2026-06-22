@@ -483,9 +483,10 @@ $initials = substr($initials, 0, 2);
             $now = time();
             foreach ($modules as $index => $modul) {
                 $deadline = $modul['Deadline_Upload'] ? strtotime($modul['Deadline_Upload']) : null;
+                $isGradedFinished = (!empty($modul['Nilai_Angka']) && $modul['Status_Tugas'] === 'Selesai');
                 
-                // If it has a future deadline, it is active
-                if ($deadline && $deadline > $now) {
+                // If it has a future deadline and is not yet graded/finished, it is active
+                if ($deadline && $deadline > $now && !$isGradedFinished) {
                     $activeModules[] = [
                         'index' => $index + 1,
                         'data' => $modul
