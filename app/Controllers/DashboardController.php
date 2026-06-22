@@ -1424,8 +1424,20 @@ class DashboardController {
         exit;
     }
     public function joinClass() {
-        if (!isset($_SESSION['user_id']) || $_SESSION['active_role'] !== 'Mahasiswa') {
+        // Fix: jika bukan Mahasiswa, redirect ke dashboard yang sesuai (bukan hanya index)
+        if (!isset($_SESSION['user_id'])) {
             header('Location: /rpl/public/index.php');
+            exit;
+        }
+        if (($_SESSION['active_role'] ?? '') !== 'Mahasiswa') {
+            $role = $_SESSION['active_role'] ?? '';
+            if ($role === 'Asisten') {
+                header('Location: /rpl/public/index.php?action=dashboard_asisten');
+            } elseif ($role === 'Dosen') {
+                header('Location: /rpl/public/index.php?action=dashboard_dosen');
+            } else {
+                header('Location: /rpl/public/index.php');
+            }
             exit;
         }
 
@@ -1449,7 +1461,6 @@ class DashboardController {
                     $checkStmt->bindParam(':classId', $classId);
                     $checkStmt->execute();
                     if ($checkStmt->fetch()) {
-                        // Using settings_error for simple flash messaging
                         $_SESSION['settings_error'] = "Anda sudah bergabung di kelas ini.";
                     } else {
                         // Join class
@@ -1464,8 +1475,9 @@ class DashboardController {
                 }
             }
         }
-        $referer = $_SERVER['HTTP_REFERER'] ?? '/rpl/public/index.php?action=my_classes';
-        header("Location: $referer");
+
+        // Fix: hardcode redirect ke dashboard_student, jangan pakai HTTP_REFERER yang tidak bisa diandalkan
+        header('Location: /rpl/public/index.php?action=dashboard_student');
         exit;
     }
 }
