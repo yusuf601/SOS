@@ -477,18 +477,19 @@ $initials = substr($initials, 0, 2);
         <div class="workspace-content">
             <?php
             // Group modules into active (Modul Berlangsung) and completed (Modul Selesai)
-            $activeModul = null;
-            $activeModulIndex = -1;
+            $activeModules = [];
             $completedModules = [];
             
             $now = time();
             foreach ($modules as $index => $modul) {
                 $deadline = $modul['Deadline_Upload'] ? strtotime($modul['Deadline_Upload']) : null;
                 
-                // Active modul is the first module with a future deadline
-                if ($deadline && $deadline > $now && !$activeModul) {
-                    $activeModul = $modul;
-                    $activeModulIndex = $index;
+                // If it has a future deadline, it is active
+                if ($deadline && $deadline > $now) {
+                    $activeModules[] = [
+                        'index' => $index + 1,
+                        'data' => $modul
+                    ];
                 } else {
                     $completedModules[] = [
                         'index' => $index + 1,
@@ -498,9 +499,12 @@ $initials = substr($initials, 0, 2);
             }
 
             // Fallback: If no future deadline is found but we have modules, the last module is active (if role is Student)
-            if (!$activeModul && !empty($modules) && $_SESSION['active_role'] === 'Mahasiswa') {
-                $activeModul = end($modules);
-                $activeModulIndex = count($modules) - 1;
+            if (empty($activeModules) && !empty($modules) && $_SESSION['active_role'] === 'Mahasiswa') {
+                $lastModul = end($modules);
+                $activeModules[] = [
+                    'index' => count($modules),
+                    'data' => $lastModul
+                ];
                 array_pop($completedModules);
             }
             ?>
@@ -554,65 +558,72 @@ $initials = substr($initials, 0, 2);
             </div>
 
             <!-- Modul Berlangsung (Figma Sibling Group 44) -->
-            <?php if ($activeModul): ?>
-                <section class="modul-berlangsung-card">
-                    <h3 class="modul-berlangsung-header">Modul Berlangsung</h3>
-                    <div class="modul-berlangsung-strip">
-                        <div class="modul-berlangsung-left">
-                            <div class="modul-berlangsung-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                </svg>
-                            </div>
-                            <div class="modul-berlangsung-details">
-                                <h4 class="modul-berlangsung-title">Modul <?= $activeModulIndex + 1 ?>: <?= htmlspecialchars($activeModul['Judul_Modul']) ?></h4>
-                                <span class="modul-berlangsung-meta">
-                                    Pertemuan <?= $activeModulIndex + 1 ?> · Deadline: 
-                                    <span class="modul-berlangsung-meta-date">
-                                        <?= $activeModul['Deadline_Upload'] ? date('d M Y, H:i', strtotime($activeModul['Deadline_Upload'])) : 'Belum Diatur' ?>
-                                    </span>
-                                </span>
-                                <?php if ($_SESSION['active_role'] === 'Mahasiswa'): ?>
-                                    <div class="modul-berlangsung-badges">
-                                        <?php
-                                        if ($activeModul['Deadline_Upload']) {
-                                            $diff = strtotime($activeModul['Deadline_Upload']) - time();
-                                            $days = ceil($diff / (3600 * 24));
-                                            if ($days > 0) {
-                                                echo '<span class="badge-yellow">' . $days . ' hari lagi</span>';
-                                            } else {
-                                                echo '<span class="badge-red">Terlambat</span>';
-                                            }
-                                        }
-                                        
-                                        if ($activeModul['ID_Pengumpulan']) {
-                                            echo '<span class="badge-green">Sudah dikumpulkan</span>';
-                                        } else {
-                                            echo '<span class="badge-red">Belum dikumpulkan</span>';
-                                        }
-                                        ?>
+            <?php if (!empty($activeModules)): ?>
+                <div style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 24px;">
+                    <?php foreach ($activeModules as $activeItem): 
+                        $activeModul = $activeItem['data'];
+                        $activeModulIndex = $activeItem['index'] - 1;
+                    ?>
+                        <section class="modul-berlangsung-card">
+                            <h3 class="modul-berlangsung-header">Modul Berlangsung</h3>
+                            <div class="modul-berlangsung-strip">
+                                <div class="modul-berlangsung-left">
+                                    <div class="modul-berlangsung-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                            <polyline points="10 9 9 9 8 9"></polyline>
+                                        </svg>
                                     </div>
-                                <?php endif; ?>
+                                    <div class="modul-berlangsung-details">
+                                        <h4 class="modul-berlangsung-title">Modul <?= $activeModulIndex + 1 ?>: <?= htmlspecialchars($activeModul['Judul_Modul']) ?></h4>
+                                        <span class="modul-berlangsung-meta">
+                                            Pertemuan <?= $activeModulIndex + 1 ?> · Deadline: 
+                                            <span class="modul-berlangsung-meta-date">
+                                                <?= $activeModul['Deadline_Upload'] ? date('d M Y, H:i', strtotime($activeModul['Deadline_Upload'])) : 'Belum Diatur' ?>
+                                            </span>
+                                        </span>
+                                        <?php if ($_SESSION['active_role'] === 'Mahasiswa'): ?>
+                                            <div class="modul-berlangsung-badges">
+                                                <?php
+                                                if ($activeModul['Deadline_Upload']) {
+                                                    $diff = strtotime($activeModul['Deadline_Upload']) - time();
+                                                    $days = ceil($diff / (3600 * 24));
+                                                    if ($days > 0) {
+                                                        echo '<span class="badge-yellow">' . $days . ' hari lagi</span>';
+                                                    } else {
+                                                        echo '<span class="badge-red">Terlambat</span>';
+                                                    }
+                                                }
+                                                
+                                                if ($activeModul['ID_Pengumpulan']) {
+                                                    echo '<span class="badge-green">Sudah dikumpulkan</span>';
+                                                } else {
+                                                    echo '<span class="badge-red">Belum dikumpulkan</span>';
+                                                }
+                                                ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <div class="modul-berlangsung-actions">
+                                    <a href="/rpl/public/index.php?action=download_materi&file=<?= urlencode($activeModul['File_Materi']) ?>" class="btn-download-modul">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        <span>Unduh Modul</span>
+                                    </a>
+                                    <?php if ($_SESSION['active_role'] === 'Mahasiswa'): ?>
+                                        <a href="/rpl/public/index.php?action=upload_tugas&id_tugas=<?= urlencode($activeModul['ID_Tugas']) ?>" class="btn-upload-tugas">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                            <span>Upload Tugas</span>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modul-berlangsung-actions">
-                            <a href="/rpl/public/index.php?action=download_materi&file=<?= urlencode($activeModul['File_Materi']) ?>" class="btn-download-modul">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                <span>Unduh Modul</span>
-                            </a>
-                            <?php if ($_SESSION['active_role'] === 'Mahasiswa'): ?>
-                                <a href="/rpl/public/index.php?action=upload_tugas" class="btn-upload-tugas">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                    <span>Upload Tugas</span>
-                                </a>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </section>
+                        </section>
+                    <?php endforeach; ?>
+                </div>
             <?php endif; ?>
 
             <!-- Modul Selesai (Figma Sibling Group 30) -->

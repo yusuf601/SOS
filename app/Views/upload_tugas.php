@@ -491,6 +491,9 @@ $initials = substr($initials, 0, 2);
                 'October' => 'Okt', 'November' => 'Nov', 'December' => 'Des'
             ];
 
+            // Check if specific task ID was requested
+            $requestedTugasId = isset($_GET['id_tugas']) ? (int)$_GET['id_tugas'] : null;
+
             foreach ($tasksData as $index => $item) {
                 $tugas = $item['tugas'];
                 $sub = $item['submission'];
@@ -498,9 +501,16 @@ $initials = substr($initials, 0, 2);
                 $deadlinePassed = time() > strtotime($tugas['Deadline_Upload']);
                 $hasSubmitted = ($sub && ($sub['Status_Tugas'] === 'Selesai' || $sub['Status_Tugas'] === 'Pending' || $sub['Status_Tugas'] === 'Revisi' || $sub['Status_Tugas'] === 'Sanggah'));
                 
-                if (!$deadlinePassed && $activeTugasItem === null) {
-                    $activeTugasItem = $item;
-                    $activeTugasIndex = $index;
+                if ($requestedTugasId !== null) {
+                    if ((int)$tugas['ID_Tugas'] === $requestedTugasId) {
+                        $activeTugasItem = $item;
+                        $activeTugasIndex = $index;
+                    }
+                } else {
+                    if (!$deadlinePassed && $activeTugasItem === null) {
+                        $activeTugasItem = $item;
+                        $activeTugasIndex = $index;
+                    }
                 }
                 
                 if ($deadlinePassed && !$hasSubmitted) {
