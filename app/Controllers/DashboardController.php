@@ -124,8 +124,9 @@ class DashboardController {
                 }
 
                 // Get count of modules in database
-                $queryModuls = "SELECT COUNT(*) as total FROM Tabel_Modul";
+                $queryModuls = "SELECT COUNT(*) as total FROM Tabel_Modul WHERE ID_Kelas = :classId";
                 $stmtModuls = $db->prepare($queryModuls);
+                $stmtModuls->bindParam(':classId', $classInfo['ID_Kelas']);
                 $stmtModuls->execute();
                 $totalModuls = $stmtModuls->fetch()['total'];
 
