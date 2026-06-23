@@ -539,9 +539,11 @@ $initials = substr($initials, 0, 2);
                         <span class="meta-info-value" id="classSchedule"><?= htmlspecialchars($schedule) ?></span>
                     </div>
                     <?php if ($_SESSION['active_role'] === 'Mahasiswa' && !empty($classInfo['ID_Kelompok'])): ?>
-                        <div class="meta-info-item" style="grid-column: span 3; margin-top: 8px; border-top: 0.5px solid rgba(0, 0, 0, 0.1); padding-top: 8px;">
-                            <span class="meta-info-label">Anggota <?= htmlspecialchars($classInfo['Nama_Kelompok']) ?></span>
-                            <span class="meta-info-value" style="font-size: 14px; font-weight: 500; color: #4B5563;"><?= !empty($groupMembers) ? htmlspecialchars(implode(', ', $groupMembers)) : '-' ?></span>
+                        <div class="meta-info-item">
+                            <span class="meta-info-label">Kelompok</span>
+                            <span class="meta-info-value" id="viewGroupMembers" style="color: #364087; cursor: pointer; text-decoration: underline; font-weight: 700; font-size: 15px;">
+                                <?= htmlspecialchars($classInfo['Nama_Kelompok']) ?> (Lihat Anggota)
+                            </span>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -738,8 +740,44 @@ $initials = substr($initials, 0, 2);
             window.location.href = '/rpl/public/index.php?action=bank_modul&class_id=' + this.value;
         });
     }
+
+    function openGroupModal() {
+        document.getElementById('groupMembersModal').style.display = 'flex';
+    }
+    function closeGroupModal() {
+        document.getElementById('groupMembersModal').style.display = 'none';
+    }
+    const viewGroupBtn = document.getElementById('viewGroupMembers');
+    if (viewGroupBtn) {
+        viewGroupBtn.addEventListener('click', openGroupModal);
+    }
 </script>
 
+<!-- Group Members Pop-up Modal -->
+<div id="groupMembersModal" class="settings-backdrop" style="display: none;">
+    <div class="settings-modal" style="max-width: 400px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);">
+        <div class="settings-header">
+            <div class="settings-header-left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <span class="settings-title" style="margin-left: 8px;">Anggota <?= htmlspecialchars($classInfo['Nama_Kelompok'] ?? 'Kelompok') ?></span>
+            </div>
+            <span onclick="closeGroupModal()" style="cursor: pointer; font-size: 24px; font-weight: bold; line-height: 1;">&times;</span>
+        </div>
+        <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px; background-color: #FFFFFF;">
+            <?php if (!empty($groupMembers)): ?>
+                <?php foreach ($groupMembers as $idx => $member): ?>
+                    <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid rgba(0,0,0,0.05);">
+                        <div style="width: 8px; height: 8px; background-color: #364087; border-radius: 50%;"></div>
+                        <span style="font-size: 14px; font-weight: 500; color: #1E293B;"><?= htmlspecialchars($member) ?></span>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <span style="font-size: 14px; color: #64748B; text-align: center;">Belum ada anggota kelompok.</span>
+            <?php endif; ?>
+            <button onclick="closeGroupModal()" style="margin-top: 16px; background-color: #364087; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#2b336c'" onmouseout="this.style.backgroundColor='#364087'">Tutup</button>
+        </div>
+    </div>
+</div>
 
     </div>
 </div>
