@@ -539,6 +539,12 @@ $initials = substr($initials, 0, 2);
                             <span class="meta-info-label">Jadwal & Ruang</span>
                             <span class="meta-info-value" id="classSchedule"><?= htmlspecialchars($schedule) ?></span>
                         </div>
+                        <?php if ($_SESSION['active_role'] === 'Mahasiswa' && !empty($classInfo['ID_Kelompok'])): ?>
+                            <div class="meta-info-item" style="grid-column: span 3; margin-top: 8px; border-top: 0.5px solid rgba(0, 0, 0, 0.1); padding-top: 8px;">
+                                <span class="meta-info-label">Anggota <?= htmlspecialchars($classInfo['Nama_Kelompok']) ?></span>
+                                <span class="meta-info-value" style="font-size: 14px; font-weight: 500; color: #4B5563;"><?= !empty($groupMembers) ? htmlspecialchars(implode(', ', $groupMembers)) : '-' ?></span>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </section>
             <?php endif; ?>

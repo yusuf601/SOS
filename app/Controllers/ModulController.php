@@ -87,6 +87,20 @@ class ModulController {
                 }
             }
 
+            // Fetch group members if Mahasiswa and belongs to a group
+            $groupMembers = [];
+            if ($role === 'Mahasiswa' && !empty($classInfo['ID_Kelompok'])) {
+                $queryMembers = "SELECT u.Nama_Lengkap FROM Tabel_User u
+                                 JOIN Tabel_KRS krs ON u.ID_User = krs.ID_User
+                                 WHERE krs.ID_Kelompok = :groupId AND krs.ID_Kelas = :classId
+                                 ORDER BY u.Nama_Lengkap ASC";
+                $stmtMembers = $db->prepare($queryMembers);
+                $stmtMembers->bindParam(':groupId', $classInfo['ID_Kelompok']);
+                $stmtMembers->bindParam(':classId', $classId);
+                $stmtMembers->execute();
+                $groupMembers = $stmtMembers->fetchAll(PDO::FETCH_COLUMN);
+            }
+
             // Dummy schedule mapped for layout
             $schedule = $classInfo['Jadwal'] ?? "Belum Diatur";
         }
