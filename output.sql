@@ -102,8 +102,13 @@ CREATE TABLE Tabel_Plotting_Asisten (
 -- Tabel_Modul: Stores practical work modules and materials
 CREATE TABLE Tabel_Modul (
     ID_Modul INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Kelas INT NOT NULL,
     Judul_Modul VARCHAR(255) NOT NULL,
-    File_Materi VARCHAR(255) NOT NULL
+    File_Materi VARCHAR(255) NOT NULL,
+    CONSTRAINT FK_Modul_Kelas FOREIGN KEY (ID_Kelas) 
+        REFERENCES Tabel_Kelas(ID_Kelas) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ==========================================
@@ -559,7 +564,7 @@ INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124019'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124053'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124015'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 PEMROGRAMAN BERORIENTASI OBJEK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'PEMROGRAMAN BERORIENTASI OBJEK'), 'Modul 1 PEMROGRAMAN BERORIENTASI OBJEK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -660,7 +665,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124015'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123125'), 61, 'Tingkatkan', 'Sanggah', 'Mohon dikoreksi ulang kak');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 PEMROGRAMAN BERORIENTASI OBJEK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'PEMROGRAMAN BERORIENTASI OBJEK'), 'Modul 2 PEMROGRAMAN BERORIENTASI OBJEK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -740,7 +745,7 @@ INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALU
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123120'), 90, 'Bagus', 'Selesai');
 INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124015'), @mod_id, 'Hadir', NOW());
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 PEMROGRAMAN BERORIENTASI OBJEK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'PEMROGRAMAN BERORIENTASI OBJEK'), 'Modul 3 PEMROGRAMAN BERORIENTASI OBJEK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -832,7 +837,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124015'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123120'), 82, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 PEMROGRAMAN BERORIENTASI OBJEK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'PEMROGRAMAN BERORIENTASI OBJEK'), 'Modul 4 PEMROGRAMAN BERORIENTASI OBJEK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -957,7 +962,7 @@ INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124054'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124018'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124017'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Pemrograman Web', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Web'), 'Modul 1 Pemrograman Web', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1061,7 +1066,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124017'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123127'), 99, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Pemrograman Web', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Web'), 'Modul 2 Pemrograman Web', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1159,7 +1164,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124017'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123114'), 79, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Pemrograman Web', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Web'), 'Modul 3 Pemrograman Web', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1257,7 +1262,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124017'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123114'), 91, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Pemrograman Web', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Web'), 'Modul 4 Pemrograman Web', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1383,7 +1388,7 @@ INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123040'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122126'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124072'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 REKAYASA PERANGKAT LUNAK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'REKAYASA PERANGKAT LUNAK'), 'Modul 1 REKAYASA PERANGKAT LUNAK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1475,7 +1480,7 @@ INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALU
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123110'), 98, 'Bagus', 'Selesai');
 INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124072'), @mod_id, 'Hadir', NOW());
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 REKAYASA PERANGKAT LUNAK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'REKAYASA PERANGKAT LUNAK'), 'Modul 2 REKAYASA PERANGKAT LUNAK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1567,7 +1572,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124072'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123118'), 96, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 REKAYASA PERANGKAT LUNAK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'REKAYASA PERANGKAT LUNAK'), 'Modul 3 REKAYASA PERANGKAT LUNAK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1668,7 +1673,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124072'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123112'), 83, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 REKAYASA PERANGKAT LUNAK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'REKAYASA PERANGKAT LUNAK'), 'Modul 4 REKAYASA PERANGKAT LUNAK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1775,7 +1780,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122084'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Struktur Data', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Struktur Data'), 'Modul 1 Struktur Data', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1783,7 +1788,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122084'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123127'), 79, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Struktur Data', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Struktur Data'), 'Modul 2 Struktur Data', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1791,7 +1796,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122084'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123127'), 96, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Struktur Data', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Struktur Data'), 'Modul 3 Struktur Data', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1799,7 +1804,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122084'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123127'), 81, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Struktur Data', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Struktur Data'), 'Modul 4 Struktur Data', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1816,7 +1821,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124081'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Sistem Basis Data', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Basis Data'), 'Modul 1 Sistem Basis Data', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1824,7 +1829,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124081'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123107'), 82, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Sistem Basis Data', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Basis Data'), 'Modul 2 Sistem Basis Data', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1832,7 +1837,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124081'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123123'), 81, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Sistem Basis Data', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Basis Data'), 'Modul 3 Sistem Basis Data', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1840,7 +1845,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124081'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123107'), 80, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Sistem Basis Data', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Basis Data'), 'Modul 4 Sistem Basis Data', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1857,7 +1862,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E120096'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Jaringan Komputer', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Jaringan Komputer'), 'Modul 1 Jaringan Komputer', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1865,7 +1870,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E120096'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123122'), 94, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Jaringan Komputer', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Jaringan Komputer'), 'Modul 2 Jaringan Komputer', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1873,7 +1878,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E120096'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123122'), 82, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Jaringan Komputer', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Jaringan Komputer'), 'Modul 3 Jaringan Komputer', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1881,7 +1886,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E120096'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123130'), 97, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Jaringan Komputer', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Jaringan Komputer'), 'Modul 4 Jaringan Komputer', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1898,7 +1903,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124078'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Sistem Operasi', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Operasi'), 'Modul 1 Sistem Operasi', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1906,7 +1911,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124078'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123123'), 98, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Sistem Operasi', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Operasi'), 'Modul 2 Sistem Operasi', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1914,7 +1919,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124078'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123121'), 87, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Sistem Operasi', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Operasi'), 'Modul 3 Sistem Operasi', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1922,7 +1927,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124078'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123123'), 62, 'Tingkatkan', 'Sanggah', 'Mohon dikoreksi ulang kak');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Sistem Operasi', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Operasi'), 'Modul 4 Sistem Operasi', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1937,7 +1942,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123077'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Analisis dan Desain Perangkat Lunak', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis dan Desain Perangkat Lunak'), 'Modul 1 Analisis dan Desain Perangkat Lunak', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1945,7 +1950,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123077'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123105'), 78, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Analisis dan Desain Perangkat Lunak', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis dan Desain Perangkat Lunak'), 'Modul 2 Analisis dan Desain Perangkat Lunak', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1953,7 +1958,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123077'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123109'), 85, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Analisis dan Desain Perangkat Lunak', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis dan Desain Perangkat Lunak'), 'Modul 3 Analisis dan Desain Perangkat Lunak', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1961,7 +1966,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123077'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123125'), 82, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Analisis dan Desain Perangkat Lunak', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis dan Desain Perangkat Lunak'), 'Modul 4 Analisis dan Desain Perangkat Lunak', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1980,7 +1985,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122022'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Cloud Computing', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Cloud Computing'), 'Modul 1 Cloud Computing', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1988,7 +1993,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122022'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123110'), 92, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Cloud Computing', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Cloud Computing'), 'Modul 2 Cloud Computing', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -1996,7 +2001,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122022'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123110'), 71, 'Tingkatkan', 'Sanggah', 'Mohon dikoreksi ulang kak');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Cloud Computing', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Cloud Computing'), 'Modul 3 Cloud Computing', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2004,7 +2009,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122022'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123110'), 83, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Cloud Computing', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Cloud Computing'), 'Modul 4 Cloud Computing', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2022,7 +2027,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124074'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Kecerdasan Buatan', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Kecerdasan Buatan'), 'Modul 1 Kecerdasan Buatan', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2030,12 +2035,12 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124074'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123107'), 82, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Kecerdasan Buatan', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Kecerdasan Buatan'), 'Modul 2 Kecerdasan Buatan', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124074'), @mod_id, 'Hadir', NOW());
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Kecerdasan Buatan', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Kecerdasan Buatan'), 'Modul 3 Kecerdasan Buatan', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2043,7 +2048,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124074'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123109'), 99, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Kecerdasan Buatan', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Kecerdasan Buatan'), 'Modul 4 Kecerdasan Buatan', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2062,7 +2067,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E121061'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Pembelajaran Mesin', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pembelajaran Mesin'), 'Modul 1 Pembelajaran Mesin', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2070,7 +2075,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E121061'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123109'), 98, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Pembelajaran Mesin', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pembelajaran Mesin'), 'Modul 2 Pembelajaran Mesin', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2078,7 +2083,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E121061'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123113'), 45, 'Ulangi', 'Revisi');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Pembelajaran Mesin', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pembelajaran Mesin'), 'Modul 3 Pembelajaran Mesin', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2086,7 +2091,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E121061'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123115'), 97, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Pembelajaran Mesin', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pembelajaran Mesin'), 'Modul 4 Pembelajaran Mesin', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2104,7 +2109,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122054'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Data Mining (Pilihan 1)', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Data Mining (Pilihan 1)'), 'Modul 1 Data Mining (Pilihan 1)', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2112,7 +2117,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122054'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123122'), 75, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Data Mining (Pilihan 1)', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Data Mining (Pilihan 1)'), 'Modul 2 Data Mining (Pilihan 1)', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2120,7 +2125,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122054'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123120'), 88, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Data Mining (Pilihan 1)', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Data Mining (Pilihan 1)'), 'Modul 3 Data Mining (Pilihan 1)', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2128,7 +2133,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122054'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123116'), 65, 'Tingkatkan', 'Sanggah', 'Mohon dikoreksi ulang kak');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Data Mining (Pilihan 1)', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Data Mining (Pilihan 1)'), 'Modul 4 Data Mining (Pilihan 1)', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2146,7 +2151,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122092'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Keamanan Data dan Informasi (Cyber Security)', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Keamanan Data dan Informasi (Cyber Security)'), 'Modul 1 Keamanan Data dan Informasi (Cyber Security)', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2154,7 +2159,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122092'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123115'), 81, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Keamanan Data dan Informasi (Cyber Security)', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Keamanan Data dan Informasi (Cyber Security)'), 'Modul 2 Keamanan Data dan Informasi (Cyber Security)', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2162,12 +2167,12 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122092'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123125'), 83, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Keamanan Data dan Informasi (Cyber Security)', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Keamanan Data dan Informasi (Cyber Security)'), 'Modul 3 Keamanan Data dan Informasi (Cyber Security)', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E122092'), @mod_id, 'Hadir', NOW());
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Keamanan Data dan Informasi (Cyber Security)', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Keamanan Data dan Informasi (Cyber Security)'), 'Modul 4 Keamanan Data dan Informasi (Cyber Security)', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2184,7 +2189,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123059'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 INTERAKSI MANUSIA DAN KOMPUTER', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'INTERAKSI MANUSIA DAN KOMPUTER'), 'Modul 1 INTERAKSI MANUSIA DAN KOMPUTER', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2192,7 +2197,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123059'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123127'), 90, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 INTERAKSI MANUSIA DAN KOMPUTER', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'INTERAKSI MANUSIA DAN KOMPUTER'), 'Modul 2 INTERAKSI MANUSIA DAN KOMPUTER', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2200,7 +2205,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123059'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123127'), 83, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 INTERAKSI MANUSIA DAN KOMPUTER', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'INTERAKSI MANUSIA DAN KOMPUTER'), 'Modul 3 INTERAKSI MANUSIA DAN KOMPUTER', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2208,7 +2213,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123059'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123128'), 89, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 INTERAKSI MANUSIA DAN KOMPUTER', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'INTERAKSI MANUSIA DAN KOMPUTER'), 'Modul 4 INTERAKSI MANUSIA DAN KOMPUTER', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2227,7 +2232,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124079'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Sistem Paralel dan Terdistribusi', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Paralel dan Terdistribusi'), 'Modul 1 Sistem Paralel dan Terdistribusi', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2235,12 +2240,12 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124079'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123126'), 92, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Sistem Paralel dan Terdistribusi', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Paralel dan Terdistribusi'), 'Modul 2 Sistem Paralel dan Terdistribusi', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124079'), @mod_id, 'Hadir', NOW());
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Sistem Paralel dan Terdistribusi', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Paralel dan Terdistribusi'), 'Modul 3 Sistem Paralel dan Terdistribusi', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2248,7 +2253,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124079'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123102'), 88, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Sistem Paralel dan Terdistribusi', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Paralel dan Terdistribusi'), 'Modul 4 Sistem Paralel dan Terdistribusi', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2266,7 +2271,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124038'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 METODE RISET', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE RISET'), 'Modul 1 METODE RISET', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2274,7 +2279,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124038'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123118'), 73, 'Tingkatkan', 'Sanggah', 'Mohon dikoreksi ulang kak');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 METODE RISET', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE RISET'), 'Modul 2 METODE RISET', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2282,7 +2287,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124038'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123126'), 77, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 METODE RISET', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE RISET'), 'Modul 3 METODE RISET', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2290,7 +2295,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124038'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123118'), 83, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 METODE RISET', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE RISET'), 'Modul 4 METODE RISET', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2304,7 +2309,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124045'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 ETIKA PROFESI', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ETIKA PROFESI'), 'Modul 1 ETIKA PROFESI', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2312,7 +2317,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124045'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123114'), 99, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 ETIKA PROFESI', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ETIKA PROFESI'), 'Modul 2 ETIKA PROFESI', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2320,7 +2325,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124045'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123105'), 68, 'Tingkatkan', 'Sanggah', 'Mohon dikoreksi ulang kak');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 ETIKA PROFESI', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ETIKA PROFESI'), 'Modul 3 ETIKA PROFESI', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2328,7 +2333,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124045'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123105'), 87, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 ETIKA PROFESI', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ETIKA PROFESI'), 'Modul 4 ETIKA PROFESI', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2347,7 +2352,7 @@ INSERT INTO Tabel_Kelompok (Nama_Kelompok, ID_Kelas) VALUES ('Kelompok 1', (SELE
 SET @k1 = LAST_INSERT_ID();
 SET @k2 = LAST_INSERT_ID() + 1;
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124061'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Analisis Jejaring Sosial', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis Jejaring Sosial'), 'Modul 1 Analisis Jejaring Sosial', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2355,7 +2360,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124061'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123105'), 78, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Analisis Jejaring Sosial', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis Jejaring Sosial'), 'Modul 2 Analisis Jejaring Sosial', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2363,7 +2368,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124061'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123112'), 85, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Analisis Jejaring Sosial', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis Jejaring Sosial'), 'Modul 3 Analisis Jejaring Sosial', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2371,7 +2376,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E124061'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123112'), 99, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Analisis Jejaring Sosial', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Analisis Jejaring Sosial'), 'Modul 4 Analisis Jejaring Sosial', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2429,7 +2434,7 @@ INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125084'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125075'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125043'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Pemrograman Dasar', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Dasar'), 'Modul 1 Pemrograman Dasar', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2578,7 +2583,7 @@ INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALU
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123126'), 49, 'Ulangi', 'Revisi');
 INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125043'), @mod_id, 'Hadir', NOW());
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Pemrograman Dasar', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Dasar'), 'Modul 2 Pemrograman Dasar', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2730,7 +2735,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125043'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123102'), 95, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Pemrograman Dasar', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Dasar'), 'Modul 3 Pemrograman Dasar', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -2876,7 +2881,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125043'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123130'), 56, 'Ulangi', 'Revisi');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Pemrograman Dasar', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Pemrograman Dasar'), 'Modul 4 Pemrograman Dasar', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3049,7 +3054,7 @@ INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125066'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125068'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125102'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Matematika Diskrit', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Matematika Diskrit'), 'Modul 1 Matematika Diskrit', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3093,7 +3098,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125102'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123119'), 100, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Matematika Diskrit', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Matematika Diskrit'), 'Modul 2 Matematika Diskrit', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3131,7 +3136,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125102'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123110'), 98, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Matematika Diskrit', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Matematika Diskrit'), 'Modul 3 Matematika Diskrit', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3172,7 +3177,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125102'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123123'), 71, 'Tingkatkan', 'Sanggah', 'Mohon dikoreksi ulang kak');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Matematika Diskrit', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Matematika Diskrit'), 'Modul 4 Matematika Diskrit', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3234,7 +3239,7 @@ INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125018'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125080'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125105'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Sistem Digital', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Digital'), 'Modul 1 Sistem Digital', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3275,7 +3280,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125105'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123111'), 81, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Sistem Digital', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Digital'), 'Modul 2 Sistem Digital', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3310,7 +3315,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125105'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123111'), 98, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Sistem Digital', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Digital'), 'Modul 3 Sistem Digital', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3348,7 +3353,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125105'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123110'), 86, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Sistem Digital', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Sistem Digital'), 'Modul 4 Sistem Digital', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3412,7 +3417,7 @@ INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125037'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125004'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125042'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Organisasi dan Arsitektur Komputer', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Organisasi dan Arsitektur Komputer'), 'Modul 1 Organisasi dan Arsitektur Komputer', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3453,7 +3458,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125042'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123106'), 81, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Organisasi dan Arsitektur Komputer', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Organisasi dan Arsitektur Komputer'), 'Modul 2 Organisasi dan Arsitektur Komputer', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3494,7 +3499,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125042'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123108'), 91, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Organisasi dan Arsitektur Komputer', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Organisasi dan Arsitektur Komputer'), 'Modul 3 Organisasi dan Arsitektur Komputer', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3535,7 +3540,7 @@ INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALU
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123109'), 80, 'Bagus', 'Selesai');
 INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125042'), @mod_id, 'Hadir', NOW());
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Organisasi dan Arsitektur Komputer', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Organisasi dan Arsitektur Komputer'), 'Modul 4 Organisasi dan Arsitektur Komputer', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3593,7 +3598,7 @@ INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125069'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125082'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125021'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 Statistika', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Statistika'), 'Modul 1 Statistika', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3628,7 +3633,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125021'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123102'), 76, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 Statistika', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Statistika'), 'Modul 2 Statistika', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3669,7 +3674,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125021'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123102'), 97, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 Statistika', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Statistika'), 'Modul 3 Statistika', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3713,7 +3718,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125021'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123123'), 84, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 Statistika', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'Statistika'), 'Modul 4 Statistika', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3773,7 +3778,7 @@ INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125058'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125033'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125023'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 ALJABAR LINEAR', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ALJABAR LINEAR'), 'Modul 1 ALJABAR LINEAR', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3814,7 +3819,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125023'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas, Alasan_Sanggah) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123119'), 71, 'Tingkatkan', 'Sanggah', 'Mohon dikoreksi ulang kak');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 ALJABAR LINEAR', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ALJABAR LINEAR'), 'Modul 2 ALJABAR LINEAR', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3855,7 +3860,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125023'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123122'), 80, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 ALJABAR LINEAR', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ALJABAR LINEAR'), 'Modul 3 ALJABAR LINEAR', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3893,7 +3898,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125023'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123101'), 84, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 ALJABAR LINEAR', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'ALJABAR LINEAR'), 'Modul 4 ALJABAR LINEAR', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3949,7 +3954,7 @@ INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User F
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125085'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125049'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
 INSERT INTO Tabel_KRS (ID_User, ID_Kelas, ID_Kelompok) VALUES ((SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125065'), (SELECT ID_Kelas FROM Tabel_Kelompok WHERE ID_Kelompok = @k2), @k2);
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 1 METODE NUMERIK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE NUMERIK'), 'Modul 1 METODE NUMERIK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 1', DATE_ADD(NOW(), INTERVAL 1 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -3998,7 +4003,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125065'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123109'), 98, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 2 METODE NUMERIK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE NUMERIK'), 'Modul 2 METODE NUMERIK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 2', DATE_ADD(NOW(), INTERVAL 2 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -4050,7 +4055,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125065'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123103'), 86, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 3 METODE NUMERIK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE NUMERIK'), 'Modul 3 METODE NUMERIK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 3', DATE_ADD(NOW(), INTERVAL 3 WEEK));
 SET @task_id = LAST_INSERT_ID();
@@ -4096,7 +4101,7 @@ INSERT INTO Tabel_Presensi (ID_User, ID_Modul, Status_Kehadiran, Tanggal) VALUES
 INSERT INTO Tabel_Pengumpulan (ID_Tugas, ID_User, File_Tugas, Waktu_Submit) VALUES (@task_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E125065'), 'tugas.zip', NOW());
 SET @sub_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Nilai (ID_Pengumpulan, ID_Asisten, Nilai_Angka, Feedback, Status_Tugas) VALUES (@sub_id, (SELECT ID_User FROM Tabel_User WHERE Username = 'E1E123103'), 91, 'Bagus', 'Selesai');
-INSERT INTO Tabel_Modul (Judul_Modul, File_Materi) VALUES ('Modul 4 METODE NUMERIK', 'modul.pdf');
+INSERT INTO Tabel_Modul (ID_Kelas, Judul_Modul, File_Materi) VALUES ((SELECT ID_Kelas FROM Tabel_Kelas WHERE Nama_Kelas = 'METODE NUMERIK'), 'Modul 4 METODE NUMERIK', 'modul.pdf');
 SET @mod_id = LAST_INSERT_ID();
 INSERT INTO Tabel_Tugas (ID_Modul, Instruksi_Tugas, Deadline_Upload) VALUES (@mod_id, 'Tugas 4', DATE_ADD(NOW(), INTERVAL 4 WEEK));
 SET @task_id = LAST_INSERT_ID();
