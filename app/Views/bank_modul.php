@@ -534,10 +534,6 @@ $initials = substr($initials, 0, 2);
                         <span class="meta-info-label">Asisten Praktikum</span>
                         <span class="meta-info-value" id="assistantName"><?= htmlspecialchars($assistantName) ?></span>
                     </div>
-                    <div class="meta-info-item">
-                        <span class="meta-info-label">Jadwal & Ruang</span>
-                        <span class="meta-info-value" id="classSchedule"><?= htmlspecialchars($schedule) ?></span>
-                    </div>
                     <?php if ($_SESSION['active_role'] === 'Mahasiswa' && !empty($classInfo['ID_Kelompok'])): ?>
                         <div class="meta-info-item">
                             <span class="meta-info-label">Kelompok</span>
