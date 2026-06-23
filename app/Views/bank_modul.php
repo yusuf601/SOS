@@ -511,8 +511,8 @@ $initials = substr($initials, 0, 2);
             ?>
 
             <!-- Class Selector (Only shown to Dosen and Asisten, hidden for Mahasiswa as per Figma screenshot) -->
-            <?php if ($_SESSION['active_role'] !== 'Mahasiswa'): ?>
-                <section class="class-selector-card">
+            <section class="class-selector-card">
+                <?php if ($_SESSION['active_role'] !== 'Mahasiswa'): ?>
                     <div class="class-selector-header">
                         <span class="class-selector-title">Pilih Kelas Praktikum:</span>
                         <div class="custom-select-wrapper">
@@ -525,29 +525,29 @@ $initials = substr($initials, 0, 2);
                             </select>
                         </div>
                     </div>
-                    
-                    <div class="class-meta-info">
-                        <div class="meta-info-item">
-                            <span class="meta-info-label">Dosen Pengampu</span>
-                            <span class="meta-info-value" id="lecturerName"><?= htmlspecialchars($lecturerName) ?></span>
-                        </div>
-                        <div class="meta-info-item">
-                            <span class="meta-info-label">Asisten Praktikum</span>
-                            <span class="meta-info-value" id="assistantName"><?= htmlspecialchars($assistantName) ?></span>
-                        </div>
-                        <div class="meta-info-item">
-                            <span class="meta-info-label">Jadwal & Ruang</span>
-                            <span class="meta-info-value" id="classSchedule"><?= htmlspecialchars($schedule) ?></span>
-                        </div>
-                        <?php if ($_SESSION['active_role'] === 'Mahasiswa' && !empty($classInfo['ID_Kelompok'])): ?>
-                            <div class="meta-info-item" style="grid-column: span 3; margin-top: 8px; border-top: 0.5px solid rgba(0, 0, 0, 0.1); padding-top: 8px;">
-                                <span class="meta-info-label">Anggota <?= htmlspecialchars($classInfo['Nama_Kelompok']) ?></span>
-                                <span class="meta-info-value" style="font-size: 14px; font-weight: 500; color: #4B5563;"><?= !empty($groupMembers) ? htmlspecialchars(implode(', ', $groupMembers)) : '-' ?></span>
-                            </div>
-                        <?php endif; ?>
+                <?php endif; ?>
+                
+                <div class="class-meta-info" style="<?= $_SESSION['active_role'] === 'Mahasiswa' ? 'border-top: none; padding-top: 0;' : '' ?>">
+                    <div class="meta-info-item">
+                        <span class="meta-info-label">Dosen Pengampu</span>
+                        <span class="meta-info-value" id="lecturerName"><?= htmlspecialchars($lecturerName) ?></span>
                     </div>
-                </section>
-            <?php endif; ?>
+                    <div class="meta-info-item">
+                        <span class="meta-info-label">Asisten Praktikum</span>
+                        <span class="meta-info-value" id="assistantName"><?= htmlspecialchars($assistantName) ?></span>
+                    </div>
+                    <div class="meta-info-item">
+                        <span class="meta-info-label">Jadwal & Ruang</span>
+                        <span class="meta-info-value" id="classSchedule"><?= htmlspecialchars($schedule) ?></span>
+                    </div>
+                    <?php if ($_SESSION['active_role'] === 'Mahasiswa' && !empty($classInfo['ID_Kelompok'])): ?>
+                        <div class="meta-info-item" style="grid-column: span 3; margin-top: 8px; border-top: 0.5px solid rgba(0, 0, 0, 0.1); padding-top: 8px;">
+                            <span class="meta-info-label">Anggota <?= htmlspecialchars($classInfo['Nama_Kelompok']) ?></span>
+                            <span class="meta-info-value" style="font-size: 14px; font-weight: 500; color: #4B5563;"><?= !empty($groupMembers) ? htmlspecialchars(implode(', ', $groupMembers)) : '-' ?></span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </section>
 
             <!-- Download Error Alert -->
             <?php if (isset($_SESSION['download_error'])): ?>
