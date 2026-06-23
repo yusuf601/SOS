@@ -528,33 +528,28 @@ Untuk mengatasi berbagai kendala pada sistem berjalan tersebut, dirancanglah usu
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{"flowmap/flowmap_fix.png"}
+    \includegraphics[width=0.8\textwidth]{flowmap/flow_map_mantap.jpg}
     \caption{Flowmap Sistem Usulan EduLab}
     \label{fig:flowmap_sistem}
 \end{figure}
 
-Berdasarkan Flowmap di atas, alur operasional dimulai dengan dosen yang mengelola kelas dan mengunggah modul praktikum ke dalam sistem. Selanjutnya, mahasiswa dapat mengunduh materi dan mengunggah berkas laporan tugas sesuai batas waktu (\textit{deadline}) yang telah ditetapkan secara terpusat. Setelah laporan terkumpul, asisten praktikum akan melakukan verifikasi dan memberikan penilaian langsung melalui antarmuka penilaian yang terintegrasi dengan rubrik. Sistem kemudian akan mengakumulasikan nilai tersebut menjadi nilai akhir secara otomatis. Apabila terdapat ketidaksesuaian, mahasiswa memiliki kesempatan untuk mengajukan sanggah nilai yang akan ditinjau kembali oleh asisten praktikum sebelum nilai ditetapkan secara permanen. Alur terpadu ini meniadakan pertukaran berkas secara manual dan mengurangi risiko tercecernya data evaluasi.
+Berdasarkan Flowmap di atas, alur operasional dimulai dengan dosen yang membuat kelas praktikum baru. Pada tahap ini, sistem akan menghasilkan (\textit{generate}) sebuah token unik yang nantinya dibagikan kepada mahasiswa agar mereka dapat bergabung ke dalam kelas yang tepat secara terotorisasi. Setelah kelas beserta asistennya terbentuk, dosen dapat mengunggah modul praktikum ke dalam sistem. Selanjutnya, mahasiswa dapat bergabung menggunakan token, mengunduh materi, dan mengunggah berkas laporan tugas sesuai batas waktu (\textit{deadline}) yang telah ditetapkan secara terpusat. Setelah laporan terkumpul, asisten praktikum akan melakukan verifikasi dan memberikan penilaian langsung melalui antarmuka penilaian yang terintegrasi dengan rubrik. Sistem kemudian akan mengakumulasikan nilai tersebut menjadi nilai akhir secara otomatis. Apabila terdapat ketidaksesuaian, mahasiswa memiliki kesempatan untuk mengajukan sanggah nilai yang akan ditinjau kembali oleh asisten praktikum sebelum nilai ditetapkan secara permanen. Alur terpadu ini meniadakan pertukaran berkas secara manual dan mengurangi risiko tercecernya data evaluasi.
 
 \subsection{Analisis Kebutuhan Sistem}
 
-Tahap analisis kebutuhan sistem bertujuan untuk menjabarkan spesifikasi perangkat lunak yang akan dibangun agar dapat menyelesaikan permasalahan yang telah diidentifikasi. Kebutuhan ini dibagi menjadi dua kategori utama, yaitu kebutuhan fungsional dan kebutuhan non-fungsional.
-
-\subsubsection{Kebutuhan Fungsional}
-Kebutuhan fungsional mendefinisikan fitur-fitur dan proses utama yang harus dapat dilakukan oleh sistem. Untuk sistem EduLab, kebutuhan fungsional meliputi:
+Tahap analisis kebutuhan sistem bertujuan untuk menjabarkan spesifikasi dan fitur utama yang dibangun pada sistem EduLab guna menyelesaikan permasalahan pengelolaan praktikum. Berikut adalah rincian fitur utama yang disediakan oleh sistem:
 \begin{enumerate}[label=\arabic*.]
-    \item 3 Level Hak Akses: Dosen, Asisten, dan Mahasiswa.
-    \item Manajemen Kelas \& Kelompok Praktikum.
-    \item Bank Modul untuk unggah dan unduh materi.
-    \item Pengumpulan tugas dengan batas waktu (\textit{deadline}) otomatis.
-    \item Penilaian dan umpan balik tugas praktikum.
-    \item Presensi digital mahasiswa.
-    \item Rekap nilai otomatis berdasarkan bobot penilaian.
-    \item Sanggah nilai dan tindak lanjut revisi.
-    \item Status kelulusan praktikum secara visual.
-    \item Ekspor rekap nilai ke format CSV/Excel.
+    \item Manajemen Hak Akses: Pengaturan akses Dosen, Asisten, dan Mahasiswa.
+    \item Manajemen Kelas: Pengelolaan kelas dan pembagian kelompok praktikum.
+    \item Bank Modul: Wadah unggah dan unduh materi praktikum.
+    \item Pengumpulan Tugas: Sistem unggah tugas dengan batasan waktu otomatis.
+    \item Penilaian: Input nilai dan pemberian umpan balik oleh asisten.
+    \item Presensi: Pencatatan kehadiran praktikan secara digital.
+    \item Rekap Nilai: Perhitungan nilai akhir otomatis berdasarkan bobot.
+    \item Sanggah Nilai: Pengajuan revisi nilai oleh mahasiswa.
+    \item Visualisasi Kelulusan: Dasbor status kelulusan praktikum.
+    \item Ekspor Data: Fitur unduh rekap nilai ke format CSV/Excel.
 \end{enumerate}
-
-\subsubsection{Kebutuhan Non-Fungsional}
 
 \section{Perancangan Sistem}
 
@@ -823,13 +818,13 @@ Skenario \autoref{fig:col_sanggah} menggambarkan rute pesan interaksi yang menga
 \clearpage
 \section{Perancangan Basis Data}
 
-Perancangan basis data merupakan tahapan penting untuk menstrukturkan penyimpanan informasi dalam sistem EduLab. Model data yang digunakan adalah model relasional, yang divisualisasikan melalui \textit{Entity Relationship Diagram} (ERD). Basis data ini dirancang untuk memastikan integritas data, mengurangi redundansi, dan mendukung seluruh alur proses bisnis yang telah dijabarkan pada bagian DFD. Terdapat 9 tabel utama yang saling berelasi untuk mendukung jalannya sistem.
+Perancangan basis data merupakan tahapan penting untuk menstrukturkan penyimpanan informasi dalam sistem EduLab. Model data yang digunakan adalah model relasional, yang divisualisasikan melalui \textit{Entity Relationship Diagram} (ERD). Basis data ini dirancang untuk memastikan integritas data, mengurangi redundansi, dan mendukung seluruh alur proses bisnis yang telah dijabarkan pada bagian DFD. Terdapat 11 tabel utama yang saling berelasi untuk mendukung jalannya sistem.
 
 \subsection{ERD}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth, height=0.45\textheight, keepaspectratio]{erd/erd_tmp.png}
+    \includegraphics[width=0.8\textwidth, height=0.45\textheight, keepaspectratio]{erd/last.png}
     \caption{Entity Relationship Diagram (ERD) Sistem EduLab}
     \label{fig:erd_edulab}
 \end{figure}
@@ -837,11 +832,12 @@ Perancangan basis data merupakan tahapan penting untuk menstrukturkan penyimpana
 Berdasarkan \autoref{fig:erd_edulab}, struktur basis data dapat dikelompokkan ke dalam beberapa relasi kunci berikut:
 
 \begin{enumerate}[nosep]
-    \item Data Master Pengguna \& Akses: Tabel User menyimpan seluruh data entitas (mahasiswa, asisten, dosen) dan berelasi dengan Tabel Kelompok serta Tabel Plotting Asisten untuk menentukan alokasi kelas praktikum.
-    \item Data Modul \& Tugas: Tabel Modul menyimpan materi praktikum dan berelasi dengan Tabel Tugas. Satu modul dapat memiliki beberapa tugas.
-    \item Data Transaksi Pengumpulan: Tabel Pengumpulan menghubungkan Tabel User (mahasiswa) dengan Tabel Tugas. Tabel ini mencatat waktu submit dan berkas.
-    \item Data Transaksi Penilaian: Tabel Nilai bergantung pada Tabel Pengumpulan. Tabel ini merekam nilai angka dan umpan balik yang diberikan oleh asisten.
-    \item Data Presensi: Tabel Presensi menghubungkan pengguna dengan modul tertentu untuk merekam status kehadiran.
+    \item Manajemen Pengguna \& Akses: Tabel User menyimpan seluruh data entitas pengguna (mahasiswa, asisten, dosen).
+    \item Manajemen Kelas \& Token: Tabel Kelas berfungsi mendefinisikan ruang praktikum dan memuat atribut khusus berupa \textit{Token\_Kelas} sebagai kunci otorisasi mahasiswa untuk bergabung.
+    \item Plotting \& KRS: Tabel KRS mencatat pendaftaran mahasiswa ke dalam kelas tertentu. Sementara Tabel Plotting Asisten memetakan asisten ke kelompoknya, dan Tabel Kelompok membagi mahasiswa ke dalam kelompok kecil.
+    \item Modul \& Tugas: Tabel Modul menyimpan materi praktikum dan memiliki relasi erat dengan Tabel Tugas.
+    \item Pengumpulan \& Penilaian: Tabel Pengumpulan mencatat berkas tugas yang diunggah mahasiswa, dan berelasi dengan Tabel Nilai tempat asisten memberikan metrik penilaian angka serta merespons sanggahan.
+    \item Evaluasi Akhir \& Presensi: Tabel Presensi digunakan untuk pencatatan kehadiran, sedangkan Tabel Nilai Akhir bertugas merekap hasil nilai kumulatif beserta indikator status kelulusan akhir mahasiswa.
 \end{enumerate}
 
 \subsection{Relasi Tabel}
