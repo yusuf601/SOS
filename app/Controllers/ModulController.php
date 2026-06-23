@@ -31,6 +31,7 @@ class ModulController {
         if ($role === 'Mahasiswa') {
             // Get student's class (default first class)
             $studentClasses = $this->kelasModel->getStudentClasses($userId);
+            $allClasses = $studentClasses;
             
             if (isset($_GET['class_id'])) {
                 $requestedId = (int)$_GET['class_id'];

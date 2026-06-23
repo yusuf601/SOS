@@ -510,24 +510,22 @@ $initials = substr($initials, 0, 2);
             }
             ?>
 
-            <!-- Class Selector (Only shown to Dosen and Asisten, hidden for Mahasiswa as per Figma screenshot) -->
+            <!-- Class Selector Card -->
             <section class="class-selector-card">
-                <?php if ($_SESSION['active_role'] !== 'Mahasiswa'): ?>
-                    <div class="class-selector-header">
-                        <span class="class-selector-title">Pilih Kelas Praktikum:</span>
-                        <div class="custom-select-wrapper">
-                            <select class="class-select" id="classSelector" aria-label="Pilih kelas praktikum">
-                                <?php foreach ($allClasses as $cls): ?>
-                                    <option value="<?= htmlspecialchars($cls['ID_Kelas']) ?>" <?= ($classInfo && $classInfo['ID_Kelas'] == $cls['ID_Kelas']) ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($cls['Nama_Kelas']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                <div class="class-selector-header">
+                    <span class="class-selector-title">Pilih Kelas Praktikum:</span>
+                    <div class="custom-select-wrapper">
+                        <select class="class-select" id="classSelector" aria-label="Pilih kelas praktikum">
+                            <?php foreach ($allClasses as $cls): ?>
+                                <option value="<?= htmlspecialchars($cls['ID_Kelas']) ?>" <?= ($classInfo && $classInfo['ID_Kelas'] == $cls['ID_Kelas']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($cls['Nama_Kelas']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
-                <?php endif; ?>
+                </div>
                 
-                <div class="class-meta-info" style="<?= $_SESSION['active_role'] === 'Mahasiswa' ? 'border-top: none; padding-top: 0;' : '' ?>">
+                <div class="class-meta-info">
                     <div class="meta-info-item">
                         <span class="meta-info-label">Dosen Pengampu</span>
                         <span class="meta-info-value" id="lecturerName"><?= htmlspecialchars($lecturerName) ?></span>
